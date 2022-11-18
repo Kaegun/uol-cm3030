@@ -1,11 +1,11 @@
 # CM3030 - Game Development Project Readme
 
 ## Team
-Hamish Grigor
-Johann Ungerer
-Marianna Siembiott
-Raj Maurya
-Xiyu Zhou (Kathy)
+* Hamish Grigor
+* Johann Ungerer
+* Marianna Siembiott
+* Raj Maurya
+* Xiyu Zhou (Kathy)
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS
