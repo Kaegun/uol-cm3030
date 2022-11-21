@@ -22,5 +22,5 @@
 * Hamish - Lead Designer and Producer
 * Johann - Lead Developer and Co-Producer
 * Marianna - TBD
-* Raj - TBD
+* Raj - Level Design and Developer
 * Kathy - TBD
