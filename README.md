@@ -17,3 +17,10 @@
 1. Github - https://github.com/Kaegun/uol-cm3030/
    1. We'll use GitHub for our version control. An appropriate gitignore has been configured and LFS support for common Unity and asset file types has been enabled.
    1. See here - https://git-lfs.github.com/, for LFS guidance
+
+## Roles
+* Hamish - Lead Designer and Producer
+* Johann - Lead Developer and Co-Producer
+* Marianna - TBD
+* Raj - Level Design and Developer
+* Kathy - TBD

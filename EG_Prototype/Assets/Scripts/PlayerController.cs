@@ -10,10 +10,6 @@ public class PlayerController : MonoBehaviour
 	private float _turnSpeed = 10.0f;
 
 	private Vector2 _moveDirection = Vector2.zero;
-	//private float _currentSpeed = 0.0f;
-
-	//	Reference: Penny De Byl - 3rd Person course (Udemy)
-	private bool IsMoving => !Mathf.Approximately(_moveDirection.sqrMagnitude, 0.0f);
 
 	public void OnMove(InputAction.CallbackContext context)
 	{
@@ -33,10 +29,9 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//transform.SetPositionAndRotation(_maxSpeed * Time.deltaTime * new Vector3(0, 0, _moveDirection.y),
-		//	Quaternion.LookRotation(_turnSpeed * Time.deltaTime * new Vector3(0, 0, _moveDirection.x), transform.up));
+		transform.Translate(_maxSpeed * Time.deltaTime * new Vector3(_moveDirection.x, 0, _moveDirection.y));
 
-		transform.Translate(_maxSpeed * Time.deltaTime * new Vector3(0, 0, _moveDirection.y));
-		transform.Rotate(_turnSpeed * Time.deltaTime * new Vector3(0, _moveDirection.x, 0));
+		//	TODO: Rotate the character relative to its axis in the direction of the movement
+		//		transform.Rotate(_turnSpeed * Time.deltaTime * new Vector3(0, _moveDirection.x, 0));
 	}
 }
