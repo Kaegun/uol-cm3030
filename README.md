@@ -23,4 +23,4 @@
 * Johann - Lead Developer and Co-Producer
 * Marianna - TBD
 * Raj - Level Design and Developer
-* Kathy - TBD
+* Kathy - Developer and Designer
