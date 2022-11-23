@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	private float _turnSpeed = 10.0f;
 
 	private Vector2 _moveDirection = Vector2.zero;
+	private bool _interactionPressed;
 
 	public void OnMove(InputAction.CallbackContext context)
 	{
@@ -17,6 +18,19 @@ public class PlayerController : MonoBehaviour
 		if (context.performed || context.canceled)
 		{
 			_moveDirection = context.ReadValue<Vector2>();
+		}
+	}
+
+	public void OnInteraction(InputAction.CallbackContext context)
+	{
+		switch (context.phase)
+		{
+			case InputActionPhase.Started:
+				_interactionPressed = true;
+				break;
+			case InputActionPhase.Canceled:
+				_interactionPressed = false;
+				break;
 		}
 	}
 

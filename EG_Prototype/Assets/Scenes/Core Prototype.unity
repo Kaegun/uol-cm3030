@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &118567447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2527615010012288936, guid: ddbe345055db8574c955553fe3c92019,
+    type: 3}
+  m_PrefabInstance: {fileID: 4769483620781763228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0b3d497c3529c48b15bde8e23523f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &349454466
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +415,7 @@ PrefabInstance:
     - target: {fileID: 911352021640653797, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.29610705
+      value: 0.296107
       objectReference: {fileID: 0}
     - target: {fileID: 911352021640653797, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
@@ -413,7 +425,7 @@ PrefabInstance:
     - target: {fileID: 911352021640653797, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.23119336
+      value: 0.23119332
       objectReference: {fileID: 0}
     - target: {fileID: 1247647437431550100, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
@@ -483,7 +495,7 @@ PrefabInstance:
     - target: {fileID: 4112210876268697036, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.29610705
+      value: 0.296107
       objectReference: {fileID: 0}
     - target: {fileID: 4112210876268697036, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
@@ -493,7 +505,7 @@ PrefabInstance:
     - target: {fileID: 4112210876268697036, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.23119336
+      value: 0.23119332
       objectReference: {fileID: 0}
     - target: {fileID: 4833935591207993746, guid: d21fd755260c88640b212abd09cb7d5e,
         type: 3}
@@ -509,6 +521,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: d7390716-de67-4fa7-9f83-c6d567ac2968
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: Player/Interaction[/Keyboard/space]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 118567447}
+    - target: {fileID: 1182178043, guid: ddbe345055db8574c955553fe3c92019, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 159711448892702066, guid: ddbe345055db8574c955553fe3c92019,
         type: 3}
       propertyPath: m_Name
