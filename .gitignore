@@ -49,7 +49,7 @@ artifacts/
 *_p.c
 *_i.h
 *.ilk
-# should we be ignoring meta files?
+# This is ok, we include Asset meta tags later on.
 *.meta
 *.obj
 *.pch
@@ -273,6 +273,9 @@ __pycache__/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !**/[Aa]ssets/**/*.meta
+
+# Include Packages folder with Package manifest
+!**/Packages/*.json
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
