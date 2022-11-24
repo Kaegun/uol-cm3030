@@ -24,3 +24,32 @@
 * Marianna - TBD
 * Raj - Level Design and Developer
 * Kathy - Developer and Designer
+
+## Coding Standards
+We should all try and follow a consistent coding standard. C# and Unity tend to adhere to the following strictures:
+* Use PascalCase for method names, e.g.
+```cs
+private void SomeMethod(int someVariable)
+{
+   //  Do some stuff
+}
+```
+* Variable names should use camelCase, e.g.
+```cs
+var myVariable = 0.0f;
+```
+* Use an underscore `_` to denote a class global variable, e.g.
+```cs
+private float _someClassVariable = 0.0f;
+```
+* Use the `[SerializeField]` attribute when exposing varaibles to the Unity Editor, instead of making variables public, e.g.
+```cs
+[SerializeField]
+private float _editorVariable = 0.0f;
+```
+* Line spacing - Please do not leave multiple empty lines in the code.
+* General Formatting - Use Ctrl K + D to auto format your code to the predefined formatting settings configured.
+
+For now, that'll do, we can get more specific as use cases arrive.
+
+***As always, Happy coding!***
