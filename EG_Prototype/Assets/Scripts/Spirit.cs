@@ -42,8 +42,7 @@ public class Spirit : MonoBehaviour, IInteractable
                 _spawnDelay -= Time.deltaTime;
                 if (_spawnDelay <= 0)
                 {
-                    _spawningGO.SetActive(false);
-                    
+                    Spawn();
                 }
                 break;
             case SpiritState.Stunned:
@@ -62,6 +61,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
     void Spawn()
     {
+        _spawningGO.SetActive(false);
         //if the target plant is at the spirit's location, possess the target plant
         if (_targetPlant.transform.position == transform.position && _targetPlant.IsPossessable())
         {
