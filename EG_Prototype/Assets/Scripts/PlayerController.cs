@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float _interactionRadius = 2.0f;
     private List<GameObject> _interactableGOsInRadius;
 
+    private GameObject _heldObject = null;
+
     public void OnMove(InputAction.CallbackContext context)
     {
         //  Only act on completed movement key events
@@ -33,6 +35,12 @@ public class PlayerController : MonoBehaviour
         {
             case InputActionPhase.Started:
                 _interactionPressed = true;
+
+                if (_heldObject != null)
+                {
+                    _heldObject.GetComponent<IInteractable>().OnPlayerInteract(this);
+                    break;
+                }
 
                 //interactables are sorted by distance from player so interacting with the first one will interact with the closest
                 if (_interactableGOsInRadius.Count > 0)
@@ -61,10 +69,17 @@ public class PlayerController : MonoBehaviour
         //	TODO: Rotate the character relative to its axis in the direction of the movement
         //		transform.Rotate(_turnSpeed * Time.deltaTime * new Vector3(0, _moveDirection.x, 0));
 
-        //remove null or inactive interactables and order them by distance from character
+        // remove null or inactive interactables and order them by distance from character
+        // TODO: Add highlight to closest interactable
         if (_interactableGOsInRadius.Count > 0)
         {
             _interactableGOsInRadius = _interactableGOsInRadius.Where(i => i != null && i.activeInHierarchy).OrderBy(i => Vector3.Distance(i.transform.position, transform.position)).ToList();
+        }
+
+        // move held object with the player
+        if (_heldObject != null)
+        {
+            _heldObject.transform.position = transform.position + new Vector3(0.5f, 0f, 0.5f);
         }
     }
 
@@ -80,5 +95,15 @@ public class PlayerController : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         _interactableGOsInRadius.Remove(other.gameObject);
+    }
+
+    public void Pickup(GameObject obj)
+    {
+        _heldObject = obj;
+    }
+
+    public void Drop(GameObject obj)
+    {
+        _heldObject = null;
     }
 }

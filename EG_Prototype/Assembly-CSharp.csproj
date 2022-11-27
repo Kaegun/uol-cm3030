@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
+    <Compile Include="Assets\Scripts\PlantPatch.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritManager.cs" />

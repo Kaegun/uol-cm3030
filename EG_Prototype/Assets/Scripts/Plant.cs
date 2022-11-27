@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Plant : MonoBehaviour, IInteractable
@@ -18,7 +19,8 @@ public class Plant : MonoBehaviour, IInteractable
     enum PlantState
     {
         Planted,
-        Possessed
+        Possessed,
+        PickedUp
     }
 
     // Start is called before the first frame update
@@ -50,11 +52,7 @@ public class Plant : MonoBehaviour, IInteractable
 
     public bool IsPossessable()
     {
-        if (_plantState == PlantState.Planted)
-        {
-            return true;
-        }
-        return false;
+        return _plantState == PlantState.Planted;
     }
 
     public void OnPossessed(Spirit spirit)
@@ -72,6 +70,16 @@ public class Plant : MonoBehaviour, IInteractable
         _possessingSpirit.OnDispossess(transform.position + new Vector3(1.5f, 0, 0));
     }
 
+    void OnPickedUp()
+    {
+        _plantState = PlantState.PickedUp;
+    }
+
+    void OnDropped()
+    {
+        _plantState = PlantState.Planted;
+    }
+
     public bool IsInteractable()
     {
         if (_plantState == PlantState.Planted || _plantState == PlantState.Possessed)
@@ -86,9 +94,25 @@ public class Plant : MonoBehaviour, IInteractable
         switch (_plantState)
         {
             case PlantState.Planted:
+                player.Pickup(gameObject);
+                OnPickedUp();
                 break;
             case PlantState.Possessed:
                 Dispossess();
+                break;
+            case PlantState.PickedUp:
+                // check for plant patches in range and sort them by their distance
+                var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+                    Where(c => c.GetComponent<PlantPatch>() != null).
+                    OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).ToList();
+
+                // if there are valid plant patches in range, drop the plant in the plant patch
+                if (plantPatches.Count > 0)
+                {
+                    transform.position = plantPatches[0].transform.position;
+                    player.Drop(gameObject);
+                    OnDropped();
+                }                
                 break;
             default:
                 break;

@@ -21,8 +21,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         Spawning,
         Possessing,
-        Stunned,
-        Banishing
+        Stunned
     }
 
     // Start is called before the first frame update
@@ -46,8 +45,6 @@ public class Spirit : MonoBehaviour, IInteractable
                 }
                 break;
             case SpiritState.Stunned:
-                break;
-            case SpiritState.Banishing:
                 break;
             default:
                 break;
