@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnedGO: {fileID: 8250614907355367807}
   _spawningGO: {fileID: 7775957776363299212}
-  _spawnDelay: 4
+  _spawnDelay: 3
 --- !u!135 &4231771739578795520
 SphereCollider:
   m_ObjectHideFlags: 0
