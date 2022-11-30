@@ -59,6 +59,12 @@ public class SpiritManager : MonoBehaviour
                 _elapsedTime -= _spawnInterval;
             }
         }
+
+        // if all plants gone, end game
+        if (plants.Count == 0)
+        {
+            GameManager.instance.EndGame();
+        }
     }
 
     public void RegisterPlant(Plant plant)

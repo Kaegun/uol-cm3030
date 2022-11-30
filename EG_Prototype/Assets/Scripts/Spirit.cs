@@ -106,6 +106,7 @@ public class Spirit : MonoBehaviour, IInteractable
         switch (_spiritState)
         {
             case SpiritState.Stunned:
+                GameManager.instance.ScorePoints(10);
                 Destroy(gameObject);
                 break;
             default:
