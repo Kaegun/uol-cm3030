@@ -3,7 +3,7 @@
 ## Team
 * Hamish Grigor
 * Johann Ungerer
-* Marianna Siembiott
+* Marianna Siembiot
 * Raj Maurya
 * Xiyu Zhou (Kathy)
 
