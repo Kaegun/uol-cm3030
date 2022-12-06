@@ -21,9 +21,9 @@
 ## Roles
 * Hamish - Lead Designer and Producer
 * Johann - Lead Developer and Co-Producer
-* Marianna - TBD
+* Marianna -  Audio Visual Lead and Developer
 * Raj - Level Design and Developer
-* Kathy - Developer and Designer
+* Kathy - UX Lead and Developer
 
 ## Coding Standards
 We should all try and follow a consistent coding standard. C# and Unity tend to adhere to the following strictures:
