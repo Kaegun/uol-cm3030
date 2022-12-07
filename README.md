@@ -1,11 +1,13 @@
 # CM3030 - Game Development Project Readme
 
-## Team
-* Hamish Grigor
-* Johann Ungerer
-* Marianna Siembiott
-* Raj Maurya
-* Xiyu Zhou (Kathy)
+## Team and Role Assignments
+| Team member | Role |
+| ----------- | ---- |
+| Hamish Grigor | Lead Designer and Producer |
+| Johann Ungerer | Lead Developer and Co-Producer |
+| Marianna Siembiot | Audio-Visual Lead and Developer |
+| Raj Maurya | Level Design and Developer |
+| Xiyu Zhou (Kathy) | UX Lead and Developer |
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS
@@ -18,12 +20,13 @@
    1. We'll use GitHub for our version control. An appropriate gitignore has been configured and LFS support for common Unity and asset file types has been enabled.
    1. See here - https://git-lfs.github.com/, for LFS guidance
 
-## Roles
-* Hamish - Lead Designer and Producer
-* Johann - Lead Developer and Co-Producer
-* Marianna -  Audio Visual Lead and Developer
-* Raj - Level Design and Developer
-* Kathy - UX Lead and Developer
+## How to set up your git environment:
+1. First install git from here: https://git-scm.com/downloads
+1. Then install git LFS: https://git-lfs.github.com/
+1. Run git lfs install to initialize git large file support
+1. Clone the repo into your working folder location using git clone https://github.com/Kaegun/uol-cm3030.git
+1. You can now open the Unity projects that have been created in the repo
+1. No scene will be loaded by default, so open a scene from the Scenes folder.
 
 ## Coding Standards
 We should all try and follow a consistent coding standard. C# and Unity tend to adhere to the following strictures:
