@@ -63,8 +63,8 @@
     <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\WizardPolyArt\Shader\PolyArtMaskTint.shader" />
-    <None Include="Assets\WizardPolyArt\SRP\HowToTestSRPs.txt" />
+    <None Include="Assets\Imported\WizardPolyArt\Shader\PolyArtMaskTint.shader" />
+    <None Include="Assets\Imported\WizardPolyArt\SRP\HowToTestSRPs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
