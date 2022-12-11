@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerPhysicsController : MonoBehaviour
@@ -15,12 +13,20 @@ public class PlayerPhysicsController : MonoBehaviour
 	[SerializeField]
 	private float _interactionRadius = 2.0f;
 
+	//	Should probably not be here
+	[SerializeField]
+	private float _maxAnimationSpeed = 4.0f;
+
 	private Vector2 _moveDirection = Vector2.zero;
 	private Rigidbody _rb;
+	private Animator _animator;
+	private float _movementSpeed;
 
 	//private bool _interactionPressed;
 	//private List<GameObject> _interactableGOsInRadius;
 	//private GameObject _heldObject = null;
+
+	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
 	public void OnMove(InputAction.CallbackContext context)
 	{
@@ -85,11 +91,26 @@ public class PlayerPhysicsController : MonoBehaviour
 	{
 		//_interactableGOsInRadius = new List<GameObject>();
 		_rb = GetComponent<Rigidbody>();
+		_animator = GetComponentInChildren<Animator>();
 	}
 
 	// Update is called once per frame
 	private void Update()
 	{
+		if (IsMoving)
+		{
+			_movementSpeed = Mathf.Clamp(_movementSpeed + _acceleration * Time.deltaTime, 0.0f, _maxAnimationSpeed);
+			if (_animator != null)
+			{
+				_animator.SetFloat("ForwardSpeed", _movementSpeed);
+			}
+		}
+		else if (_movementSpeed > 0.0f)
+		{
+			_movementSpeed = 0.0f;
+			_animator.SetFloat("ForwardSpeed", _movementSpeed);
+		}
+
 		//transform.Translate(_maxSpeed * Time.deltaTime * new Vector3(_moveDirection.x, 0, _moveDirection.y));
 
 		//	TODO: Rotate the character relative to its axis in the direction of the movement
@@ -114,7 +135,7 @@ public class PlayerPhysicsController : MonoBehaviour
 		Debug.Log($"Move Direction: {_moveDirection}");
 
 		//	If there are any keys down, we should move
-		if (_moveDirection.sqrMagnitude > 0)
+		if (IsMoving)
 		{
 			Debug.Log("Moving");
 			var direction = Quaternion.Euler(0, _moveDirection.CalculateAngle(), 0);
