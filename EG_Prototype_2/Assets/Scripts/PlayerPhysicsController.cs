@@ -117,10 +117,7 @@ public class PlayerPhysicsController : MonoBehaviour
 		if (_moveDirection.sqrMagnitude > 0)
 		{
 			Debug.Log("Moving");
-			//	From: https://answers.unity.com/questions/446540/calculating-the-angle-of-a-vector2-from-zero.html
-			var angle = 360.0f - (Mathf.Atan2(-_moveDirection.x, _moveDirection.y) * Mathf.Rad2Deg);
-
-			var direction = Quaternion.Euler(0, angle, 0);
+			var direction = Quaternion.Euler(0, _moveDirection.CalculateAngle(), 0);
 			var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
 			_rb.MoveRotation(turnDirection.normalized);
 
