@@ -293,7 +293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182360635843861785}
-  - component: {fileID: 1182360635843861780}
+  - component: {fileID: 9116252208002146431}
   - component: {fileID: 1182360635843861787}
   - component: {fileID: 1182360635843861786}
   m_Layer: 0
@@ -318,7 +318,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1182360635843861780
+--- !u!114 &9116252208002146431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,11 +327,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1182360635843861784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212c95a2f22440d43a64729bbf6e4230, type: 3}
+  m_Script: {fileID: 11500000, guid: fa09fabfa19c55f429590bdb8c391633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveSpeed: 20
   _maxSpeed: 20
-  _turnSpeed: 80
+  _turnSpeed: 90
   _interactionRadius: 2
 --- !u!114 &1182360635843861787
 MonoBehaviour:
@@ -361,7 +362,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1182360635843861780}
+      - m_Target: {fileID: 9116252208002146431}
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -379,13 +380,24 @@ MonoBehaviour:
     m_ActionId: 6f45709e-90f6-4b9d-a3dd-6884871fd3f9
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9116252208002146431}
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e6570d50-93a8-4ab9-8606-03503a8b213f
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1182360635843861780}
-        m_MethodName: OnInteraction
+      - m_Target: {fileID: 9116252208002146431}
+        m_MethodName: OnFire2
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -438,7 +450,7 @@ MonoBehaviour:
     m_ActionId: 7a17aa59-d0ef-4f9c-9001-e22f6c85c1e7
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
