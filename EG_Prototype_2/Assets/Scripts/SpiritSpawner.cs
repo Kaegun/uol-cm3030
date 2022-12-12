@@ -54,5 +54,5 @@ public class SpiritSpawner : MonoBehaviour
             int rand = Random.Range(0, _spawnPoints.Length);
             Instantiate(_spirit, _spawnPoints[rand].transform.position, Quaternion.identity);
         }
-    }
+    }   
 }
