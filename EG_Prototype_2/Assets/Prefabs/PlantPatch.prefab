@@ -138,3 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836f95bed28b66243beb2b78828923f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _containsPlant: 0
+  _mesh: {fileID: 2091960093599807604}
+  _dirtMaterial: {fileID: 2100000, guid: c1cdeb92bfa24114d8e07c02ae1c0c04, type: 2}
+  _compostMaterial: {fileID: 2100000, guid: 488b903483acabb45bac03accb4d1523, type: 2}

@@ -56,6 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Compost.cs" />
+    <Compile Include="Assets\Scripts\CompostBin.cs" />
+    <Compile Include="Assets\Scripts\IInteractable.cs" />
+    <Compile Include="Assets\Scripts\IPickUp.cs" />
     <Compile Include="Assets\Scripts\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
     <Compile Include="Assets\Scripts\PlantPatch.cs" />
@@ -63,6 +67,8 @@
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
+    <Compile Include="Assets\Scripts\TrickPlant.cs" />
+    <Compile Include="Assets\Scripts\TrickPlantBag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

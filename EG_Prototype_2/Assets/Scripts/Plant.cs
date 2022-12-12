@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Plant : MonoBehaviour
+public class Plant : MonoBehaviour, IPickUp
 {
     enum PlantState
     {
@@ -47,7 +48,7 @@ public class Plant : MonoBehaviour
             case PlantState.Planted:
                 break;
             case PlantState.BecomingPossessed:
-                _possessionProgress += Time.deltaTime;                
+                _possessionProgress += Time.deltaTime;
                 break;
             case PlantState.Carried:
                 break;
@@ -59,12 +60,7 @@ public class Plant : MonoBehaviour
         _mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
     }
 
-    public bool IsPossessable()
-    {
-        return _plantState == PlantState.Planted;
-    }
-
-    public bool IsCarriable()
+    public bool CanBePossessed()
     {
         return _plantState == PlantState.Planted;
     }
@@ -84,12 +80,57 @@ public class Plant : MonoBehaviour
         _plantState = PlantState.Carried;
         _possessionProgress = _possessionThreshold;
         _plantPatch.RemovePlant();
-        _plantPatch = null;        
+        _plantPatch = null;
     }
 
     public void Dispossess()
     {
         _plantState = PlantState.Planted;
-        _possessionProgress = 0;        
+        _possessionProgress = 0;
+    }
+
+    public PlantPatch PlantPatch()
+    {
+        return _plantPatch;
+    }
+
+    public bool CanBePickedUp()
+    {
+        return _plantState == PlantState.Planted;
+    }
+
+    public bool CanBeDropped()
+    {
+        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+            Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant()).
+            ToList();
+        return plantPatches.Count > 0;
+    }
+
+    public void OnPickUp()
+    {
+        _plantState = PlantState.Carried;
+        if (_plantPatch != null)
+        {
+            _plantPatch.RemovePlant();
+            _plantPatch = null;
+        }
+    }
+
+    public void OnDrop()
+    {
+        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+            Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant()).
+            Select(c => c.GetComponent<PlantPatch>()).
+            OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
+            ToList();
+
+        if (plantPatches.Count > 0)
+        {
+            _plantPatch = plantPatches[0];
+            transform.position = _plantPatch.transform.position;
+        }
+
+        _plantState = PlantState.Planted;
     }
 }

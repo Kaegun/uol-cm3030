@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Spirit : MonoBehaviour
+public class Spirit : MonoBehaviour, IInteractable
 {
     enum SpiritState
     {
         Searching,
         StartingPossession,
-        Possessing
+        Possessing,
+        Trapped,
+        Repelled
     }
 
     [SerializeField]
@@ -24,6 +26,10 @@ public class Spirit : MonoBehaviour
 
     [SerializeField]
     private GameObject _spiritBody;
+
+    [SerializeField]
+    private float _repelDuration;
+    private float _repelProgress;
 
     // Start is called before the first frame update
     void Start()
@@ -47,18 +53,47 @@ public class Spirit : MonoBehaviour
                 }
                 transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
 
-                // search for nearby possessable plants and try to possess one
+                // check for nearby possessable plants and start to possess one
                 var plants = Physics.OverlapSphere(transform.position, 2f).
-                    Where(c => c.GetComponent<Plant>() != null && c.GetComponent<Plant>().IsPossessable()).
-                    Select(c => c.GetComponent<Plant>()).
+                    Where(c => (c.GetComponent<Plant>() != null && c.GetComponent<Plant>().CanBePossessed()) || (c.GetComponent<TrickPlant>() != null && c.GetComponent<TrickPlant>().CanTrapSpirit())).
                     ToList();
                 if (plants.Count > 0)
                 {
-                    _possessedPlant = plants[0];
-                    _possessedPlant.StartPossession();
-                    transform.position = _possessedPlant.transform.position;
-                    _spiritState = SpiritState.StartingPossession;
-                    _spiritBody.SetActive(false);
+                    // handle normal plant
+                    if (plants[0].GetComponent<Plant>() != null)
+                    {
+                        var plant = plants[0].GetComponent<Plant>();
+                        if (plant.PlantPatch() != null && plant.PlantPatch().ContainsCompost())
+                        {
+                            Repel();
+                            plant.PlantPatch().RemoveCompost();
+                        }
+                        else
+                        {
+                            _possessedPlant = plant;
+                            _possessedPlant.StartPossession();
+                            transform.position = _possessedPlant.transform.position;
+                            _spiritState = SpiritState.StartingPossession;
+                            _spiritBody.SetActive(false);
+                        }
+                    }
+                    // handle trick plant
+                    else if (plants[0].GetComponent<TrickPlant>() != null)
+                    {
+                        var trickPlant = plants[0].GetComponent<TrickPlant>();
+                        if (trickPlant.PlantPatch() != null && trickPlant.PlantPatch().ContainsCompost())
+                        {
+                            Repel();
+                            trickPlant.PlantPatch().RemoveCompost();
+                        }
+                        else
+                        {
+                            trickPlant.TrapSpirit(this);
+                            _spiritBody.SetActive(false);
+                            _spiritState = SpiritState.Trapped;
+                            transform.position = trickPlant.transform.position;
+                        }
+                    }
                 }
                 break;
             case SpiritState.StartingPossession:
@@ -73,22 +108,52 @@ public class Spirit : MonoBehaviour
                 transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
                 _possessedPlant.transform.position = transform.position;
                 break;
+            case SpiritState.Repelled:
+                _repelProgress += Time.deltaTime;
+                if (_repelProgress > _repelDuration)
+                {
+                    _spiritState = SpiritState.Searching;
+                }
+                transform.position += _moveSpeed * 2.5f * Time.deltaTime * _moveDirection;
+                break;
             default:
                 break;
         }
     }
 
-    public bool IsBanishable()
+    public bool CanBeBanished()
     {
         return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
     }
 
     public void Banish()
     {
-        if (IsBanishable())
+        if (_possessedPlant != null)
         {
             _possessedPlant.Dispossess();
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
+    }
+
+    public bool CanBeRepelled()
+    {
+        return _spiritState == SpiritState.Searching || _spiritState == SpiritState.Repelled;
+    }
+
+    public void Repel()
+    {
+        _spiritState = SpiritState.Repelled;
+        _repelProgress = 0;
+        _moveDirection = new Vector3(0, 0, 1).normalized;
+    }
+
+    public bool CanBeInteractedWith()
+    {
+        return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+    }
+
+    public void OnPlayerInteract(PlayerController player)
+    {
+        Banish();
     }
 }

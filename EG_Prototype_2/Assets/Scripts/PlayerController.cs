@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveDirection = Vector2.zero;
     //private bool _interactionPressed;
     //private List<GameObject> _interactableGOsInRadius;
-    //private GameObject _heldObject = null;
+    private GameObject _heldObject = null;
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -33,32 +33,56 @@ public class PlayerController : MonoBehaviour
         switch (context.phase)
         {
             case InputActionPhase.Started:
-                //_interactionPressed = true;
-
-                //if (_heldObject != null)
-                //{
-                //	_heldObject.GetComponent<IInteractable>().OnPlayerInteract(this);
-                //	break;
-                //}
-
-                ////interactables are sorted by distance from player so interacting with the first one will interact with the closest
-                //if (_interactableGOsInRadius.Count > 0)
-                //{
-                //	_interactableGOsInRadius[0].GetComponent<IInteractable>().OnPlayerInteract(this);
-                //}
-
-                // search for nearby spirits and try to banish one
-                var spirits = Physics.OverlapSphere(transform.position, 2f).
-                    Where(c => c.GetComponent<Spirit>() != null && c.GetComponent<Spirit>().IsBanishable()).
-                    Select(c => c.GetComponent<Spirit>()).
-                    ToList();
-                if (spirits.Count > 0)
+                if (_heldObject != null)
                 {
-                    spirits[0].Banish();
+                    if (_heldObject.GetComponent<IInteractable>() != null && _heldObject.GetComponent<IInteractable>().CanBeInteractedWith())
+                    {
+                        _heldObject.GetComponent<IInteractable>().OnPlayerInteract(this);
+                    }
+                    break;
+                }
+
+                var interactables = Physics.OverlapSphere(transform.position, 2f).
+                    Where(i => i.GetComponent<IInteractable>() != null && i.GetComponent<IInteractable>().CanBeInteractedWith()).
+                    Select(i => i.gameObject).
+                    OrderBy(i => Vector3.Distance(i.transform.position, transform.position)).
+                    ToList();
+
+                if (interactables.Count > 0)
+                {
+                    interactables[0].GetComponent<IInteractable>().OnPlayerInteract(this);
                 }
                 break;
             case InputActionPhase.Canceled:
-                //_interactionPressed = false;
+                break;
+        }
+    }
+
+    public void OnPickUp(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+        {
+            case InputActionPhase.Started:
+                if (_heldObject != null && _heldObject.GetComponent<IPickUp>() != null && _heldObject.GetComponent<IPickUp>().CanBeDropped())
+                {
+                    _heldObject.GetComponent<IPickUp>().OnDrop();
+                    _heldObject = null;
+                    break;
+                }
+
+                var pickUps = Physics.OverlapSphere(transform.position, 2f).
+                    Where(p => p.GetComponent<IPickUp>() != null && p.GetComponent<IPickUp>().CanBePickedUp()).
+                    Select(p => p.gameObject).
+                    OrderBy(p => Vector3.Distance(p.transform.position, transform.position)).
+                    ToList();
+
+                if (pickUps.Count > 0)
+                {
+                    _heldObject = pickUps[0];
+                    _heldObject.GetComponent<IPickUp>().OnPickUp();
+                }
+                break;
+            case InputActionPhase.Canceled:
                 break;
         }
     }
@@ -94,11 +118,11 @@ public class PlayerController : MonoBehaviour
         //	_interactableGOsInRadius = _interactableGOsInRadius.Where(i => i != null && i.activeInHierarchy).OrderBy(i => Vector3.Distance(i.transform.position, transform.position)).ToList();
         //}
 
-        //// move held object with the player
-        //if (_heldObject != null)
-        //{
-        //	_heldObject.transform.position = transform.position + new Vector3(0.5f, 0f, 0.5f);
-        //}
+        // move held object with the player
+        if (_heldObject != null)
+        {
+            _heldObject.transform.position = transform.position + new Vector3(0.5f, 0f, 0.5f);
+        }
     }
 
     //uses OnTriggerStay rather than OnTriggerEnter as OnTriggerEnter is not called is a gameObject is set to active within the collider
