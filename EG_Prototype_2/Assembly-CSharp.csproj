@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\SpiritSpawnPoint.cs" />
      <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
+     <Compile Include="Assets\amusedART\SlimeRabbit\Sc_AniTest.cs" />
      <None Include="Assets\WorldMaterialsFree\Shaders\WorldMatHDRPFree.shader" />
      <None Include="Assets\WorldMaterialsFree\Shaders\WorldMatLiteFree.shader" />
      <None Include="Assets\WorldMaterialsFree\Shaders\WorldMatFree.shader" />
