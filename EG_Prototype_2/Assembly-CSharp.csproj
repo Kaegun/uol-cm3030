@@ -58,8 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
+    <Compile Include="Assets\Scripts\Forest.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\IPickUp.cs" />
+    <Compile Include="Assets\Scripts\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
     <Compile Include="Assets\Scripts\PlantPatch.cs" />

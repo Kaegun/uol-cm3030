@@ -43,6 +43,8 @@ public class SpiritSpawner : MonoBehaviour
             if (wave.Delay <= 0)
             {
                 SpawnWave(_waveQueue.Dequeue());
+                // account for overspill of delay in previous wave
+                _waveQueue.Peek().Delay += wave.Delay;
             }
         }        
     }

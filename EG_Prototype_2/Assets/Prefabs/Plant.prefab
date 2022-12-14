@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7344565796665904463}
   - component: {fileID: 7344565796665904456}
   - component: {fileID: 7344565796665904457}
-  - component: {fileID: 7344565796665904462}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7344565796665904462
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7344565796665904460}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7344565797260719088
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1afbd144f374445ab5bb51770d7c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _plantState: 0
   _possessionThreshold: 0
   _plantMaterial: {fileID: 2100000, guid: 6e078c6d6a989224d81be2a1e2492d04, type: 2}
   _spiritMaterial: {fileID: 2100000, guid: 49756bc0217032a44a152d3131240199, type: 2}
   _mesh: {fileID: 7344565796665904457}
+  _plantPatch: {fileID: 0}

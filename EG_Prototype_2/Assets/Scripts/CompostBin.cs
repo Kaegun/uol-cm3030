@@ -15,6 +15,9 @@ public class CompostBin : MonoBehaviour, IInteractable
     [SerializeField]
     private MeshRenderer _compostMesh;
 
+    [SerializeField]
+    private Transform _spawnTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +54,7 @@ public class CompostBin : MonoBehaviour, IInteractable
 
     public void OnPlayerInteract(PlayerController player)
     {
-        Instantiate(_compost, transform.position + new Vector3(1.5f, 0, 1.5f), Quaternion.identity);
+        Instantiate(_compost, _spawnTransform.position, Quaternion.identity);
         _cooldownProgress = 0;
     }
 }
