@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrickPlantBag : MonoBehaviour, IInteractable
+public class TrickPlantBag : MonoBehaviour, IPickUp
 {
     [SerializeField]
     private TrickPlant _trickPlant;
@@ -20,16 +20,30 @@ public class TrickPlantBag : MonoBehaviour, IInteractable
     void Update()
     {
 
-    }
+    }    
 
-    public bool CanBeInteractedWith()
+    public bool CanBePickedUp()
     {
         return true;
     }
 
-    public void OnPlayerInteract(PlayerController player)
+    public bool CanBeDropped()
     {
-        var trickPlant = Instantiate(_trickPlant, _spawnTransform.position, Quaternion.identity);
-        trickPlant.gameObject.transform.localScale = Vector3.one * 0.5f;
+        return true;
+    }
+
+    public GameObject PickUpObject()
+    {
+        return Instantiate(_trickPlant, _spawnTransform.position, Quaternion.identity).gameObject;
+    }
+
+    public void OnPickUp()
+    {
+        
+    }
+
+    public void OnDrop()
+    {
+        
     }
 }

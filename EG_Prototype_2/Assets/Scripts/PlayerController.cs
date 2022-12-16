@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
                 if (pickUps.Count > 0)
                 {
-                    _heldObject = pickUps[0];
+                    _heldObject = pickUps[0].GetComponent<IPickUp>().PickUpObject();
                     _heldObject.GetComponent<IPickUp>().OnPickUp();
                 }
                 break;

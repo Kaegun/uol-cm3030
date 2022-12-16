@@ -135,6 +135,11 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
         };
     }
 
+    public GameObject PickUpObject()
+    {
+        return gameObject;
+    }
+
     public bool CanBeInteractedWith()
     {
         return _plantState == PlantState.TrappingSpirit;
