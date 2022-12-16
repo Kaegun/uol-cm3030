@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompostBin : MonoBehaviour, IInteractable
+public class CompostBin : MonoBehaviour, IPickUp
 {
     [SerializeField]
     private Compost _compost;
@@ -47,7 +47,7 @@ public class CompostBin : MonoBehaviour, IInteractable
         return _cooldownProgress < _cooldownDuration;
     }
 
-    public bool CanBeInteractedWith()
+    /*public bool CanBeInteractedWith()
     {
         return !OnCooldown();
     }
@@ -56,5 +56,31 @@ public class CompostBin : MonoBehaviour, IInteractable
     {
         Instantiate(_compost, _spawnTransform.position, Quaternion.identity);
         _cooldownProgress = 0;
+    }*/
+
+    public bool CanBePickedUp()
+    {
+        return !OnCooldown();
+    }
+
+    public bool CanBeDropped()
+    {
+        return true;
+    }
+
+    public GameObject PickUpObject()
+    {
+        _cooldownProgress = 0;
+        return Instantiate(_compost, _spawnTransform.position, Quaternion.identity).gameObject;
+    }
+
+    public void OnPickUp()
+    {
+        
+    }
+
+    public void OnDrop()
+    {
+        
     }
 }

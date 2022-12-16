@@ -33,4 +33,9 @@ public class Compost : MonoBehaviour, IPickUp
     {
 
     }
+
+    public GameObject PickUpObject()
+    {
+        return gameObject;
+    }
 }

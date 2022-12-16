@@ -133,4 +133,9 @@ public class Plant : MonoBehaviour, IPickUp
 
         _plantState = PlantState.Planted;
     }
+
+    public GameObject PickUpObject()
+    {
+        return gameObject;
+    }
 }
