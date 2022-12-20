@@ -43,6 +43,8 @@ public class SpiritSpawner : MonoBehaviour
             if (wave.Delay <= 0)
             {
                 SpawnWave(_waveQueue.Dequeue());
+                // account for overspill of delay in previous wave
+                _waveQueue.Peek().Delay += wave.Delay;
             }
         }        
     }
@@ -54,5 +56,5 @@ public class SpiritSpawner : MonoBehaviour
             int rand = Random.Range(0, _spawnPoints.Length);
             Instantiate(_spirit, _spawnPoints[rand].transform.position, Quaternion.identity);
         }
-    }
+    }   
 }

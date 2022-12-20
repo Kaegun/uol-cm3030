@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveTowardsCentre : MonoBehaviour
 {
     [SerializeField]
-    private float _moveSpeed;
+    private float _moveSpeed = 1.5f;
 
     private Vector3 _direction;
 
