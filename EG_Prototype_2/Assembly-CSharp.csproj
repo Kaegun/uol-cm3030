@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerPhysicsController.cs" />
+    <Compile Include="Assets\Scripts\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\Utility.cs" />

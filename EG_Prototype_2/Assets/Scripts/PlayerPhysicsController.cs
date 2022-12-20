@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerPhysicsController : MonoBehaviour
 {
 	[SerializeField]
 	private float _acceleration = 20.0f;
+
+	[SerializeField]
+	private float _maxSpeed = 6.0f;
 
 	//	Degrees to turn per second
 	[SerializeField]
@@ -138,12 +143,23 @@ public class PlayerPhysicsController : MonoBehaviour
 		if (IsMoving)
 		{
 			Debug.Log("Moving");
-			var direction = Quaternion.Euler(0, _moveDirection.CalculateAngle(), 0);
+			var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, _moveDirection), 0);
+
 			var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
 			_rb.MoveRotation(turnDirection.normalized);
-
-			//	TODO: Find a way to clamp the speed
+			//	Check whether the direction needs to be inverted, and bleed off the speed
+			var dot = Vector3.Dot(new Vector3(_moveDirection.x, 0, _moveDirection.y), transform.forward);
+			if (!Mathf.Approximately(dot, 1.0f))
+			{
+				_rb.velocity *= dot;
+			}
 			_rb.AddForce(_acceleration * Time.deltaTime * transform.forward, ForceMode.VelocityChange);
+
+			//	Clamp the speed
+			if (_rb.velocity.magnitude > _maxSpeed)
+			{
+				_rb.velocity = _rb.velocity.normalized * _maxSpeed;
+			}
 		}
 		else
 		{
