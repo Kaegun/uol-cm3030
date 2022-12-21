@@ -27,6 +27,10 @@ public class Compost : MonoBehaviour, IPickUp
             plantPatches[0].AddCompost();
             Destroy(gameObject);
         }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
     }
 
     public void OnPickUp()

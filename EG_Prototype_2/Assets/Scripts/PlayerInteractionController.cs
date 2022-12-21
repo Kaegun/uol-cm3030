@@ -8,6 +8,9 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField]
     private float _interactionRadius = 2.0f;
 
+    [SerializeField]
+    private Transform _heldObjectTransform;
+
     //private bool _interactionPressed;
     //private List<GameObject> _interactableGOsInRadius;
     private GameObject _heldObject = null;    
@@ -93,7 +96,7 @@ public class PlayerInteractionController : MonoBehaviour
         // move held object with the player
         if (_heldObject != null)
         {
-            _heldObject.transform.position = transform.position + new Vector3(0.5f, 0f, 0.5f);
+            _heldObject.transform.position = _heldObjectTransform.position;
         }
     }   
 }

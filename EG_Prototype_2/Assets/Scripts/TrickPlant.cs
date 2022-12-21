@@ -121,6 +121,7 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
         }
         else
         {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             _plantState = PlantState.Inactive;
         }
     }

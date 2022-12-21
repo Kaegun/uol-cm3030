@@ -40,7 +40,7 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 
     public void OnDrop()
     {
-
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     public void OnPickUp()
