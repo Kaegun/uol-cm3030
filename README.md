@@ -11,7 +11,7 @@
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS
-   1. We are using the latest available release of Unity as at the start of the team project. Ideally we should now stick to this version for the entire build cycle, uless we find a compelling reason to upgrade such as a major bug fix, etc.
+   1. We are using the latest available release of Unity as at the start of the team project. Ideally we should now stick to this version for the entire build cycle, unless we find a compelling reason to upgrade such as a major bug fix, etc.
 1. OneDrive - https://1drv.ms/u/s!Aogm4S-HQ3gila0_w627oEFvd0XuQg?e=zkexuJ
    1. We will place all working documents on OneDrive, enabling us to edit Word documents jointly and easily share content that is better suited to a file system rather than a code repository.
 1. Codecks - https://uol-cm3030.codecks.io/decks
