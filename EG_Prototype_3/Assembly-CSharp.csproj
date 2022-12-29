@@ -110,6 +110,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Vegetable_CNSSS.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\StandardCutout.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\BubbleBurst.shader" />
+    <None Include="Assets\Materials\Shaders\CustomLighting.hlsl" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Terrain.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
