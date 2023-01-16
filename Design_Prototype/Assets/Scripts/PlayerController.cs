@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private string _previousAnimation = "Idle03";
     private float currentDirection = 0;
 
-    private void walk(int direction){
+    private void Walk(int direction){
         if(_previousAnimation != "BattleWalkForward")
                 _animator.CrossFade("BattleWalkForward", 0.5f);
 
@@ -52,16 +52,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if(Input.GetKey(KeyCode.W)){
-            walk(0);
+            Walk(0);
         }
         else if(Input.GetKey(KeyCode.D)){
-            walk(90);
+            Walk(90);
         }
         else if(Input.GetKey(KeyCode.A)){
-            walk(270);
+            Walk(270);
         }
         else if(Input.GetKey(KeyCode.S)){
-            walk(180);
+            Walk(180);
         }
         else{
             Debug.Log("Idle02");

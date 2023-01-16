@@ -9,9 +9,6 @@ public class Grass : MonoBehaviour
     [SerializeField]
     public GameObject[] _grasses;
 
-    [SerializeField]
-    public GameObject[] _plants;
-
     void instantiateObjects(int range, GameObject[] arr, float minX, float maxX, float minY, float maxY){
         for (int i=0; i < range; i++) {
             int objectIndex = Random.Range(0,arr.Length);
@@ -25,7 +22,6 @@ public class Grass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //instantiateObjects(10, _plants, -10.0f, 100.0f, -10.0f, 80.0f);
         instantiateObjects(100, _grasses, -40.0f, 60.0f, -40.0f, 100.0f);
 
     }

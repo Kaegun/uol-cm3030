@@ -9,6 +9,14 @@ public class OrbController : MonoBehaviour
 
     private GameObject _spirit;
 
+    void PossessingPlant(){
+            _orb.GetComponent<ParticleSystem>().startColor = new Color(162, 0, 37, 1.0f);
+        }
+
+    void DefaultState(){
+            _orb.GetComponent<ParticleSystem>().startColor = new Color(0, 162, 37, 1.0f);
+    }        
+
     void Update()
     {
         
@@ -19,14 +27,7 @@ public class OrbController : MonoBehaviour
 
         */
 
-        void PossessingPlant(){
-            _orb.GetComponent<ParticleSystem>().startColor = new Color(162, 0, 37, 1.0f);
-        }
-
-        void DefaultState(){
-            _orb.GetComponent<ParticleSystem>().startColor = new Color(0, 162, 37, 1.0f);
-        }        
-    }
+    }  
 
     void Start(){
         DefaultState();
