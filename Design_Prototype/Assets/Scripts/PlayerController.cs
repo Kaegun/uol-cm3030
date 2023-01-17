@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
             ChangeAnim("PickUp");
         }
         else{
-            ChangeAnim("idle01");
+            ChangeAnim("Idle03");
         }
     }
 

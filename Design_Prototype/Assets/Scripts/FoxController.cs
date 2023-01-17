@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//tdo to avoid collisions vith trees etc add area taht the fox movein
+//tdo to avoid collisions with trees etc add an area thatt the fox move in
 
 public class FoxController : MonoBehaviour
 {
@@ -45,18 +45,19 @@ public class FoxController : MonoBehaviour
          (playerDelta.x > 0 ? new Vector3(-15, 0, 15) : new Vector3(15, 0, 15));
         Vector3 delta = target - _fox.transform.position;
 
-        var tooClose = playerDelta.magnitude < 9;
+        var tooClose = playerDelta.magnitude < 15;
         Quaternion targetRotation = Quaternion.FromToRotation(new Vector3(1, 0, 0), new Vector3(-1, 0, 0));
 
-        if (delta.magnitude > 25 || tooClose)
+        if (delta.magnitude > 35 || tooClose)
         {
             delta.Normalize();
             _fox.transform.position += (tooClose ? 20f : 7f) * delta * Time.deltaTime;
             targetRotation = Quaternion.FromToRotation(new Vector3(0, 0, 1), delta);
             if (tooClose)
             {
-                ChangeAnim("Fox_Somersault_InPlace");
-                dontChangeAnimationFor = 1f;
+                ChangeAnim("Fox_Jump_Pivot_InPlace");
+                if(dontChangeAnimationFor<=0)
+                    dontChangeAnimationFor = 3f;
             }
             else
                 ChangeAnim("Fox_Walk_InPlace 0");
