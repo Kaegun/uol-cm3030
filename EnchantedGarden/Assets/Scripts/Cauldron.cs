@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Cauldron : MonoBehaviour
@@ -15,6 +16,10 @@ public class Cauldron : MonoBehaviour
     private int _maxUses = 5;
     private int _currentUses;
 
+    [SerializeField]
+    private float _combineDuration;
+    private float _combineProgress;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +34,26 @@ public class Cauldron : MonoBehaviour
         if (_currentFuel < 0 && _fireParticles.activeSelf)
         {
             _fireParticles.SetActive(false);
+        }
+
+        var combinables = Physics.OverlapSphere(transform.position, 2f).
+            Where(c => c.GetComponent<ICombinable>() != null && c.GetComponent<ICombinable>().CanBeCombined()).
+            Select(c => c.GetComponent<ICombinable>()).
+            ToList();       
+
+        if (combinables.Count > 0 && CanUseCauldron())
+        {
+            _combineProgress += Time.deltaTime;
+            if (_combineProgress >= _combineDuration)
+            {
+                UsePotion();
+                combinables[0].OnCombine();
+                _combineProgress = 0;
+            }
+        }
+        else
+        {
+            _combineProgress = 0;
         }
     }
 

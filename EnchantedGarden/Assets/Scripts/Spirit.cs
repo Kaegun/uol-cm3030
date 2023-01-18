@@ -45,7 +45,7 @@ public class Spirit : MonoBehaviour, IInteractable
         {
             case SpiritState.Searching:
                 // random movement for testing purposes
-                _moveTime += Time.deltaTime;                
+                _moveTime += Time.deltaTime;
                 if (_moveTime >= Random.Range(2.5f, 4f))
                 {
                     if (Vector3.Distance(transform.position, Vector3.zero) > 20)
@@ -73,36 +73,21 @@ public class Spirit : MonoBehaviour, IInteractable
                     if (plants[0].GetComponent<Plant>() != null)
                     {
                         var plant = plants[0].GetComponent<Plant>();
-                        if (plant.PlantPatch() != null && plant.PlantPatch().ContainsCompost())
-                        {
-                            Repel(plant.transform.position);
-                            plant.PlantPatch().RemoveCompost();
-                        }
-                        else
-                        {
-                            _possessedPlant = plant;
-                            _possessedPlant.StartPossession();
-                            transform.position = _possessedPlant.transform.position;
-                            _spiritState = SpiritState.StartingPossession;
-                            _spiritBody.SetActive(false);
-                        }
+                        _possessedPlant = plant;
+                        _possessedPlant.StartPossession();
+                        transform.position = _possessedPlant.transform.position;
+                        _spiritState = SpiritState.StartingPossession;
+                        _spiritBody.SetActive(false);
+
                     }
                     // handle trick plants
                     else if (plants[0].GetComponent<TrickPlant>() != null)
                     {
                         var trickPlant = plants[0].GetComponent<TrickPlant>();
-                        if (trickPlant.PlantPatch() != null && trickPlant.PlantPatch().ContainsCompost())
-                        {
-                            Repel(trickPlant.transform.position);
-                            trickPlant.PlantPatch().RemoveCompost();
-                        }
-                        else
-                        {
-                            trickPlant.TrapSpirit(this);
-                            _spiritBody.SetActive(false);
-                            _spiritState = SpiritState.Trapped;
-                            transform.position = trickPlant.transform.position;
-                        }
+                        trickPlant.TrapSpirit(this);
+                        _spiritBody.SetActive(false);
+                        _spiritState = SpiritState.Trapped;
+                        transform.position = trickPlant.transform.position;
                     }
                 }
                 break;
