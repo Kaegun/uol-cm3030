@@ -43,7 +43,6 @@ public class AudioController : MonoBehaviour {
 
     // Singleton instance
     public static AudioController GetInstance() {
-        Debug.Log("GET!" + _instance + "!");
         return _instance;
     }
 
