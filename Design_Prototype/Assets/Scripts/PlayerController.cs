@@ -61,8 +61,11 @@ public class PlayerController : MonoBehaviour
                 dontChangeAnimationFor = 0.5f;
         }
 
-        else if(Input.GetKey(KeyCode.Return)){
+        else if(Input.GetKeyDown(KeyCode.Return)){
             ChangeAnim("PickUp");
+            if(dontChangeAnimationFor<=0)
+                dontChangeAnimationFor = 1f;
+            AudioController.GetInstance().PlayPickUp(); 
         }
         else{
             ChangeAnim("Idle03");

@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioController : MonoBehaviour
-{
+public class AudioController : MonoBehaviour {
+    
+    private static AudioController _instance;
 
     private AudioSource _backgroundSource;
 
     private AudioSource _otherSoundsSource;
-
-    private static AudioController _instance;
 
     // AudioClips
 
@@ -31,6 +30,16 @@ public class AudioController : MonoBehaviour
     [SerializeField]
     private AudioClip _possessingPlantSpirit;
 
+    [SerializeField]
+    private AudioClip _pickUp;
+
+    [SerializeField]
+    private AudioClip _putDown;
+
+    [SerializeField]
+    private AudioClip _caldronCombination;
+
+    // Singleton instance
     public static AudioController GetInstance() {
         return _instance;
     }
@@ -39,34 +48,48 @@ public class AudioController : MonoBehaviour
     void Start()
     {
         _instance = this;
+        
         var sources = GetComponents<AudioSource>();
+        
         _backgroundSource = sources[0];
+        _backgroundSource.volume = 0.7f;
         _otherSoundsSource = sources[1];
-        ChangeBackgroundMusic(1);
-        PlaySpawningSpirit();
+        
+        ChangeBackgroundMusic(1);;
     }
 
-    void ChangeBackgroundMusic(int level) {
+    public void ChangeBackgroundMusic(int level) {
         _backgroundSource.clip =  _backgroundSounds[level-1];
         _backgroundSource.Play();
     }
 
-    void PlayPossesionPlant() {
+    public void PlayPossesionPlant() {
         _otherSoundsSource.PlayOneShot(_possessionPlant);
     }
 
-    void PlayDispossesionPlant() {
+    public  void PlayDispossesionPlant() {
         _otherSoundsSource.PlayOneShot(_dispossessionPlant);
     }
 
-    void PlaySpawningSpirit() {
+    public void PlaySpawningSpirit() {
         _otherSoundsSource.PlayOneShot(_spawningSpirit);
     }
 
-    void PossessingPlantSpirit() {
+    public void PlayPossessingPlantSpirit() {
         _otherSoundsSource.PlayOneShot( _possessingPlantSpirit);
     }
 
+    public  void PlayPickUp() {
+        _otherSoundsSource.PlayOneShot( _pickUp);
+    }
+
+    public void PlayPutDown() {
+        _otherSoundsSource.PlayOneShot( _putDown);
+    }
+
+    public void PlayCaldronCombination(){
+        _otherSoundsSource.PlayOneShot(_caldronCombination);
+    }
 
     // Update is called once per frame
     void Update()
@@ -80,12 +103,24 @@ public class AudioController : MonoBehaviour
             PlayPossesionPlant();
         }
 
-         else if(Input.GetKeyDown(KeyCode.A)){
+        else if(Input.GetKeyDown(KeyCode.A)){
             PlaySpawningSpirit();
         }
 
-       else if(Input.GetKeyDown(KeyCode.D)){
-          PossessingPlantSpirit(); 
+        else if(Input.GetKeyDown(KeyCode.D)){
+            PlayPossessingPlantSpirit(); 
+        }
+
+        else if(Input.GetKeyDown(KeyCode.F)){
+            PlayPickUp(); 
+        }
+
+        else if(Input.GetKeyDown(KeyCode.G)){
+            PlayPutDown(); 
+        }
+
+         else if(Input.GetKeyDown(KeyCode.H)){
+            PlayCaldronCombination(); 
         }
     }
 }
