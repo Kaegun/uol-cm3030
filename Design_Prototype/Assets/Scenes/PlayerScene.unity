@@ -2407,16 +2407,16 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 40a071b09046cc94f860d368fe9986e7, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -2505,11 +2505,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492112b54a284954b9f24b0fab8c5171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 963194229}
   _backgroundSounds:
   - {fileID: 8300000, guid: 40a071b09046cc94f860d368fe9986e7, type: 3}
   - {fileID: 8300000, guid: 914a2015725e4994cb303b571b14e1c8, type: 3}
   - {fileID: 8300000, guid: a0471b56b050bba469981929498c190a, type: 3}
+  _possessionPlant: {fileID: 8300000, guid: 7e679e31f3574ca4b9133bbb6c1c2251, type: 3}
+  _dispossessionPlant: {fileID: 8300000, guid: 7056dae9ab0e16141bba67c4c453686d, type: 3}
+  _spawningSpirit: {fileID: 8300000, guid: 34f9cbd28a9740349b6cc2f5e280dda3, type: 3}
+  _possessingPlantSpirit: {fileID: 8300000, guid: adcac75087a17704ca6c0c3b15bc3aa5,
+    type: 3}
 --- !u!82 &963194231
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2529,7 +2533,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0

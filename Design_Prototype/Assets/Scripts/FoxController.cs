@@ -36,6 +36,11 @@ public class FoxController : MonoBehaviour
 
     }
 
+    private bool isPositionAllowed(Vector2 position)
+    {
+        return (position - new Vector2(75, -22)).magnitude < 40;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -49,25 +54,36 @@ public class FoxController : MonoBehaviour
         Quaternion targetRotation = Quaternion.FromToRotation(new Vector3(1, 0, 0), new Vector3(-1, 0, 0));
 
         if (delta.magnitude > 35 || tooClose)
+        
         {
             delta.Normalize();
-            _fox.transform.position += (tooClose ? 20f : 7f) * delta * Time.deltaTime;
+            Vector2 newPosition = _fox.transform.position + (tooClose ? 20f : 7f) * delta * Time.deltaTime;
+            bool canMove = isPositionAllowed(newPosition);
+            if (canMove)
+                _fox.transform.position = newPosition;
             targetRotation = Quaternion.FromToRotation(new Vector3(0, 0, 1), delta);
-            if (tooClose)
+            if (canMove)
             {
-                ChangeAnim("Fox_Jump_Pivot_InPlace");
-                if(dontChangeAnimationFor<=0)
-                    dontChangeAnimationFor = 3f;
+                if (tooClose)
+                {
+                    ChangeAnim("Fox_Jump_Pivot_InPlace");
+                    if (dontChangeAnimationFor <= 0)
+                        dontChangeAnimationFor = 3f;
+                }
+                else
+                    ChangeAnim("Fox_Walk_InPlace 0");
             }
             else
-                ChangeAnim("Fox_Walk_InPlace 0");
+            {
+                ChangeAnim("Fox_Sit_Idle_Break");
+            }
         }
         else
         {
             ChangeAnim("Fox_Sit_Idle_Break");
         }
 
-        _fox.transform.eulerAngles = new Vector3(0,_fox.transform.eulerAngles.y,0);
+        _fox.transform.eulerAngles = new Vector3(0, _fox.transform.eulerAngles.y, 0);
         _fox.transform.rotation = Quaternion.RotateTowards(_fox.transform.rotation, targetRotation, Time.deltaTime * 360f * 0.5f);
 
     }
