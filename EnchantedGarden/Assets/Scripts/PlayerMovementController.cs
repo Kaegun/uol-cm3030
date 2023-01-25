@@ -18,7 +18,7 @@ public class PlayerMovementController : MonoBehaviour
 	private float _maxAnimationSpeed = 4.0f;
 
 	[SerializeField]
-	private InputEventScriptableObject _inputEventHandler;
+	private ScriptableInputEventHandler _inputEventHandler;
 
 	private Vector2 _moveDirection = Vector2.zero;
 	private Rigidbody _rb;
@@ -27,19 +27,6 @@ public class PlayerMovementController : MonoBehaviour
 	private bool _interactionPressed;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
-
-	//public void OnMove(InputAction.CallbackContext context)
-	//{
-	//	switch (context.phase)
-	//	{
-	//		case InputActionPhase.Started:
-	//			break;
-	//		case InputActionPhase.Performed:
-	//		case InputActionPhase.Canceled:
-	//			_moveDirection = context.ReadValue<Vector2>();
-	//			break;
-	//	}
-	//}
 
 	// Start is called before the first frame update
 	private void Start()

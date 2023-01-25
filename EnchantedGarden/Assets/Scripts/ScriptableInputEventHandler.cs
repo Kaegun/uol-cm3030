@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "Scriptable/Events/InputEvents")]
-public class InputEventScriptableObject : ScriptableObject
+public class ScriptableInputEventHandler : ScriptableEventHandler
 {
 	public event EventHandler<float> InteractionPressed;
 	public event EventHandler<float> InteractionReleased;
@@ -48,16 +48,5 @@ public class InputEventScriptableObject : ScriptableObject
 			return true;
 		}
 		return false;
-	}
-
-	private void ExecuteEvent<T>(EventHandler<T> handler, T e)
-	{
-		if (handler != null)
-		{
-			foreach (var evt in handler.GetInvocationList())
-			{
-				evt.DynamicInvoke(this, e);
-			}
-		}
 	}
 }

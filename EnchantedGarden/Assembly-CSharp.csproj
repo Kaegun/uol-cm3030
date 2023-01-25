@@ -72,13 +72,14 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\IPickUp.cs" />
-    <Compile Include="Assets\Scripts\InputEventScriptableObject.cs" />
     <Compile Include="Assets\Scripts\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
     <Compile Include="Assets\Scripts\PlantPatch.cs" />
     <Compile Include="Assets\Scripts\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\PlayerMovementController.cs" />
+    <Compile Include="Assets\Scripts\ScriptableEventHandler.cs" />
+    <Compile Include="Assets\Scripts\ScriptableInputEventHandler.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawnPoint.cs" />
