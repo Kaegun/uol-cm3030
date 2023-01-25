@@ -13,38 +13,58 @@ public class PlayerMovementController : MonoBehaviour
 	[SerializeField]
 	private float _turnSpeed = 90.0f;
 
-	//	Should probably not be here
+	//	Maximum speed set on the animator
 	[SerializeField]
 	private float _maxAnimationSpeed = 4.0f;
+
+	[SerializeField]
+	private InputEventScriptableObject _inputEventHandler;
 
 	private Vector2 _moveDirection = Vector2.zero;
 	private Rigidbody _rb;
 	private Animator _animator;
 	private float _movementSpeed;
-
-	[SerializeField]
-	private GameObject _playerModel;
+	private bool _interactionPressed;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
-	public void OnMove(InputAction.CallbackContext context)
-	{
-		switch (context.phase)
-		{
-			case InputActionPhase.Started:
-				break;
-			case InputActionPhase.Performed:
-			case InputActionPhase.Canceled:
-				_moveDirection = context.ReadValue<Vector2>();
-				break;
-		}
-	}
+	//public void OnMove(InputAction.CallbackContext context)
+	//{
+	//	switch (context.phase)
+	//	{
+	//		case InputActionPhase.Started:
+	//			break;
+	//		case InputActionPhase.Performed:
+	//		case InputActionPhase.Canceled:
+	//			_moveDirection = context.ReadValue<Vector2>();
+	//			break;
+	//	}
+	//}
 
 	// Start is called before the first frame update
 	private void Start()
 	{
 		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
+
+		_inputEventHandler.Movement += OnMovement;
+		_inputEventHandler.InteractionPressed += OnInteractionPressed;
+		_inputEventHandler.InteractionReleased += OnInteractionReleased;
+	}
+
+	private void OnInteractionPressed(object sender, float e)
+	{
+		_interactionPressed = e > 0.0;
+	}
+
+	private void OnInteractionReleased(object sender, float e)
+	{
+		_interactionPressed = e > 0.0;
+	}
+
+	private void OnMovement(object sender, Vector2 e)
+	{
+		_moveDirection = e;
 	}
 
 	// Update is called once per frame
@@ -63,11 +83,6 @@ public class PlayerMovementController : MonoBehaviour
 			_movementSpeed = 0.0f;
 			_animator.SetFloat("ForwardSpeed", _movementSpeed);
 		}
-
-		//transform.Translate(_maxSpeed * Time.deltaTime * new Vector3(_moveDirection.x, 0, _moveDirection.y));
-
-		//	TODO: Rotate the character relative to its axis in the direction of the movement
-		//		transform.Rotate(_turnSpeed * Time.deltaTime * new Vector3(0, _moveDirection.x, 0));        
 	}
 
 	private void FixedUpdate()
@@ -82,7 +97,9 @@ public class PlayerMovementController : MonoBehaviour
 			// Rotate player model in direction of movement
 			var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, _moveDirection), 0);
 			var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
-			_playerModel.transform.rotation = turnDirection.normalized;
+			//_playerModel.transform.rotation = turnDirection.normalized;
+			transform.rotation = turnDirection.normalized;
+
 			_rb.MoveRotation(turnDirection.normalized);
 
 			// Apply velocity change to rigidbody in direction of movement

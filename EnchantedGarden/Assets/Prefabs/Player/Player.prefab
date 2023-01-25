@@ -239,6 +239,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1182360635843861785}
     m_Modifications:
+    - target: {fileID: 1141652980046948, guid: 2577b0e612b44814bb27de1a7bf3ad97, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1248815240492774, guid: 2577b0e612b44814bb27de1a7bf3ad97, type: 3}
       propertyPath: m_Name
       value: PolyArtWizardStandardMat
