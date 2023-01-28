@@ -65,6 +65,7 @@ public class PlayerInteractionController : MonoBehaviour
 
                 if (pickUps.Count > 0)
                 {
+                    AudioController.GetInstance().PlayPickUp();
                     _heldObject = pickUps[0].GetComponent<IPickUp>().PickUpObject();
                     _heldObject.GetComponent<IPickUp>().OnPickUp();
                 }
