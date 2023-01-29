@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IPickUp
 {
-    bool CanBePickedUp();
-    bool CanBeDropped();
-    GameObject PickUpObject();
-    void OnPickUp();
-    void OnDrop();
+	//	TODO: These can be properties?
+	bool CanBePickedUp();
+	bool CanBeDropped();
+	GameObject PickUpObject();
+	void OnPickUp();
+	void OnDrop();
 }
