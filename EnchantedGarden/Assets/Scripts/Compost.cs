@@ -3,15 +3,9 @@ using UnityEngine;
 
 public class Compost : MonoBehaviour, IPickUp
 {
-	public bool CanBeDropped()
-	{
-		return true;
-	}
+	public bool CanBeDropped => true;
 
-	public bool CanBePickedUp()
-	{
-		return true;
-	}
+	public bool CanBePickedUp => true;
 
 	public void OnDrop()
 	{
@@ -33,10 +27,7 @@ public class Compost : MonoBehaviour, IPickUp
 		}
 	}
 
-	public void OnPickUp()
-	{
-
-	}
+	public void OnPickUp() { }
 
 	public GameObject PickUpObject()
 	{

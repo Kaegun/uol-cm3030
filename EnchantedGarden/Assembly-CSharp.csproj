@@ -61,20 +61,22 @@
     <Compile Include="Assets\Imported\GUI PRO Kit - Fantasy RPG\Scripts\PanelFantasyRPG.cs" />
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\MouseLook.cs" />
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\AudioController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\CinemachineInputProviderEx.cs" />
     <Compile Include="Assets\Scripts\Cauldron.cs" />
+    <Compile Include="Assets\Scripts\CinemachineInputProviderEx.cs" />
+    <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
+    <Compile Include="Assets\Scripts\Common\DrawGizmoText.cs" />
+    <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
+    <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
-    <Compile Include="Assets\Scripts\DayNightSlider.cs" />
-    <Compile Include="Assets\Scripts\DrawGizmoSphere.cs" />
-    <Compile Include="Assets\Scripts\DrawGizmoText.cs" />
     <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Herb.cs" />
-    <Compile Include="Assets\Scripts\ICombinable.cs" />
-    <Compile Include="Assets\Scripts\IInteractable.cs" />
-    <Compile Include="Assets\Scripts\IPickUp.cs" />
+    <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
+    <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
+    <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
     <Compile Include="Assets\Scripts\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Log.cs" />
     <Compile Include="Assets\Scripts\MoveTowardsCentre.cs" />
@@ -82,11 +84,12 @@
     <Compile Include="Assets\Scripts\PickUpStore.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
     <Compile Include="Assets\Scripts\PlantPatch.cs" />
-    <Compile Include="Assets\Scripts\PlayerInteractionController.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovementController.cs" />
-    <Compile Include="Assets\Scripts\ScriptableEventHandler.cs" />
-    <Compile Include="Assets\Scripts\ScriptableInputEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerInteractionController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMovementController.cs" />
     <Compile Include="Assets\Scripts\ProgressDots.cs" />
+    <Compile Include="Assets\Scripts\Scriptable\ScriptableEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Scriptable\ScriptableInputEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Scriptable\ScriptableLevelDefinition.cs" />
     <Compile Include="Assets\Scripts\Spade.cs" />
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritSineMovement.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="Assets\Scripts\TestSunSlider.cs" />
     <Compile Include="Assets\Scripts\TrickPlant.cs" />
     <Compile Include="Assets\Scripts\TrickPlantBag.cs" />
-    <Compile Include="Assets\Scripts\Utility.cs" />
+    <Compile Include="Assets\Scripts\UI\DayNightSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Firefly.shader" />
@@ -111,6 +114,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\CollectShadowWaterCustom.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\WaterX.shader" />
+    <None Include="Assets\Imported\Sounds\Magical Music Album - 040618\Notes.txt" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Plants_Shader.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Rock.shader" />
     <None Include="Assets\Imported\WizardPolyArt\Shader\PolyArtMaskTint.shader" />

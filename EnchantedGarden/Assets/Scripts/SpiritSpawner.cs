@@ -6,51 +6,43 @@ public class SpiritSpawner : MonoBehaviour
 	[SerializeField]
 	GameObject _spirit;
 
-	[SerializeField]
-	private SpiritSpawnPoint[] _spawnPoints;
+	//[SerializeField]
+	//private SpiritSpawnPoint[] _spawnPoints;
 
-	//  TODO: Do not use embedded classes
-	//  TODO: This is a good use case for a scriptable object -> One per level
-	[System.Serializable]
-	// Class rather than struct to allow mutability when stored in a queue
-	class Wave
-	{
-		// number of spirits spawned in the wave
-		public int Count;
-
-		// delay from previous wave to this wave
-		public float Delay;
-	}
+	private Queue<SpiritWave> _waveQueue;
 
 	[SerializeField]
-	private Wave[] _waveArray;
+	private ScriptableLevelDefinition _level;
 
-	private Queue<Wave> _waveQueue;
+	[SerializeField]
+	private Transform[] _spawnPoints;
+
+	private float _nextWave = 0;
 
 	// Start is called before the first frame update
-	void Start()
+	private void Start()
 	{
-		_waveQueue = new Queue<Wave>(_waveArray);
+		_waveQueue = new Queue<SpiritWave>(_level.Waves);
+		_nextWave = NextWaveDelay();
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		if (_waveQueue.Count > 0)
 		{
-			Wave wave = _waveQueue.Peek();
-			wave.Delay -= Time.deltaTime;
-
-			if (wave.Delay <= 0)
+			var wave = _waveQueue.Peek();
+			_nextWave += Time.deltaTime;
+			if (_nextWave > wave.Delay)
 			{
 				SpawnWave(_waveQueue.Dequeue());
 				// account for overspill of delay in previous wave
-				_waveQueue.Peek().Delay += wave.Delay;
+				_nextWave = NextWaveDelay();
 			}
 		}
 	}
 
-	void SpawnWave(Wave wave)
+	private void SpawnWave(SpiritWave wave)
 	{
 		for (int i = 0; i < wave.Count; i++)
 		{
@@ -58,4 +50,6 @@ public class SpiritSpawner : MonoBehaviour
 			Instantiate(_spirit, _spawnPoints[rand].transform.position, Quaternion.identity);
 		}
 	}
+
+	private float NextWaveDelay() => _waveQueue.Count > 0 ? _waveQueue.Peek().Delay : 0.0f;
 }

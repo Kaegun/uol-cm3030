@@ -29,6 +29,54 @@ public class Spirit : MonoBehaviour, IInteractable
 	private float _repelDuration;
 	private float _repelProgress;
 
+	public bool CanBeBanished()
+	{
+		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+	}
+
+	public void Banish()
+	{
+		if (_possessedPlant != null)
+		{
+			_possessedPlant.Dispossess();
+		}
+		GameManager.Instance.ScorePoints(50);
+		Destroy(gameObject);
+	}
+
+	public bool CanBeRepelled()
+	{
+		return _spiritState == SpiritState.Searching || _spiritState == SpiritState.Repelled;
+	}
+
+	public void Repel(Vector3 from)
+	{
+		_spiritState = SpiritState.Repelled;
+		_repelProgress = 0;
+		var direction = transform.position - from;
+		direction.y = 0;
+		_moveDirection = direction.normalized;
+	}
+
+	public bool PossessingPlant()
+	{
+		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+	}
+
+	public void StealPossessedPlant()
+	{
+		GameManager.Instance.ScorePoints(-100);
+		Destroy(_possessedPlant.gameObject);
+		Destroy(gameObject);
+	}
+
+	public bool CanBeInteractedWith => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+
+	public void OnPlayerInteract(PlayerInteractionController player)
+	{
+		Banish();
+	}
+
 	//  Start is called before the first frame update
 	private void Start()
 	{
@@ -46,25 +94,22 @@ public class Spirit : MonoBehaviour, IInteractable
 				_moveTime += Time.deltaTime;
 				if (_moveTime >= Random.Range(2.5f, 4f))
 				{
-					if (Vector3.Distance(transform.position, Vector3.zero) > 20)
-					{
-						_moveDirection = transform.position.normalized * -1;
-					}
-					else
-					{
-						_moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-					}
+					_moveDirection = Vector3.Distance(transform.position, Vector3.zero) > 20
+						? transform.position.normalized * -1
+						: new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+
 					_moveDirection.y = 0;
 					_moveDirection = _moveDirection.normalized;
 					_moveTime = 0;
-
 				}
+
 				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
 
 				//  check for nearby possessable plants and start to possess one
-				var plants = Physics.OverlapSphere(transform.position, 2f).
-					Where(c => (c.GetComponent<Plant>() != null && c.GetComponent<Plant>().CanBePossessed()) || (c.GetComponent<TrickPlant>() != null && c.GetComponent<TrickPlant>().CanTrapSpirit())).
-					ToList();
+				var plants = Physics.OverlapSphere(transform.position, 2f)
+					.Where(c => (c.GetComponent<Plant>() != null && c.GetComponent<Plant>().CanBePossessed()) || (c.GetComponent<TrickPlant>() != null && c.GetComponent<TrickPlant>().CanTrapSpirit))
+					.ToList();
+
 				if (plants.Count > 0)
 				{
 					//  handle normal plants
@@ -113,56 +158,5 @@ public class Spirit : MonoBehaviour, IInteractable
 			default:
 				break;
 		}
-	}
-
-	public bool CanBeBanished()
-	{
-		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
-	}
-
-	public void Banish()
-	{
-		if (_possessedPlant != null)
-		{
-			_possessedPlant.Dispossess();
-		}
-		GameManager.instance.ScorePoints(50);
-		Destroy(gameObject);
-	}
-
-	public bool CanBeRepelled()
-	{
-		return _spiritState == SpiritState.Searching || _spiritState == SpiritState.Repelled;
-	}
-
-	public void Repel(Vector3 from)
-	{
-		_spiritState = SpiritState.Repelled;
-		_repelProgress = 0;
-		var direction = transform.position - from;
-		direction.y = 0;
-		_moveDirection = direction.normalized;
-	}
-
-	public bool PossessingPlant()
-	{
-		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
-	}
-
-	public void StealPossessedPlant()
-	{
-		GameManager.instance.ScorePoints(-100);
-		Destroy(_possessedPlant.gameObject);
-		Destroy(gameObject);
-	}
-
-	public bool CanBeInteractedWith()
-	{
-		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
-	}
-
-	public void OnPlayerInteract(PlayerInteractionController player)
-	{
-		Banish();
 	}
 }

@@ -3,15 +3,9 @@ using UnityEngine;
 
 public class Herb : MonoBehaviour, IPickUp
 {
-	public bool CanBeDropped()
-	{
-		return true;
-	}
+	public bool CanBeDropped => true;
 
-	public bool CanBePickedUp()
-	{
-		return true;
-	}
+	public bool CanBePickedUp => true;
 
 	public void OnDrop()
 	{
@@ -31,25 +25,10 @@ public class Herb : MonoBehaviour, IPickUp
 		}
 	}
 
-	public void OnPickUp()
-	{
-
-	}
+	public void OnPickUp() { }
 
 	public GameObject PickUpObject()
 	{
 		return gameObject;
-	}
-
-	//  Start is called before the first frame update
-	private void Start()
-	{
-
-	}
-
-	//  Update is called once per frame
-	private void Update()
-	{
-
 	}
 }

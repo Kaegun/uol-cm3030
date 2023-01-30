@@ -15,6 +15,23 @@ public class CompostBin : MonoBehaviour, IPickUp
 	[SerializeField]
 	private Transform _spawnTransform;
 
+	//	TODO: Should this be accessed from outside?
+	public bool OnCooldown => _cooldownProgress < _cooldownDuration;
+
+	public bool CanBePickedUp => !OnCooldown;
+
+	public bool CanBeDropped => true;
+
+	public GameObject PickUpObject()
+	{
+		_cooldownProgress = 0;
+		return Instantiate(_compost, _spawnTransform.position, Quaternion.identity).gameObject;
+	}
+
+	public void OnPickUp() { }
+
+	public void OnDrop() { }
+
 	//	Start is called before the first frame update
 	private void Start()
 	{
@@ -24,7 +41,7 @@ public class CompostBin : MonoBehaviour, IPickUp
 	//	Update is called once per frame
 	private void Update()
 	{
-		if (OnCooldown())
+		if (OnCooldown)
 		{
 			_cooldownProgress += Time.deltaTime;
 			if (_cooldownProgress > _cooldownDuration)
@@ -36,32 +53,7 @@ public class CompostBin : MonoBehaviour, IPickUp
 		//	Alter opacity of compost in compost bin to signify cooldown
 		var color = _compostMesh.material.color;
 		//	TODO: Can lerp this color for a smoother transition?
-		color.a = OnCooldown() ? 0 : 1;
+		color.a = OnCooldown ? 0 : 1;
 		_compostMesh.material.color = color;
 	}
-
-	public bool OnCooldown()
-	{
-		return _cooldownProgress < _cooldownDuration;
-	}
-
-	public bool CanBePickedUp()
-	{
-		return !OnCooldown();
-	}
-
-	public bool CanBeDropped()
-	{
-		return true;
-	}
-
-	public GameObject PickUpObject()
-	{
-		_cooldownProgress = 0;
-		return Instantiate(_compost, _spawnTransform.position, Quaternion.identity).gameObject;
-	}
-
-	public void OnPickUp() { }
-
-	public void OnDrop() { }
 }

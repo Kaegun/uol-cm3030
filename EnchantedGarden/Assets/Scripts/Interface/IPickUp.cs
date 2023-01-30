@@ -2,9 +2,8 @@
 
 public interface IPickUp
 {
-	//	TODO: These can be properties?
-	bool CanBePickedUp();
-	bool CanBeDropped();
+	bool CanBePickedUp { get; }
+	bool CanBeDropped { get; }
 	GameObject PickUpObject();
 	void OnPickUp();
 	void OnDrop();
