@@ -44,4 +44,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spirit: {fileID: 7931279852990355854, guid: a46afc212a9efb44aac9291be18046ed, type: 3}
-  _level: {fileID: 0}
+  _level: {fileID: 11400000, guid: 53f78de3cb19c074d86dfcc544dba116, type: 2}
+  _spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}

@@ -138,8 +138,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _plantState: 0
+  _unplantedFactor: 10
   _possessionThreshold: 0
   _plantMaterial: {fileID: 2100000, guid: 6e078c6d6a989224d81be2a1e2492d04, type: 2}
   _spiritMaterial: {fileID: 2100000, guid: 49756bc0217032a44a152d3131240199, type: 2}
   _mesh: {fileID: 7344565796665904457}
+  _planted: 0
   _plantPatch: {fileID: 0}
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
