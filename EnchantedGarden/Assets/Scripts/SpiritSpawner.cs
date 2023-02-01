@@ -1,60 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpiritSpawner : MonoBehaviour
 {
-    [SerializeField]
-    GameObject _spirit;
+	[SerializeField]
+	GameObject _spirit;
 
-    [SerializeField]
-    private SpiritSpawnPoint[] _spawnPoints;
+	//[SerializeField]
+	//private SpiritSpawnPoint[] _spawnPoints;
 
-    [System.Serializable]
-    // Class rather than struct to allow mutability when stored in a queue
-    class Wave
-    {
-        // number of spirits spawned in the wave
-        public int Count;
+	private Queue<SpiritWave> _waveQueue;
 
-        // delay from previous wave to this wave
-        public float Delay;
-    }
+	[SerializeField]
+	private ScriptableLevelDefinition _level;
 
-    [SerializeField]
-    private Wave[] _waveArray;
+	[SerializeField]
+	private Transform[] _spawnPoints;
 
-    private Queue<Wave> _waveQueue;
+	private float _nextWave = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _waveQueue = new Queue<Wave>(_waveArray);
-    }
+	// Start is called before the first frame update
+	private void Start()
+	{
+		_waveQueue = new Queue<SpiritWave>(_level.Waves);
+		_nextWave = NextWaveDelay();
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (_waveQueue.Count > 0)
-        {
-            Wave wave = _waveQueue.Peek();
-            wave.Delay -= Time.deltaTime;
+	// Update is called once per frame
+	private void Update()
+	{
+		if (_waveQueue.Count > 0)
+		{
+			var wave = _waveQueue.Peek();
+			_nextWave += Time.deltaTime;
+			if (_nextWave > wave.Delay)
+			{
+				SpawnWave(_waveQueue.Dequeue());
+				// account for overspill of delay in previous wave
+				_nextWave = NextWaveDelay();
+			}
+		}
+	}
 
-            if (wave.Delay <= 0)
-            {
-                SpawnWave(_waveQueue.Dequeue());
-                // account for overspill of delay in previous wave
-                _waveQueue.Peek().Delay += wave.Delay;
-            }
-        }        
-    }
+	private void SpawnWave(SpiritWave wave)
+	{
+		for (int i = 0; i < wave.Count; i++)
+		{
+			int rand = Random.Range(0, _spawnPoints.Length);
+			Instantiate(_spirit, _spawnPoints[rand].transform.position, Quaternion.identity);
+		}
+	}
 
-    void SpawnWave(Wave wave)
-    {
-        for (int i = 0; i < wave.Count; i++)
-        {
-            int rand = Random.Range(0, _spawnPoints.Length);
-            Instantiate(_spirit, _spawnPoints[rand].transform.position, Quaternion.identity);
-        }
-    }   
+	private float NextWaveDelay() => _waveQueue.Count > 0 ? _waveQueue.Peek().Delay : 0.0f;
 }

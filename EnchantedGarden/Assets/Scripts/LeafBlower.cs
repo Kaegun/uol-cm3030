@@ -1,75 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 {
-    [SerializeField]
-    private float _cooldownDuration;
+	[SerializeField]
+	private float _cooldownDuration;
 
-    private float _cooldownProgress;
+	private float _cooldownProgress;
 
-    [SerializeField]
-    private float _range;
+	[SerializeField]
+	private float _range;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	public bool CanBeDropped => true;
 
-    }
+	public bool CanBePickedUp => true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (_cooldownProgress > 0)
-        {
-            _cooldownProgress -= Time.deltaTime;
-        }
-    }
+	public void OnDrop()
+	{
+		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+	}
 
-    public bool CanBeDropped()
-    {
-        return true;
-    }
+	public void OnPickUp() { }
 
-    public bool CanBePickedUp()
-    {
-        return true;
-    }
+	public GameObject PickUpObject()
+	{
+		return gameObject;
+	}
 
-    public void OnDrop()
-    {
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-    }
+	public bool CanBeInteractedWith => _cooldownProgress <= 0;
 
-    public void OnPickUp()
-    {
+	public void OnPlayerInteract(PlayerInteractionController player)
+	{
+		var spirits = Physics.OverlapSphere(transform.position, _range).
+			Where(s => (s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled())).
+			Select(s => s.GetComponent<Spirit>()).
+			ToList();
 
-    }
+		foreach (var spirit in spirits)
+		{
+			spirit.Repel(transform.position);
+		}
 
-    public GameObject PickUpObject()
-    {
-        return gameObject;
-    }
+		_cooldownProgress = _cooldownDuration;
+	}
 
-    public bool CanBeInteractedWith()
-    {
-        return _cooldownProgress <= 0;
-    }
-
-    public void OnPlayerInteract(PlayerInteractionController player)
-    {
-        var spirits = Physics.OverlapSphere(transform.position, _range).
-            Where(s => (s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled())).
-            Select(s => s.GetComponent<Spirit>()).
-            ToList();
-        foreach (var spirit in spirits)
-        {
-            spirit.Repel(transform.position);
-        }
-        _cooldownProgress = _cooldownDuration;
-    }
-
-
+	// Update is called once per frame
+	private void Update()
+	{
+		if (_cooldownProgress > 0)
+		{
+			_cooldownProgress -= Time.deltaTime;
+		}
+	}
 }
