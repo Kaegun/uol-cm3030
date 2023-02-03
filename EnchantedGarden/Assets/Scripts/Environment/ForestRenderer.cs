@@ -37,7 +37,7 @@ public class ForestRenderer : MonoBehaviour
 		while (i < number)
 		{
 			var pos = new Vector3(Random.Range(-x / 2, x / 2), 0, Random.Range(-z / 2, z / 2));
-			if (positions.Where(p => (pos - p).sqrMagnitude < treeArea).Count() == 0 && guard++ < 5)
+			if (positions.Where(p => (pos - p).sqrMagnitude / 4 < treeArea / 4).Count() == 0 && guard++ < 5)
 			{
 				Debug.Log(pos);
 				Instantiate(_treePrefab, transform.position + pos, Quaternion.identity);
@@ -49,10 +49,7 @@ public class ForestRenderer : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	private void Update()
-	{
-
-	}
+	private void Update() { }
 
 	private float GetAreaOfObject(GameObject treePrefab)
 	{
