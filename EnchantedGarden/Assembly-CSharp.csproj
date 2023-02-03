@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
+    <Compile Include="Assets\Scripts\Environment\ForestRenderer.cs" />
     <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -120,7 +121,6 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Rock.shader" />
     <None Include="Assets\Imported\WizardPolyArt\Shader\PolyArtMaskTint.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\Imported\Baker House\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\EyeLash.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Shadows.cginc" />

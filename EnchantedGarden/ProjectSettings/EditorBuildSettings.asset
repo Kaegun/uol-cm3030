@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ju-scene-updates-cauldron.unity
+    path: Assets/Scenes/Tests/ju-scene-updates-cauldron.unity
     guid: bf5fb9f9807553640b0d21996dcebf28
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7b52f3648676e194dace18e95d10dd52,

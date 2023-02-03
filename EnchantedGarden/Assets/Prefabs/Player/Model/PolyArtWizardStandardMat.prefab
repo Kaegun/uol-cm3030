@@ -631,7 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4463868907105534}
   - component: {fileID: 95538263452871118}
-  - component: {fileID: 136306802490482818}
+  - component: {fileID: -5533068383607573775}
   m_Layer: 0
   m_Name: PolyArtWizardStandardMat
   m_TagString: Untagged
@@ -674,7 +674,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &136306802490482818
+--- !u!136 &-5533068383607573775
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
