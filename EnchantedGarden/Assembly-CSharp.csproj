@@ -109,6 +109,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Water.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\UnityStandardParticleShadow.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Audio\Music\delete-me.txt" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Water_Shader_WebGl.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Acid.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\UnityStandardParticles.cginc" />
