@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9058112424979511733}
-  m_Layer: 0
+  - component: {fileID: 5133385920474134245}
+  m_Layer: 9
   m_Name: Trick Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5133385920474134245
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017128806680820391}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1001 &2514725543177043439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41,6 +55,22 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
       propertyPath: m_Name
       value: VegetationSmall03
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b247e1f98f261d648bafb713dd26be2a, type: 3}
       propertyPath: m_RootOrder

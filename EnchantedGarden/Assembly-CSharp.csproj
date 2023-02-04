@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Cauldron.cs" />
     <Compile Include="Assets\Scripts\CinemachineInputProviderEx.cs" />
+    <Compile Include="Assets\Scripts\Common\CommonTypes.cs" />
+    <Compile Include="Assets\Scripts\Common\DrawGizmoMesh.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoText.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
