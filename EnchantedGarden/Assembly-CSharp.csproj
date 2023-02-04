@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
-    <Compile Include="Assets\Scripts\Environment\ForestRenderer.cs" />
+    <Compile Include="Assets\Scripts\Environment\ForestSpawner.cs" />
     <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -133,6 +133,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\GroundCover.shader" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Opaque_Shader_VS.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Vegetable_CNSSS.shader" />
+    <None Include="Assets\FreeLabAssets\Shaders\SBS_Mana.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\StandardCutout.shader" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Opaque_Shader.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\BubbleBurst.shader" />
