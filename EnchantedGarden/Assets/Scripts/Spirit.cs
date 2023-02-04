@@ -80,7 +80,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	//  Start is called before the first frame update
 	private void Start()
 	{
-		// set movement direction on spawn
+		//	TODO: Set movement direction on spawn
 		_moveDirection = transform.position.normalized * -1;
 	}
 

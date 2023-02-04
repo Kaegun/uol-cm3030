@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Plant : MonoBehaviour, IPickUp
 {
@@ -38,6 +39,9 @@ public class Plant : MonoBehaviour, IPickUp
 	[SerializeField]
 	private PlantPatch _plantPatch;
 
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
 	public bool CanBeReplanted()
 	{
 		return _plantState == PlantState.Default && _plantPatch != null && !_planted;
@@ -57,6 +61,7 @@ public class Plant : MonoBehaviour, IPickUp
 	public void StartPossession()
 	{
 		_plantState = PlantState.BecomingPossessed;
+		_worldEvents?.OnPlantPossessing(transform.position);
 	}
 
 	public bool PossessionThresholdReached()
@@ -72,6 +77,8 @@ public class Plant : MonoBehaviour, IPickUp
 		_plantPatch = null;
 
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
+
+		_worldEvents?.OnPlantPossessed(transform.position);
 	}
 
 	public void Dispossess()
