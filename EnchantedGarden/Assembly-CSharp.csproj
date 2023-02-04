@@ -61,6 +61,7 @@
     <Compile Include="Assets\Imported\GUI PRO Kit - Fantasy RPG\Scripts\PanelFantasyRPG.cs" />
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\MouseLook.cs" />
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\PlayerMovement.cs" />
+    <Compile Include="Assets\Imported\SkythianCat\Glowing_Forest\Scripts\WaterGroup.cs" />
     <Compile Include="Assets\Scripts\AudioController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Cauldron.cs" />
@@ -133,7 +134,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\GroundCover.shader" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Opaque_Shader_VS.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Vegetable_CNSSS.shader" />
-    <None Include="Assets\FreeLabAssets\Shaders\SBS_Mana.shader" />
+    <None Include="Assets\Imported\FreeLabAssets\Shaders\SBS_Mana.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\StandardCutout.shader" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Opaque_Shader.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\BubbleBurst.shader" />
@@ -164,6 +165,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Respawn.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\SculptedHair.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Imported\FreeWeapons\Read_me.txt" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Rock_Shader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
