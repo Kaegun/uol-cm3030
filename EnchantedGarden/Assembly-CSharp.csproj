@@ -116,7 +116,6 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\CollectShadowWaterCustom.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\WaterX.shader" />
-    <None Include="Assets\Imported\Sounds\Magical Music Album - 040618\Notes.txt" />
     <None Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Plants_Shader.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Rock.shader" />
     <None Include="Assets\Imported\WizardPolyArt\Shader\PolyArtMaskTint.shader" />
