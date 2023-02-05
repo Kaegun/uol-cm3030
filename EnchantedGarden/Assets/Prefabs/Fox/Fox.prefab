@@ -1202,7 +1202,8 @@ MonoBehaviour:
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _player: {fileID: 0}
   _turnSpeed: 60
-  _moveSpeed: 6
+  _maxSpeed: 6
+  _acceleration: 6
 --- !u!136 &5015844482702719919
 CapsuleCollider:
   m_ObjectHideFlags: 0
