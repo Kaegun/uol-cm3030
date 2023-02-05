@@ -105,7 +105,7 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer == (int)CommonTypes.Layers.Player)
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Player))
 		{
 			SetIdle();
 		}
