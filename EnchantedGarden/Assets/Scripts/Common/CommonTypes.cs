@@ -16,11 +16,13 @@
 		PlantPatch = 14,
 		Tool = 15,
 		Player = 16,
+		Forest = 17,
 	}
 
-	public static bool IsLayer(this int a, Layers b)
+	public static bool IsLayer(this UnityEngine.GameObject go, Layers layer)
 	{
-		return a.Equals(b);
+		//	Check whether the layer equals the layer enum
+		return go.layer.Equals(layer);
 	}
 
 	public static class AnimatorActions

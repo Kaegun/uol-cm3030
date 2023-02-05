@@ -1,5 +1,5 @@
 ﻿public interface IInteractable
 {
-	bool CanBeInteractedWith { get; }
+	bool IsInteractable { get; }
 	void OnPlayerInteract(PlayerInteractionController player);
 }

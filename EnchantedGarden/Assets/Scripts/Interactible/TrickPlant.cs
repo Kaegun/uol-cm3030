@@ -54,8 +54,9 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 
 	public void OnDrop()
 	{
+		//	TODO: Convert to use Trigger and Layer
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant()).
+			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
 			Select(c => c.GetComponent<PlantPatch>()).
 			OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
 			ToList();
@@ -88,7 +89,7 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 		return gameObject;
 	}
 
-	public bool CanBeInteractedWith => _plantState == PlantState.TrappingSpirit;
+	public bool IsInteractable => _plantState == PlantState.TrappingSpirit;
 
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{

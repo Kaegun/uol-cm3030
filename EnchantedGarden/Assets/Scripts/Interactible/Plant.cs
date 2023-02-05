@@ -93,8 +93,9 @@ public class Plant : MonoBehaviour, IPickUp
 	{
 		get
 		{
+			//	TODO: Convert to Trigger + Layer
 			var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-				Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant()).
+				Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
 				ToList();
 			return plantPatches.Count > 0;
 		}
@@ -104,8 +105,9 @@ public class Plant : MonoBehaviour, IPickUp
 
 	public void OnDrop()
 	{
+		//	TODO: All of this can be done with Trigger Collider and Layers
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant()).
+			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
 			Select(c => c.GetComponent<PlantPatch>()).
 			OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
 			ToList();
@@ -147,6 +149,7 @@ public class Plant : MonoBehaviour, IPickUp
 			_possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * _unplantedFactor;
 		}
 
+		//	TODO: Plant possession VFX needs to change
 		//  Alter plant material based on progress towards possession
 		_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
 	}

@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+//  TODO: Split fire system code into separate class
 public class Cauldron : MonoBehaviour
 {
     [SerializeField]
@@ -56,7 +57,7 @@ public class Cauldron : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _currentUses = _maxUses;
         _fireCoroutine = StartCoroutine(FireCoroutine());
@@ -64,7 +65,7 @@ public class Cauldron : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   private  void Update()
     {
         //	Could we use a Trigger Collider here?
         var combinables = Physics.OverlapSphere(transform.position, 2f).
@@ -103,6 +104,7 @@ public class Cauldron : MonoBehaviour
         _usesText.text = $"{_currentUses}/{_maxUses}";
     }
 
+    //  TODO: Does this need to be in a CoRoutine?
     private IEnumerator FireCoroutine()
     {
         _currentFuel = _maxFuel;

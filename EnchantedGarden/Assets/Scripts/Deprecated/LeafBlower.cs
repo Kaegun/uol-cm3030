@@ -27,7 +27,7 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 		return gameObject;
 	}
 
-	public bool CanBeInteractedWith => _cooldownProgress <= 0;
+	public bool IsInteractable => _cooldownProgress <= 0;
 
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{

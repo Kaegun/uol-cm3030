@@ -59,19 +59,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		_moveDirection = direction.normalized;
 	}
 
-	public bool PossessingPlant()
-	{
-		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
-	}
-
-	public void StealPossessedPlant()
-	{
-		GameManager.Instance.ScorePoints(-100);
-		Destroy(_possessedPlant.gameObject);
-		Destroy(gameObject);
-	}
-
-	public bool CanBeInteractedWith => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+	public bool IsInteractable => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{
@@ -135,6 +123,15 @@ public class Spirit : MonoBehaviour, IInteractable
 		}
 	}
 
+	private bool IsPossessingPlant => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+
+	private void StealPossessedPlant()
+	{
+		GameManager.Instance.ScorePoints(-100);
+		Destroy(_possessedPlant.gameObject);
+		Destroy(gameObject);
+	}
+
 	private void Move()
 	{
 		//	TODO: Place common movement code here
@@ -153,7 +150,8 @@ public class Spirit : MonoBehaviour, IInteractable
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
-		if (other.gameObject.layer.IsLayer(CommonTypes.Layers.Plant))
+		//	TODO: I suppose this can now be a switch statement
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant))
 		{
 			//  handle normal plants
 			_possessedPlant = other.GetComponent<Plant>();
@@ -165,7 +163,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 		}
 		//  handle trick plants
-		else if (other.gameObject.layer.IsLayer(CommonTypes.Layers.TrickPlant))
+		else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant))
 		{
 			var trickPlant = other.GetComponent<TrickPlant>();
 			Assert.IsNotNull(trickPlant);
@@ -173,6 +171,10 @@ public class Spirit : MonoBehaviour, IInteractable
 			DeactivateBody();
 			_spiritState = SpiritState.Trapped;
 			transform.position = trickPlant.transform.position;
+		}
+		else if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
+		{
+			StealPossessedPlant();
 		}
 	}
 }
