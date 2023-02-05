@@ -8,7 +8,7 @@ public class DrawGizmoMesh : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
-		var mesh = GetComponent<MeshFilter>().mesh;
+		var mesh = GetComponent<MeshFilter>().sharedMesh;
 		Gizmos.color = _color;
 		Gizmos.DrawWireMesh(mesh, transform.position, transform.rotation, transform.localScale);
 	}

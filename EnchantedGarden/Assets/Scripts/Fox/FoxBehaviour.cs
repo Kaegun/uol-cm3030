@@ -13,6 +13,9 @@ public class FoxBehaviour : MonoBehaviour
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
+	[SerializeField]
+	private GameObject _player;
+
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -24,6 +27,7 @@ public class FoxBehaviour : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
+		//	TODO: Move the fox towards the player, whenever no other state is active
 
 	}
 

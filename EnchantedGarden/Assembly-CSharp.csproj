@@ -62,10 +62,7 @@
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\MouseLook.cs" />
     <Compile Include="Assets\Imported\Polytope Studio\Lowpoly Medieval Demos\Environment_Free\PlayerMovement.cs" />
     <Compile Include="Assets\Imported\SkythianCat\Glowing_Forest\Scripts\WaterGroup.cs" />
-    <Compile Include="Assets\Scripts\AudioController.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Cauldron.cs" />
-    <Compile Include="Assets\Scripts\CinemachineInputProviderEx.cs" />
     <Compile Include="Assets\Scripts\Common\CommonTypes.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoMesh.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
@@ -74,10 +71,10 @@
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
+    <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
     <Compile Include="Assets\Scripts\Environment\ForestSpawner.cs" />
     <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Herb.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
@@ -101,6 +98,10 @@
     <Compile Include="Assets\Scripts\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
+    <Compile Include="Assets\Scripts\Systems\AudioController.cs" />
+    <Compile Include="Assets\Scripts\Systems\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Systems\CinemachineInputProviderEx.cs" />
+    <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\TestSunSlider.cs" />
     <Compile Include="Assets\Scripts\TrickPlant.cs" />
     <Compile Include="Assets\Scripts\TrickPlantBag.cs" />
