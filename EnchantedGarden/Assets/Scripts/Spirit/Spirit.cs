@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Spirit : MonoBehaviour, IInteractable
 {
@@ -12,18 +13,20 @@ public class Spirit : MonoBehaviour, IInteractable
 		Repelled
 	}
 
-	//[SerializeField]
-	private SpiritState _spiritState;
-
 	[SerializeField]
 	private float _moveSpeed;
-	private Vector3 _moveDirection;
-	private float _moveTime = 0;
+
+	[SerializeField]
+	private float _turnSpeed = 30f;
 
 	[SerializeField]
 	private float _repelDuration;
-	private float _repelProgress;
 
+	private Vector3 _moveDirection;
+	private float _repelProgress,
+		_moveTime = 0;
+
+	private SpiritState _spiritState;
 	private Plant _possessedPlant;
 	private Renderer _renderer;
 
@@ -102,36 +105,9 @@ public class Spirit : MonoBehaviour, IInteractable
 					_moveTime = 0;
 				}
 
+				transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
 				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
 
-				//  check for nearby possessable plants and start to possess one
-				var plants = Physics.OverlapSphere(transform.position, 2f)
-					.Where(c => (c.GetComponent<Plant>() != null && c.GetComponent<Plant>().CanBePossessed()) || (c.GetComponent<TrickPlant>() != null && c.GetComponent<TrickPlant>().CanTrapSpirit))
-					.ToList();
-
-				if (plants.Count > 0)
-				{
-					//  handle normal plants
-					if (plants[0].GetComponent<Plant>() != null)
-					{
-						var plant = plants[0].GetComponent<Plant>();
-						_possessedPlant = plant;
-						_possessedPlant.StartPossession();
-						transform.position = _possessedPlant.transform.position;
-						_spiritState = SpiritState.StartingPossession;
-						DeactivateBody();
-
-					}
-					//  handle trick plants
-					else if (plants[0].GetComponent<TrickPlant>() != null)
-					{
-						var trickPlant = plants[0].GetComponent<TrickPlant>();
-						trickPlant.TrapSpirit(this);
-						DeactivateBody();
-						_spiritState = SpiritState.Trapped;
-						transform.position = trickPlant.transform.position;
-					}
-				}
 				break;
 			case SpiritState.StartingPossession:
 				if (_possessedPlant.PossessionThresholdReached())
@@ -159,6 +135,11 @@ public class Spirit : MonoBehaviour, IInteractable
 		}
 	}
 
+	private void Move()
+	{
+		//	TODO: Place common movement code here
+	}
+
 	private void DeactivateBody()
 	{
 		_renderer.enabled = false;
@@ -167,5 +148,31 @@ public class Spirit : MonoBehaviour, IInteractable
 	private void ActivateBody()
 	{
 		_renderer.enabled = true;
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
+		if (other.gameObject.layer.IsLayer(CommonTypes.Layers.Plant))
+		{
+			//  handle normal plants
+			_possessedPlant = other.GetComponent<Plant>();
+			Assert.IsNotNull(_possessedPlant);
+			_possessedPlant.StartPossession();
+			transform.position = _possessedPlant.transform.position;
+			_spiritState = SpiritState.StartingPossession;
+			DeactivateBody();
+
+		}
+		//  handle trick plants
+		else if (other.gameObject.layer.IsLayer(CommonTypes.Layers.TrickPlant))
+		{
+			var trickPlant = other.GetComponent<TrickPlant>();
+			Assert.IsNotNull(trickPlant);
+			trickPlant.TrapSpirit(this);
+			DeactivateBody();
+			_spiritState = SpiritState.Trapped;
+			transform.position = trickPlant.transform.position;
+		}
 	}
 }

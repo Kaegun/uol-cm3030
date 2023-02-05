@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Compost.cs" />
     <Compile Include="Assets\Scripts\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
+    <Compile Include="Assets\Scripts\Environment\FireSystem.cs" />
     <Compile Include="Assets\Scripts\Environment\ForestSpawner.cs" />
     <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
