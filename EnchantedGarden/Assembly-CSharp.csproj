@@ -95,7 +95,7 @@
     <Compile Include="Assets\Scripts\Scriptable\ScriptableLevelDefinition.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableWorldEventHandler.cs" />
     <Compile Include="Assets\Scripts\Spade.cs" />
-    <Compile Include="Assets\Scripts\Spirit.cs" />
+    <Compile Include="Assets\Scripts\Spirit\Spirit.cs" />
     <Compile Include="Assets\Scripts\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\Systems\AudioController.cs" />

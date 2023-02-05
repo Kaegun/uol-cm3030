@@ -12,7 +12,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		Repelled
 	}
 
-	[SerializeField]
+	//[SerializeField]
 	private SpiritState _spiritState;
 
 	[SerializeField]
@@ -20,14 +20,12 @@ public class Spirit : MonoBehaviour, IInteractable
 	private Vector3 _moveDirection;
 	private float _moveTime = 0;
 
-	private Plant _possessedPlant;
-
-	[SerializeField]
-	private GameObject _spiritBody;
-
 	[SerializeField]
 	private float _repelDuration;
 	private float _repelProgress;
+
+	private Plant _possessedPlant;
+	private Renderer _renderer;
 
 	public bool CanBeBanished()
 	{
@@ -82,6 +80,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		//	TODO: Set movement direction on spawn
 		_moveDirection = transform.position.normalized * -1;
+		_renderer = GetComponent<Renderer>();
 	}
 
 	//  Update is called once per frame
@@ -120,7 +119,7 @@ public class Spirit : MonoBehaviour, IInteractable
 						_possessedPlant.StartPossession();
 						transform.position = _possessedPlant.transform.position;
 						_spiritState = SpiritState.StartingPossession;
-						_spiritBody.SetActive(false);
+						DeactivateBody();
 
 					}
 					//  handle trick plants
@@ -128,7 +127,7 @@ public class Spirit : MonoBehaviour, IInteractable
 					{
 						var trickPlant = plants[0].GetComponent<TrickPlant>();
 						trickPlant.TrapSpirit(this);
-						_spiritBody.SetActive(false);
+						DeactivateBody();
 						_spiritState = SpiritState.Trapped;
 						transform.position = trickPlant.transform.position;
 					}
@@ -158,5 +157,15 @@ public class Spirit : MonoBehaviour, IInteractable
 			default:
 				break;
 		}
+	}
+
+	private void DeactivateBody()
+	{
+		_renderer.enabled = false;
+	}
+
+	private void ActivateBody()
+	{
+		_renderer.enabled = true;
 	}
 }
