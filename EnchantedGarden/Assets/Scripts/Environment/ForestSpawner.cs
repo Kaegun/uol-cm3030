@@ -38,7 +38,7 @@ public class ForestSpawner : MonoBehaviour
 
 		Debug.Log($"_density:{_density} | area:{area} | treeArea:{treeArea} | number:{Mathf.CeilToInt(area / treeArea * _density)}");
 
-		int number = Mathf.CeilToInt(area / treeArea * _density),
+		int number = Mathf.CeilToInt(area / (treeArea / 4) * _density),
 			i = 0;
 		List<Vector3> positions = new List<Vector3>();
 		var guard = 0;
