@@ -77,7 +77,7 @@ public class FoxBehaviour : MonoBehaviour
 				break;
 		}
 
-		_animator.SetFloat(CommonTypes.AnimatorVariable.ForwardSpeed, _currentSpeed);
+		_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _currentSpeed);
 	}
 
 	private void PlantPossessing(object sender, Vector3 e)
@@ -111,19 +111,13 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	//	TODO: Might not need both here
-	private void OnTriggerStay(Collider other)
-	{
-		if (other.gameObject.layer.IsLayer(CommonTypes.Layers.Player))
-		{
-			SetIdle();
-		}
-	}
-
 	private void SetIdle()
 	{
 		_state = FoxState.Idle;
 		//	TODO: A bit abrupt
 		_currentSpeed = 0f;
+
+		//	TODO: Test Alert animation
+		_animator.SetTrigger(CommonTypes.AnimatorActions.Alert);
 	}
 }

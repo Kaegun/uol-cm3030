@@ -62,13 +62,13 @@ public class PlayerMovementController : MonoBehaviour
 			_movementSpeed = Mathf.Clamp(_movementSpeed + _acceleration * Time.deltaTime, 0.0f, _maxAnimationSpeed);
 			if (_animator != null)
 			{
-				_animator.SetFloat(CommonTypes.AnimatorVariable.ForwardSpeed, _movementSpeed);
+				_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _movementSpeed);
 			}
 		}
 		else if (_movementSpeed > 0.0f)
 		{
 			_movementSpeed = 0.0f;
-			_animator.SetFloat(CommonTypes.AnimatorVariable.ForwardSpeed, _movementSpeed);
+			_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _movementSpeed);
 		}
 	}
 

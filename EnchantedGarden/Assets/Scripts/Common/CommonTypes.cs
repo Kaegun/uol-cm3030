@@ -23,8 +23,9 @@
 		return a.Equals(b);
 	}
 
-	public static class AnimatorVariable
+	public static class AnimatorActions
 	{
 		public const string ForwardSpeed = "ForwardSpeed";
+		public const string Alert = "Alert";
 	}
 }
