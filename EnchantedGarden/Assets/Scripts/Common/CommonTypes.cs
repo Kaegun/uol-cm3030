@@ -1,14 +1,30 @@
-﻿public class CommonTypes
+﻿public static class CommonTypes
 {
-	public static class Layers
+	public enum Layers
 	{
-		public static readonly string Firewood = "Firewood";
-		public static readonly string TrickPlant = "Trick Plant";
-		public static readonly string Plant = "Plant";
-		public static readonly string Cauldron = "Cauldron";
-		public static readonly string Herb = "Herb";
-		public static readonly string Spirit = "Spirit";
-		public static readonly string PlantPatch = "Plant Patch";
-		public static readonly string Tool = "Tool";
+		Default = 0,
+		TransparentFX = 1,
+		IgnoreRaycast = 2,
+		Water = 4,
+		UI = 5,
+		Firewood = 8,
+		TrickPlant = 9,
+		Plant = 10,
+		Cauldron = 11,
+		Herb = 12,
+		Spirit = 13,
+		PlantPatch = 14,
+		Tool = 15,
+		Player = 16,
+	}
+
+	public static bool IsLayer(this int a, Layers b)
+	{
+		return a.Equals(b);
+	}
+
+	public static class AnimatorVariable
+	{
+		public const string ForwardSpeed = "ForwardSpeed";
 	}
 }

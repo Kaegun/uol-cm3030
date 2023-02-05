@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 //  TODO: Do not use embedded classes
 //  TODO: This is a good use case for a scriptable object -> One per level
-[System.Serializable]
+[Serializable]
 // Class rather than struct to allow mutability when stored in a queue
 public class SpiritWave
 {
@@ -16,13 +17,14 @@ public class SpiritWave
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/LevelDefinition")]
 public class ScriptableLevelDefinition : ScriptableObject
 {
+	//	The duration of a level
+	[SerializeField]
+	[Range(15f, 600f)]
+	private float _levelDuration = 90f;
+	public float LevelDuration { get { return _levelDuration; } }
+
 	//	The definition of the spirit spawning frequency
 	[SerializeField]
 	private SpiritWave[] _waves;
 	public SpiritWave[] Waves { get { return _waves; } }
-
-	//	The duration of a level
-	[SerializeField]
-	private float _levelDuration;
-	public float LevelDuration { get { return _levelDuration; } }
 }
