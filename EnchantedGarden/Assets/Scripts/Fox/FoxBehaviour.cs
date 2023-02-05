@@ -16,7 +16,6 @@ public class FoxBehaviour : MonoBehaviour
 		Alert,
 	}
 
-
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
