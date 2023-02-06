@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Plant : MonoBehaviour, IPickUp
 {
@@ -30,8 +29,8 @@ public class Plant : MonoBehaviour, IPickUp
 	[SerializeField]
 	private Material _spiritMaterial;
 
-	[SerializeField]
-	private MeshRenderer _mesh;
+	//[SerializeField]
+	//private MeshRenderer _mesh;
 
 	[SerializeField]
 	private bool _planted;
@@ -73,9 +72,11 @@ public class Plant : MonoBehaviour, IPickUp
 	{
 		_plantState = PlantState.Carried;
 		_possessionProgress = _possessionThreshold;
-		_plantPatch.RemovePlant();
-		_plantPatch = null;
-
+		if (_plantPatch != null)
+		{
+			_plantPatch.RemovePlant();
+			_plantPatch = null;
+		}
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
 
 		_worldEvents?.OnPlantPossessed(transform.position);
@@ -153,6 +154,6 @@ public class Plant : MonoBehaviour, IPickUp
 
 		//	TODO: Plant possession VFX needs to change
 		//  Alter plant material based on progress towards possession
-		_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
+		//_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 public class Spirit : MonoBehaviour, IInteractable
@@ -93,8 +92,7 @@ public class Spirit : MonoBehaviour, IInteractable
 					_moveTime = 0;
 				}
 
-				transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
-				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
+				Move();
 
 				break;
 			case SpiritState.StartingPossession:
@@ -105,8 +103,10 @@ public class Spirit : MonoBehaviour, IInteractable
 					//  use current position to approximate direction fastest to edge of forest
 					_moveDirection = transform.position.normalized;
 				}
+
 				break;
 			case SpiritState.Possessing:
+				//	TODO: Ensure all movement is using common Move method
 				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
 				_possessedPlant.transform.position = transform.position;
 				break;
@@ -116,7 +116,9 @@ public class Spirit : MonoBehaviour, IInteractable
 				{
 					_spiritState = SpiritState.Searching;
 				}
-				transform.position += _moveSpeed * 2.5f * Time.deltaTime * _moveDirection;
+
+				Move(2.5f);
+
 				break;
 			default:
 				break;
@@ -132,9 +134,11 @@ public class Spirit : MonoBehaviour, IInteractable
 		Destroy(gameObject);
 	}
 
-	private void Move()
+	private void Move(float speedFactor = 1.0f)
 	{
 		//	TODO: Place common movement code here
+		transform.position += _moveSpeed * Time.deltaTime * _moveDirection * speedFactor;
+		transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
 	}
 
 	private void DeactivateBody()

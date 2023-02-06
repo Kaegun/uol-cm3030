@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3413958857559001136}
   - component: {fileID: 613657470594366714}
   - component: {fileID: 6979849728142793417}
+  - component: {fileID: 3986918202461463148}
   m_Layer: 10
   m_Name: Plant
   m_TagString: Untagged
@@ -94,3 +95,24 @@ CapsuleCollider:
   m_Height: 0.4477014
   m_Direction: 1
   m_Center: {x: -0.0037645288, y: 0.2238507, z: 0.05278138}
+--- !u!114 &3986918202461463148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406488986052271407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1afbd144f374445ab5bb51770d7c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _plantState: 0
+  _unplantedFactor: 10
+  _possessionThreshold: 0
+  _plantMaterial: {fileID: 0}
+  _spiritMaterial: {fileID: 0}
+  _mesh: {fileID: 0}
+  _planted: 0
+  _plantPatch: {fileID: 0}
+  _worldEvents: {fileID: 0}
