@@ -11,7 +11,7 @@ public class TrickPlantBag : MonoBehaviour, IPickUp
 
 	public bool CanBeDropped => true;
 
-	public GameObject PickUpObject()
+		public GameObject PickUpObject()
 	{
 		return Instantiate(_trickPlant, _spawnTransform.position, Quaternion.identity).gameObject;
 	}

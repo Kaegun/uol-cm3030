@@ -101,6 +101,8 @@ public class Plant : MonoBehaviour, IPickUp
 		}
 	}
 
+	public Transform PickupAdjustment => throw new System.NotImplementedException();
+
 	public void OnPickUp() { }
 
 	public void OnDrop()

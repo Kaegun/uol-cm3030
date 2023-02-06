@@ -60,7 +60,6 @@ public class FoxBehaviour : MonoBehaviour
 					transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
 
 					//	TODO: Set turning anim.
-					Debug.Log("we're spinning in place");
 				}
 
 				_state = (_player.position - transform.position).magnitude > _idleFollowDistance ? FoxState.Follow : FoxState.Idle;
@@ -105,10 +104,8 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log($"OnTriggerEnter: {other.gameObject.name}");
 		if (other.gameObject.IsLayer(CommonTypes.Layers.Player))
 		{
-			Debug.Log($"OnTriggerEnter: {other.gameObject.name} is a Player");
 			SetIdle();
 		}
 	}

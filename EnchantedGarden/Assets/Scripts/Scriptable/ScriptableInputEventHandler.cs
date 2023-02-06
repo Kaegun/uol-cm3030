@@ -13,12 +13,9 @@ public class ScriptableInputEventHandler : ScriptableEventHandler
 	{
 		if (HandleInputDown(context, out float pressed))
 			ExecuteEvent(InteractionPressed, pressed);
-	}
 
-	public void OnInteractionReleased(InputAction.CallbackContext context)
-	{
-		if (HandleInputUp(context, out float pressed))
-			ExecuteEvent(InteractionReleased, pressed);
+		if (HandleInputUp(context, out float up))
+			ExecuteEvent(InteractionReleased, up);
 	}
 
 	public void OnMove(InputAction.CallbackContext context)

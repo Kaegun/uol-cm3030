@@ -101,7 +101,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182360635843861785}
-  - component: {fileID: 5847960766304803271}
   - component: {fileID: 9116252208002146431}
   - component: {fileID: 1182360635843861787}
   - component: {fileID: 1182360635843861786}
@@ -130,24 +129,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5847960766304803271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182360635843861784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212c95a2f22440d43a64729bbf6e4230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _input: {fileID: 11400000, guid: c78bfbc66ae56444bba9fb817b8cbe15, type: 2}
-  _interactionRadius: 2
-  _heldObjectTransform: {fileID: 1017804161593777655}
-  _audioSource: {fileID: 5695086480003079404}
-  _pickUpAudio: {fileID: 11400000, guid: 069916c6e20718440ba30b22bbb3f654, type: 2}
-  _putDownAudio: {fileID: 11400000, guid: 50cd3c7db9844c447a294981c62cc683, type: 2}
 --- !u!114 &9116252208002146431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,11 +141,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa09fabfa19c55f429590bdb8c391633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputEventHandler: {fileID: 11400000, guid: c78bfbc66ae56444bba9fb817b8cbe15, type: 2}
   _acceleration: 40
   _maxSpeed: 6
   _turnSpeed: 540
   _maxAnimationSpeed: 4
-  _inputEventHandler: {fileID: 11400000, guid: c78bfbc66ae56444bba9fb817b8cbe15, type: 2}
+  _interactionRadius: 2
+  _heldObjectTransform: {fileID: 3261166773604324256}
+  _audioSource: {fileID: 5695086480003079404}
+  _pickUpAudio: {fileID: 11400000, guid: 069916c6e20718440ba30b22bbb3f654, type: 2}
+  _putDownAudio: {fileID: 11400000, guid: 50cd3c7db9844c447a294981c62cc683, type: 2}
 --- !u!114 &1182360635843861787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +197,18 @@ MonoBehaviour:
     m_ActionId: 6f45709e-90f6-4b9d-a3dd-6884871fd3f9
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: c78bfbc66ae56444bba9fb817b8cbe15, type: 2}
+        m_MethodName: OnInteractionPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e6570d50-93a8-4ab9-8606-03503a8b213f
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -390,36 +387,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &2794495913968655363
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2500697739893654266}
-  m_Layer: 16
-  m_Name: HeldObjectTransform
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2500697739893654266
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2794495913968655363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.979, z: 0.963}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3269215860291500262}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4161275950907470880
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,9 +784,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3265476268899390488}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1017804161593777655 stripped
+--- !u!4 &3261166773604324256 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 2544175501287705071, guid: 2577b0e612b44814bb27de1a7bf3ad97,
+  m_CorrespondingSourceObject: {fileID: 4697918775314360, guid: 2577b0e612b44814bb27de1a7bf3ad97,
     type: 3}
   m_PrefabInstance: {fileID: 3265476268899390488}
   m_PrefabAsset: {fileID: 0}

@@ -1,4 +1,4 @@
-﻿using Boo.Lang;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,7 +23,6 @@ public class ForestSpawner : MonoBehaviour
 		//  Clamp density to 0 - 1
 		_density = Mathf.Clamp(_density, 0, 1);
 		var mesh = GetComponent<MeshFilter>().sharedMesh;
-		Debug.Log($"{name}: {mesh.bounds}");
 		var x = mesh.bounds.size.x * transform.localScale.x;
 		var z = mesh.bounds.size.z * transform.localScale.z;
 
@@ -36,8 +35,6 @@ public class ForestSpawner : MonoBehaviour
 		}
 		treeArea /= (_treePrefabs.Length ^ 2);
 
-		Debug.Log($"_density:{_density} | area:{area} | treeArea:{treeArea} | number:{Mathf.CeilToInt(area / treeArea * _density)}");
-
 		int number = Mathf.CeilToInt(area / (treeArea / 4) * _density),
 			i = 0;
 		List<Vector3> positions = new List<Vector3>();
@@ -49,7 +46,6 @@ public class ForestSpawner : MonoBehaviour
 			var pos = new Vector3(Random.Range(-x / 2, x / 2), 0, Random.Range(-z / 2, z / 2));
 			if (positions.Where(p => (pos - p).sqrMagnitude / 4 < treeArea / 4).Count() == 0 || guard++ > 5)
 			{
-				Debug.Log(pos);
 				Instantiate(tree, transform.position + pos, Quaternion.identity);
 				positions.Add(pos);
 				i++;
@@ -68,15 +64,12 @@ public class ForestSpawner : MonoBehaviour
 
 		//	Calculate the area of the object
 		var meshFilters = treePrefab.GetComponentsInChildren<MeshFilter>();
-		Debug.Log($"{meshFilters.Length}");
 
 		foreach (var mf in meshFilters)
 		{
 			x = Mathf.Max(x, mf.sharedMesh.bounds.size.x * treePrefab.transform.localScale.x);
 			z = Mathf.Max(z, mf.sharedMesh.bounds.size.z * treePrefab.transform.localScale.z);
 		}
-
-		Debug.Log($"x: {x} | z:{z}");
 
 		return x * z;
 	}

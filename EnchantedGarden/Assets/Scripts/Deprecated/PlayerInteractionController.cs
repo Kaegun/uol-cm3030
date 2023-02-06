@@ -20,6 +20,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     [SerializeField]
     private ScriptableAudioClip _pickUpAudio;
+
     [SerializeField]
     private ScriptableAudioClip _putDownAudio;
 
@@ -120,17 +121,19 @@ public class PlayerInteractionController : MonoBehaviour
             AudioController.PlayAudio(_audioSource, _pickUpAudio);
             _heldObject = pickUps[0].GetComponent<IPickUp>().PickUpObject();
             _heldObject.GetComponent<IPickUp>().OnPickUp();
+            _heldObject.transform.SetParent(transform.parent, false);
         }
     }
 
     //	Update is called once per frame
     private void Update()
     {
-        //	TODO: We can attach to the player
-        //	Move held object with the player
-        if (_heldObject != null)
-        {
-            _heldObject.transform.position = _heldObjectTransform.position;
-        }
+        //  Check whether this works on a pickup
+        ////	TODO: We can attach to the player
+        ////	Move held object with the player
+        //if (_heldObject != null)
+        //{
+        //    _heldObject.transform.position = _heldObjectTransform.position;
+        //}
     }
 }

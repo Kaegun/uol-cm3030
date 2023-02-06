@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
+    <Compile Include="Assets\Scripts\Deprecated\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />
     <Compile Include="Assets\Scripts\Deprecated\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
@@ -86,14 +87,13 @@
     <Compile Include="Assets\Scripts\Interactible\PesticideSpray.cs" />
     <Compile Include="Assets\Scripts\Interactible\Plant.cs" />
     <Compile Include="Assets\Scripts\Interactible\PlantPatch.cs" />
-    <Compile Include="Assets\Scripts\Interactible\Spade.cs" />
+    <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlant.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlantBag.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerInteractionController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerMovementController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableAudioClip.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableEventHandler.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableInputEventHandler.cs" />

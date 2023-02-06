@@ -91,6 +91,8 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 
 	public bool IsInteractable => _plantState == PlantState.TrappingSpirit;
 
+	public Transform PickupAdjustment => throw new System.NotImplementedException();
+
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{
 		_trappedSpirit.Banish();

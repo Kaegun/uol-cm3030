@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!136 &8578792129509532057
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8282117798365755675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.28
-  m_Height: 1.7724732
-  m_Direction: 1
-  m_Center: {x: 0.05401024, y: 0.8862366, z: 0}
 --- !u!1 &7754108684737133617
 GameObject:
   m_ObjectHideFlags: 0
@@ -23,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6689965096717609098}
+  - component: {fileID: 3032321156973147166}
+  - component: {fileID: 2934656443759496695}
   m_Layer: 0
   m_Name: Shovel
   m_TagString: Untagged
@@ -45,6 +33,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3032321156973147166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754108684737133617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb0a68bfba8f104d8a1824943897458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionDuration: 1
+  _adjustmentPosition: {x: 11, y: -76.8, z: 4.6}
+  _adjustmentRotation: {x: -8.815, y: 114.074, z: -0.47}
+  _adjustmentScaleFactor: 100
+--- !u!136 &2934656443759496695
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754108684737133617}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.28
+  m_Height: 1.7724732
+  m_Direction: 1
+  m_Center: {x: 0.05401024, y: 0.8862366, z: 0}
 --- !u!1001 &2958373192853426000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114,12 +132,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b935d8de81c259742861dcba19d2f33f, type: 3}
---- !u!1 &8282117798365755675 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6620782931358447179, guid: b935d8de81c259742861dcba19d2f33f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2958373192853426000}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8282117798365755686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6620782931358447222, guid: b935d8de81c259742861dcba19d2f33f,
