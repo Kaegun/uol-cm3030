@@ -19,6 +19,12 @@ public class DrawGizmoText : MonoBehaviour
 	[SerializeField]
 	private Vector2 _anchor;
 
+	public string Text
+	{
+		get { return _text; }
+		set { _text = value; }
+	}
+
 #if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
@@ -27,8 +33,12 @@ public class DrawGizmoText : MonoBehaviour
 			return;
 
 		Vector3 screenPosition = view.camera.WorldToScreenPoint(transform.position);
-		if (screenPosition.y < 0 || screenPosition.y > view.camera.pixelHeight || screenPosition.x < 0 || screenPosition.x > view.camera.pixelWidth || screenPosition.z < 0)
+		if (screenPosition.y < 0 || screenPosition.y > view.camera.pixelHeight
+			|| screenPosition.x < 0 || screenPosition.x > view.camera.pixelWidth
+			|| screenPosition.z < 0)
+		{
 			return;
+		}
 
 		var pixelRatio = EditorGUIUtility.pixelsPerPoint;
 		Handles.BeginGUI();

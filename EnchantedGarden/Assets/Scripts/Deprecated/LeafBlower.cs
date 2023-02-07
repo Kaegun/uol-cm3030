@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
+[Obsolete("This implementation will not be retained")]
 public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 {
 	[SerializeField]
@@ -20,7 +22,7 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 	}
 
-	public void OnPickUp() { }
+	public void OnPickUp(Transform _) { }
 
 	public GameObject PickUpObject()
 	{

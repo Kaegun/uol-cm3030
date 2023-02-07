@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 public class PlantPatch : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlantPatch : MonoBehaviour
 	private Material _compostMaterial;
 
 	private bool _containsCompost = false;
+	[Obsolete("Removing Compost")]
 	private MeshRenderer _mesh;
 	private Plant _plant;
 
@@ -33,17 +35,20 @@ public class PlantPatch : MonoBehaviour
 		_plant = null;
 	}
 
+	[Obsolete("Removing Compost")]
 	public bool ContainsCompost()
 	{
 		return _containsCompost;
 	}
 
+	[Obsolete("Removing Compost")]
 	public void AddCompost()
 	{
 		_containsCompost = true;
 		_mesh.material = _compostMaterial;
 	}
 
+	[Obsolete("Removing Compost")]
 	public void RemoveCompost()
 	{
 		_containsCompost = false;
@@ -58,7 +63,23 @@ public class PlantPatch : MonoBehaviour
 		//	Instantiate a plant at the start of the level if flag is set
 		if (_containsPlant)
 		{
-			_plant = Instantiate(_plantPrefab, transform.position, Quaternion.identity);
+			//	TODO: Instantiate on the "planted" spot, set plant state to planted
+			_plant = Instantiate(_plantPrefab, transform.position, Quaternion.identity.RandomizeY());
+			_plant.Replant(this);
 		}
 	}
+
+#if UNITY_EDITOR
+	private void OnDrawGizmos()
+	{
+		//	TODO: This doesn not work as expected
+		if (TryGetComponent<DrawGizmoText>(out var gizmo))
+		{
+			if (_containsPlant)
+			{
+				gizmo.Text += " - Spawns Plant";
+			}
+		}
+	}
+#endif
 }

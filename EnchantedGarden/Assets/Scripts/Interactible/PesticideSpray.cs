@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class PesticideSpray : MonoBehaviour, IPickUp, ICombinable
+public class PesticideSpray : PickUpBase, ICombinable
 {
 	[SerializeField]
 	private GameObject _contents;
@@ -9,33 +9,14 @@ public class PesticideSpray : MonoBehaviour, IPickUp, ICombinable
 	[SerializeField]
 	private bool _full;
 
+	//	TODO: Won't need this
 	[SerializeField]
 	private float _actionRadius = 2f;
-
-	private bool _held;
 
 	public void UseSpray()
 	{
 		_full = false;
 		_contents.SetActive(false);
-	}
-
-	public bool CanBeDropped => true;
-
-	public bool CanBePickedUp => true;
-
-	public void OnDrop()
-	{
-		_held = false;
-		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-	}
-
-	public void OnPickUp() { }
-
-	public GameObject PickUpObject()
-	{
-		_held = true;
-		return gameObject;
 	}
 
 	public void OnCombine()
@@ -54,7 +35,6 @@ public class PesticideSpray : MonoBehaviour, IPickUp, ICombinable
 	{
 		_full = false;
 		_contents.SetActive(false);
-		_held = false;
 	}
 
 	// Update is called once per frame
@@ -62,6 +42,7 @@ public class PesticideSpray : MonoBehaviour, IPickUp, ICombinable
 	{
 		if (_held && _full)
 		{
+			//	TODO: Use trigger collider
 			// Check for nearby banishable spirits
 			var spirits = Physics.OverlapSphere(transform.position, _actionRadius).
 			Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeBanished()).

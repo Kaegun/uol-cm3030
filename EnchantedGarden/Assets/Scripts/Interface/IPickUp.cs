@@ -4,7 +4,6 @@ public interface IPickUp
 {
 	bool CanBePickedUp { get; }
 	bool CanBeDropped { get; }
-	GameObject PickUpObject();
-	void OnPickUp();
+	void OnPickUp(Transform pickupTransform);
 	void OnDrop();
 }

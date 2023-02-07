@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 	private Animator _animator;
 	private float _movementSpeed;
 	private List<IPickUp> _pickups = new List<IPickUp>();
-	private GameObject _heldObject = null;
+	private IPickUp _heldObject = null;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
@@ -63,13 +63,12 @@ public class PlayerController : MonoBehaviour
 	{
 		Debug.Log($"PlayerController.InteractionPressed: {_pickups.Count}");
 
-		if (_heldObject != null && _heldObject.GetComponent<IPickUp>() != null)
+		if (_heldObject != null)
 		{
-			if (_heldObject.GetComponent<IPickUp>().CanBeDropped)
+			if (_heldObject.CanBeDropped)
 			{
 				AudioController.PlayAudio(_audioSource, _putDownAudio);
-				_heldObject.GetComponent<IPickUp>().OnDrop();
-				_heldObject.transform.SetParent(null);
+				_heldObject.OnDrop();
 				_heldObject = null;
 				return;
 			}
@@ -81,16 +80,23 @@ public class PlayerController : MonoBehaviour
 		else if (_pickups.Count > 0)
 		{
 			AudioController.PlayAudio(_audioSource, _pickUpAudio);
-			_heldObject = _pickups[0].PickUpObject();
-			_heldObject.GetComponent<IPickUp>().OnPickUp();
+			//	TODO: Refactor below
+			_heldObject = PickupCorrectObject();
+			_heldObject.OnPickUp(_heldObjectTransform);
 
-			//	TODO: Store the orientation of the object, and replace it with the same orientation again
+			////	TODO: Store the orientation of the object, and replace it with the same orientation again
 
-			Debug.Log($"Before SetParent: {_heldObject.transform.position} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
-			_heldObject.transform.SetParent(_heldObjectTransform, false);
-			Debug.Log($"After SetParent: {_heldObject.transform} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
-			_pickups.RemoveAt(0);
+			//Debug.Log($"Before SetParent: {_heldObject.transform.position} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
+			//_heldObject.transform.SetParent(_heldObjectTransform, false);
+			//Debug.Log($"After SetParent: {_heldObject.transform} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
 		}
+	}
+
+	private IPickUp PickupCorrectObject()
+	{
+		var heldObject = _pickups[0];
+		_pickups.RemoveAt(0);
+		return heldObject;
 	}
 
 	private void OnInteractionReleased(object sender, float e)

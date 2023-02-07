@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class Plant : MonoBehaviour, IPickUp
+public class Plant : PickUpBase
 {
 	enum PlantState
 	{
@@ -13,24 +13,21 @@ public class Plant : MonoBehaviour, IPickUp
 	[SerializeField]
 	private PlantState _plantState;
 
+	//	TODO: Scriptable Candidate
 	[SerializeField]
 	private float _unplantedFactor = 10.0f;
 
+	//	TODO: Scriptable Candidate
 	//  Threshold for amount of time plant must be BeingPossessed state before becoming Possessed
 	[SerializeField]
 	private float _possessionThreshold;
 
-	//  Amount of time plant has been BeingPossessed. Reset by when dispossessed
-	private float _possessionProgress;
-
+	//	TODO: VFX Changes
 	[SerializeField]
 	private Material _plantMaterial;
 
 	[SerializeField]
 	private Material _spiritMaterial;
-
-	//[SerializeField]
-	//private MeshRenderer _mesh;
 
 	[SerializeField]
 	private bool _planted;
@@ -41,17 +38,23 @@ public class Plant : MonoBehaviour, IPickUp
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
+	//  Amount of time plant has been BeingPossessed. Reset by when dispossessed
+	private float _possessionProgress;
+
 	public bool CanBeReplanted()
 	{
 		return _plantState == PlantState.Default && _plantPatch != null && !_planted;
 	}
 
-	public void Replant()
+	//	TODO: Not sure this is correct
+	public void Replant(PlantPatch parent)
 	{
 		_planted = true;
-		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+		//transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+		_plantPatch = parent;
 	}
 
+	//	TODO: Property
 	public bool CanBePossessed()
 	{
 		return _plantState == PlantState.Default;
@@ -63,6 +66,7 @@ public class Plant : MonoBehaviour, IPickUp
 		_worldEvents?.OnPlantPossessing(transform.position);
 	}
 
+	//	TODO: Property
 	public bool PossessionThresholdReached()
 	{
 		return _possessionProgress >= _possessionThreshold;
@@ -88,9 +92,9 @@ public class Plant : MonoBehaviour, IPickUp
 		_possessionProgress = 0;
 	}
 
-	public bool CanBePickedUp => _plantState == PlantState.Default;
+	public new bool CanBePickedUp => _plantState == PlantState.Default;
 
-	public bool CanBeDropped
+	public new bool CanBeDropped
 	{
 		get
 		{
@@ -102,11 +106,23 @@ public class Plant : MonoBehaviour, IPickUp
 		}
 	}
 
+	//	This could be a Scriptable Object
 	public Transform PickupAdjustment => throw new System.NotImplementedException();
 
-	public void OnPickUp() { }
+	public override void OnPickUp(Transform pickupTransform)
+	{
+		_plantState = PlantState.Carried;
+		if (_plantPatch != null)
+		{
+			_plantPatch.RemovePlant();
+			_plantPatch = null;
+			_planted = false;
+		}
 
-	public void OnDrop()
+		base.OnPickUp(pickupTransform);
+	}
+
+	public override void OnDrop()
 	{
 		//	TODO: All of this can be done with Trigger Collider and Layers
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
@@ -123,19 +139,6 @@ public class Plant : MonoBehaviour, IPickUp
 
 		_plantState = PlantState.Default;
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
-	}
-
-	public GameObject PickUpObject()
-	{
-		_plantState = PlantState.Carried;
-		if (_plantPatch != null)
-		{
-			_plantPatch.RemovePlant();
-			_plantPatch = null;
-			_planted = false;
-		}
-
-		return gameObject;
 	}
 
 	//  Start is called before the first frame update

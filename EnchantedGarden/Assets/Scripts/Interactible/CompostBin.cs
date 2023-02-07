@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Obsolete("Don't think we need this anymore")]
 public class CompostBin : MonoBehaviour, IPickUp
 {
 	[SerializeField]
@@ -28,7 +30,7 @@ public class CompostBin : MonoBehaviour, IPickUp
 		return Instantiate(_compost, _spawnTransform.position, Quaternion.identity).gameObject;
 	}
 
-	public void OnPickUp() { }
+	public void OnPickUp(Transform _) { }
 
 	public void OnDrop() { }
 

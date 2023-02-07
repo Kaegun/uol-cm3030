@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Obsolete("Don't think we need this anymore")]
 public class PickUpStore : MonoBehaviour, IPickUp
 {
 	[SerializeField]
@@ -11,7 +13,7 @@ public class PickUpStore : MonoBehaviour, IPickUp
 
 	public void OnDrop() { }
 
-	public void OnPickUp() { }
+	public void OnPickUp(Transform _) { }
 
 	public GameObject PickUpObject()
 	{
