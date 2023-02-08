@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions;
 
 public class Spirit : MonoBehaviour, IInteractable
 {
@@ -139,7 +138,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		//	TODO: Place common movement code here
 		transform.position += _moveSpeed * Time.deltaTime * _moveDirection * speedFactor;
-		transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
+		//transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
 	}
 
 	private void DeactivateBody()
@@ -157,25 +156,23 @@ public class Spirit : MonoBehaviour, IInteractable
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
-		//	TODO: I suppose this can now be a switch statement
-		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant))
+		//	Handle plants
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant)
+			&& other.TryGetComponent(out _possessedPlant)
+			&& _possessedPlant.CanBePossessed)
 		{
 			//  handle normal plants
-			_possessedPlant = other.GetComponent<Plant>();
-			Assert.IsNotNull(_possessedPlant);
-			if (!_possessedPlant.CanBePossessed)
-				return;
 			_possessedPlant.StartPossession();
 			transform.position = _possessedPlant.transform.position;
 			_spiritState = SpiritState.StartingPossession;
 			DeactivateBody();
 
 		}
-		//  handle trick plants
-		else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant))
+		else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
+			&& other.TryGetComponent(out TrickPlant trickPlant)
+			&& trickPlant.CanTrapSpirit)
 		{
-			var trickPlant = other.GetComponent<TrickPlant>();
-			Assert.IsNotNull(trickPlant);
+			//  handle trick plants
 			trickPlant.TrapSpirit(this);
 			DeactivateBody();
 			_spiritState = SpiritState.Trapped;
@@ -183,6 +180,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		}
 		else if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
 		{
+			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();
 		}
 	}
