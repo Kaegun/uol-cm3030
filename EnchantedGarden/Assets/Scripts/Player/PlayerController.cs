@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
 	private float _movementSpeed;
 	private List<IPickUp> _pickups = new List<IPickUp>();
 	private IPickUp _heldObject = null;
+	private PickUpSpawnerBase _spawner;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
@@ -89,6 +90,11 @@ public class PlayerController : MonoBehaviour
 			//Debug.Log($"Before SetParent: {_heldObject.transform.position} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
 			//_heldObject.transform.SetParent(_heldObjectTransform, false);
 			//Debug.Log($"After SetParent: {_heldObject.transform} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
+		}
+		else if (_spawner != null)
+		{
+			_heldObject = _spawner.SpawnPickUp() ;
+			_heldObject.OnPickUp(_heldObjectTransform);
 		}
 	}
 
@@ -180,6 +186,10 @@ public class PlayerController : MonoBehaviour
 			_pickups.Add(pickup);
 			Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
 		}
+		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
+		{
+			_spawner = spawner;
+		}
 	}
 
 	private void OnTriggerExit(Collider other)
@@ -188,6 +198,10 @@ public class PlayerController : MonoBehaviour
 		{
 			_pickups.Remove(pickup);
 			Debug.Log($"PlayerController.OnTriggerExit: {other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count} ");
+		}
+		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
+		{
+			_spawner = null;
 		}
 	}
 }

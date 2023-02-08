@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoText.cs" />
     <Compile Include="Assets\Scripts\Common\PickUpBase.cs" />
+    <Compile Include="Assets\Scripts\Common\PickUpSpawnerBase.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlant.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlantBag.cs" />
+    <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />

@@ -45,7 +45,7 @@ public class GameManager : SingletonBase<GameManager>
 
 		//	TODO: Update DayNightSlider with remaining time
 		//_timeText.text = $"Time: {Level.LevelDuration - _elapsedTime}";
-		if (_elapsedTime >= Level.LevelDuration && !_gameOver.activeSelf)
+		if (_elapsedTime >= Level.LevelDuration /*&& !_gameOver.activeSelf*/)
 		{
 			EndGame();
 		}
