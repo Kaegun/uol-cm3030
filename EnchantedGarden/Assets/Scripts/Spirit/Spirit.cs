@@ -70,6 +70,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		//	TODO: Set movement direction on spawn
 		_moveDirection = transform.position.normalized * -1;
+		//	TODO: We may not want to do this
 		_renderer = GetComponent<Renderer>();
 	}
 
@@ -96,7 +97,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 				break;
 			case SpiritState.StartingPossession:
-				if (_possessedPlant.PossessionThresholdReached())
+				if (_possessedPlant.PossessionThresholdReached)
 				{
 					_possessedPlant.CompletePossession();
 					_spiritState = SpiritState.Possessing;
@@ -143,12 +144,14 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private void DeactivateBody()
 	{
-		_renderer.enabled = false;
+		//	TODO: We may not want to do this
+		//_renderer.enabled = false;
 	}
 
 	private void ActivateBody()
 	{
-		_renderer.enabled = true;
+		//	TODO: We may not want to do this
+		//_renderer.enabled = true;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -160,6 +163,8 @@ public class Spirit : MonoBehaviour, IInteractable
 			//  handle normal plants
 			_possessedPlant = other.GetComponent<Plant>();
 			Assert.IsNotNull(_possessedPlant);
+			if (!_possessedPlant.CanBePossessed)
+				return;
 			_possessedPlant.StartPossession();
 			transform.position = _possessedPlant.transform.position;
 			_spiritState = SpiritState.StartingPossession;

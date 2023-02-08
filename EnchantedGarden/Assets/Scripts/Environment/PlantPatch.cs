@@ -11,6 +11,12 @@ public class PlantPatch : MonoBehaviour
 	private Plant _plantPrefab;
 
 	[SerializeField]
+	private Transform _droppedPosition;
+
+	[SerializeField]
+	private Transform _plantedPosition;
+
+	[SerializeField]
 	private Material _dirtMaterial;
 
 	[SerializeField]
@@ -60,26 +66,15 @@ public class PlantPatch : MonoBehaviour
 		_mesh = GetComponentInChildren<MeshRenderer>();
 		Assert.IsNotNull(_mesh);
 
+		Assert.IsNotNull(_droppedPosition);
+		Assert.IsNotNull(_plantedPosition);
+
 		//	Instantiate a plant at the start of the level if flag is set
 		if (_containsPlant)
 		{
-			//	TODO: Instantiate on the "planted" spot, set plant state to planted
-			_plant = Instantiate(_plantPrefab, transform.position, Quaternion.identity.RandomizeY());
+			//	Instantiate on the "planted" spot, set plant state to planted
+			_plant = Instantiate(_plantPrefab, _plantedPosition.position, Quaternion.identity.RandomizeY());
 			_plant.Replant(this);
 		}
 	}
-
-#if UNITY_EDITOR
-	private void OnDrawGizmos()
-	{
-		//	TODO: This doesn not work as expected
-		if (TryGetComponent<DrawGizmoText>(out var gizmo))
-		{
-			if (_containsPlant)
-			{
-				gizmo.Text += " - Spawns Plant";
-			}
-		}
-	}
-#endif
 }

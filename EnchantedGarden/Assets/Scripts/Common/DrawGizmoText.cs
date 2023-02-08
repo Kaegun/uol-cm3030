@@ -28,6 +28,11 @@ public class DrawGizmoText : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
+		DrawText( _showName ? name : _text);
+	}
+
+	protected void DrawText(string text)
+	{
 		var view = SceneView.currentDrawingSceneView;
 		if (!view)
 			return;
@@ -48,7 +53,6 @@ public class DrawGizmoText : MonoBehaviour
 			normal = new GUIStyleState() { textColor = _color }
 		};
 
-		var text = _showName ? name : _text;
 		Vector2 size = style.CalcSize(new GUIContent(text)) * pixelRatio;
 		var alignedPosition = ((Vector2)screenPosition
 			+ size * ((_anchor + Vector2.left + Vector2.up) / 2f))

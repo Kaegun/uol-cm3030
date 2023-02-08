@@ -27,4 +27,14 @@ public class ScriptableLevelDefinition : ScriptableObject
 	[SerializeField]
 	private SpiritWave[] _waves;
 	public SpiritWave[] Waves { get { return _waves; } }
+
+	//  Factor by how much easier it is to possess the plant
+	[SerializeField]
+	private float _unplantedFactor = 5f;
+	public float UnplantedFactor { get { return _unplantedFactor; } }
+
+	//  Threshold for amount of time plant must be BeingPossessed state before becoming Possessed
+	[SerializeField]
+	private float _possessionThreshold = 10f;
+	public float PossessionThreshold { get { return _possessionThreshold; } }
 }

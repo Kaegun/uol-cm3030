@@ -107,12 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1afbd144f374445ab5bb51770d7c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _adjustmentPosition: {x: 0, y: 0, z: 0}
+  _adjustmentRotation: {x: 0, y: 0, z: 0}
+  _adjustmentScaleFactor: 100
   _plantState: 0
-  _unplantedFactor: 10
-  _possessionThreshold: 0
   _plantMaterial: {fileID: 0}
   _spiritMaterial: {fileID: 0}
-  _mesh: {fileID: 0}
   _planted: 0
   _plantPatch: {fileID: 0}
-  _worldEvents: {fileID: 0}
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}

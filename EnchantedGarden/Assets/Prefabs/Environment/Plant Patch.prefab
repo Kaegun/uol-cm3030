@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7363181223905619535}
   - component: {fileID: 7001392957669965420}
-  - component: {fileID: 6519333776263154904}
   m_Layer: 14
   m_Name: Plant Patch
   m_TagString: Untagged
@@ -30,8 +29,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1555050968434763894}
-  - {fileID: 1065508302508516980}
   - {fileID: 1235267968613408194}
+  - {fileID: 1065508302508516980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,25 +49,10 @@ MonoBehaviour:
   _containsPlant: 0
   _plantPrefab: {fileID: 3986918202461463148, guid: 823740098882c864bb62de2aa52a7fa9,
     type: 3}
+  _droppedPosition: {fileID: 1235267968613408194}
+  _plantedPosition: {fileID: 1065508302508516980}
   _dirtMaterial: {fileID: 0}
   _compostMaterial: {fileID: 0}
---- !u!114 &6519333776263154904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 494673990867804055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5edf943d3ee0ec2468a01a157b47598e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textSize: 15
-  _color: {r: 0.3027597, g: 0.8018868, b: 0.11725702, a: 1}
-  _text: gizmo text
-  _showName: 1
-  _anchor: {x: 0, y: 8}
 --- !u!1 &6383842293683766452
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1065508302508516980}
   m_Layer: 14
-  m_Name: Planted Point
+  m_Name: Planted Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +81,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7363181223905619535}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6805582182691996878
 GameObject:
@@ -202,7 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1235267968613408194}
   m_Layer: 14
-  m_Name: Plant Loose Point
+  m_Name: Dropped Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,5 +204,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7363181223905619535}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

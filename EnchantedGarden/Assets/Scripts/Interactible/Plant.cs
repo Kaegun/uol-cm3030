@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Plant : PickUpBase
 {
@@ -12,15 +13,6 @@ public class Plant : PickUpBase
 
 	[SerializeField]
 	private PlantState _plantState;
-
-	//	TODO: Scriptable Candidate
-	[SerializeField]
-	private float _unplantedFactor = 10.0f;
-
-	//	TODO: Scriptable Candidate
-	//  Threshold for amount of time plant must be BeingPossessed state before becoming Possessed
-	[SerializeField]
-	private float _possessionThreshold;
 
 	//	TODO: VFX Changes
 	[SerializeField]
@@ -55,27 +47,21 @@ public class Plant : PickUpBase
 	}
 
 	//	TODO: Property
-	public bool CanBePossessed()
-	{
-		return _plantState == PlantState.Default;
-	}
+	public bool CanBePossessed => _plantState == PlantState.Default;
 
 	public void StartPossession()
 	{
 		_plantState = PlantState.BecomingPossessed;
-		_worldEvents?.OnPlantPossessing(transform.position);
+		_worldEvents.OnPlantPossessing(transform.position);
 	}
 
 	//	TODO: Property
-	public bool PossessionThresholdReached()
-	{
-		return _possessionProgress >= _possessionThreshold;
-	}
+	public bool PossessionThresholdReached => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
 
 	public void CompletePossession()
 	{
 		_plantState = PlantState.Carried;
-		_possessionProgress = _possessionThreshold;
+		_possessionProgress = GameManager.Instance.Level.PossessionThreshold;
 		if (_plantPatch != null)
 		{
 			_plantPatch.RemovePlant();
@@ -83,7 +69,7 @@ public class Plant : PickUpBase
 		}
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
 
-		_worldEvents?.OnPlantPossessed(transform.position);
+		_worldEvents.OnPlantPossessed(transform.position);
 	}
 
 	public void Dispossess()
@@ -138,12 +124,13 @@ public class Plant : PickUpBase
 		}
 
 		_plantState = PlantState.Default;
-		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
+		transform.rotation = Quaternion.identity.RandomizeY();
 	}
 
 	//  Start is called before the first frame update
 	private void Start()
 	{
+		Assert.IsNotNull(_worldEvents);
 		_possessionProgress = 0;
 	}
 
@@ -152,7 +139,7 @@ public class Plant : PickUpBase
 	{
 		if (_plantState == PlantState.BecomingPossessed)
 		{
-			_possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * _unplantedFactor;
+			_possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
 		}
 
 		//	TODO: Plant possession VFX needs to change
