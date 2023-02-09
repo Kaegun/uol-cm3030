@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
-  _turnSpeed: 360
+  _turnSpeed: 10
   _repelDuration: 3
 --- !u!135 &4107769748018646644
 SphereCollider:
