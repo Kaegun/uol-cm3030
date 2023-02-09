@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
-  m_Name: Level1Music
+  m_Name: Level1MidIntensityAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 40a071b09046cc94f860d368fe9986e7, type: 3}
-  volume: 0.3
+  clip: {fileID: 8300000, guid: e32b3303f6bd2a842b9eeade8fa66721, type: 3}
+  volume: 1
   loop: 1
   spatialBlend: 0

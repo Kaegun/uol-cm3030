@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
-  m_Name: Level2Music
+  m_Name: ShovelDigAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 914a2015725e4994cb303b571b14e1c8, type: 3}
-  volume: 0.3
-  loop: 1
-  spatialBlend: 0
+  clip: {fileID: 8300000, guid: b57578f257e164544b347dd5386ed55f, type: 3}
+  volume: 1
+  loop: 0
+  spatialBlend: 1
