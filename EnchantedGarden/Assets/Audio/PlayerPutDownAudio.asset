@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: PlayerPutDownAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 10bbf836a2bef4d208cae6f69cdd691b, type: 3}
+  clip: {fileID: 8300000, guid: ea6635bc72a0e194ca6c56e92f7c1d94, type: 3}
   volume: 1
   loop: 0
   spatialBlend: 1
