@@ -25,10 +25,7 @@ public class PesticideSpray : PickUpBase, ICombinable
 		_contents.SetActive(true);
 	}
 
-	public bool CanBeCombined()
-	{
-		return _held && !_full;
-	}
+	public bool CanBeCombined => _held && !_full;
 
 	// Start is called before the first frame update
 	private void Start()
@@ -45,7 +42,7 @@ public class PesticideSpray : PickUpBase, ICombinable
 			//	TODO: Use trigger collider
 			// Check for nearby banishable spirits
 			var spirits = Physics.OverlapSphere(transform.position, _actionRadius).
-			Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeBanished()).
+			Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeBanished).
 			Select(s => s.GetComponent<Spirit>()).
 			OrderBy(s => Vector3.Distance(s.transform.position, transform.position)).
 			ToList();

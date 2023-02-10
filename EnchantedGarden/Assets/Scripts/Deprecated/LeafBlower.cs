@@ -33,8 +33,9 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{
+		//	TODO: Collider / Deprecatd
 		var spirits = Physics.OverlapSphere(transform.position, _range).
-			Where(s => (s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled())).
+			Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled).
 			Select(s => s.GetComponent<Spirit>()).
 			ToList();
 
