@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+[RequireComponent(typeof(AudioSource))]
 public class FireSystem : MonoBehaviour
 {
 	[Serializable]
@@ -12,6 +14,14 @@ public class FireSystem : MonoBehaviour
 		public float StartSize;
 	}
 
+	[Header("Audio")]
+	[SerializeField]
+	private ScriptableAudioClip _fireAmbientAudio;
+
+	[SerializeField]
+	private ScriptableAudioClip _fireAddLogAudio;
+
+	[Header("Fire particles")]
 	[SerializeField]
 	private float _fireLifetime = 10.0f;
 
@@ -39,15 +49,63 @@ public class FireSystem : MonoBehaviour
 	[SerializeField]
 	private GameObject _lowFireLogs;
 
+	public bool IsAlive => _currentFireLevel > 0;
+
+	private AudioSource _fireAudioSource;
 	private float _currentFireLevel, _fireLifetimeStep;
+
+	public void AddLog()
+	{
+		Debug.Log("Entering AddLog");
+		_currentFireLevel = _fireLifetime;
+		AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
+		_currentFireLevel = _fireLifetime;
+		SetParticleSystem(_highFireParameters, _highFireLogs);
+		//	Restart particles if stopped
+		if (_fireParticles.isStopped)
+		{
+			_fireParticles.Play();
+			//	Play ambient audio - maybe delayed via CoR?
+			StartCoroutine(StartAmbientAudioCoRoutine());
+		}
+	}
+
+	private IEnumerator StartAmbientAudioCoRoutine()
+	{
+		yield return new WaitForSeconds(_fireAddLogAudio.clip.length * 0.6f);
+		// Play fire ambient noise
+		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
+	}
+
+	//  TODO: Does this need to be in a CoRoutine?
+	//private IEnumerator FireCoroutine()
+	//{
+	//	_currentFuel = _maxFuel;
+	//	_fireParticles.SetActive(true);
+	//	// Play add log to fire noise
+	//	AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
+	//	yield return new WaitForSeconds(_fireAddLogAudio.clip.length * 0.6f);
+	//	// Play fire ambient noise
+	//	AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
+	//	yield return new WaitForSeconds(_maxFuel - _fireAddLogAudio.clip.length * 0.6f);
+	//	// Stop fire
+	//	_fireAudioSource.Stop();
+	//	_fireParticles.SetActive(false);
+	//	_currentFuel = 0;
+	//}
 
 	// Start is called before the first frame update
 	private void Start()
 	{
+		_fireAudioSource = GetComponent<AudioSource>();
+		Assert.IsNotNull(_fireAudioSource);
 		Assert.IsNotNull(_fireParticles);
 
 		_currentFireLevel = _fireLifetime;
 		_fireLifetimeStep = _fireLifetime / 3;
+
+		//	Start Fire Audio
+		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
 	}
 
 	// Update is called once per frame
@@ -56,11 +114,12 @@ public class FireSystem : MonoBehaviour
 		//	Set fire animations based on fire timer level
 		_currentFireLevel -= Time.deltaTime;
 
-		if (_currentFireLevel < 0)
+		if (!IsAlive)
 		{
 			//	Fire is dead
 			DisableLogs();
 			_fireParticles.Stop();
+			_fireAudioSource.Stop();
 		}
 		else if (_currentFireLevel < _fireLifetime - _fireLifetimeStep * 2)
 		{
@@ -88,17 +147,5 @@ public class FireSystem : MonoBehaviour
 		_lowFireLogs.SetActive(false);
 		_mediumFireLogs.SetActive(false);
 		_highFireLogs.SetActive(false);
-	}
-
-	//	TODO: Called when a log has been added - use SO?
-	private void LogAdded()
-	{
-		_currentFireLevel = _fireLifetime;
-		SetParticleSystem(_highFireParameters, _highFireLogs);
-		//	Restart particles if stopped
-		if (_fireParticles.isStopped)
-		{
-			_fireParticles.Play();
-		}
 	}
 }

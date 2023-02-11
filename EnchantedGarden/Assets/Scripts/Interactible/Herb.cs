@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Herb : PickUpBase
 {
-	public override void OnDrop()
+	public override void OnDrop(bool despawn = false)
 	{
 		//	TODO: Make this work with triggers
 		var cauldron = Physics.OverlapSphere(transform.position, 2.0f).

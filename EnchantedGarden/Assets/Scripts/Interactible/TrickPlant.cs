@@ -52,7 +52,7 @@ public class TrickPlant : PickUpBase, IInteractable
 	public new bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
 
 	//	TODO: Change to use trigger collider
-	public override void OnDrop()
+	public override void OnDrop(bool despawn = false)
 	{
 		//	TODO: Convert to use Trigger and Layer
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
@@ -90,12 +90,12 @@ public class TrickPlant : PickUpBase, IInteractable
 	public bool IsInteractable => _plantState == PlantState.TrappingSpirit;
 
 	//	TODO: Check this
-	public void OnPlayerInteract(PlayerInteractionController player)
-	{
-		_trappedSpirit.Banish();
-		_plantState = PlantState.Planted;
-		_trapProgress = 0;
-	}
+	//public void OnPlayerInteract(PlayerInteractionController player)
+	//{
+	//	_trappedSpirit.Banish();
+	//	_plantState = PlantState.Planted;
+	//	_trapProgress = 0;
+	//}
 
 	//	Update is called once per frame
 	private void Update()

@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />
     <Compile Include="Assets\Scripts\Deprecated\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />

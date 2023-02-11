@@ -145,8 +145,7 @@ MonoBehaviour:
   _acceleration: 40
   _maxSpeed: 6
   _turnSpeed: 540
-  _maxAnimationSpeed: 4
-  _interactionRadius: 2
+  _maxAnimationSpeed: 6
   _heldObjectTransform: {fileID: 3261166773604324256}
   _audioSource: {fileID: 5695086480003079404}
   _pickUpAudio: {fileID: 11400000, guid: 069916c6e20718440ba30b22bbb3f654, type: 2}
