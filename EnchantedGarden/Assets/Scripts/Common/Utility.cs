@@ -13,6 +13,12 @@ public static class Utility
 		return new Vector3(v.x, 0.0f, v.z);
 	}
 
+	public static Vector3 RandomUnitVec3()
+    {
+		return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
+
+	}
+
 	public static Quaternion RotateTowards(this Quaternion q, Vector3 position, Vector3 target, float t)
 	{
 		var vectDirection = (target - position).normalized;
