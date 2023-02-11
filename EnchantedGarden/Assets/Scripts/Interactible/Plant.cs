@@ -2,148 +2,182 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Plant : PickUpBase
+public class Plant : PickUpBase, IPossessable
 {
-	enum PlantState
-	{
-		Default,
-		BecomingPossessed,
-		Carried
-	}
+    enum PlantState
+    {
+        Default,
+        BecomingPossessed,
+        Carried
+    }
 
-	[SerializeField]
-	private PlantState _plantState;
+    [SerializeField]
+    private PlantState _plantState;
 
-	//	TODO: VFX Changes
-	[SerializeField]
-	private Material _plantMaterial;
+    //	TODO: VFX Changes
+    [SerializeField]
+    private Material _plantMaterial;
 
-	[SerializeField]
-	private Material _spiritMaterial;
+    [SerializeField]
+    private Material _spiritMaterial;
 
-	[SerializeField]
-	private bool _planted;
+    [SerializeField]
+    private bool _planted;
 
-	[SerializeField]
-	private PlantPatch _plantPatch;
+    [SerializeField]
+    private PlantPatch _plantPatch;
 
-	[SerializeField]
-	private ScriptableWorldEventHandler _worldEvents;
+    [SerializeField]
+    private ScriptableWorldEventHandler _worldEvents;
 
-	//  Amount of time plant has been BeingPossessed. Reset by when dispossessed
-	private float _possessionProgress;
+    //  Amount of time plant has been BeingPossessed. Reset by when dispossessed
+    private float _possessionProgress;
 
-	public bool CanBeReplanted()
-	{
-		return _plantState == PlantState.Default && _plantPatch != null && !_planted;
-	}
+    public bool CanBeReplanted()
+    {
+        return _plantState == PlantState.Default && _plantPatch != null && !_planted;
+    }
 
-	//	TODO: Not sure this is correct
-	public void Replant(PlantPatch parent)
-	{
-		_planted = true;
-		//transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-		_plantPatch = parent;
-	}
+    //	TODO: Not sure this is correct
+    public void Replant(PlantPatch parent)
+    {
+        _planted = true;
+        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        _plantPatch = parent;
+    }
 
-	//	TODO: Property
-	public bool CanBePossessed => _plantState == PlantState.Default;
+    //	TODO: Property
+    public bool CanBePossessed => _plantState == PlantState.Default;
 
-	public void StartPossession()
-	{
-		_plantState = PlantState.BecomingPossessed;
-		_worldEvents.OnPlantPossessing(transform.position);
-	}
+    public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
 
-	//	TODO: Property
-	public bool PossessionThresholdReached => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
+    public void OnPossessionStarted(Spirit possessor)
+    {
+        _plantState = PlantState.BecomingPossessed;
+        _worldEvents.OnPlantPossessing(transform.position);
+    }
 
-	public void CompletePossession()
-	{
-		_plantState = PlantState.Carried;
-		_possessionProgress = GameManager.Instance.Level.PossessionThreshold;
-		if (_plantPatch != null)
-		{
-			_plantPatch.RemovePlant();
-			_plantPatch = null;
-		}
-		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
+    public void WhileCompletingPossession(Spirit possessor)
+    {
+        _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
+        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * 5f);
+    }
 
-		_worldEvents.OnPlantPossessed(transform.position);
-	}
+    public void OnPossessionCompleted(Spirit possessor)
+    {
+        _plantState = PlantState.Carried;
+        _possessionProgress = GameManager.Instance.Level.PossessionThreshold;
+        if (_plantPatch != null)
+        {
+            _plantPatch.RemovePlant();
+            _plantPatch = null;
+        }
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
 
-	public void Dispossess()
-	{
-		_plantState = PlantState.Default;
-		_possessionProgress = 0;
-	}
+        _worldEvents.OnPlantPossessed(transform.position);
+    }
 
-	public new bool CanBePickedUp => _plantState == PlantState.Default;
+    public void OnDispossess()
+    {
+        _plantState = PlantState.Default;
+        _possessionProgress = 0;
+    }
 
-	public new bool CanBeDropped
-	{
-		get
-		{
-			//	TODO: Convert to Trigger + Layer
-			var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-				Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-				ToList();
-			return plantPatches.Count > 0;
-		}
-	}
+    //public void StartPossession()
+    //{
+    //	_plantState = PlantState.BecomingPossessed;
+    //	_worldEvents.OnPlantPossessing(transform.position);
+    //}
 
-	//	This could be a Scriptable Object
-	public Transform PickupAdjustment => throw new System.NotImplementedException();
+    //	TODO: Property
+    //public bool PossessionThresholdReached => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
 
-	public override void OnPickUp(Transform pickupTransform)
-	{
-		_plantState = PlantState.Carried;
-		if (_plantPatch != null)
-		{
-			_plantPatch.RemovePlant();
-			_plantPatch = null;
-			_planted = false;
-		}
+    //public void CompletePossession()
+    //{
+    //	_plantState = PlantState.Carried;
+    //	_possessionProgress = GameManager.Instance.Level.PossessionThreshold;
+    //	if (_plantPatch != null)
+    //	{
+    //		_plantPatch.RemovePlant();
+    //		_plantPatch = null;
+    //	}
+    //	transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
+    //
+    //	_worldEvents.OnPlantPossessed(transform.position);
+    //}
 
-		base.OnPickUp(pickupTransform);
-	}
+    //public void Dispossess()
+    //{
+    //	_plantState = PlantState.Default;
+    //	_possessionProgress = 0;
+    //}
 
-	public override void OnDrop(bool despawn = false)
-	{
-		//	TODO: All of this can be done with Trigger Collider and Layers
-		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-			Select(c => c.GetComponent<PlantPatch>()).
-			OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
-			ToList();
+    public new bool CanBePickedUp => _plantState == PlantState.Default;
 
-		if (plantPatches.Count > 0)
-		{
-			_plantPatch = plantPatches[0];
-			transform.position = _plantPatch.transform.position;
-		}
+    public new bool CanBeDropped
+    {
+        get
+        {
+            //	TODO: Convert to Trigger + Layer
+            var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+                Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+                ToList();
+            return plantPatches.Count > 0;
+        }
+    }
 
-		_plantState = PlantState.Default;
-		transform.rotation = Quaternion.identity.RandomizeY();
-	}
+    //	This could be a Scriptable Object
+    public Transform PickupAdjustment => throw new System.NotImplementedException();
 
-	//  Start is called before the first frame update
-	private void Start()
-	{
-		Assert.IsNotNull(_worldEvents);
-		_possessionProgress = 0;
-	}
+    public override void OnPickUp(Transform pickupTransform)
+    {
+        _plantState = PlantState.Carried;
+        if (_plantPatch != null)
+        {
+            _plantPatch.RemovePlant();
+            _plantPatch = null;
+            _planted = false;
+        }
 
-	//  Update is called once per frame
-	private void Update()
-	{
-		if (_plantState == PlantState.BecomingPossessed)
-		{
-			_possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
-		}
+        base.OnPickUp(pickupTransform);
+    }
 
-		//	TODO: Plant possession VFX needs to change
-		//  Alter plant material based on progress towards possession
-		//_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
-	}
+    public override void OnDrop(bool despawn = false)
+    {
+        //	TODO: All of this can be done with Trigger Collider and Layers
+        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+            Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+            Select(c => c.GetComponent<PlantPatch>()).
+            OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
+            ToList();
+
+        if (plantPatches.Count > 0)
+        {
+            _plantPatch = plantPatches[0];
+            transform.position = _plantPatch.transform.position;
+        }
+
+        _plantState = PlantState.Default;
+        transform.rotation = Quaternion.identity.RandomizeY();
+    }
+
+    //  Start is called before the first frame update
+    private void Start()
+    {
+        Assert.IsNotNull(_worldEvents);
+        _possessionProgress = 0;
+    }
+
+    //  Update is called once per frame
+    private void Update()
+    {
+        if (_plantState == PlantState.BecomingPossessed)
+        {
+            _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
+        }
+
+        //	TODO: Plant possession VFX needs to change
+        //  Alter plant material based on progress towards possession
+        //_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
+    }
 }

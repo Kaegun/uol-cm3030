@@ -35,7 +35,7 @@ public class Spirit : MonoBehaviour
     {
         if (_possessedPlant != null)
         {
-            _possessedPlant.Dispossess();
+            _possessedPlant.OnDispossess();
         }
         GameManager.Instance.ScorePoints(50);
         Destroy(gameObject);
@@ -96,9 +96,10 @@ public class Spirit : MonoBehaviour
                 }*/
                 break;
             case SpiritState.StartingPossession:
-                if (_possessedPlant.PossessionThresholdReached)
+                _possessedPlant.WhileCompletingPossession(this);
+                if (_possessedPlant.PossessionCompleted)
                 {
-                    _possessedPlant.CompletePossession();
+                    _possessedPlant.OnPossessionCompleted(this);
                     _spiritState = SpiritState.Possessing;
                     _moveDirection = (_spawnPos - transform.position).normalized;
                 }
@@ -210,13 +211,15 @@ public class Spirit : MonoBehaviour
     {
         //	Handle plants
         if (other.gameObject.IsLayer(CommonTypes.Layers.Plant)
-            && other.TryGetComponent(out _possessedPlant)
-            && _possessedPlant.CanBePossessed
+            && other.TryGetComponent(out Plant plant)
+            && plant.CanBePossessed
+            && plant == _targetPlant
             && _spiritState == SpiritState.Searching)
         {
             //  handle normal plants
+            _possessedPlant = plant;
             StopAllCoroutines();
-            _possessedPlant.StartPossession();
+            _possessedPlant.OnPossessionStarted(this);
             transform.position = new Vector3(_possessedPlant.transform.position.x, transform.position.y, _possessedPlant.transform.position.z);
             _spiritState = SpiritState.StartingPossession;
             DeactivateBody();
