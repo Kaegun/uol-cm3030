@@ -19,16 +19,31 @@ public class DrawGizmoText : MonoBehaviour
 	[SerializeField]
 	private Vector2 _anchor;
 
+	public string Text
+	{
+		get { return _text; }
+		set { _text = value; }
+	}
+
 #if UNITY_EDITOR
 	private void OnDrawGizmos()
+	{
+		DrawText( _showName ? name : _text);
+	}
+
+	protected void DrawText(string text)
 	{
 		var view = SceneView.currentDrawingSceneView;
 		if (!view)
 			return;
 
 		Vector3 screenPosition = view.camera.WorldToScreenPoint(transform.position);
-		if (screenPosition.y < 0 || screenPosition.y > view.camera.pixelHeight || screenPosition.x < 0 || screenPosition.x > view.camera.pixelWidth || screenPosition.z < 0)
+		if (screenPosition.y < 0 || screenPosition.y > view.camera.pixelHeight
+			|| screenPosition.x < 0 || screenPosition.x > view.camera.pixelWidth
+			|| screenPosition.z < 0)
+		{
 			return;
+		}
 
 		var pixelRatio = EditorGUIUtility.pixelsPerPoint;
 		Handles.BeginGUI();
@@ -38,7 +53,6 @@ public class DrawGizmoText : MonoBehaviour
 			normal = new GUIStyleState() { textColor = _color }
 		};
 
-		var text = _showName ? name : _text;
 		Vector2 size = style.CalcSize(new GUIContent(text)) * pixelRatio;
 		var alignedPosition = ((Vector2)screenPosition
 			+ size * ((_anchor + Vector2.left + Vector2.up) / 2f))

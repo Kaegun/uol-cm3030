@@ -46,7 +46,7 @@ public class ForestSpawner : MonoBehaviour
 			var pos = new Vector3(Random.Range(-x / 2, x / 2), 0, Random.Range(-z / 2, z / 2));
 			if (positions.Where(p => (pos - p).sqrMagnitude / 4 < treeArea / 4).Count() == 0 || guard++ > 5)
 			{
-				Instantiate(tree, transform.position + pos, Quaternion.identity);
+				Instantiate(tree, transform.position + transform.rotation * pos, Quaternion.identity);
 				positions.Add(pos);
 				i++;
 				guard = 0;

@@ -19,6 +19,14 @@ public static class Utility
 		return Quaternion.Slerp(q, Quaternion.LookRotation(vectDirection), t);
 	}
 
+	public static Quaternion RandomizeY(this Quaternion q)
+	{
+		//	TODO: Validate this approach
+		var rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+		//return new Quaternion(q.x, rotation.y, q.z, q.w);
+		return rotation;
+	}
+
 	public static Vector3 GetVector2DFromAngle(float angle)
 	{
 		//	TODO: Check whether this is correct, since it feels very 2D

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 public class Spirit : MonoBehaviour, IInteractable
 {
@@ -28,12 +26,9 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private SpiritState _spiritState;
 	private Plant _possessedPlant;
-	private Renderer _renderer;
+	//private Renderer _renderer;
 
-	public bool CanBeBanished()
-	{
-		return _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
-	}
+	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
 	public void Banish()
 	{
@@ -45,10 +40,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		Destroy(gameObject);
 	}
 
-	public bool CanBeRepelled()
-	{
-		return _spiritState == SpiritState.Searching || _spiritState == SpiritState.Repelled;
-	}
+	public bool CanBeRepelled => _spiritState == SpiritState.Searching || _spiritState == SpiritState.Repelled;
 
 	public void Repel(Vector3 from)
 	{
@@ -71,7 +63,8 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		//	TODO: Set movement direction on spawn
 		_moveDirection = transform.position.normalized * -1;
-		_renderer = GetComponent<Renderer>();
+		//	TODO: We may not want to do this
+		//_renderer = GetComponent<Renderer>();
 	}
 
 	//  Update is called once per frame
@@ -93,20 +86,21 @@ public class Spirit : MonoBehaviour, IInteractable
 					_moveTime = 0;
 				}
 
-				transform.rotation = transform.rotation.RotateTowards(transform.position, _moveDirection, _turnSpeed * Time.deltaTime);
-				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
+				Move();
 
 				break;
 			case SpiritState.StartingPossession:
-				if (_possessedPlant.PossessionThresholdReached())
+				if (_possessedPlant.PossessionThresholdReached)
 				{
 					_possessedPlant.CompletePossession();
 					_spiritState = SpiritState.Possessing;
 					//  use current position to approximate direction fastest to edge of forest
 					_moveDirection = transform.position.normalized;
 				}
+
 				break;
 			case SpiritState.Possessing:
+				//	TODO: Ensure all movement is using common Move method
 				transform.position += _moveSpeed * Time.deltaTime * _moveDirection;
 				_possessedPlant.transform.position = transform.position;
 				break;
@@ -116,7 +110,9 @@ public class Spirit : MonoBehaviour, IInteractable
 				{
 					_spiritState = SpiritState.Searching;
 				}
-				transform.position += _moveSpeed * 2.5f * Time.deltaTime * _moveDirection;
+
+				Move(2.5f);
+
 				break;
 			default:
 				break;
@@ -132,41 +128,46 @@ public class Spirit : MonoBehaviour, IInteractable
 		Destroy(gameObject);
 	}
 
-	private void Move()
+	private void Move(float speedFactor = 1.0f)
 	{
-		//	TODO: Place common movement code here
+		//	TODO: Place common movement code here        
+		transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + _moveDirection, _turnSpeed * Time.deltaTime);
+		transform.position += _moveSpeed * Time.deltaTime * _moveDirection * speedFactor;
+
 	}
 
 	private void DeactivateBody()
 	{
-		_renderer.enabled = false;
+		//	TODO: We may not want to do this
+		//_renderer.enabled = false;
 	}
 
 	private void ActivateBody()
 	{
-		_renderer.enabled = true;
+		//	TODO: We may not want to do this
+		//_renderer.enabled = true;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
-		//	TODO: I suppose this can now be a switch statement
-		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant))
+		//	Handle plants
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant)
+			&& other.TryGetComponent(out _possessedPlant)
+			&& _possessedPlant.CanBePossessed)
 		{
 			//  handle normal plants
-			_possessedPlant = other.GetComponent<Plant>();
-			Assert.IsNotNull(_possessedPlant);
 			_possessedPlant.StartPossession();
 			transform.position = _possessedPlant.transform.position;
 			_spiritState = SpiritState.StartingPossession;
 			DeactivateBody();
 
 		}
-		//  handle trick plants
-		else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant))
+		else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
+			&& other.TryGetComponent(out TrickPlant trickPlant)
+			&& trickPlant.CanTrapSpirit)
 		{
-			var trickPlant = other.GetComponent<TrickPlant>();
-			Assert.IsNotNull(trickPlant);
+			//  handle trick plants
 			trickPlant.TrapSpirit(this);
 			DeactivateBody();
 			_spiritState = SpiritState.Trapped;
@@ -174,6 +175,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		}
 		else if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
 		{
+			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();
 		}
 	}

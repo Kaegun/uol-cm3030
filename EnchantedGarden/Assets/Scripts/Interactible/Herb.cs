@@ -1,14 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class Herb : MonoBehaviour, IPickUp
+public class Herb : PickUpBase
 {
-	public bool CanBeDropped => true;
-
-	public bool CanBePickedUp => true;
-
-	public void OnDrop()
+	public override void OnDrop()
 	{
+		//	TODO: Make this work with triggers
 		var cauldron = Physics.OverlapSphere(transform.position, 2.0f).
 			Where(c => c.GetComponent<Cauldron>() != null).
 			Select(c => c.GetComponent<Cauldron>()).
@@ -23,12 +20,5 @@ public class Herb : MonoBehaviour, IPickUp
 		{
 			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 		}
-	}
-
-	public void OnPickUp() { }
-
-	public GameObject PickUpObject()
-	{
-		return gameObject;
 	}
 }

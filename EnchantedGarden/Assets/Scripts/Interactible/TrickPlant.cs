@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
-public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
+//	TODO: Interactable is deprecating
+public class TrickPlant : PickUpBase, IInteractable
 {
 	enum PlantState
 	{
@@ -15,8 +14,6 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 	[SerializeField]
 	private PlantState _plantState;
 
-	private PlantPatch _plantPatch;
-
 	[SerializeField]
 	private float _growthDuration;
 	private float _growthProgress = 0;
@@ -27,15 +24,19 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 	private float _trapProgress = 0;
 	private Spirit _trappedSpirit;
 
-	[SerializeField]
-	private MeshRenderer _mesh;
+	//[SerializeField]
+	//private MeshRenderer _mesh;
 
+	//	TODO: VFX
 	[SerializeField]
 	private Material _normalMaterial;
+
 	[SerializeField]
 	private Material _trappedMaterial;
 
 	public bool CanTrapSpirit => _fullyGrown && _plantState == PlantState.Planted;
+
+	private PlantPatch _plantPatch;
 
 	public void TrapSpirit(Spirit spirit)
 	{
@@ -48,11 +49,10 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 		return _plantPatch;
 	}
 
-	public bool CanBeDropped => true;
+	public new bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
 
-	public bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
-
-	public void OnDrop()
+	//	TODO: Change to use trigger collider
+	public override void OnDrop()
 	{
 		//	TODO: Convert to use Trigger and Layer
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
@@ -74,25 +74,22 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 		}
 	}
 
-	public void OnPickUp()
+	//	TODO: Consider passing in the attach point to this method
+	public override void OnPickUp(Transform pickupTransform)
 	{
 		_plantState = PlantState.Inactive;
 		if (_plantPatch != null)
 		{
 			_plantPatch.RemovePlant();
 			_plantPatch = null;
-		};
-	}
+		}
 
-	public GameObject PickUpObject()
-	{
-		return gameObject;
+		base.OnPickUp(pickupTransform);
 	}
 
 	public bool IsInteractable => _plantState == PlantState.TrappingSpirit;
 
-	public Transform PickupAdjustment => throw new System.NotImplementedException();
-
+	//	TODO: Check this
 	public void OnPlayerInteract(PlayerInteractionController player)
 	{
 		_trappedSpirit.Banish();
@@ -131,10 +128,11 @@ public class TrickPlant : MonoBehaviour, IPickUp, IInteractable
 				break;
 		}
 
-		// Change scale based on growth progress
+		//	Change scale based on growth progress
 		gameObject.transform.localScale = Vector3.one * System.Math.Min(0.5f + _growthProgress / _growthDuration, 1);
 
-		// Lerp material based on spirit trapped
-		_mesh.material.Lerp(_normalMaterial, _trappedMaterial, _trapProgress / _trapDuration);
+		//	TODO: Replace with VFX 
+		//	Lerp material based on spirit trapped
+		//_mesh.material.Lerp(_normalMaterial, _trappedMaterial, _trapProgress / _trapDuration);
 	}
 }

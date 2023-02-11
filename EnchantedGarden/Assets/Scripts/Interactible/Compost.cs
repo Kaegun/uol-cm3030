@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
+[Obsolete("Don't think we're using this anymore")]
 public class Compost : MonoBehaviour, IPickUp
 {
 	public bool CanBeDropped => true;
@@ -27,7 +29,7 @@ public class Compost : MonoBehaviour, IPickUp
 		}
 	}
 
-	public void OnPickUp() { }
+	public void OnPickUp(Transform _) { }
 
 	public GameObject PickUpObject()
 	{
