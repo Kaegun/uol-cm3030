@@ -12,6 +12,9 @@ public class TrickPlantBag : MonoBehaviour, IPickUp
 	public bool CanBePickedUp => true;
 
 	public bool CanBeDropped => true;
+	
+	public bool PlayAnimation => false;
+
 
 	public GameObject PickUpObject()
 	{
@@ -20,5 +23,5 @@ public class TrickPlantBag : MonoBehaviour, IPickUp
 
 	public void OnPickUp(Transform _) { }
 
-	public void OnDrop() { }
+	public void OnDrop(bool despawn = false) { }
 }

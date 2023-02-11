@@ -24,6 +24,8 @@ public class CompostBin : MonoBehaviour, IPickUp
 
 	public bool CanBeDropped => true;
 
+	public bool PlayAnimation => false;
+
 	public GameObject PickUpObject()
 	{
 		_cooldownProgress = 0;
@@ -32,7 +34,7 @@ public class CompostBin : MonoBehaviour, IPickUp
 
 	public void OnPickUp(Transform _) { }
 
-	public void OnDrop() { }
+	public void OnDrop(bool despawn = false) { }
 
 	//	Start is called before the first frame update
 	private void Start()

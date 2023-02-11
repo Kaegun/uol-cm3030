@@ -53,10 +53,10 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	public bool IsInteractable => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
-	public void OnPlayerInteract(PlayerInteractionController player)
-	{
-		Banish();
-	}
+	//public void OnPlayerInteract(PlayerInteractionController player)
+	//{
+	//	Banish();
+	//}
 
 	//  Start is called before the first frame update
 	private void Start()
@@ -150,7 +150,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
+		//Debug.Log($"Spirt.OnTriggerEnter: {other.gameObject.name}");
 		//	Handle plants
 		if (other.gameObject.IsLayer(CommonTypes.Layers.Plant)
 			&& other.TryGetComponent(out _possessedPlant)

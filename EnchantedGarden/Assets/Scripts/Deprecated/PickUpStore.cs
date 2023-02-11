@@ -11,7 +11,9 @@ public class PickUpStore : MonoBehaviour, IPickUp
 
 	public bool CanBePickedUp => true;
 
-	public void OnDrop() { }
+	public bool PlayAnimation => false;
+
+	public void OnDrop(bool despawn = false) { }
 
 	public void OnPickUp(Transform _) { }
 
