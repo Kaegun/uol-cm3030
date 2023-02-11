@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: PlayerPickUpAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 4eb37002b28fe4876a69f40ef096fc6a, type: 3}
+  clip: {fileID: 8300000, guid: 34dd5631d0a543641b4fdb1bbca84722, type: 3}
   volume: 1
   loop: 0
   spatialBlend: 1

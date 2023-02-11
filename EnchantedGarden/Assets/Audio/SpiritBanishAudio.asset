@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: SpiritBanishAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 66d42bdd5901dd94082e555168e94d60, type: 3}
+  clip: {fileID: 8300000, guid: 0d22c088149e95d4092629f148e9591f, type: 3}
   volume: 1
   loop: 0
   spatialBlend: 1
