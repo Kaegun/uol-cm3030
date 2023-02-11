@@ -1,5 +1,7 @@
 ﻿using Boo.Lang;
+using Cinemachine.Utility;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,13 +21,9 @@ public class PlayerController : MonoBehaviour
 
 	//	Maximum speed set on the animator
 	[SerializeField]
-	private float _maxAnimationSpeed = 4.0f;
+	private float _maxAnimationSpeed = 6.0f;
 
 	[Header("Interaction")]
-	//	The player model's root has a bad scale factor, correct for it here.
-	[SerializeField]
-	private float _scaleCorrection = 100.0f;
-
 	[SerializeField]
 	private Transform _heldObjectTransform;
 
@@ -42,10 +40,12 @@ public class PlayerController : MonoBehaviour
 	private Vector2 _moveDirection = Vector2.zero;
 	private Rigidbody _rb;
 	private Animator _animator;
+	private Camera _camera;
 	private float _movementSpeed;
 	private List<IPickUp> _pickups = new List<IPickUp>();
 	private IPickUp _heldObject = null;
 	private PickUpSpawnerBase _spawner;
+	private Cauldron _cauldron;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
+		//	TODO: I know there's some issues with this approach
+		_camera = Camera.main;
 
 		_inputEventHandler.Movement += OnMovement;
 		_inputEventHandler.InteractionPressed += OnInteractionPressed;
@@ -62,16 +64,22 @@ public class PlayerController : MonoBehaviour
 
 	private void OnInteractionPressed(object sender, float e)
 	{
-		Debug.Log($"PlayerController.InteractionPressed: {_pickups.Count}");
+		Debug.Log($"PlayerController.InteractionPressed: Pickups: {_pickups.Count} | Cauldron: {_cauldron != null} HeldObject: {_heldObject != null}");
 
 		if (_heldObject != null)
 		{
 			if (_heldObject.CanBeDropped)
 			{
-				AudioController.PlayAudio(_audioSource, _putDownAudio);
-				_heldObject.OnDrop();
-				_heldObject = null;
-				return;
+				if (_cauldron != null)
+				{
+					HandleCauldronInteraction();
+					return;
+				}
+				else
+				{
+					DropObject(false, true);
+					return;
+				}
 			}
 			else
 			{
@@ -81,19 +89,12 @@ public class PlayerController : MonoBehaviour
 		else if (_pickups.Count > 0)
 		{
 			AudioController.PlayAudio(_audioSource, _pickUpAudio);
-			//	TODO: Refactor below
 			_heldObject = PickupCorrectObject();
 			_heldObject.OnPickUp(_heldObjectTransform);
-
-			////	TODO: Store the orientation of the object, and replace it with the same orientation again
-
-			//Debug.Log($"Before SetParent: {_heldObject.transform.position} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
-			//_heldObject.transform.SetParent(_heldObjectTransform, false);
-			//Debug.Log($"After SetParent: {_heldObject.transform} | {_heldObject.transform.localScale} | {_heldObject.transform.rotation}");
 		}
 		else if (_spawner != null)
 		{
-			_heldObject = _spawner.SpawnPickUp() ;
+			_heldObject = _spawner.SpawnPickUp();
 			_heldObject.OnPickUp(_heldObjectTransform);
 		}
 	}
@@ -103,6 +104,34 @@ public class PlayerController : MonoBehaviour
 		var heldObject = _pickups[0];
 		_pickups.RemoveAt(0);
 		return heldObject;
+	}
+
+	private void DropObject(bool destroy, bool playAudio)
+	{
+		if (playAudio)
+			AudioController.PlayAudio(_audioSource, _putDownAudio);
+
+		_heldObject?.OnDrop(destroy);
+		_heldObject = null;
+	}
+
+	private void HandleCauldronInteraction()
+	{
+		Debug.Log($"{nameof(HandleCauldronInteraction)} - ({_heldObject.GetType()})");
+		if (_heldObject is Log)
+		{
+			Debug.Log("Adding a log");
+			_cauldron.AddLog();
+			DropObject(true, false);
+		}
+		else if (_heldObject is Herb)
+		{
+			_cauldron.AddHerb();
+		}
+		else if (_heldObject is PesticideSpray)
+		{
+			_cauldron.FillPesticideSpray(_heldObject as PesticideSpray);
+		}
 	}
 
 	private void OnInteractionReleased(object sender, float e)
@@ -136,18 +165,13 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		/*	TODO: Review the movement again. There's physics rotation and model rotation being applied, 
-		 *		as well as shifting the direction of the force applied and then force is being nullified,
-		 *		depending on keypresses. It feels like there are redundant actions.
-		 */
 		//	If there are any keys down, we should move
 		if (IsMoving)
 		{
-			// Rotate player model in direction of movement
+			// Rotate player model in direction of movement - adjust for camera
+			//	TODO: Apply camera transform to move vector
 			var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, _moveDirection), 0);
 			var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
-			//_playerModel.transform.rotation = turnDirection.normalized;
-			transform.rotation = turnDirection.normalized;
 
 			_rb.MoveRotation(turnDirection.normalized);
 
@@ -181,6 +205,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
 		if (other.TryGetComponent<IPickUp>(out var pickup))
 		{
 			_pickups.Add(pickup);
@@ -189,6 +214,11 @@ public class PlayerController : MonoBehaviour
 		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
 		{
 			_spawner = spawner;
+		}
+		else if (other.TryGetComponent<Cauldron>(out var cauldron))
+		{
+			Debug.Log($"Cauldron assigned: WTF");
+			_cauldron = cauldron;
 		}
 	}
 
@@ -203,5 +233,10 @@ public class PlayerController : MonoBehaviour
 		{
 			_spawner = null;
 		}
+		else if (other.TryGetComponent(out _cauldron))
+		{
+			_cauldron = null;
+		}
+
 	}
 }

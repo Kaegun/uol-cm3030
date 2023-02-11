@@ -1,32 +1,17 @@
 ﻿using System.Collections;
 using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 
-//  TODO: Split fire system code into separate class
+[RequireComponent(typeof(AudioSource))]
 public class Cauldron : MonoBehaviour
 {
-	//	TODO: @HBG - Put the fire audio on the Fire System
-	[SerializeField]
-	private AudioSource _fireAudioSource;
-	[SerializeField]
-	private ScriptableAudioClip _fireAmbientAudio;
-	[SerializeField]
-	private ScriptableAudioClip _fireAddLogAudio;
-
-	[SerializeField]
-	private AudioSource _cauldronAudioSource;
-	[SerializeField]
-	private ScriptableAudioClip _cauldronCombineAudio;
+	[Header("Audio")]
 	[SerializeField]
 	private ScriptableAudioClip _cauldronBubbleAudio;
 
 	[SerializeField]
-	private GameObject _fireParticles;
-
-	[SerializeField]
-	private float _maxFuel = 10f;
-	private float _currentFuel;
+	private ScriptableAudioClip _cauldronCombineAudio;
 
 	[SerializeField]
 	private int _maxUses = 5;
@@ -36,32 +21,43 @@ public class Cauldron : MonoBehaviour
 	private float _combineDuration;
 	private float _combineProgress;
 
-	[SerializeField]
-	private GameObject _progressDots;
+	//	TODO: Build a UI component
+	//[SerializeField]
+	//private GameObject _progressDots;
 
-	[SerializeField]
-	private TextMeshPro _usesText;
+	//[SerializeField]
+	//private TextMeshPro _usesText;
 
-	private Coroutine _fireCoroutine;
+	private FireSystem _fireSystem;
+	private AudioSource _cauldronAudioSource;
 
 	public void AddLog()
 	{
-		// Restart FireCoroutine
-		StopCoroutine(_fireCoroutine);
-		_fireCoroutine = StartCoroutine(FireCoroutine());
+		_fireSystem.AddLog();
 	}
 
 	public void AddHerb()
 	{
 		_currentUses = _maxUses;
-		_usesText.text = $"{_currentUses}/{_maxUses}";
+		//_usesText.text = $"{_currentUses}/{_maxUses}";
+	}
+
+	public void FillPesticideSpray(PesticideSpray pesticideSpray)
+	{
+		//	Do pesticide stuff
 	}
 
 	// Start is called before the first frame update
 	private void Start()
 	{
+		_fireSystem = GetComponentInChildren<FireSystem>();
+		Assert.IsNotNull(_fireSystem);
+		if (!TryGetComponent(out _cauldronAudioSource))
+		{
+			Assert.IsNotNull(_cauldronAudioSource);
+		}
+
 		_currentUses = _maxUses;
-		_fireCoroutine = StartCoroutine(FireCoroutine());
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
@@ -77,7 +73,7 @@ public class Cauldron : MonoBehaviour
 		//	Could this be done in a Co-Routine?
 		if (combinables.Count > 0 && CanUseCauldron)
 		{
-			_progressDots.SetActive(true);
+			//_progressDots.SetActive(true);
 			_combineProgress += Time.deltaTime;
 			if (_combineProgress >= _combineDuration)
 			{
@@ -89,34 +85,17 @@ public class Cauldron : MonoBehaviour
 		}
 		else
 		{
-			_progressDots.SetActive(false);
+			//_progressDots.SetActive(false);
 			_combineProgress = 0;
 		}
 	}
 
-	private bool CanUseCauldron => _currentUses > 0 && _currentFuel > 0;
+	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;
 
 	private void UsePotion()
 	{
 		_currentUses -= 1;
-		_usesText.text = $"{_currentUses}/{_maxUses}";
-	}
-
-	//  TODO: Does this need to be in a CoRoutine?
-	private IEnumerator FireCoroutine()
-	{
-		_currentFuel = _maxFuel;
-		_fireParticles.SetActive(true);
-		// Play add log to fire noise
-		AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
-		yield return new WaitForSeconds(_fireAddLogAudio.clip.length * 0.6f);
-		// Play fire ambient noise
-		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
-		yield return new WaitForSeconds(_maxFuel - _fireAddLogAudio.clip.length * 0.6f);
-		// Stop fire
-		_fireAudioSource.Stop();
-		_fireParticles.SetActive(false);
-		_currentFuel = 0;
+		//_usesText.text = $"{_currentUses}/{_maxUses}";
 	}
 
 	private IEnumerator CauldronCombineCoroutine()

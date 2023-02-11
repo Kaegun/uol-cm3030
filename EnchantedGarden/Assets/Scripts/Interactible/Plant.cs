@@ -108,7 +108,7 @@ public class Plant : PickUpBase
 		base.OnPickUp(pickupTransform);
 	}
 
-	public override void OnDrop()
+	public override void OnDrop(bool despawn = false)
 	{
 		//	TODO: All of this can be done with Trigger Collider and Layers
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).

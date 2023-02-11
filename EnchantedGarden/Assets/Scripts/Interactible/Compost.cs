@@ -9,7 +9,9 @@ public class Compost : MonoBehaviour, IPickUp
 
 	public bool CanBePickedUp => true;
 
-	public void OnDrop()
+	public bool PlayAnimation => false;
+
+	public void OnDrop(bool despawn = false)
 	{
 		var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
 			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsCompost()).

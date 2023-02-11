@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb0a68bfba8f104d8a1824943897458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionDuration: 1
   _adjustmentPosition: {x: 11, y: -76.8, z: 4.6}
   _adjustmentRotation: {x: -8.815, y: 114.074, z: -0.47}
   _adjustmentScaleFactor: 100
+  _actionDuration: 1
 --- !u!136 &2934656443759496695
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.28
+  m_Radius: 0.32
   m_Height: 1.7724732
   m_Direction: 1
   m_Center: {x: 0.05401024, y: 0.8862366, z: 0}

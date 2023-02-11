@@ -69,12 +69,12 @@
     <Compile Include="Assets\Scripts\Common\PickUpBase.cs" />
     <Compile Include="Assets\Scripts\Common\PickUpSpawnerBase.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
+    <Compile Include="Assets\Scripts\Common\UiSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />
     <Compile Include="Assets\Scripts\Deprecated\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
@@ -110,7 +110,6 @@
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\UI\DayNightSlider.cs" />
-    <Compile Include="Assets\Scripts\UI\TestSunSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Firefly.shader" />
