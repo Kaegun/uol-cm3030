@@ -1,25 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : SingletonBase<GameManager>
 {
-	//	TODO: Move these from here, I don't "think" we want to do it this way.
-	//	Build a UI with some Events on
-	//[SerializeField]
-	//private Text _scoreText;
-
-	//[SerializeField]
-	//private Text _timeText;
-
-	//[SerializeField]
-	//private Text _gameOverText;
-
 	[SerializeField]
 	private ScriptableLevelDefinition _level;
-	public ScriptableLevelDefinition Level { get { return _level; } }
+	public ScriptableLevelDefinition Level => _level;
 
-	[SerializeField]
-	private GameObject _gameOver;
+	public float Elapsed => _elapsedTime;
 
 	private int _score;
 	private float _elapsedTime = 0f;
@@ -35,7 +22,6 @@ public class GameManager : SingletonBase<GameManager>
 	private void Start()
 	{
 		_score = 0;
-		//_gameOver.SetActive(false);
 	}
 
 	//	Update is called once per frame

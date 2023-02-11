@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 18, y: 14, z: -2}
+  m_FollowOffset: {x: 12, y: 12, z: 0}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 1035471166776981175}
   - component: {fileID: 1035471166776981174}
   - component: {fileID: 1035471166776981173}
+  - component: {fileID: 5990276286315626868}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -165,13 +166,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035471166776981131}
-  m_LocalRotation: {x: 0.22515231, y: -0.63216954, z: 0.19931984, w: 0.71410066}
-  m_LocalPosition: {x: 18.779999, y: 14, z: -7.4400005}
+  m_LocalRotation: {x: 0.2541678, y: -0.6556348, z: 0.2504161, w: 0.6654574}
+  m_LocalPosition: {x: 12.78, y: 12, z: -5.4400005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1035471166312442942}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 41.808002, y: -90, z: 0}
 --- !u!20 &1035471166776981168
 Camera:
   m_ObjectHideFlags: 0
@@ -288,6 +289,18 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5990276286315626868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035471166776981131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceea37e7d6b391b489f47e046a60d3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035471167418398105
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,14 +325,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035471167418398105}
-  m_LocalRotation: {x: 0.22515231, y: -0.63216954, z: 0.19931984, w: 0.71410066}
-  m_LocalPosition: {x: 18.779999, y: 14, z: -7.4400005}
+  m_LocalRotation: {x: 0.2541678, y: -0.6556348, z: 0.2504161, w: 0.6654574}
+  m_LocalPosition: {x: 12.78, y: 12, z: -5.4400005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1035471166105307239}
   m_Father: {fileID: 1035471166312442942}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 41.808002, y: -90, z: 0}
 --- !u!114 &1035471167418398107
 MonoBehaviour:
   m_ObjectHideFlags: 0
