@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Launcher.unity
     guid: 62efb91626aa0384fb48e8798f8c76fe
   - enabled: 1
-    path: Assets/Scenes/Tests/ju-template-level.unity
-    guid: 09432e6baefe1a645b9a22bcfbb43037
+    path: Assets/Scenes/Subscenes/UI Overlay.unity
+    guid: 66fdc981ca375fe4abb5bda5a72db4f4
+  - enabled: 1
+    path: Assets/Scenes/Tests/ju-beta-1.unity
+    guid: 73775ed45f9680f4ca0957eaa7e9fada
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7b52f3648676e194dace18e95d10dd52,
       type: 2}

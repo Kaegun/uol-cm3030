@@ -24,4 +24,9 @@
 		public const string ForwardSpeed = "ForwardSpeed";
 		public const string Alert = "Alert";
 	}
+
+	public static class Scenes
+	{
+		public const string UI = "UI Overlay";
+	}
 }

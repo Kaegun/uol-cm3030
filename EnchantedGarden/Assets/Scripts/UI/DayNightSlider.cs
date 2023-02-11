@@ -8,6 +8,11 @@ public class DayNightSlider : MonoBehaviour
 
 	[SerializeField]
 	private float _cycleTime = 30;
+	public float CycleTime
+	{
+		get { return _cycleTime; }
+		set { _cycleTime = value; }
+	}
 
 	private void Start()
 	{
@@ -17,7 +22,7 @@ public class DayNightSlider : MonoBehaviour
 
 	// Update is called once per frame
 	private void Update()
-	{
-		_slider.value = Time.time / _cycleTime;
+	{		
+		_slider.value = GameManager.Instance.Elapsed / GameManager.Instance.Level.LevelDuration;
 	}
 }

@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Common\PickUpBase.cs" />
     <Compile Include="Assets\Scripts\Common\PickUpSpawnerBase.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
+    <Compile Include="Assets\Scripts\Common\UiSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\UI\DayNightSlider.cs" />
-    <Compile Include="Assets\Scripts\UI\TestSunSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Firefly.shader" />
