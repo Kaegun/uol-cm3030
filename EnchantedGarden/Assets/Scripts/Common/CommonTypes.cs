@@ -1,4 +1,4 @@
-﻿public static class CommonTypes
+public static class CommonTypes
 {
     public enum Layers
     {
@@ -26,8 +26,10 @@
         public const string Alert = "Alert";
     }
 
-    public static class Scenes
-    {
-        public const string UI = "UI Overlay";
-    }
+	public static class Scenes
+	{
+		public const string UI = "UI Overlay";
+		public const string GameOver = "Game Over";
+		public const string Level1 = "ju-beta-1";   //	TODO: Name properly
+	}
 }
