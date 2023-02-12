@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 3
   _turnSpeed: 10
-  _repelDuration: 3
+  _bodyObj: {fileID: 3262456472504981868}
 --- !u!135 &4107769748018646644
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -172,6 +172,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4ccb47f8161ed3d4e8b6c48cfa92371f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e42e51479827d4491e40bdad502ec3, type: 3}
+--- !u!1 &3262456472504981868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39e42e51479827d4491e40bdad502ec3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2416175915241858109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2741920646490817494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39e42e51479827d4491e40bdad502ec3,
