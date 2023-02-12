@@ -124,9 +124,10 @@ public class PlayerController : MonoBehaviour
 			_cauldron.AddLog();
 			DropObject(true, false);
 		}
-		else if (_heldObject is Herb)
+		else if (_heldObject is Ingredient)
 		{
 			_cauldron.AddHerb();
+			DropObject(true, false);
 		}
 		else if (_heldObject is PesticideSpray)
 		{
@@ -208,7 +209,8 @@ public class PlayerController : MonoBehaviour
 		Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
 		if (other.TryGetComponent<IPickUp>(out var pickup))
 		{
-			_pickups.Add(pickup);
+			if (pickup.CanBePickedUp)
+				_pickups.Add(pickup);
 			Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
 		}
 		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))

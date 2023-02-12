@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4417145759998793801}
   - component: {fileID: 6921358624055933018}
   - component: {fileID: 6923104278581943940}
+  - component: {fileID: 4762822422415266324}
+  - component: {fileID: 6248518272842234668}
   m_Layer: 0
   m_Name: Alchemy Ingredient Position
   m_TagString: Untagged
@@ -63,6 +65,33 @@ MonoBehaviour:
   _text: gizmo text
   _showName: 1
   _anchor: {x: 0, y: 3}
+--- !u!114 &4762822422415266324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475707280554230199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e317a3b19d374324cb9b3e117120c84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnedPrefab: {fileID: 160420618508155098, guid: 1d2bb524f774d674aa5bf112202c9c4c,
+    type: 3}
+--- !u!135 &6248518272842234668
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475707280554230199}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6965466810908475853
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +103,8 @@ GameObject:
   - component: {fileID: 385895737321599249}
   - component: {fileID: 5087239244546211219}
   - component: {fileID: 9214685483645853711}
+  - component: {fileID: 6148302126787736348}
+  - component: {fileID: 465344454195361767}
   m_Layer: 0
   m_Name: Trick Plant Position
   m_TagString: Untagged
@@ -126,6 +157,33 @@ MonoBehaviour:
   _text: gizmo text
   _showName: 1
   _anchor: {x: 0, y: 3}
+--- !u!114 &6148302126787736348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6965466810908475853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a347a7463728f4692daf8b48ce06c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnedPrefab: {fileID: 2017128806680820391, guid: 7e699bd45987b7641945329f2baf7c17,
+    type: 3}
+--- !u!135 &465344454195361767
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6965466810908475853}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7175782575260627793
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +195,7 @@ GameObject:
   - component: {fileID: 4280819411076254865}
   - component: {fileID: 1664040393578508323}
   - component: {fileID: 1731253914001906006}
+  - component: {fileID: 8560411283421999011}
   m_Layer: 0
   m_Name: Potion Position
   m_TagString: Untagged
@@ -189,6 +248,19 @@ MonoBehaviour:
   _text: gizmo text
   _showName: 1
   _anchor: {x: 0, y: 3}
+--- !u!135 &8560411283421999011
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175782575260627793}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8734860308272779372
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +326,7 @@ MonoBehaviour:
     _prefab: {fileID: 160420618508155098, guid: 1d2bb524f774d674aa5bf112202c9c4c,
       type: 3}
     _position: {fileID: 4417145759998793801}
-    _localScale: 2
+    _localScale: 1
     _spawnRadius: 2
     _numberToSpawn: 3
   _potion:
@@ -268,7 +340,7 @@ MonoBehaviour:
     _prefab: {fileID: 2017128806680820391, guid: 7e699bd45987b7641945329f2baf7c17,
       type: 3}
     _position: {fileID: 385895737321599249}
-    _localScale: 0.3
+    _localScale: 1
     _spawnRadius: 2.4
     _numberToSpawn: 3
 --- !u!1001 &7934817094363948670

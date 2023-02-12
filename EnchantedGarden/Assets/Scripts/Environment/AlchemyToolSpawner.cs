@@ -11,10 +11,6 @@ public class AlchemyToolSpawner : MonoBehaviour
 	[SerializeField]
 	private StaticSpawnedObject _trickPlant;
 
-	//	TODO: Spawn a couple on the table
-	private const int _trickPlantRows = 2;
-	private const int _trickPlantColumns = 2;
-
 	//  Start is called before the first frame update
 	private void Start()
 	{

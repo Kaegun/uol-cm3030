@@ -1,19 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-//  TODO: Do not use embedded classes
-//  TODO: This is a good use case for a scriptable object -> One per level
-[Serializable]
-// Class rather than struct to allow mutability when stored in a queue
-public class SpiritWave
-{
-	// number of spirits spawned in the wave
-	public int Count;
-
-	// delay from previous wave to this wave
-	public float Delay;
-}
-
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/LevelDefinition")]
 public class ScriptableLevelDefinition : ScriptableObject
 {
@@ -37,4 +24,7 @@ public class ScriptableLevelDefinition : ScriptableObject
 	[SerializeField]
 	private float _possessionThreshold = 10f;
 	public float PossessionThreshold { get { return _possessionThreshold; } }
+
+	[SerializeField]
+	private CauldronSettings _cauldronSettings;
 }

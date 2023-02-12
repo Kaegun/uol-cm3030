@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,13 +20,6 @@ public class Cauldron : MonoBehaviour
 	private float _combineDuration;
 	private float _combineProgress;
 
-	//	TODO: Build a UI component
-	//[SerializeField]
-	//private GameObject _progressDots;
-
-	//[SerializeField]
-	//private TextMeshPro _usesText;
-
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
 
@@ -38,8 +30,11 @@ public class Cauldron : MonoBehaviour
 
 	public void AddHerb()
 	{
-		_currentUses = _maxUses;
-		//_usesText.text = $"{_currentUses}/{_maxUses}";
+		if (_fireSystem.IsAlive)
+		{
+			_currentUses = _maxUses;
+			StartCoroutine(CauldronCombineCoroutine());
+		}
 	}
 
 	public void FillPesticideSpray(PesticideSpray pesticideSpray)
@@ -65,29 +60,29 @@ public class Cauldron : MonoBehaviour
 	private void Update()
 	{
 		//	TODO: Could we use a Trigger Collider here?
-		var combinables = Physics.OverlapSphere(transform.position, 2f)
-			.Where(c => c.GetComponent<ICombinable>() != null && c.GetComponent<ICombinable>().CanBeCombined)
-			.Select(c => c.GetComponent<ICombinable>())
-			.ToList();
+		//var combinables = Physics.OverlapSphere(transform.position, 2f)
+		//	.Where(c => c.GetComponent<ICombinable>() != null && c.GetComponent<ICombinable>().CanBeCombined)
+		//	.Select(c => c.GetComponent<ICombinable>())
+		//	.ToList();
 
 		//	Could this be done in a Co-Routine?
-		if (combinables.Count > 0 && CanUseCauldron)
-		{
-			//_progressDots.SetActive(true);
-			_combineProgress += Time.deltaTime;
-			if (_combineProgress >= _combineDuration)
-			{
-				UsePotion();
-				combinables[0].OnCombine();
-				_combineProgress = 0;
-				StartCoroutine(CauldronCombineCoroutine());
-			}
-		}
-		else
-		{
-			//_progressDots.SetActive(false);
-			_combineProgress = 0;
-		}
+		//if (combinables.Count > 0 && CanUseCauldron)
+		//{
+		//	//_progressDots.SetActive(true);
+		//	_combineProgress += Time.deltaTime;
+		//	if (_combineProgress >= _combineDuration)
+		//	{
+		//		UsePotion();
+		//		//combinables[0].OnCombine();
+		//		_combineProgress = 0;
+		//		StartCoroutine(CauldronCombineCoroutine());
+		//	}
+		//}
+		//else
+		//{
+		//	//_progressDots.SetActive(false);
+		//	_combineProgress = 0;
+		//}
 	}
 
 	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;

@@ -62,6 +62,7 @@
     <Compile Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Demos\Environment_Free\MouseLook.cs" />
     <Compile Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Demos\Environment_Free\PlayerMovement.cs" />
     <Compile Include="Assets\Imported\SkythianCat\Glowing_Forest\Scripts\WaterGroup.cs" />
+    <Compile Include="Assets\Scripts\Common\CauldronSettings.cs" />
     <Compile Include="Assets\Scripts\Common\CommonTypes.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoMesh.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\Common\PickUpBase.cs" />
     <Compile Include="Assets\Scripts\Common\PickUpSpawnerBase.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
+    <Compile Include="Assets\Scripts\Common\SpiritWave.cs" />
     <Compile Include="Assets\Scripts\Common\StaticSpawnedObject.cs" />
     <Compile Include="Assets\Scripts\Common\UiSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="Assets\Scripts\Interactible\Compost.cs" />
     <Compile Include="Assets\Scripts\Interactible\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Interactible\FireSystem.cs" />
-    <Compile Include="Assets\Scripts\Interactible\Herb.cs" />
+    <Compile Include="Assets\Scripts\Interactible\Ingredient.cs" />
     <Compile Include="Assets\Scripts\Interactible\IngredientSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\Log.cs" />
     <Compile Include="Assets\Scripts\Interactible\PesticideSpray.cs" />

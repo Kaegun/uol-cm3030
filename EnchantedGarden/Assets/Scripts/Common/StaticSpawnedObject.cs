@@ -73,6 +73,10 @@ public class StaticSpawnedObject
 	{
 		var spawned = GameObject.Instantiate(_prefab, _position);
 		spawned.transform.localScale *= _localScale;
+
+		if (spawned.TryGetComponent<IPickUp>(out var pickup))
+			pickup.CanBePickedUp = pickup.Despawns = false;
+
 		return spawned;
 	}
 }

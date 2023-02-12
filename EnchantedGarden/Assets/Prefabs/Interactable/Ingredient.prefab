@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8404737696974941040}
-  - component: {fileID: 8619781826045279911}
+  - component: {fileID: 4351325924637368919}
   - component: {fileID: 5768666944810572247}
   m_Layer: 0
   m_Name: Ingredient
@@ -27,12 +27,12 @@ Transform:
   m_GameObject: {fileID: 160420618508155098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8619781826045279911
+--- !u!114 &4351325924637368919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 160420618508155098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e317a3b19d374324cb9b3e117120c84a, type: 3}
+  m_Script: {fileID: 11500000, guid: eecf6c78e54c523438347afe1bde9270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _adjustmentPosition: {x: -3.4, y: 13.6, z: 8.8}
+  _adjustmentRotation: {x: 11.221, y: 75.996, z: 208.811}
+  _adjustmentScaleFactor: 100
+  _despawns: 1
+  _despawnTimeout: 5
+  _playAnimation: 0
   _ingredientPrefabs:
-  - {fileID: 7570405467501425085, guid: 0ab22827d0f3f0b40a97e9430d684283, type: 3}
   - {fileID: 8954726919292774957, guid: eae42a57b046b1a42a79ae6319bccca3, type: 3}
-  - {fileID: 7749838506462483410, guid: d354c41a99993964baca0254487708d1, type: 3}
-  - {fileID: 3318689441606926373, guid: d3ee913ed32937344b0587e70dc777a2, type: 3}
 --- !u!135 &5768666944810572247
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -60,5 +63,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.3, z: 0}

@@ -9,8 +9,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
 
-	//	UI Events
-	public event EventHandler<ScriptableLevelDefinition> UiSceneLoaded;
+//	UI Events
 
 	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
 	{
@@ -25,10 +24,5 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnPlantPossessed(Vector3 location)
 	{
 		ExecuteEvent(PlantPossessed, location);
-	}
-
-	public void OnUiSceneLoaded(ScriptableLevelDefinition level)
-	{
-		ExecuteEvent(UiSceneLoaded, level);
 	}
 }

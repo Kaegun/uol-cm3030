@@ -1,5 +1,2 @@
-﻿public class WoodPile : PickUpSpawnerBase
-{
-	//	Why?
-
-}
+﻿//	All code in base
+public class WoodPile : PickUpSpawnerBase { }
