@@ -46,10 +46,13 @@ public class Plant : PickUpBase, IPossessable
         _plantPatch = parent;
     }
 
-    //	TODO: Property
     public bool CanBePossessed => _plantState == PlantState.Default;
 
     public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
+
+    public Transform Transform => transform;
+
+    public GameObject GameObject => gameObject;
 
     public void OnPossessionStarted(Spirit possessor)
     {
@@ -60,7 +63,8 @@ public class Plant : PickUpBase, IPossessable
     public void WhileCompletingPossession(Spirit possessor)
     {
         _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
-        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * 5f);
+        // TODO: Refactor to move smoothly to a specific position on the spirit
+        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * _possessionProgress / GameManager.Instance.Level.PossessionThreshold);
     }
 
     public void OnPossessionCompleted(Spirit possessor)
@@ -171,10 +175,10 @@ public class Plant : PickUpBase, IPossessable
     //  Update is called once per frame
     private void Update()
     {
-        if (_plantState == PlantState.BecomingPossessed)
-        {
-            _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
-        }
+        //if (_plantState == PlantState.BecomingPossessed)
+        //{
+        //    _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
+        //}
 
         //	TODO: Plant possession VFX needs to change
         //  Alter plant material based on progress towards possession
