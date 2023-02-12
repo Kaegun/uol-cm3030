@@ -4,9 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Events/WorldEvents")]
 public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
+	//	Plant Events
 	public event EventHandler<Vector3[]> SpiritWaveSpawned;
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
+
+//	UI Events
 
 	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
 	{

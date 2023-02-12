@@ -16,15 +16,6 @@ public class PlantPatch : MonoBehaviour
 	[SerializeField]
 	private Transform _plantedPosition;
 
-	[SerializeField]
-	private Material _dirtMaterial;
-
-	[SerializeField]
-	private Material _compostMaterial;
-
-	private bool _containsCompost = false;
-	[Obsolete("Removing Compost")]
-	private MeshRenderer _mesh;
 	private Plant _plant;
 
 	public bool ContainsPlant => _containsPlant;
@@ -41,32 +32,9 @@ public class PlantPatch : MonoBehaviour
 		_plant = null;
 	}
 
-	[Obsolete("Removing Compost")]
-	public bool ContainsCompost()
-	{
-		return _containsCompost;
-	}
-
-	[Obsolete("Removing Compost")]
-	public void AddCompost()
-	{
-		_containsCompost = true;
-		_mesh.material = _compostMaterial;
-	}
-
-	[Obsolete("Removing Compost")]
-	public void RemoveCompost()
-	{
-		_containsCompost = false;
-		_mesh.material = _dirtMaterial;
-	}
-
 	private void Start()
 	{
-		_mesh = GetComponentInChildren<MeshRenderer>();
-		Assert.IsNotNull(_mesh);
-
-		Assert.IsNotNull(_droppedPosition);
+			Assert.IsNotNull(_droppedPosition);
 		Assert.IsNotNull(_plantedPosition);
 
 		//	Instantiate a plant at the start of the level if flag is set

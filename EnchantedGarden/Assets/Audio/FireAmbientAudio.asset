@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FireAmbientAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 2feae24658ec6d049b113dd0e6e950a0, type: 3}
-  volume: 1
+  volume: 0.2
   loop: 1
   spatialBlend: 1

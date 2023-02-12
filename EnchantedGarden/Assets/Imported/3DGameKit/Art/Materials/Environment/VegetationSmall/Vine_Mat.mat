@@ -4,11 +4,13 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Vine_Mat
-  m_Shader: {fileID: 4800000, guid: 9624a55c514d0424c9483ac44daa604d, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
+  m_Shader: {fileID: -6465566751694194690, guid: 41cb31b545a9597439610588b9ce70dd,
+    type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -71,6 +73,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_31CEE2AA: 1.38
+    - Vector1_7B0D7500: 0.73
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -91,6 +95,9 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
+    - Color_962C92FC: {r: 0.29236382, g: 0.8490566, b: 0.46050483, a: 0}
+    - Color_CE1F1BEC: {r: 0.3829119, g: 0.21052866, b: 0.7830189, a: 1}
+    - Vector3_2C87DE24: {r: 0, g: 0.75, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _NoiseAmount: {r: 0, g: -0.1, b: 0.5, a: 0}

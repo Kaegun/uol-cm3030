@@ -15,9 +15,13 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 
 	public bool CanBeDropped => true;
 
-	public bool CanBePickedUp => true;
+	public bool CanBePickedUp { get; set; } = true;
 
-	public void OnDrop()
+	public bool Despawns { get; set; } = false;
+
+	public bool PlayAnimation => false;
+
+	public void OnDrop(bool despawn = false)
 	{
 		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 	}
@@ -31,21 +35,21 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 
 	public bool IsInteractable => _cooldownProgress <= 0;
 
-	public void OnPlayerInteract(PlayerInteractionController player)
-	{
-		//	TODO: Collider / Deprecatd
-		var spirits = Physics.OverlapSphere(transform.position, _range).
-			Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled).
-			Select(s => s.GetComponent<Spirit>()).
-			ToList();
+	//public void OnPlayerInteract(PlayerInteractionController player)
+	//{
+	//	//	TODO: Collider / Deprecatd
+	//	var spirits = Physics.OverlapSphere(transform.position, _range).
+	//		Where(s => s.GetComponent<Spirit>() != null && s.GetComponent<Spirit>().CanBeRepelled).
+	//		Select(s => s.GetComponent<Spirit>()).
+	//		ToList();
 
-		foreach (var spirit in spirits)
-		{
-			spirit.Repel(transform.position);
-		}
+	//	foreach (var spirit in spirits)
+	//	{
+	//		spirit.Repel(transform.position);
+	//	}
 
-		_cooldownProgress = _cooldownDuration;
-	}
+	//	_cooldownProgress = _cooldownDuration;
+	//}
 
 	// Update is called once per frame
 	private void Update()

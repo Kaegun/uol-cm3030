@@ -62,6 +62,7 @@
     <Compile Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Demos\Environment_Free\MouseLook.cs" />
     <Compile Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Demos\Environment_Free\PlayerMovement.cs" />
     <Compile Include="Assets\Imported\SkythianCat\Glowing_Forest\Scripts\WaterGroup.cs" />
+    <Compile Include="Assets\Scripts\Common\CauldronSettings.cs" />
     <Compile Include="Assets\Scripts\Common\CommonTypes.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoMesh.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
@@ -69,12 +70,15 @@
     <Compile Include="Assets\Scripts\Common\PickUpBase.cs" />
     <Compile Include="Assets\Scripts\Common\PickUpSpawnerBase.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonBase.cs" />
+    <Compile Include="Assets\Scripts\Common\SpiritWave.cs" />
+    <Compile Include="Assets\Scripts\Common\StaticSpawnedObject.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
+    <Compile Include="Assets\Scripts\Deprecated\Compost.cs" />
+    <Compile Include="Assets\Scripts\Deprecated\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />
     <Compile Include="Assets\Scripts\Deprecated\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
@@ -82,20 +86,20 @@
     <Compile Include="Assets\Scripts\Environment\PlantPatch.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\Interactible\Cauldron.cs" />
-    <Compile Include="Assets\Scripts\Interactible\Compost.cs" />
-    <Compile Include="Assets\Scripts\Interactible\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Interactible\FireSystem.cs" />
-    <Compile Include="Assets\Scripts\Interactible\Herb.cs" />
+    <Compile Include="Assets\Scripts\Interactible\Ingredient.cs" />
+    <Compile Include="Assets\Scripts\Interactible\IngredientSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\Log.cs" />
     <Compile Include="Assets\Scripts\Interactible\PesticideSpray.cs" />
     <Compile Include="Assets\Scripts\Interactible\Plant.cs" />
     <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlant.cs" />
-    <Compile Include="Assets\Scripts\Interactible\TrickPlantBag.cs" />
+    <Compile Include="Assets\Scripts\Interactible\TrickPlantSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
+    <Compile Include="Assets\Scripts\Interface\IPossessable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableAudioClip.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableBackgroundMusic.cs" />
@@ -108,9 +112,10 @@
     <Compile Include="Assets\Scripts\Systems\CameraController.cs" />
     <Compile Include="Assets\Scripts\Systems\CinemachineInputProviderEx.cs" />
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
+    <Compile Include="Assets\Scripts\Systems\UiSceneLoader.cs" />
     <Compile Include="Assets\Scripts\UI\DayNightSlider.cs" />
-    <Compile Include="Assets\Scripts\UI\TestSunSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Firefly.shader" />
