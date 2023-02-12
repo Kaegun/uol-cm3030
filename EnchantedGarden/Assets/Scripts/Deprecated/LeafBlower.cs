@@ -15,7 +15,9 @@ public class LeafBlower : MonoBehaviour, IPickUp, IInteractable
 
 	public bool CanBeDropped => true;
 
-	public bool CanBePickedUp => true;
+	public bool CanBePickedUp { get; set; } = true;
+
+	public bool Despawns { get; set; } = false;
 
 	public bool PlayAnimation => false;
 

@@ -14,22 +14,31 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	[Header("Despawns")]
 	[SerializeField]
-	private bool _despawns = false;
+	protected bool _despawns = false;
 
 	[SerializeField]
-	private float _despawnTimeout = 5.0f;
+	protected float _despawnTimeout = 5.0f;
 
 	[Header("Pickup Animation")]
 	[SerializeField]
-	private bool _playAnimation = false;
+	protected bool _playAnimation = false;
 
 	public bool CanBeDropped => _held;
 
-	public bool CanBePickedUp => !_held;
+	public bool CanBePickedUp
+	{
+		get { return !_held && _canBePickedUp; }
+		set { _canBePickedUp = value; }
+	}
+	public bool Despawns
+	{
+		get { return _despawns; }
+		set { _despawns = value; }
+	}
 
 	public bool PlayAnimation => _playAnimation;
 
-	protected bool _held;
+	protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
 
 	public virtual void OnDrop(bool destroy = false)
@@ -63,7 +72,7 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	private void Update()
 	{
-		if (!_held)
+		if (!_held && _despawns)
 		{
 			_despawnTimer += Time.deltaTime;
 			if (_despawnTimer > _despawnTimeout)
