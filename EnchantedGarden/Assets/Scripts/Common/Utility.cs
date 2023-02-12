@@ -14,7 +14,7 @@ public static class Utility
 	}
 
 	public static Vector3 RandomUnitVec3()
-    {
+	{
 		return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
 
 	}
@@ -40,7 +40,9 @@ public static class Utility
 	}
 
 	//	Check whether the layer equals the layer enum
-	public static bool IsLayer(this UnityEngine.GameObject go, Layers layer) => go.layer == (int)layer;
+	public static bool IsLayer(this GameObject go, Layers layer) => go.layer == (int)layer;
+
+	public static int LayerAsLayerMask(Layers layer) => 1 << (int)layer;
 
 	public static float AngleToRadians(float angle) => angle * Mathf.Deg2Rad;
 }
