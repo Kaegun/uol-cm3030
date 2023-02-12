@@ -19,6 +19,11 @@
 		Forest = 17,
 	}
 
+	public static int LayerAsLayerMask(Layers layer)
+    {
+		return 1 << (int)layer;
+    }
+
 	public static class AnimatorActions
 	{
 		public const string ForwardSpeed = "ForwardSpeed";

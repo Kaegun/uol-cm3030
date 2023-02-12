@@ -48,7 +48,7 @@ public class SpiritSpawner : MonoBehaviour
 		{
 			int rand = Random.Range(0, _spawnPoints.Length);
 			spawnLocations[i] = _spawnPoints[rand].transform.position;
-			Instantiate(_spirit, spawnLocations[i], Quaternion.identity, transform);
+			Instantiate(_spirit, spawnLocations[i] + 3 * Utility.RandomUnitVec3().ZeroY(), Quaternion.identity, transform);
 		}
 
 		//	Alert any interested parties that a wave has spawned
