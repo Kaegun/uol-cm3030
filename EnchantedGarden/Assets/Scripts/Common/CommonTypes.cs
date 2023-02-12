@@ -28,5 +28,7 @@
 	public static class Scenes
 	{
 		public const string UI = "UI Overlay";
+		public const string GameOver = "Game Over";
+		public const string Level1 = "ju-beta-1";   //	TODO: Name properly
 	}
 }
