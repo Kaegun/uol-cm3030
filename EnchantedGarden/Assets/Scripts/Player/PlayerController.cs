@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnInteractionPressed(object sender, float e)
 	{
-		Debug.Log($"PlayerController.InteractionPressed: Pickups: {_pickups.Count} | Cauldron: {_cauldron != null} HeldObject: {_heldObject != null}");
+		Debug.Log($"PlayerController.InteractionPressed: Pickups: {_pickups.Count} | Cauldron: {_cauldron != null} | HeldObject: {_heldObject != null}");
 
 		if (_heldObject != null)
 		{
@@ -120,13 +120,14 @@ public class PlayerController : MonoBehaviour
 		Debug.Log($"{nameof(HandleCauldronInteraction)} - ({_heldObject.GetType()})");
 		if (_heldObject is Log)
 		{
-			Debug.Log("Adding a log");
+			Debug.Log("Dropping a log");
 			_cauldron.AddLog();
 			DropObject(true, false);
 		}
 		else if (_heldObject is Ingredient)
 		{
-			_cauldron.AddHerb();
+			Debug.Log("Mixing ingredients");
+			_cauldron.AddIngredient();
 			DropObject(true, false);
 		}
 		else if (_heldObject is PesticideSpray)
@@ -219,26 +220,26 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.TryGetComponent<Cauldron>(out var cauldron))
 		{
-			Debug.Log($"Cauldron assigned: WTF");
 			_cauldron = cauldron;
 		}
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
+		Debug.Log($"PlayerController.OnTriggerExit: {other.name}");
 		if (other.TryGetComponent<IPickUp>(out var pickup))
 		{
 			_pickups.Remove(pickup);
-			Debug.Log($"PlayerController.OnTriggerExit: {other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count} ");
+			Debug.Log($"PlayerController.OnTriggerExit: {other.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
 		}
 		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
 		{
 			_spawner = null;
 		}
-		else if (other.TryGetComponent(out _cauldron))
+		else if (other.TryGetComponent<Cauldron>(out var _))
 		{
+			//	Assign cauldron to null
 			_cauldron = null;
 		}
-
 	}
 }

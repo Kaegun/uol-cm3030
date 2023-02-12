@@ -28,7 +28,7 @@ public class Cauldron : MonoBehaviour
 		_fireSystem.AddLog();
 	}
 
-	public void AddHerb()
+	public void AddIngredient()
 	{
 		if (_fireSystem.IsAlive)
 		{

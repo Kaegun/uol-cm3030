@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\Common\StaticSpawnedObject.cs" />
     <Compile Include="Assets\Scripts\Common\UiSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
+    <Compile Include="Assets\Scripts\Deprecated\Compost.cs" />
+    <Compile Include="Assets\Scripts\Deprecated\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
     <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
@@ -85,8 +87,6 @@
     <Compile Include="Assets\Scripts\Environment\PlantPatch.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\Interactible\Cauldron.cs" />
-    <Compile Include="Assets\Scripts\Interactible\Compost.cs" />
-    <Compile Include="Assets\Scripts\Interactible\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Interactible\FireSystem.cs" />
     <Compile Include="Assets\Scripts\Interactible\Ingredient.cs" />
     <Compile Include="Assets\Scripts\Interactible\IngredientSpawner.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Assets\Scripts\Interactible\Plant.cs" />
     <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlant.cs" />
-    <Compile Include="Assets\Scripts\Interactible\TrickPlantBag.cs" />
+    <Compile Include="Assets\Scripts\Interactible\TrickPlantSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
