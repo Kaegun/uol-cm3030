@@ -136,17 +136,20 @@ public class PlayerController : MonoBehaviour
     {
         switch (_heldObject)
         {
+            // Handle as interaction instead?
             case Log _ when _cauldron != null:
                 _cauldron.AddLog();
                 DropObject(true, false);
                 break;
+            // Handle as interaction instead?
             case Ingredient _ when _cauldron != null:
                 _cauldron.AddIngredient();
                 DropObject(true, false);
                 break;
-            case PesticideSpray pesticideSpray when _cauldron != null:
-                _cauldron.FillPesticideSpray(pesticideSpray);
-                break;
+            // Filling pesticide spray is handled as an interaction instead now
+            //case PesticideSpray pesticideSpray when _cauldron != null:
+            //    _cauldron.FillPesticideSpray(pesticideSpray);
+            //    break;
             default:
                 DropObject(false, true);
                 break;
@@ -203,6 +206,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // This is quite dense and might be better done with a slightly different approach
         switch (_heldObject)
         {
             // When held object is a shovel and there are nearby interactable that can be interacted with by a shovel
@@ -230,10 +234,6 @@ public class PlayerController : MonoBehaviour
                     interactable?.OnInteractWith(spray);
                 }
                 break;
-            //case ICombinable combinable when _interactables.Select(i => i as IInteractable<ICombinable>).Where(i => i.CanInteractWith(combinable)).FirstOrDefault() is var interactable && interactable != null:
-            //    //interactables.OrderBy(i => Vector3.Distance(transform.position, i.Transform.position)).FirstOrDefault().OnInteractWith(spray);
-            //    interactable.OnInteractWith(combinable);
-            //    break;
             default:
                 break;
         }
