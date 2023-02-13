@@ -1,7 +1,5 @@
-﻿using Boo.Lang;
-using Cinemachine.Utility;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -118,21 +116,25 @@ public class PlayerController : MonoBehaviour
 	private void HandleCauldronInteraction()
 	{
 		Debug.Log($"{nameof(HandleCauldronInteraction)} - ({_heldObject.GetType()})");
-		if (_heldObject is Log)
+
+		switch (_heldObject)
 		{
-			Debug.Log("Dropping a log");
-			_cauldron.AddLog();
-			DropObject(true, false);
-		}
-		else if (_heldObject is Ingredient)
-		{
-			Debug.Log("Mixing ingredients");
-			_cauldron.AddIngredient();
-			DropObject(true, false);
-		}
-		else if (_heldObject is PesticideSpray)
-		{
-			_cauldron.FillPesticideSpray(_heldObject as PesticideSpray);
+			case Log _:
+				//	Drop the log to increase the fire
+				_cauldron.AddLog();
+				DropObject(true, false);
+				break;
+			case Ingredient _:
+				//	Mixing ingredients
+				_cauldron.AddIngredient();
+				DropObject(true, false);
+				break;
+			case PesticideSpray pesticideSpray:
+				//	Fill potion bottle to dispel spirits
+				_cauldron.FillPesticideSpray(pesticideSpray);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -170,16 +172,25 @@ public class PlayerController : MonoBehaviour
 		//	If there are any keys down, we should move
 		if (IsMoving)
 		{
+			// TODO: This is a bad way to do this and needs fixing
 			// Rotate player model in direction of movement - adjust for camera
-			//	TODO: Apply camera transform to move vector
-			var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, _moveDirection), 0);
+			// Calculate vector from camera to player
+			Vector3 camToPlayer = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(_camera.transform.position.x, 0, _camera.transform.position.z);
+			// Calculate angle of vector from camera to player about the y axis
+			float camToPlayerAngle = Vector3.SignedAngle(Vector3.forward, camToPlayer, Vector3.up);
+			// Rotate move direction vector by angle from camera to player
+			Vector3 moveV3 = (Quaternion.Euler(0, camToPlayerAngle, 0) * new Vector3(_moveDirection.x, 0, _moveDirection.y)).normalized;
+			// Create new 2d vector of movement used in place of _moveDirection
+			Vector2 moveV2 = new Vector2(moveV3.x, moveV3.z);
+
+			// Calculate and apply rotations based on moveV2
+			var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, moveV2), 0);
 			var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
 
 			_rb.MoveRotation(turnDirection.normalized);
 
 			// Apply velocity change to rigidbody in direction of movement
-			var moveDirVec3 = new Vector3(_moveDirection.x, 0, _moveDirection.y);
-			_rb.AddForce(_acceleration * Time.deltaTime * moveDirVec3, ForceMode.VelocityChange);
+			_rb.AddForce(_acceleration * Time.deltaTime * moveV3, ForceMode.VelocityChange);
 
 			// Clamp the speed
 			if (_rb.velocity.magnitude > _maxSpeed)
@@ -188,11 +199,11 @@ public class PlayerController : MonoBehaviour
 			}
 
 			// If player has no input in a direction set the velocity for that direction to 0
-			if (_moveDirection.x == 0)
+			if (moveV2.x == 0)
 			{
 				_rb.velocity = new Vector3(0, _rb.velocity.y, _rb.velocity.z);
 			}
-			if (_moveDirection.y == 0)
+			if (moveV2.y == 0)
 			{
 				_rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
 			}

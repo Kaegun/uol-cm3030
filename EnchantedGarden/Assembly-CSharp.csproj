@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Interactible\PesticideSpray.cs" />
     <Compile Include="Assets\Scripts\Interactible\Plant.cs" />
     <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
+    <Compile Include="Assets\Scripts\Interactible\SpiritWall.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlant.cs" />
     <Compile Include="Assets\Scripts\Interactible\TrickPlantSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />

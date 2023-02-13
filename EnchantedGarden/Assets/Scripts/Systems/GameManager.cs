@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -41,8 +42,10 @@ public class GameManager : SingletonBase<GameManager>
 	private void EndGame()
 	{
 		Debug.Log("Game Over");
-		//	TODO: Put in overlay scene
-		//_gameOverText.text = $"Game Over.\nYou scored {_score} points!";
-		//_gameOver.SetActive(true);
+
+		Time.timeScale = 0.0f;
+
+		//	Load Game Over Screen
+		SceneManager.LoadSceneAsync(CommonTypes.Scenes.GameOver, LoadSceneMode.Additive);
 	}
 }

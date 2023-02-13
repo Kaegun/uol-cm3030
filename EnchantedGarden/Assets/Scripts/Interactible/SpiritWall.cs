@@ -10,8 +10,7 @@ public class SpiritWall : MonoBehaviour, IPossessable
 
     public bool CanBePossessed => !_isPossessed;
 
-    // Possession threshold not used so possession complete instantly
-    // Change later?
+    // Possession is completed instantly, should this be changed?
     public bool PossessionCompleted => true;
 
     public Transform Transform => transform;
@@ -21,7 +20,6 @@ public class SpiritWall : MonoBehaviour, IPossessable
     public void OnDispossess()
     {
         _isPossessed = false;
-        // Destroy grown wall
         _wallObj.SetActive(false);
         // Score points
     }
@@ -39,7 +37,6 @@ public class SpiritWall : MonoBehaviour, IPossessable
 
     public void OnPossessionCompleted(Spirit possessor)
     {
-        // Grow wall
         _wallObj.SetActive(true);
     }
 
