@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Subscenes/UI Overlay.unity
     guid: 66fdc981ca375fe4abb5bda5a72db4f4
   - enabled: 1
-    path: Assets/Scenes/Tests/ju-beta-1.unity
-    guid: 73775ed45f9680f4ca0957eaa7e9fada
+    path: Assets/Scenes/Template.unity
+    guid: ddf742f04d5bc4e44aa8788871046078
+  - enabled: 1
+    path: Assets/Scenes/Subscenes/Game Over.unity
+    guid: 30eb30413711b0642a57b222a3d85cab
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7b52f3648676e194dace18e95d10dd52,
       type: 2}
