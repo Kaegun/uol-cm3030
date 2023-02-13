@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1afbd144f374445ab5bb51770d7c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _adjustmentPosition: {x: 0, y: 0, z: 0}
-  _adjustmentRotation: {x: 0, y: 0, z: 0}
+  _adjustmentPosition: {x: -2, y: 50, z: 7}
+  _adjustmentRotation: {x: 180, y: 0, z: 0}
   _adjustmentScaleFactor: 100
   _despawns: 0
   _despawnTimeout: 5

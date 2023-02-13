@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7363181223905619535}
   - component: {fileID: 7001392957669965420}
+  - component: {fileID: 2052801231632426284}
   m_Layer: 14
   m_Name: Plant Patch
   m_TagString: Untagged
@@ -52,6 +53,20 @@ MonoBehaviour:
     type: 3}
   _droppedPosition: {fileID: 1235267968613408194}
   _plantedPosition: {fileID: 1065508302508516980}
+--- !u!136 &2052801231632426284
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494673990867804055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.8
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5544878256618134280
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class Plant : PickUpBase, IPossessable
 
     public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
 
-    public Transform Transform => transform;
+    public new Transform Transform => transform;
 
     public GameObject GameObject => gameObject;
 
@@ -118,20 +118,20 @@ public class Plant : PickUpBase, IPossessable
 
     public new bool CanBePickedUp => _plantState == PlantState.Default;
 
-    public new bool CanBeDropped
-    {
-        get
-        {
-            //	TODO: Convert to Trigger + Layer
-            var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-                Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-                ToList();
-            return plantPatches.Count > 0;
-        }
-    }
+    //public new bool CanBeDropped
+    //{
+    //    get
+    //    {
+    //        //	TODO: Convert to Trigger + Layer
+    //        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+    //            Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+    //            ToList();
+    //        return plantPatches.Count > 0;
+    //    }
+    //}
 
     //	This could be a Scriptable Object
-    public Transform PickupAdjustment => throw new System.NotImplementedException();
+    //public Transform PickupAdjustment => throw new System.NotImplementedException();
 
     public override void OnPickUp(Transform pickupTransform)
     {
@@ -148,21 +148,30 @@ public class Plant : PickUpBase, IPossessable
 
     public override void OnDrop(bool despawn = false)
     {
+        base.OnDrop();
         //	TODO: All of this can be done with Trigger Collider and Layers
-        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+        var plantPatch = Physics.OverlapSphere(transform.position, 2.0f).
             Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
             Select(c => c.GetComponent<PlantPatch>()).
             OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
-            ToList();
+            FirstOrDefault();
 
-        if (plantPatches.Count > 0)
+        if (plantPatch != null)
         {
-            _plantPatch = plantPatches[0];
+            _plantPatch = plantPatch;
             transform.position = _plantPatch.transform.position;
         }
 
         _plantState = PlantState.Default;
         transform.rotation = Quaternion.identity.RandomizeY();
+    }
+
+    protected override bool _CanBeDropped()
+    {
+        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
+                Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+                ToList();
+        return base._CanBeDropped() && plantPatches.Count > 0;
     }
 
     //  Start is called before the first frame update
@@ -183,5 +192,5 @@ public class Plant : PickUpBase, IPossessable
         //	TODO: Plant possession VFX needs to change
         //  Alter plant material based on progress towards possession
         //_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
-    }
+    }    
 }
