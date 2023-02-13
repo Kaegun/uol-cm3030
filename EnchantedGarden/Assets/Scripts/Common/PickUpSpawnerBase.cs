@@ -8,14 +8,14 @@ using UnityEngine.Assertions;
 
 public abstract class PickUpSpawnerBase : MonoBehaviour
 {
-	[SerializeField]
-	private GameObject _spawnedPrefab;
+    [Header("Pickup Prefab")]
+    [SerializeField]
+    private PickUpBase _spawnedPrefab;
 
-	public IPickUp SpawnPickUp()
-	{
-		var go = Instantiate(_spawnedPrefab);
-		var result = go.GetComponent<IPickUp>();
-		Assert.IsNotNull(result);
-		return result;
-	}
+    public IPickUp SpawnPickUp()
+    {
+        var pickUp = Instantiate(_spawnedPrefab);
+        Assert.IsNotNull(pickUp);
+        return pickUp;
+    }
 }
