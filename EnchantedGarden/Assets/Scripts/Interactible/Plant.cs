@@ -118,17 +118,11 @@ public class Plant : PickUpBase, IPossessable
 
     public new bool CanBePickedUp => _plantState == PlantState.Default;
 
-    //public new bool CanBeDropped
-    //{
-    //    get
-    //    {
-    //        //	TODO: Convert to Trigger + Layer
-    //        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-    //            Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-    //            ToList();
-    //        return plantPatches.Count > 0;
-    //    }
-    //}
+    //	TODO: Convert to Trigger + Layer  
+    public override bool CanBeDropped => base.CanBeDropped && Physics.OverlapSphere(transform.position, 2.0f).
+                Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+                ToList().Count > 0;
+
 
     //	This could be a Scriptable Object
     //public Transform PickupAdjustment => throw new System.NotImplementedException();
@@ -166,14 +160,6 @@ public class Plant : PickUpBase, IPossessable
         transform.rotation = Quaternion.identity.RandomizeY();
     }
 
-    protected override bool _CanBeDropped()
-    {
-        var plantPatches = Physics.OverlapSphere(transform.position, 2.0f).
-                Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-                ToList();
-        return base._CanBeDropped() && plantPatches.Count > 0;
-    }
-
     //  Start is called before the first frame update
     private void Start()
     {
@@ -192,5 +178,5 @@ public class Plant : PickUpBase, IPossessable
         //	TODO: Plant possession VFX needs to change
         //  Alter plant material based on progress towards possession
         //_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
-    }    
+    }
 }

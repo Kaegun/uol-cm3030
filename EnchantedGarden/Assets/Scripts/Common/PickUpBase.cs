@@ -24,7 +24,7 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
     protected bool _playAnimation = false;
 
     public Transform Transform => transform;
-    public bool CanBeDropped => _CanBeDropped();
+    public virtual bool CanBeDropped => _held;
 
     public bool CanBePickedUp
     {
@@ -69,12 +69,6 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
         transform.localPosition = Vector3.zero + _adjustmentPosition;
         transform.localRotation = Quaternion.Euler(_adjustmentRotation.x, _adjustmentRotation.y, _adjustmentRotation.z);
         transform.localScale *= _adjustmentScaleFactor;
-    }
-
-    // Work around for CanBeDropped property not being overwritten by subclasses
-    protected virtual bool _CanBeDropped()
-    {
-        return _held;
     }
 
     private void Update()
