@@ -2,84 +2,86 @@
 
 public abstract class PickUpBase : MonoBehaviour, IPickUp
 {
-    [Header("Pickup Transform")]
-    [SerializeField]
-    protected Vector3 _adjustmentPosition;
+	[Header("Pickup Transform")]
+	[SerializeField]
+	protected Vector3 _adjustmentPosition;
 
-    [SerializeField]
-    protected Vector3 _adjustmentRotation;
+	[SerializeField]
+	protected Vector3 _adjustmentRotation;
 
-    [SerializeField]
-    protected float _adjustmentScaleFactor = 100f;
+	[SerializeField]
+	protected float _adjustmentScaleFactor = 100f;
 
-    [Header("Despawns")]
-    [SerializeField]
-    protected bool _despawns = false;
+	[Header("Despawns")]
+	[SerializeField]
+	protected bool _despawns = false;
 
-    [SerializeField]
-    protected float _despawnTimeout = 5.0f;
+	[SerializeField]
+	protected float _despawnTimeout = 5.0f;
 
-    [Header("Pickup Animation")]
-    [SerializeField]
-    protected bool _playAnimation = false;
+	[Header("Pickup Animation")]
+	[SerializeField]
+	protected bool _playAnimation = false;
 
-    public Transform Transform => transform;
-    public virtual bool CanBeDropped => _held;
+	public virtual Transform Transform => transform;
 
-    public bool CanBePickedUp
-    {
-        get { return !_held && _canBePickedUp; }
-        set { _canBePickedUp = value; }
-    }
-    public bool Despawns
-    {
-        get { return _despawns; }
-        set { _despawns = value; }
-    }
+	public virtual bool CanBeDropped => _held;
 
-    public bool PlayAnimation => _playAnimation;
+	public virtual bool CanBePickedUp
+	{
+		get { return !_held && _canBePickedUp; }
+		set { _canBePickedUp = value; }
+	}
 
-    protected bool _held = false, _canBePickedUp = true;
-    private float _despawnTimer;
+	public virtual bool Despawns
+	{
+		get { return _despawns; }
+		set { _despawns = value; }
+	}
 
-    public virtual void OnDrop(bool destroy = false)
-    {
-        _held = false;
-        //	Set parent to null if its being held
-        transform.SetParent(null);
-        if (destroy)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            //	Reset the despawn timer
-            _despawnTimer = 0.0f;
-            //	Randomize Y rotation of dropped object - could be parameterized
-            transform.SetPositionAndRotation(new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity.RandomizeY());
-        }
-    }
+	public virtual bool PlayAnimation => _playAnimation;
 
-    public virtual void OnPickUp(Transform pickupTransform)
-    {
-        _held = true;
+	protected bool _held = false, _canBePickedUp = true;
+	private float _despawnTimer;
 
-        transform.SetParent(pickupTransform, false);
+	public virtual void OnDrop(bool destroy = false)
+	{
+		_held = false;
+		//	Set parent to null if its being held
+		transform.SetParent(null);
+		if (destroy)
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			//	Reset the despawn timer
+			_despawnTimer = 0.0f;
+			//	Randomize Y rotation of dropped object - could be parameterized
+			transform.SetPositionAndRotation(new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity.RandomizeY());
+		}
+	}
 
-        transform.localPosition = Vector3.zero + _adjustmentPosition;
-        transform.localRotation = Quaternion.Euler(_adjustmentRotation.x, _adjustmentRotation.y, _adjustmentRotation.z);
-        transform.localScale *= _adjustmentScaleFactor;
-    }
+	public virtual void OnPickUp(Transform pickupTransform)
+	{
+		_held = true;
 
-    private void Update()
-    {
-        if (!_held && _despawns)
-        {
-            _despawnTimer += Time.deltaTime;
-            if (_despawnTimer > _despawnTimeout)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
+		transform.SetParent(pickupTransform, false);
+
+		transform.localPosition = Vector3.zero + _adjustmentPosition;
+		transform.localRotation = Quaternion.Euler(_adjustmentRotation.x, _adjustmentRotation.y, _adjustmentRotation.z);
+		transform.localScale *= _adjustmentScaleFactor;
+	}
+
+	private void Update()
+	{
+		if (!_held && _despawns)
+		{
+			_despawnTimer += Time.deltaTime;
+			if (_despawnTimer > _despawnTimeout)
+			{
+				Destroy(gameObject);
+			}
+		}
+	}
 }

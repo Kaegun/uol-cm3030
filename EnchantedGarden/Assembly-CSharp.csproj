@@ -73,10 +73,8 @@
     <Compile Include="Assets\Scripts\Common\SpiritWave.cs" />
     <Compile Include="Assets\Scripts\Common\StaticSpawnedObject.cs" />
     <Compile Include="Assets\Scripts\Common\Utility.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\Compost.cs" />
     <Compile Include="Assets\Scripts\Deprecated\CompostBin.cs" />
     <Compile Include="Assets\Scripts\Deprecated\Forest.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\LeafBlower.cs" />
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />

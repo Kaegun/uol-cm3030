@@ -40,7 +40,7 @@ public class TrickPlant : PickUpBase
 		_plantState = PlantState.TrappingSpirit;
 	}
 
-	public new bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
+	public override bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
 
 	//	TODO: Change to use trigger collider
 	public override void OnDrop(bool despawn = false)
