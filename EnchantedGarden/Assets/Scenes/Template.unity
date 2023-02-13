@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6266274, g: 0.35303628, b: 0.3146758, a: 1}
+  m_IndirectSpecularColor: {r: 0.99999905, g: 0, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5135,6 +5135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wood Pile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635829051063946772, guid: c5b9449b2dc34ca4897223fd9be3233a,
+        type: 3}
+      propertyPath: _playAnimation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5186434215141483372, guid: c5b9449b2dc34ca4897223fd9be3233a,
         type: 3}

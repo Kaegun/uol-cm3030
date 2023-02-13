@@ -89,7 +89,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406488986052271407}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.12308809
   m_Height: 0.4477014
@@ -110,6 +110,9 @@ MonoBehaviour:
   _adjustmentPosition: {x: 0, y: 0, z: 0}
   _adjustmentRotation: {x: 0, y: 0, z: 0}
   _adjustmentScaleFactor: 100
+  _despawns: 0
+  _despawnTimeout: 5
+  _playAnimation: 0
   _plantState: 0
   _plantMaterial: {fileID: 0}
   _spiritMaterial: {fileID: 0}
