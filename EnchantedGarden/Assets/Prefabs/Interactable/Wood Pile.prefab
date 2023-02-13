@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f968d7ca1d10341a7f2ab5c6691c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnedPrefab: {fileID: 7782144700315711574, guid: 9cab35710f502284d81138fc02ad2ee7,
+  _spawnedPrefab: {fileID: 441588444738166568, guid: 9cab35710f502284d81138fc02ad2ee7,
     type: 3}
+  _playAnimation: 0
 --- !u!65 &224730340511124191
 BoxCollider:
   m_ObjectHideFlags: 0
