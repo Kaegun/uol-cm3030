@@ -23,20 +23,21 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected bool _playAnimation = false;
 
-	public bool CanBeDropped => _held;
+	public virtual bool CanBeDropped => _held;
 
-	public bool CanBePickedUp
+	public virtual bool CanBePickedUp
 	{
 		get { return !_held && _canBePickedUp; }
 		set { _canBePickedUp = value; }
 	}
-	public bool Despawns
+
+	public virtual bool Despawns
 	{
 		get { return _despawns; }
 		set { _despawns = value; }
 	}
 
-	public bool PlayAnimation => _playAnimation;
+	public virtual bool PlayAnimation => _playAnimation;
 
 	protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
