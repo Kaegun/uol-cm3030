@@ -23,6 +23,7 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected bool _playAnimation = false;
 
+	public Transform Transform => transform;
 	public bool CanBeDropped => _held;
 
 	public bool CanBePickedUp
