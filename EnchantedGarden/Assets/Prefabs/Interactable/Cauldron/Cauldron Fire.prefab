@@ -4911,7 +4911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireAmbientAudio: {fileID: 11400000, guid: d545532b2a55bb340b8f73e39d7fd5be, type: 2}
   _fireAddLogAudio: {fileID: 11400000, guid: 0695dff1abbee774e9bbb76ef8fc7481, type: 2}
-  _fireLifetime: 10
+  _fireLifetime: 45
   _fireParticles: {fileID: 3516513796403995339}
   _highFireParameters:
     StartLifeTime: 1.5

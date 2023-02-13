@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
-public class Cauldron : MonoBehaviour
+public class Cauldron : MonoBehaviour, IInteractable<PesticideSpray>
 {
 	[Header("Audio")]
 	[SerializeField]
@@ -87,7 +87,9 @@ public class Cauldron : MonoBehaviour
 
 	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;
 
-	private void UsePotion()
+    public Transform Transform => transform;
+
+    private void UsePotion()
 	{
 		_currentUses -= 1;
 		//_usesText.text = $"{_currentUses}/{_maxUses}";
@@ -98,5 +100,28 @@ public class Cauldron : MonoBehaviour
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronCombineAudio);
 		yield return new WaitForSeconds(_cauldronCombineAudio.clip.length * 0.8f);
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
+	}
+
+    public bool CanInteractWith<I>(I interactor)
+    {
+		switch (interactor)
+		{
+			case ICombinable combinable:
+				return combinable.CanBeCombined && CanUseCauldron;
+			default:
+				return false;
+		}
+	}
+
+    public void OnInteractWith<I>(I interactor)
+    {
+		switch (interactor)
+		{
+			case ICombinable combinable:
+				combinable.Combining();
+				break;
+			default:
+				break;
+		}
 	}
 }

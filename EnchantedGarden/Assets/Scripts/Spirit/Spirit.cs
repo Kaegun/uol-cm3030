@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Spirit : MonoBehaviour
+public class Spirit : MonoBehaviour, IInteractable<PesticideSpray>
 {
     enum SpiritState
     {
@@ -115,6 +115,8 @@ public class Spirit : MonoBehaviour
     }
 
     private bool IsPossessingPlant => (_spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession) && _possessedPossessable is Plant;
+
+    public Transform Transform => transform;
 
     private void StealPossessedPlant()
     {
@@ -260,5 +262,29 @@ public class Spirit : MonoBehaviour
         //    transform.position = trickPlant.transform.position;
         //}
 
+    }
+
+    public bool CanInteractWith<I>(I interactor)
+    {
+        switch (interactor)
+        {
+            case PesticideSpray spray:
+                return CanBeBanished && spray.CanUseSpray;
+            default:
+                return false;
+        }
+    }
+
+    public void OnInteractWith<I>(I interactor)
+    {
+        switch (interactor)
+        {
+            case PesticideSpray spray:
+                Banish();
+                spray.UseSpray();
+                break;
+            default:
+                break;
+        }
     }
 }
