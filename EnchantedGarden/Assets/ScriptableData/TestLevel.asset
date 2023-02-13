@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2dc88a8646e694dbc8b000abf0be43, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  _waves:
-  - Count: 5
-    Delay: -0.11690499
-  - Count: 5
-    Delay: -0.43039456
-  - Count: 5
-    Delay: -1.2023978
   _levelDuration: 90
+  _waves:
+  - Count: 2
+    Delay: 5
+  - Count: 2
+    Delay: 5
+  - Count: 3
+    Delay: 6
+  _unplantedFactor: 5
+  _possessionThreshold: 10
+  _cauldronSettings:
+    _maximumUses: 0

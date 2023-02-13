@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Spirit : MonoBehaviour
@@ -165,13 +167,21 @@ public class Spirit : MonoBehaviour
         float searchDuration = 0;
         while (_spiritState == SpiritState.Searching)
         {
-            // TODO: Update layer mask to include more possessables based on search duration
-            int layerMask = Utility.LayerAsLayerMask(CommonTypes.Layers.SpiritWall);
+            // Capture elapsed time at start of loop execution
+            float time = Time.time;
+            // Add possessable layers based on how long the spirit has been searching for something to possess
+            int layerMask = Utility.LayersAsLayerMask(CommonTypes.Layers.Plant);
+            if (searchDuration > 10)
+            {
+                layerMask = Utility.LayersAsLayerMask(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall });
+            }
             // If target is not valid carry out searching behaviour to find vaild possession target
             if (_targetPossessable == null || !_targetPossessable.CanBePossessed)
             {
                 // For 2 seconds rotate spirit and use raycast to search for valid possessable
+                // Spirits target closest possessable found
                 float t = 0;
+                HashSet<IPossessable> hitPossessables = new HashSet<IPossessable>();
                 while (t < 2)
                 {
                     if (Physics.Raycast(transform.position, transform.rotation * Vector3.forward, out RaycastHit hit, 100f, layerMask, QueryTriggerInteraction.Collide)
@@ -179,7 +189,7 @@ public class Spirit : MonoBehaviour
                         && hitPossessable.CanBePossessed)
                     {
                         Debug.DrawRay(transform.position, (transform.rotation * Vector3.forward).normalized * hit.distance, Color.yellow);
-                        _targetPossessable = hitPossessable;
+                        hitPossessables.Add(hitPossessable);
                     }
                     float bounce = Mathf.PingPong(Time.time, 1.6f) - 0.8f;
                     transform.rotation = transform.rotation.RotateTowards(transform.position,
@@ -188,6 +198,7 @@ public class Spirit : MonoBehaviour
                     t += Time.deltaTime;
                     yield return new WaitForFixedUpdate();
                 }
+                _targetPossessable = hitPossessables.OrderBy(p => Vector3.Distance(p.Transform.position, transform.position)).FirstOrDefault();
                 // For three seconds if vaild possessable has not been found, move towards origin
                 _moveDirection = Quaternion.Euler(new Vector3(0, Random.Range(-60, 60), 0)) * transform.position.normalized * -1;
                 t = 0;
@@ -203,7 +214,9 @@ public class Spirit : MonoBehaviour
                 _moveDirection = (_targetPossessable.Transform.position - transform.position).normalized;
                 Move();
             }
-            searchDuration += Time.deltaTime;
+            // Use captured time to increment search duration
+            // There is probably a better way to do this
+            searchDuration += Time.time - time;
             yield return new WaitForFixedUpdate();
         }
     }
@@ -211,7 +224,7 @@ public class Spirit : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //	TODO: Handle all layers for possession
-        if ((other.gameObject.IsLayer(CommonTypes.Layers.Plant) || other.gameObject.IsLayer(CommonTypes.Layers.SpiritWall))
+        if (other.gameObject.IsInLayers(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall })
             && other.TryGetComponent(out IPossessable possessable)
             && possessable.CanBePossessed
             && possessable == _targetPossessable
