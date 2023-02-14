@@ -25,6 +25,11 @@ public class ScriptableLevelDefinition : ScriptableObject
 	private float _possessionThreshold = 10f;
 	public float PossessionThreshold { get { return _possessionThreshold; } }
 
+	//  Threshold for amount of time taken to replant a plant
+	[SerializeField]
+	private float _replantingThreshold = 2f;
+	public float ReplantingThreshold { get { return _replantingThreshold; } }
+
 	[SerializeField]
 	private CauldronSettings _cauldronSettings;
 }

@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private float _movementSpeed;
     // HashSet to prevent duplicates
     private HashSet<IPickUp> _pickups = new HashSet<IPickUp>();
+    private HashSet<IInteractable> _interactables = new HashSet<IInteractable>();
     private IPickUp _heldObject = null;
     private PickUpSpawnerBase _spawner;
     private Cauldron _cauldron;
@@ -135,17 +136,20 @@ public class PlayerController : MonoBehaviour
     {
         switch (_heldObject)
         {
-            case Log _ when _cauldron != null:
-                _cauldron.AddLog();
-                DropObject(true, false);
-                break;
+            // Handled as interaction instead
+            //case Log _ when _cauldron != null:
+            //    _cauldron.AddLog();
+            //    DropObject(true, false);
+            //    break;
+            // Handle as interaction instead?
             case Ingredient _ when _cauldron != null:
                 _cauldron.AddIngredient();
                 DropObject(true, false);
                 break;
-            case PesticideSpray pesticideSpray when _cauldron != null:
-                _cauldron.FillPesticideSpray(pesticideSpray);
-                break;
+            // Filling pesticide spray is handled as an interaction instead now
+            //case PesticideSpray pesticideSpray when _cauldron != null:
+            //    _cauldron.FillPesticideSpray(pesticideSpray);
+            //    break;
             default:
                 DropObject(false, true);
                 break;
@@ -202,6 +206,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Should be able to make this more concise
+        switch (_heldObject)
+        {
+            // When held object is a shovel and there are nearby interactable that can be interacted with by a shovel
+            case Shovel shovel when _interactables.Where(i => i.CanInteractWith(shovel)).ToList() is var interactables && interactables.Count > 0:
+                {
+                    var interactable = interactables
+                        .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
+                        .FirstOrDefault();
+                    interactable.OnInteractWith(shovel);
+                    shovel.OnInteract(interactable);
+                    break;
+                }
+            // When held object is pesticide spray and there are nearby interactable that can be interacted with by pesticide spray
+            case PesticideSpray spray when _interactables.Where(i => i.CanInteractWith(spray)).ToList() is var interactables && interactables.Count > 0:
+                {
+                    var interactable = _interactables
+                        .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
+                        .FirstOrDefault();
+                    if (interactable is Spirit spirit)
+                    {
+                        _interactables.Remove(spirit);
+                    }
+                    interactable.OnInteractWith(spray);
+                    spray.OnInteract(interactable);
+                    break;
+                }
+            case Log log when _interactables.Where(i => i.CanInteractWith(log)).ToList() is var interactables && interactables.Count > 0:
+                {
+                    var interactable = interactables
+                        .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
+                        .FirstOrDefault();
+                    interactable.OnInteractWith(log);
+                    log.OnInteract(interactable);
+                    // Wanted to have this handled in the logs OnInteract function but doing so was causing MissReferenceExceptions
+                    // Can probably be done in a better way
+                    if (interactable is Cauldron)
+                    {
+                        Destroy(log.gameObject);
+                        _heldObject = null;
+                    }
+                    break;
+                }
+            default:
+                break;
+        }
+
         if (_pickups.Count > 0 || _spawner != null)
         {
             // TODO: Highlight closest pickup/spawner
@@ -273,12 +324,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
+        //Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
         if (other.TryGetComponent<IPickUp>(out var pickup))
         {
             if (pickup.CanBePickedUp)
                 _pickups.Add(pickup);
-            Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
+            //Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
         }
         else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
         {
@@ -288,15 +339,19 @@ public class PlayerController : MonoBehaviour
         {
             _cauldron = cauldron;
         }
+        if (other.TryGetComponent<IInteractable>(out var interactable))
+        {
+            _interactables.Add(interactable);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"PlayerController.OnTriggerExit: {other.name}");
+        //Debug.Log($"PlayerController.OnTriggerExit: {other.name}");
         if (other.TryGetComponent<IPickUp>(out var pickup))
         {
             _pickups.Remove(pickup);
-            Debug.Log($"PlayerController.OnTriggerExit: {other.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
+            //Debug.Log($"PlayerController.OnTriggerExit: {other.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
         }
         else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
         {
@@ -306,6 +361,10 @@ public class PlayerController : MonoBehaviour
         {
             //	Assign cauldron to null
             _cauldron = null;
+        }
+        if (other.TryGetComponent<IInteractable>(out var interactable))
+        {
+            _interactables.Remove(interactable);
         }
     }
 }

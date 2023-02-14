@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
-public class Cauldron : MonoBehaviour
+public class Cauldron : MonoBehaviour, IInteractable
 {
 	[Header("Audio")]
 	[SerializeField]
@@ -16,6 +16,7 @@ public class Cauldron : MonoBehaviour
 	private int _maxUses = 5;
 	private int _currentUses;
 
+	// Think these are unnecessary as combination time is handled by the combinable
 	[SerializeField]
 	private float _combineDuration;
 	private float _combineProgress;
@@ -87,7 +88,9 @@ public class Cauldron : MonoBehaviour
 
 	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;
 
-	private void UsePotion()
+    public Transform Transform => transform;
+
+    private void UsePotion()
 	{
 		_currentUses -= 1;
 		//_usesText.text = $"{_currentUses}/{_maxUses}";
@@ -98,5 +101,33 @@ public class Cauldron : MonoBehaviour
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronCombineAudio);
 		yield return new WaitForSeconds(_cauldronCombineAudio.clip.length * 0.8f);
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
+	}
+
+    public bool CanInteractWith(IInteractor interactor)
+    {
+		switch (interactor)
+		{
+			case ICombinable _:
+				return interactor.CanInteractWith(this) && CanUseCauldron;
+			case Log _:
+				return interactor.CanInteractWith(this);
+			default:
+				return false;
+		}
+	}
+
+    public void OnInteractWith(IInteractor interactor)
+    {
+		switch (interactor)
+		{
+			case ICombinable combinable:
+				combinable.Combining();
+				break;
+			case Log _:
+				AddLog();
+				break;
+			default:
+				break;
+		}
 	}
 }

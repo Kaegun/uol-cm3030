@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5186434215141483372}
   - component: {fileID: 4635829051063946772}
   - component: {fileID: 224730340511124191}
-  - component: {fileID: 5448981605673783102}
   m_Layer: 8
   m_Name: Wood Pile
   m_TagString: Untagged
@@ -53,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnedPrefab: {fileID: 441588444738166568, guid: 9cab35710f502284d81138fc02ad2ee7,
     type: 3}
-  _playAnimation: 0
 --- !u!65 &224730340511124191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67,19 +65,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.1, z: 0}
---- !u!135 &5448981605673783102
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4506185375414284305}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1128588029695366871
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,8 @@
-﻿public interface IInteractable
+﻿using UnityEngine;
+
+public interface IInteractable
 {
-	bool IsInteractable { get; }
-	//void OnPlayerInteract(PlayerInteractionController player);
+    Transform Transform { get; }
+    bool CanInteractWith(IInteractor interactor);
+    void OnInteractWith(IInteractor interactor);
 }

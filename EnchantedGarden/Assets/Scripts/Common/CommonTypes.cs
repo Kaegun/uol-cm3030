@@ -18,6 +18,7 @@ public static class CommonTypes
 		Player = 16,
 		Forest = 17,
 		SpiritWall = 18,
+		CauldronVat = 19,
 	}
 
 	public static class AnimatorActions

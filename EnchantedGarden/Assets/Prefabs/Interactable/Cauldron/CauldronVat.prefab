@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33673056326201200}
   - component: {fileID: 23463214201233802}
   - component: {fileID: 6469639758067299900}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: CauldronVat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6925250684229194787}
   - component: {fileID: 6607969837411699810}
   - component: {fileID: 5061465572584281847}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Contents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
