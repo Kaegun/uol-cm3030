@@ -21,13 +21,15 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
         _contents.SetActive(false);
     }
 
-    public void Combining()
+    public bool Combining()
     {
         _combinationProgress += Time.deltaTime;
         if (_combinationProgress >= _combinationThreshold)
         {
             OnCombine();
+            return true;
         }
+        return false;
     }
 
     public void OnCombine()
