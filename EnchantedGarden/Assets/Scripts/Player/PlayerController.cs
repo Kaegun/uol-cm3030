@@ -32,9 +32,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private ScriptableAudioClip _pickUpAudio;
-
     [SerializeField]
     private ScriptableAudioClip _putDownAudio;
+    [SerializeField]
+    private ScriptableAudioClip _digAudio;
 
     private Vector2 _moveDirection = Vector2.zero;
     private Rigidbody _rb;
