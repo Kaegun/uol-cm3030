@@ -4620,12 +4620,12 @@ PrefabInstance:
     - target: {fileID: 1035471166776981172, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.25416782
+      value: 0.2541678
       objectReference: {fileID: 0}
     - target: {fileID: 1035471166776981172, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6556347
+      value: -0.65563476
       objectReference: {fileID: 0}
     - target: {fileID: 1035471167418398106, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
@@ -4640,12 +4640,12 @@ PrefabInstance:
     - target: {fileID: 1035471167418398106, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.25416782
+      value: 0.2541678
       objectReference: {fileID: 0}
     - target: {fileID: 1035471167418398106, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6556347
+      value: -0.65563476
       objectReference: {fileID: 0}
     - target: {fileID: 1035471167418398107, guid: 3fbe0707098d7d24b97397cc2681965f,
         type: 3}
@@ -5521,6 +5521,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _fireLifetime
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160314228633334451, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
+        type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160314228633334451, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
+        type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 524288
       objectReference: {fileID: 0}
     - target: {fileID: 4006564793226087218, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
         type: 3}

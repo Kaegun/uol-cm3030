@@ -136,11 +136,11 @@ public class PlayerController : MonoBehaviour
     {
         switch (_heldObject)
         {
-            // Handle as interaction instead?
-            case Log _ when _cauldron != null:
-                _cauldron.AddLog();
-                DropObject(true, false);
-                break;
+            // Handled as interaction instead
+            //case Log _ when _cauldron != null:
+            //    _cauldron.AddLog();
+            //    DropObject(true, false);
+            //    break;
             // Handle as interaction instead?
             case Ingredient _ when _cauldron != null:
                 _cauldron.AddIngredient();
@@ -231,8 +231,24 @@ public class PlayerController : MonoBehaviour
                     }
                     interactable.OnInteractWith(spray);
                     spray.OnInteract(interactable);
+                    break;
                 }
-                break;
+            case Log log when _interactables.Where(i => i.CanInteractWith(log)).ToList() is var interactables && interactables.Count > 0:
+                {
+                    var interactable = interactables
+                        .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
+                        .FirstOrDefault();
+                    interactable.OnInteractWith(log);
+                    log.OnInteract(interactable);
+                    // Wanted to have this handled in the logs OnInteract function but doing so was causing MissReferenceExceptions
+                    // Can probably be done in a better way
+                    if (interactable is Cauldron)
+                    {
+                        Destroy(log.gameObject);
+                        _heldObject = null;
+                    }
+                    break;
+                }
             default:
                 break;
         }

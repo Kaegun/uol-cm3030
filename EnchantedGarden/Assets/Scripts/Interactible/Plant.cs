@@ -22,9 +22,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     private Material _spiritMaterial;
 
     [SerializeField]
-    private bool _planted;
-
-    [SerializeField]
     private PlantPatch _plantPatch;
 
     [SerializeField]
@@ -33,6 +30,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     //  Amount of time plant has been BeingPossessed. Reset by when dispossessed
     private float _possessionProgress;
     private float _replantingProgress;
+    private bool _planted;
 
     public bool CanBeReplanted()
     {

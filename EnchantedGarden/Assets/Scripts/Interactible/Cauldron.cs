@@ -16,6 +16,7 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private int _maxUses = 5;
 	private int _currentUses;
 
+	// Think these are unnecessary as combination time is handled by the combinable
 	[SerializeField]
 	private float _combineDuration;
 	private float _combineProgress;
@@ -106,8 +107,10 @@ public class Cauldron : MonoBehaviour, IInteractable
     {
 		switch (interactor)
 		{
-			case ICombinable combinable:
-				return combinable.CanBeCombined && CanUseCauldron;
+			case ICombinable _:
+				return interactor.CanInteractWith(this) && CanUseCauldron;
+			case Log _:
+				return interactor.CanInteractWith(this);
 			default:
 				return false;
 		}
@@ -119,6 +122,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 		{
 			case ICombinable combinable:
 				combinable.Combining();
+				break;
+			case Log _:
+				AddLog();
 				break;
 			default:
 				break;
