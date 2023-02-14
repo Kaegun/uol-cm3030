@@ -53,6 +53,9 @@ public class ForestSpawner : MonoBehaviour
 				guard = 0;
 			}
 		}
+
+		if (_seed > 0)
+			Random.InitState(0);
 	}
 
 	// Update is called once per frame
