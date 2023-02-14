@@ -7,6 +7,9 @@ public class GameManager : SingletonBase<GameManager>
 	private ScriptableLevelDefinition _level;
 	public ScriptableLevelDefinition Level => _level;
 
+	[SerializeField]
+	private AudioSource _backgroundMusicAudioSource;
+
 	public float Elapsed => _elapsedTime;
 
 	private int _score;
@@ -23,6 +26,7 @@ public class GameManager : SingletonBase<GameManager>
 	private void Start()
 	{
 		_score = 0;
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
 	}
 
 	//	Update is called once per frame
