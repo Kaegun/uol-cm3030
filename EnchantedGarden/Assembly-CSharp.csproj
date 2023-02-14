@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
+    <Compile Include="Assets\Scripts\Interface\IInteractor.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
     <Compile Include="Assets\Scripts\Interface\IPossessable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
@@ -160,6 +161,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\GroundFog.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Fonts\Quite Magical\info.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Environments\Sources\Shaders\PT_Water_Shader.shader" />
     <None Include="Assets\Imported\Polytope Studio (--- Remove ---)\Lowpoly Medieval Environments\Sources\Shaders\PT_Vegetation_Flowers_Shader.shader" />
