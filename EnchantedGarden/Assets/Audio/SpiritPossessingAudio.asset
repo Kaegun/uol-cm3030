@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: SpiritPossessingAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: adcac75087a17704ca6c0c3b15bc3aa5, type: 3}
-  volume: 1
+  clip: {fileID: 8300000, guid: f24d47d17780b0248b5a8578b1e19c97, type: 3}
+  volume: 0.4
   loop: 0
   spatialBlend: 1

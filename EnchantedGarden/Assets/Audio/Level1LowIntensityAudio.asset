@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level1LowIntensityAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 52e649f705862e3439ce4b132b46f76f, type: 3}
-  volume: 1
+  volume: 0.3
   loop: 1
   spatialBlend: 0
