@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
-public class Cauldron : MonoBehaviour, IInteractable<PesticideSpray>
+public class Cauldron : MonoBehaviour, IInteractable
 {
 	[Header("Audio")]
 	[SerializeField]
@@ -102,7 +102,7 @@ public class Cauldron : MonoBehaviour, IInteractable<PesticideSpray>
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
-    public bool CanInteractWith<I>(I interactor)
+    public bool CanInteractWith(IInteractor interactor)
     {
 		switch (interactor)
 		{
@@ -113,7 +113,7 @@ public class Cauldron : MonoBehaviour, IInteractable<PesticideSpray>
 		}
 	}
 
-    public void OnInteractWith<I>(I interactor)
+    public void OnInteractWith(IInteractor interactor)
     {
 		switch (interactor)
 		{

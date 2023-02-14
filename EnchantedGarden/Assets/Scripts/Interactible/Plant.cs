@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Plant : PickUpBase, IPossessable, IInteractable<Shovel>
+public class Plant : PickUpBase, IPossessable, IInteractable
 {
     enum PlantState
     {
@@ -181,18 +181,18 @@ public class Plant : PickUpBase, IPossessable, IInteractable<Shovel>
         //_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
     }
 
-    public bool CanInteractWith<I>(I interactor)
+    public bool CanInteractWith(IInteractor interactor)
     {
         switch (interactor)
         {
             case Shovel _:
-                return CanBeReplanted();
+                return CanBeReplanted() && interactor.CanInteractWith(this);
             default:
                 return false;
         }
     }
 
-    public void OnInteractWith<I>(I interactor)
+    public void OnInteractWith(IInteractor interactor)
     {
         switch (interactor)
         {

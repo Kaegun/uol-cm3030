@@ -206,32 +206,31 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // This is quite dense and might be better done with a slightly different approach
+        // Should be able to make this more concise
         switch (_heldObject)
         {
             // When held object is a shovel and there are nearby interactable that can be interacted with by a shovel
-            case Shovel shovel when _interactables.Select(i => i as IInteractable<Shovel>).Where(i => i.CanInteractWith(shovel)).ToList().Count > 0:
+            case Shovel shovel when _interactables.Where(i => i.CanInteractWith(shovel)).ToList() is var interactables && interactables.Count > 0:
                 {
-                    var interactable = _interactables.Select(i => i as IInteractable<Shovel>)
-                        .Where(i => i.CanInteractWith(shovel))
+                    var interactable = interactables
                         .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
                         .FirstOrDefault();
                     interactable.OnInteractWith(shovel);
+                    shovel.OnInteract(interactable);
                     break;
                 }
             // When held object is pesticide spray and there are nearby interactable that can be interacted with by pesticide spray
-            case PesticideSpray spray when _interactables.Select(i => i as IInteractable<PesticideSpray>).Where(i => i.CanInteractWith(spray)).ToList().Count > 0:
+            case PesticideSpray spray when _interactables.Where(i => i.CanInteractWith(spray)).ToList() is var interactables && interactables.Count > 0:
                 {
-                    Debug.Log("Using pesticide spray");
-                    var interactable = _interactables.Select(i => i as IInteractable<PesticideSpray>)
-                        .Where(i => i.CanInteractWith(spray))
+                    var interactable = _interactables
                         .OrderBy(i => Vector3.Distance(transform.position, i.Transform.position))
                         .FirstOrDefault();
                     if (interactable is Spirit spirit)
                     {
                         _interactables.Remove(spirit);
                     }
-                    interactable?.OnInteractWith(spray);
+                    interactable.OnInteractWith(spray);
+                    spray.OnInteract(interactable);
                 }
                 break;
             default:

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Spirit : MonoBehaviour, IInteractable<PesticideSpray>
+public class Spirit : MonoBehaviour, IInteractable
 {
     enum SpiritState
     {
@@ -264,24 +264,23 @@ public class Spirit : MonoBehaviour, IInteractable<PesticideSpray>
 
     }
 
-    public bool CanInteractWith<I>(I interactor)
+    public bool CanInteractWith(IInteractor interactor)
     {
         switch (interactor)
         {
-            case PesticideSpray spray:
-                return CanBeBanished && spray.CanUseSpray;
+            case PesticideSpray _:
+                return CanBeBanished && interactor.CanInteractWith(this);
             default:
                 return false;
         }
     }
 
-    public void OnInteractWith<I>(I interactor)
+    public void OnInteractWith(IInteractor interactor)
     {
         switch (interactor)
         {
-            case PesticideSpray spray:
+            case PesticideSpray _:
                 Banish();
-                spray.UseSpray();
                 break;
             default:
                 break;
