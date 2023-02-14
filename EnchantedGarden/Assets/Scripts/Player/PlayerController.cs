@@ -280,39 +280,57 @@ public class PlayerController : MonoBehaviour
         if (IsMoving)
         {
             // TODO: This is a bad way to do this and needs fixing
-            // Rotate player model in direction of movement - adjust for camera
+
             // Calculate vector from camera to player
             Vector3 camToPlayer = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(_camera.transform.position.x, 0, _camera.transform.position.z);
+
             // Calculate angle of vector from camera to player about the y axis
+            // This is the angle by which player input needs to be translated
             float camToPlayerAngle = Vector3.SignedAngle(Vector3.forward, camToPlayer, Vector3.up);
-            // Rotate move direction vector by angle from camera to player
+
+            // Vector3 representation of player input adjusted for camera
             Vector3 moveV3 = (Quaternion.Euler(0, camToPlayerAngle, 0) * new Vector3(_moveDirection.x, 0, _moveDirection.y)).normalized;
-            // Create new 2d vector of movement used in place of _moveDirection
+
+            // Vector2 representation of player input adjusted for camera
             Vector2 moveV2 = new Vector2(moveV3.x, moveV3.z);
 
             // Calculate and apply rotations based on moveV2
             var direction = Quaternion.Euler(0, -Vector2.SignedAngle(Vector2.up, moveV2), 0);
             var turnDirection = Quaternion.RotateTowards(transform.rotation, direction, _turnSpeed * Time.deltaTime);
-
             _rb.MoveRotation(turnDirection.normalized);
 
-            // Apply velocity change to rigidbody in direction of movement
+            // Apply velocity change to rigidbody in desired direction of movement
             _rb.AddForce(_acceleration * Time.deltaTime * moveV3, ForceMode.VelocityChange);
+
+            // Prevent character sliding in a direction that the player is not trying to move in
+            // Capture velocity adjusted to be relative to player input directions
+            var adjustedVelocity = Quaternion.Euler(0, -camToPlayerAngle, 0) * _rb.velocity;
+
+            // Adjust to ensure diagonal movement is exactly in direction desired without sliding
+            if (_moveDirection.x != 0 && _moveDirection.y != 0)
+            {
+                adjustedVelocity.x = _moveDirection.x;
+                adjustedVelocity.z = _moveDirection.y;
+                adjustedVelocity = adjustedVelocity.normalized * _rb.velocity.magnitude;
+            }
+
+            // Adjust to remove movement in a direction that is not desired
+            if (_moveDirection.x == 0 || (_moveDirection.x < 0 && adjustedVelocity.x > 0) || (_moveDirection.x > 0 && adjustedVelocity.x < 0))
+            {
+                adjustedVelocity.x = 0;
+            }
+            if (_moveDirection.y == 0 || (_moveDirection.y < 0 && adjustedVelocity.y > 0) || (_moveDirection.y > 0 && adjustedVelocity.y < 0))
+            {
+                adjustedVelocity.z = 0;
+            }
+
+            // Apply velocity adjustments
+            _rb.velocity = Quaternion.Euler(0, camToPlayerAngle, 0) * adjustedVelocity;
 
             // Clamp the speed
             if (_rb.velocity.magnitude > _maxSpeed)
             {
                 _rb.velocity = _rb.velocity.normalized * _maxSpeed;
-            }
-
-            // If player has no input in a direction set the velocity for that direction to 0
-            if (moveV2.x == 0)
-            {
-                _rb.velocity = new Vector3(0, _rb.velocity.y, _rb.velocity.z);
-            }
-            if (moveV2.y == 0)
-            {
-                _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, 0);
             }
         }
         else
