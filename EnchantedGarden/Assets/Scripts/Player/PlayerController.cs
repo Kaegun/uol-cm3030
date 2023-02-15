@@ -142,11 +142,11 @@ public class PlayerController : MonoBehaviour
             //    _cauldron.AddLog();
             //    DropObject(true, false);
             //    break;
-            // Handle as interaction instead?
-            case Ingredient _ when _cauldron != null:
-                _cauldron.AddIngredient();
-                DropObject(true, false);
-                break;
+            // Handled as interaction instead
+            //case Ingredient _ when _cauldron != null:
+            //    _cauldron.AddIngredient();
+            //    DropObject(true, false);
+            //    break;
             // Filling pesticide spray is handled as an interaction instead now
             //case PesticideSpray pesticideSpray when _cauldron != null:
             //    _cauldron.FillPesticideSpray(pesticideSpray);

@@ -30,7 +30,7 @@ public class Cauldron : MonoBehaviour, IInteractable
 	}
 
 	// TODO: Make private once updated to be handled as interaction
-	public void AddIngredient()
+	private void AddIngredient()
 	{
 		if (_fireSystem.IsAlive)
 		{
@@ -118,6 +118,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 				return interactor.CanInteractWith(this) && CanUseCauldron;
 			case Log _:
 				return interactor.CanInteractWith(this);
+			case Ingredient _:
+				return interactor.CanInteractWith(this);
 			default:
 				return false;
 		}
@@ -135,6 +137,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 				break;
 			case Log _:
 				AddLog();
+				break;
+			case Ingredient _:
+				AddIngredient();
 				break;
 			default:
 				break;
