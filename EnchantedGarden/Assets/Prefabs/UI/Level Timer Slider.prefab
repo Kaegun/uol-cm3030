@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 421334407366130155}
   - component: {fileID: 421334407366130152}
   m_Layer: 5
-  m_Name: DayNightSlider
+  m_Name: Level Timer Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

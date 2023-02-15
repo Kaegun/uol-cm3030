@@ -47,7 +47,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
     public bool CanBePossessed => _plantState == PlantState.Default;
 
-    public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
+    public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.ActiveLevel.PossessionThreshold;
 
     public override Transform Transform => transform;
 
@@ -61,15 +61,15 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
     public void WhileCompletingPossession(Spirit possessor)
     {
-        _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.Level.UnplantedFactor;
+        _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.ActiveLevel.UnplantedFactor;
         // TODO: Refactor to move smoothly to a specific position on the spirit
-        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * _possessionProgress / GameManager.Instance.Level.PossessionThreshold);
+        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * _possessionProgress / GameManager.Instance.ActiveLevel.PossessionThreshold);
     }
 
     public void OnPossessionCompleted(Spirit possessor)
     {
         _plantState = PlantState.Carried;
-        _possessionProgress = GameManager.Instance.Level.PossessionThreshold;
+        _possessionProgress = GameManager.Instance.ActiveLevel.PossessionThreshold;
         if (_plantPatch != null)
         {
             _plantPatch.RemovePlant();
@@ -196,7 +196,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
         {
             case Shovel _:
                 _replantingProgress += Time.deltaTime;
-                if (_replantingProgress >= GameManager.Instance.Level.ReplantingThreshold)
+                if (_replantingProgress >= GameManager.Instance.ActiveLevel.ReplantingThreshold)
                 {
                     Debug.Log("Replanted plant!");
                     _planted = true;

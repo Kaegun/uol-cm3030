@@ -8,6 +8,10 @@ public class CauldronSettings
 	private int _maximumUses;
 	public int MaximumUses => _maximumUses;
 
+	[SerializeField]
+	private float _fireDuration = 30.0f;
+	public float FireDuration => _fireDuration;
+
 	public int NumberOfUses { get; set; }
 
 	public CauldronSettings()
