@@ -100,6 +100,8 @@ MonoBehaviour:
   _cauldronCombineAudio: {fileID: 11400000, guid: 8d8ba2c4888880c44b1470874ea0d090,
     type: 2}
   _maxUses: 5
+  _cauldronContents: {fileID: 6058634154690378662}
+  _cauldronContentsParticles: {fileID: 5389204591758614667}
 --- !u!82 &800947263938588532
 AudioSource:
   m_ObjectHideFlags: 0
@@ -635,11 +637,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4498170197579884598, guid: 0f7e17bb497549b46ba742d54a90a643,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f7e17bb497549b46ba742d54a90a643, type: 3}
 --- !u!4 &6332930687579599851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4754664102619504, guid: 0f7e17bb497549b46ba742d54a90a643,
+    type: 3}
+  m_PrefabInstance: {fileID: 6337676005821831835}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6058634154690378662 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 281304648287559997, guid: 0f7e17bb497549b46ba742d54a90a643,
+    type: 3}
+  m_PrefabInstance: {fileID: 6337676005821831835}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5389204591758614667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2105925107786185232, guid: 0f7e17bb497549b46ba742d54a90a643,
     type: 3}
   m_PrefabInstance: {fileID: 6337676005821831835}
   m_PrefabAsset: {fileID: 0}

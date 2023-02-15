@@ -16,6 +16,11 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private int _maxUses = 5;
 	private int _currentUses;
 
+	[SerializeField]
+	private GameObject _cauldronContents;
+	[SerializeField]
+	private GameObject _cauldronContentsParticles;
+
 	// Think these are unnecessary as combination time is handled by the combinable
 	//[SerializeField]
 	//private float _combineDuration;
@@ -32,9 +37,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 	// TODO: Make private once updated to be handled as interaction
 	private void AddIngredient()
 	{
+		_currentUses = _maxUses;
 		if (_fireSystem.IsAlive)
-		{
-			_currentUses = _maxUses;
+		{			
 			StartCoroutine(CauldronCombineCoroutine());
 		}
 	}
@@ -64,6 +69,30 @@ public class Cauldron : MonoBehaviour, IInteractable
 		if (!CanUseCauldron)
         {
 			_cauldronAudioSource.Stop();
+			if (_currentUses > 0)
+            {
+				_cauldronContentsParticles.SetActive(false);
+			}
+			else
+            {
+				_cauldronContents.SetActive(false);
+            }
+			
+        }
+		if (CanUseCauldron)
+        {
+			if (!_cauldronAudioSource.isPlaying)
+            {
+				AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
+			}
+			if (!_cauldronContents.activeSelf)
+            {
+				_cauldronContents.SetActive(true);
+            }
+			if (!_cauldronContentsParticles.activeSelf)
+            {
+				_cauldronContentsParticles.SetActive(true);
+            }
         }
 		//	TODO: Could we use a Trigger Collider here?
 		//var combinables = Physics.OverlapSphere(transform.position, 2f)
