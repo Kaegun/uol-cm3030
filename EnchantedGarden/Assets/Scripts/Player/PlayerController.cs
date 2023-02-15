@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private HashSet<IInteractable> _interactables = new HashSet<IInteractable>();
     private IPickUp _heldObject = null;
     private PickUpSpawnerBase _spawner;
+    // TODO: Remove this variable and references to it. Cauldron is tracked as an interactable
     private Cauldron _cauldron;
 
     private bool IsMoving => _moveDirection.sqrMagnitude > 0;

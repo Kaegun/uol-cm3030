@@ -289,7 +289,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (interactor)
         {
-            case PesticideSpray _:
+            case Flask _:
                 return CanBeBanished && interactor.CanInteractWith(this);
             default:
                 return false;
@@ -300,7 +300,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (interactor)
         {
-            case PesticideSpray _:
+            case Flask _:
                 Banish();
                 break;
             default:
@@ -312,7 +312,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (interactor)
         {
-            case PesticideSpray _:
+            case Flask _:
                 return true;
             default:
                 return false;

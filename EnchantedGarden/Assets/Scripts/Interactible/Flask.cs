@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class PesticideSpray : PickUpBase, ICombinable, IInteractor
+public class Flask : PickUpBase, ICombinable, IInteractor
 {
     [SerializeField]
     private GameObject _contents;
@@ -13,9 +13,9 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
     private float _combinationThreshold = 1f;
     private float _combinationProgress = 0f;
 
-    public bool CanUseSpray => _full;
+    public bool CanUseFlask => _full;
 
-    public void UseSpray()
+    private void UseFlask()
     {
         _full = false;
         _contents.SetActive(false);
@@ -50,7 +50,7 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
             case Cauldron _:
                 return CanBeCombined;
             case Spirit _:
-                return CanUseSpray;
+                return CanUseFlask;
             default:
                 return false;
         }
@@ -61,7 +61,7 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
         switch (interactable)
         {
             case Spirit _:
-                UseSpray();
+                UseFlask();
                 break;
             default:
                 break;
