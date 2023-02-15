@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Interface\IInteractor.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
     <Compile Include="Assets\Scripts\Interface\IPossessable.cs" />
+    <Compile Include="Assets\Scripts\Interface\ISettable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableAudioClip.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableBackgroundMusic.cs" />
@@ -115,8 +116,10 @@
     <Compile Include="Assets\Scripts\Systems\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\Systems\UiSceneLoader.cs" />
-    <Compile Include="Assets\Scripts\UI\DayNightSlider.cs" />
-    <Compile Include="Assets\Scripts\UI\UiManager.cs" />
+    <Compile Include="Assets\Scripts\UI\GenericSlider.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelTimerSlider.cs" />
+    <Compile Include="Assets\Scripts\UI\UiEventManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UiOverlayManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Firefly.shader" />

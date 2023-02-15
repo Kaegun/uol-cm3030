@@ -2,19 +2,23 @@
 
 public class GameManager : SingletonBase<GameManager>
 {
-	[SerializeField]
-	private ScriptableLevelDefinition _level;
-	public ScriptableLevelDefinition Level => _level;
-
 	//	TODO: Multiple levels
 	[SerializeField]
 	private ScriptableLevelDefinition[] _levels;
 	public ScriptableLevelDefinition[] Levels => _levels;
 
+	//	Track the currently active level
+	private ScriptableLevelDefinition _level;
+	public ScriptableLevelDefinition ActiveLevel => _level;
+
 	public float Elapsed => _elapsedTime;
+
+	public int NumberOfPlants => _numberOfPlants;
 
 	private int _score;
 	private float _elapsedTime = 0f;
+	private bool _gameOver = false;
+	private int _numberOfPlants = 5;
 
 	//	TODO: Fix scoring - We can use a SO for this
 	public void ScorePoints(int points)
@@ -26,6 +30,9 @@ public class GameManager : SingletonBase<GameManager>
 	public void RestartGame()
 	{
 		//	TODO: Restart game at current level?
+
+		Time.timeScale = 0.0f;
+
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
 	}
 
@@ -34,6 +41,7 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		Debug.Log("Game Over");
 
+		_gameOver = true;
 		Time.timeScale = 0.0f;
 
 		//	Load Game Over Screen
@@ -44,8 +52,7 @@ public class GameManager : SingletonBase<GameManager>
 	private void Start()
 	{
 		_score = 0;
-
-		//	TODO: Testing
+		_level = _levels[0];
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 	}
 
@@ -54,16 +61,9 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		_elapsedTime += Time.deltaTime;
 
-		//	TODO: Update DayNightSlider with remaining time
-		//_timeText.text = $"Time: {Level.LevelDuration - _elapsedTime}";
-		if (_elapsedTime >= Level.LevelDuration /*&& !_gameOver.activeSelf*/)
+		if (_elapsedTime >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
 		}
-	}
-
-	private void OnDestroy()
-	{
-		Instance = null;
 	}
 }
