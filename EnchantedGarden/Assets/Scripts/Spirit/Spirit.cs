@@ -54,7 +54,7 @@ public class Spirit : MonoBehaviour, IInteractable
         }
         // Spirit is destroyed before audio plays
         // TODO: Fix audio not playing due to spirit object being destroyed
-        AudioController.PlayAudio(_audioSource, _bansihAudio);
+        AudioController.PlayAudioDetached(_bansihAudio, transform.position);
         GameManager.Instance.ScorePoints(50);
         Destroy(gameObject);
     }

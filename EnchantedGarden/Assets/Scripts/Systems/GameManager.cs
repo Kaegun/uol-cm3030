@@ -14,6 +14,9 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private AudioSource _backgroundMusicAudioSource;
 
+	[SerializeField]
+	private AudioSource _detachedAudioSourcePrefab;
+
 	public float Elapsed => _elapsedTime;
 
 	public int NumberOfPlants => _numberOfPlants;
@@ -38,6 +41,12 @@ public class GameManager : SingletonBase<GameManager>
 
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
 	}
+
+	// Should probably be in the AudioController, would likely need to make it a Singleton though
+	public AudioSource CreateDetachedAudioSource(Vector3 position)
+    {
+		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);		
+    }
 
 	//	TODO: Here we might be able to use an SO to raise events to all things that need to know about Game Ending, i.e. Sounds, etc.
 	private void EndGame()

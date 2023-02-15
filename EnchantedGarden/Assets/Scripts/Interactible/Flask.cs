@@ -13,12 +13,16 @@ public class Flask : PickUpBase, ICombinable, IInteractor
     private float _combinationThreshold = 1f;
     private float _combinationProgress = 0f;
 
+    [SerializeField]
+    private ScriptableAudioClip _flaskSmashAudio;
+
     public bool CanUseFlask => _full;
 
     private void UseFlask()
     {
         _full = false;
         _contents.SetActive(false);
+        AudioController.PlayAudioDetached(_flaskSmashAudio, transform.position);
     }
 
     public bool Combining()

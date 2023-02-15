@@ -67,7 +67,8 @@ MonoBehaviour:
   _playAnimation: 0
   _contents: {fileID: 6175189768580254424}
   _full: 0
-  _actionRadius: 2
+  _combinationThreshold: 1
+  _flaskSmashAudio: {fileID: 11400000, guid: ad3a963c14d2ac14395b203ab166d2c2, type: 2}
 --- !u!1001 &6175639433173168054
 PrefabInstance:
   m_ObjectHideFlags: 0
