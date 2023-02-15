@@ -31,6 +31,10 @@ public class ScriptableLevelDefinition : ScriptableObject
 
 	//	Settings pertaining to the cauldron
 	[SerializeField]
+	private ScriptableBackgroundMusic _backgroundMusic;
+	public ScriptableBackgroundMusic BackgroundMusic { get { return _backgroundMusic; } }
+
+	[SerializeField]
 	private CauldronSettings _cauldronSettings;
 	public CauldronSettings CauldronSettings => _cauldronSettings;
 }

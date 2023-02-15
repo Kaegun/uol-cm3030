@@ -145,13 +145,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputEventHandler: {fileID: 11400000, guid: c78bfbc66ae56444bba9fb817b8cbe15, type: 2}
   _acceleration: 40
-  _maxSpeed: 6
-  _turnSpeed: 540
-  _maxAnimationSpeed: 6
+  _maxSpeed: 10
+  _turnSpeed: 1080
+  _maxAnimationSpeed: 10
   _heldObjectTransform: {fileID: 3261166773604324256}
   _audioSource: {fileID: 5695086480003079404}
   _pickUpAudio: {fileID: 11400000, guid: 069916c6e20718440ba30b22bbb3f654, type: 2}
   _putDownAudio: {fileID: 11400000, guid: 50cd3c7db9844c447a294981c62cc683, type: 2}
+  _digAudio: {fileID: 11400000, guid: 81be47444fca6824eb20b3ec61eb035f, type: 2}
 --- !u!114 &1182360635843861787
 MonoBehaviour:
   m_ObjectHideFlags: 0

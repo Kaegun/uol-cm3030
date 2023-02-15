@@ -11,6 +11,9 @@ public class GameManager : SingletonBase<GameManager>
 	private ScriptableLevelDefinition _level;
 	public ScriptableLevelDefinition ActiveLevel => _level;
 
+	[SerializeField]
+	private AudioSource _backgroundMusicAudioSource;
+
 	public float Elapsed => _elapsedTime;
 
 	public int NumberOfPlants => _numberOfPlants;
@@ -54,6 +57,7 @@ public class GameManager : SingletonBase<GameManager>
 		_score = 0;
 		_level = _levels[0];
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
 	}
 
 	//	Update is called once per frame

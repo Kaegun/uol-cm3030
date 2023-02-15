@@ -23,6 +23,19 @@ public class Spirit : MonoBehaviour, IInteractable
     [SerializeField]
     private GameObject _bodyObj;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private ScriptableAudioClip _spawnAudio;
+    [SerializeField]
+    private ScriptableAudioClip _beginPossessingAudio;
+    [SerializeField]
+    private ScriptableAudioClip _completePossessionAudio;
+    [SerializeField]
+    private ScriptableAudioClip _bansihAudio;
+
     private Vector3 _moveDirection;
     //private float _moveTime = 0;
 
@@ -39,6 +52,9 @@ public class Spirit : MonoBehaviour, IInteractable
         {
             _possessedPossessable.OnDispossess();
         }
+        // Spirit is destroyed before audio plays
+        // TODO: Fix audio not playing due to spirit object being destroyed
+        AudioController.PlayAudio(_audioSource, _bansihAudio);
         GameManager.Instance.ScorePoints(50);
         Destroy(gameObject);
     }
@@ -48,6 +64,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         _spawnPos = transform.position;
         _spiritState = SpiritState.Spawning;
+        AudioController.PlayAudio(_audioSource, _spawnAudio);
         StartCoroutine(SpawnCoroutine());
     }
 
@@ -98,6 +115,7 @@ public class Spirit : MonoBehaviour, IInteractable
                 {
                     _possessedPossessable.OnPossessionCompleted(this);
                     _spiritState = SpiritState.Possessing;
+                    AudioController.PlayAudio(_audioSource, _completePossessionAudio);
                 }
 
                 break;
@@ -238,6 +256,7 @@ public class Spirit : MonoBehaviour, IInteractable
             _possessedPossessable.OnPossessionStarted(this);
             transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
             _spiritState = SpiritState.StartingPossession;
+            AudioController.PlayAudio(_audioSource, _beginPossessingAudio);
 
             if (possessable is SpiritWall)
             {

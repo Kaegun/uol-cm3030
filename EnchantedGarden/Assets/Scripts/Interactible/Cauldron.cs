@@ -17,18 +17,19 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private int _currentUses;
 
 	// Think these are unnecessary as combination time is handled by the combinable
-	[SerializeField]
-	private float _combineDuration;
-	private float _combineProgress;
+	//[SerializeField]
+	//private float _combineDuration;
+	//private float _combineProgress;
 
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
 
-	public void AddLog()
+	private void AddLog()
 	{
 		_fireSystem.AddLog();
 	}
 
+	// TODO: Make private once updated to be handled as interaction
 	public void AddIngredient()
 	{
 		if (_fireSystem.IsAlive)
@@ -38,10 +39,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 		}
 	}
 
-	public void FillPesticideSpray(PesticideSpray pesticideSpray)
-	{
-		//	Do pesticide stuff
-	}
+	//public void FillPesticideSpray(PesticideSpray pesticideSpray)
+	//{
+	//	//	Do pesticide stuff
+	//}
 
 	// Start is called before the first frame update
 	private void Start()
@@ -60,6 +61,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 	// Update is called once per frame
 	private void Update()
 	{
+		if (!CanUseCauldron)
+        {
+			_cauldronAudioSource.Stop();
+        }
 		//	TODO: Could we use a Trigger Collider here?
 		//var combinables = Physics.OverlapSphere(transform.position, 2f)
 		//	.Where(c => c.GetComponent<ICombinable>() != null && c.GetComponent<ICombinable>().CanBeCombined)
@@ -121,7 +126,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 		switch (interactor)
 		{
 			case ICombinable combinable:
-				combinable.Combining();
+				if (combinable.Combining())
+                {
+					StartCoroutine(CauldronCombineCoroutine());
+                }
 				break;
 			case Log _:
 				AddLog();

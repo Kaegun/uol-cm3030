@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpiritSpawner : MonoBehaviour
@@ -34,7 +35,7 @@ public class SpiritSpawner : MonoBehaviour
             _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _nextWave)
             {
-                SpawnWave(_waveQueue.Dequeue());
+                StartCoroutine(SpawnWaveCoroutine(_waveQueue.Dequeue()));
                 _nextWave = NextWaveDelay();
             }
         }
@@ -52,6 +53,21 @@ public class SpiritSpawner : MonoBehaviour
             Instantiate(_spirit, spawnLocations[i] + 3 * Utility.RandomUnitVec3().ZeroY(), Quaternion.identity, transform);
         }
 
+        //	Alert any interested parties that a wave has spawned
+        _worldEvents?.OnSpiritWaveSpawned(spawnLocations);
+    }
+
+    private IEnumerator SpawnWaveCoroutine(SpiritWave wave)
+    {
+        var spawnLocations = new Vector3[wave.Count];
+        for (int i = 0; i < wave.Count; i++)
+        {
+            int rand = Random.Range(0, _spawnPoints.Length);
+            var pos = _spawnPoints[rand].transform.position + 3 * Utility.RandomUnitVec3().ZeroY();
+            spawnLocations[i] = pos;
+            Instantiate(_spirit, pos, Quaternion.identity, transform);
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
+        }
         //	Alert any interested parties that a wave has spawned
         _worldEvents?.OnSpiritWaveSpawned(spawnLocations);
     }

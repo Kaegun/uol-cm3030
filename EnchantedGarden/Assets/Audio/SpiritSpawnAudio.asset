@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: SpiritSpawnAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: f24d47d17780b0248b5a8578b1e19c97, type: 3}
-  volume: 1
+  clip: {fileID: 8300000, guid: 6344e9739c0c0f64db205fcc4c4b66f0, type: 3}
+  volume: 0.3
   loop: 0
   spatialBlend: 1
