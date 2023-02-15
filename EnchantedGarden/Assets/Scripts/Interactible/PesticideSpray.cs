@@ -41,18 +41,7 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
 
     public bool CanBeCombined => _held && !_full;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        _full = false;
-        _contents.SetActive(false);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
+    public GameObject GameObject => gameObject;
 
     public bool CanInteractWith(IInteractable interactable)
     {
@@ -77,5 +66,29 @@ public class PesticideSpray : PickUpBase, ICombinable, IInteractor
             default:
                 break;
         }
+    }
+
+    public bool DestroyAfterInteract(IInteractable interactable)
+    {
+        switch (interactable)
+        {
+            case Spirit _:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        _full = false;
+        _contents.SetActive(false);
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+
     }
 }

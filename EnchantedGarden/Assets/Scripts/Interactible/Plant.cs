@@ -207,4 +207,9 @@ public class Plant : PickUpBase, IPossessable, IInteractable
         }
 
     }
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+        return false;
+    }
 }

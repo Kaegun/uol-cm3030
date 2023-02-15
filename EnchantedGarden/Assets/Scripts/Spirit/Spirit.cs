@@ -136,6 +136,8 @@ public class Spirit : MonoBehaviour, IInteractable
 
     public Transform Transform => transform;
 
+    public GameObject GameObject => gameObject;
+
     private void StealPossessedPlant()
     {
         GameManager.Instance.ScorePoints(-100);
@@ -303,6 +305,17 @@ public class Spirit : MonoBehaviour, IInteractable
                 break;
             default:
                 break;
+        }
+    }
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+        switch (interactor)
+        {
+            case PesticideSpray _:
+                return true;
+            default:
+                return false;
         }
     }
 }

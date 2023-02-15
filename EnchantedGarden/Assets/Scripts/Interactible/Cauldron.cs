@@ -95,6 +95,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 
     public Transform Transform => transform;
 
+    public GameObject GameObject => gameObject;
+
     private void UsePotion()
 	{
 		_currentUses -= 1;
@@ -138,4 +140,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 				break;
 		}
 	}
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+		return false;
+    }
 }
