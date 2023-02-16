@@ -48,6 +48,7 @@ MonoBehaviour:
   _adjustmentPosition: {x: 11, y: -76.8, z: 4.6}
   _adjustmentRotation: {x: -8.815, y: 114.074, z: -0.47}
   _adjustmentScaleFactor: 100
+  _indicatorAdjustmentPosition: {x: 0, y: 2.2, z: 0}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0

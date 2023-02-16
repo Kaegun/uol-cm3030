@@ -34,6 +34,12 @@ public static class Utility
         return rotation;
     }
 
+    public static Quaternion ZeroY(this Quaternion q)
+    {
+        var rotation = q.eulerAngles.ZeroY();
+        return Quaternion.Euler(rotation);
+    }
+
     public static Vector3 GetVector2DFromAngle(float angle)
     {
         //	TODO: Check whether this is correct, since it feels very 2D
