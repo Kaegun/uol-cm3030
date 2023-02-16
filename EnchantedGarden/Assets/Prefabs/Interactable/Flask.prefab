@@ -62,6 +62,7 @@ MonoBehaviour:
   _adjustmentPosition: {x: -5, y: 57, z: 2}
   _adjustmentRotation: {x: 180, y: 0, z: 0}
   _adjustmentScaleFactor: 100
+  _indicatorAdjustmentPosition: {x: 0, y: 1.2, z: 0}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0

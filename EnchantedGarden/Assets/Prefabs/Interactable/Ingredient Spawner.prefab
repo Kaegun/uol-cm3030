@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnedPrefab: {fileID: 4351325924637368919, guid: 1d2bb524f774d674aa5bf112202c9c4c,
     type: 3}
+  _pickUpIndicatorAdjustment: {x: 0, y: 1, z: 0}
 --- !u!135 &7121670826766201899
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -12,6 +12,10 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected float _adjustmentScaleFactor = 100f;
 
+	[Header("Pickup Indicator Position")]
+	[SerializeField]
+	protected Vector3 _indicatorAdjustmentPosition;	
+
 	[Header("Despawns")]
 	[SerializeField]
 	protected bool _despawns = false;
@@ -41,7 +45,9 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	public virtual bool PlayAnimation => _playAnimation;
 
-	protected bool _held = false, _canBePickedUp = true;
+    public Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
+
+    protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
 
 	public virtual void OnDrop(bool destroy = false)

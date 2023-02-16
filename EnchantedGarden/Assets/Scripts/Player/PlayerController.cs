@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _maxAnimationSpeed = 6.0f;
 
+    [Header("Pick Up UI")]
+    [SerializeField]
+    private GameObject _pickUpIndicator;
+
     [Header("Interaction")]
     [SerializeField]
     private Transform _heldObjectTransform;
@@ -205,6 +209,19 @@ public class PlayerController : MonoBehaviour
         _moveDirection = e;
     }
 
+    private void SetPickUpIndicator(bool active, Vector3? position = null)
+    {
+        if (_pickUpIndicator.activeSelf != active)
+        {
+            _pickUpIndicator.SetActive(active);
+        }
+        if (position != null)
+        {
+            _pickUpIndicator.transform.position = position.Value;
+        }
+        _pickUpIndicator.transform.LookAt(_camera.transform.position.ZeroY());
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -317,9 +334,31 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        if (_pickups.Count > 0 || _spawner != null)
+
+        var closestPickUp = _pickups.OrderBy(p => Vector3.Distance(p.Transform.position, transform.position)).FirstOrDefault();
+        switch (closestPickUp == null)
         {
-            // TODO: Highlight closest pickup/spawner
+            case true when _spawner != null && _heldObject == null:
+                // Indicator at spawner
+                SetPickUpIndicator(true, _spawner.IndicatorPosition);
+                break;
+            case false when _spawner == null && _heldObject == null:
+                // Indicator at closest pick up
+                SetPickUpIndicator(true, closestPickUp.IndicatorPostion);
+                break;
+            case false when _spawner != null && _heldObject == null:
+                // Indicator at closest between pick up and spawner
+                SetPickUpIndicator(
+                    true,
+                    Vector3.Distance(_spawner.transform.position, transform.position) < Vector3.Distance(closestPickUp.Transform.position, transform.position)
+                        ? _spawner.IndicatorPosition
+                        : closestPickUp.IndicatorPostion
+                );
+                break;
+            default:
+                // Disable indicator
+                SetPickUpIndicator(false);
+                break;
         }
 
         if (IsMoving)
