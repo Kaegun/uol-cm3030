@@ -54,7 +54,7 @@ public class Spirit : MonoBehaviour, IInteractable
         }
         // Spirit is destroyed before audio plays
         // TODO: Fix audio not playing due to spirit object being destroyed
-        AudioController.PlayAudio(_audioSource, _bansihAudio);
+        AudioController.PlayAudioDetached(_bansihAudio, transform.position);
         GameManager.Instance.ScorePoints(50);
         Destroy(gameObject);
     }
@@ -135,6 +135,8 @@ public class Spirit : MonoBehaviour, IInteractable
     private bool IsPossessingPlant => (_spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession) && _possessedPossessable is Plant;
 
     public Transform Transform => transform;
+
+    public GameObject GameObject => gameObject;
 
     private void StealPossessedPlant()
     {
@@ -287,7 +289,7 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (interactor)
         {
-            case PesticideSpray _:
+            case Flask _:
                 return CanBeBanished && interactor.CanInteractWith(this);
             default:
                 return false;
@@ -298,11 +300,22 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (interactor)
         {
-            case PesticideSpray _:
+            case Flask _:
                 Banish();
                 break;
             default:
                 break;
+        }
+    }
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+        switch (interactor)
+        {
+            case Flask _:
+                return true;
+            default:
+                return false;
         }
     }
 }

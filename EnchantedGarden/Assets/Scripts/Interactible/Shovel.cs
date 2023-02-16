@@ -1,6 +1,10 @@
 ﻿//	Code is in base
+using UnityEngine;
+
 public class Shovel : PickUpBase, IInteractor
 {
+    public GameObject GameObject => gameObject;
+
     public bool CanInteractWith(IInteractable interactable)
     {
         switch (interactable)
@@ -15,6 +19,11 @@ public class Shovel : PickUpBase, IInteractor
     public void OnInteract(IInteractable interactable)
     {
 
+    }
+
+    public bool DestroyAfterInteract(IInteractable interactable)
+    {
+        return false;
     }
 
     //	Start is called before the first frame update

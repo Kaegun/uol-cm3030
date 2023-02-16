@@ -17,12 +17,30 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     //	TODO: VFX Changes
     [SerializeField]
     private Material _plantMaterial;
-
     [SerializeField]
     private Material _spiritMaterial;
 
     [SerializeField]
     private PlantPatch _plantPatch;
+
+    [SerializeField]
+    private GameObject _plantModel;
+
+    [Header("Normal Plant Model Transform")]
+    [SerializeField]
+    private Vector3 _normalPosition;
+    [SerializeField]
+    private Vector3 _normalRotation;
+    [SerializeField]
+    private Vector3 _normalScale;
+
+    [Header("Dropped Plant Model Transform")]
+    [SerializeField]
+    private Vector3 _droppedPosition;
+    [SerializeField]
+    private Vector3 _droppedRotation;
+    [SerializeField]
+    private Vector3 _droppedScale;
 
     [SerializeField]
     private ScriptableWorldEventHandler _worldEvents;
@@ -43,6 +61,8 @@ public class Plant : PickUpBase, IPossessable, IInteractable
         _planted = true;
         //transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         _plantPatch = parent;
+        _replantingProgress = 0;
+        SetModelNormal();
     }
 
     public bool CanBePossessed => _plantState == PlantState.Default;
@@ -55,6 +75,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
     public void OnPossessionStarted(Spirit possessor)
     {
+        SetModelNormal();
         _plantState = PlantState.BecomingPossessed;
         _worldEvents.OnPlantPossessing(transform.position);
     }
@@ -84,6 +105,15 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     {
         _plantState = PlantState.Default;
         _possessionProgress = 0;
+        transform.position = transform.position.ZeroY();
+        if (_plantPatch != null)
+        {
+            SetModelNormal();
+        }
+        else
+        {
+            SetModelDropped();
+        }
     }
 
     //public void StartPossession()
@@ -128,6 +158,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
     public override void OnPickUp(Transform pickupTransform)
     {
+        SetModelNormal();
         _plantState = PlantState.Carried;
         if (_plantPatch != null)
         {
@@ -155,8 +186,8 @@ public class Plant : PickUpBase, IPossessable, IInteractable
             transform.position = _plantPatch.transform.position;
         }
 
+        SetModelDropped();
         _plantState = PlantState.Default;
-        transform.rotation = Quaternion.identity.RandomizeY();
     }
 
     //  Start is called before the first frame update
@@ -179,6 +210,20 @@ public class Plant : PickUpBase, IPossessable, IInteractable
         //_mesh.material.Lerp(_plantMaterial, _spiritMaterial, _possessionProgress / _possessionThreshold);
     }
 
+    private void SetModelNormal()
+    {
+        _plantModel.transform.localPosition = _normalPosition;
+        _plantModel.transform.localRotation = Quaternion.Euler(_normalRotation);
+        _plantModel.transform.localScale = _normalScale;
+    }
+
+    private void SetModelDropped()
+    {
+        _plantModel.transform.localPosition = _droppedPosition;
+        _plantModel.transform.localRotation = Quaternion.Euler(_droppedRotation);
+        _plantModel.transform.localScale = _droppedScale;
+    }
+
     public bool CanInteractWith(IInteractor interactor)
     {
         switch (interactor)
@@ -199,12 +244,17 @@ public class Plant : PickUpBase, IPossessable, IInteractable
                 if (_replantingProgress >= GameManager.Instance.ActiveLevel.ReplantingThreshold)
                 {
                     Debug.Log("Replanted plant!");
-                    _planted = true;
+                    Replant(_plantPatch);
                 }
                 break;
             default:
                 break;
         }
 
+    }
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+        return false;
     }
 }

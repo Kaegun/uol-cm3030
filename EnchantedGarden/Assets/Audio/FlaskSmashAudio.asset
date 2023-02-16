@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
-  m_Name: CauldronBubbleAudio
+  m_Name: FlaskSmashAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 11c347ed454122a44bfd47f540f9a8e8, type: 3}
-  volume: 0.2
-  loop: 1
+  clip: {fileID: 8300000, guid: ed7526f7013435240905be899315302b, type: 3}
+  volume: 0.5
+  loop: 0
   spatialBlend: 1
