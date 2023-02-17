@@ -59,7 +59,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     public void Replant(PlantPatch parent)
     {
         _planted = true;
-        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         _plantPatch = parent;
         _replantingProgress = 0;
         SetModelNormal();
