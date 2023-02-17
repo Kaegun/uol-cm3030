@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SpiritBanishAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 0d22c088149e95d4092629f148e9591f, type: 3}
-  volume: 1
+  volume: 0.4
   loop: 0
   spatialBlend: 1

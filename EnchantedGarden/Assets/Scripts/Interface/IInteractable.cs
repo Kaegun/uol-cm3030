@@ -1,5 +1,10 @@
-﻿public interface IInteractable
+﻿using UnityEngine;
+
+public interface IInteractable
 {
-	bool IsInteractable { get; }
-	//void OnPlayerInteract(PlayerInteractionController player);
+    Transform Transform { get; }
+    GameObject GameObject { get; }
+    bool CanInteractWith(IInteractor interactor);
+    void OnInteractWith(IInteractor interactor);
+    bool DestroyOnInteract(IInteractor interactor);
 }

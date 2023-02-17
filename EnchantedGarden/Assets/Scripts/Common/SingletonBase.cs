@@ -2,7 +2,7 @@
 
 public abstract class SingletonBase<T> : MonoBehaviour where T : SingletonBase<T>
 {
-	public static T Instance { get; private set; }
+	public static T Instance { get; protected set; }
 
 	protected virtual void Awake()
 	{
@@ -12,7 +12,6 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : SingletonBase<T
 		}
 		else
 		{
-			//	This shouldn't be possible
 			Destroy(this);
 		}
 	}

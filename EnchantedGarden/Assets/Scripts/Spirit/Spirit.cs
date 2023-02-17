@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Spirit : MonoBehaviour
+public class Spirit : MonoBehaviour, IInteractable
 {
     enum SpiritState
     {
@@ -23,6 +23,19 @@ public class Spirit : MonoBehaviour
     [SerializeField]
     private GameObject _bodyObj;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private ScriptableAudioClip _spawnAudio;
+    [SerializeField]
+    private ScriptableAudioClip _beginPossessingAudio;
+    [SerializeField]
+    private ScriptableAudioClip _completePossessionAudio;
+    [SerializeField]
+    private ScriptableAudioClip _bansihAudio;
+
     private Vector3 _moveDirection;
     //private float _moveTime = 0;
 
@@ -39,6 +52,9 @@ public class Spirit : MonoBehaviour
         {
             _possessedPossessable.OnDispossess();
         }
+        // Spirit is destroyed before audio plays
+        // TODO: Fix audio not playing due to spirit object being destroyed
+        AudioController.PlayAudioDetached(_bansihAudio, transform.position);
         GameManager.Instance.ScorePoints(50);
         Destroy(gameObject);
     }
@@ -48,6 +64,7 @@ public class Spirit : MonoBehaviour
     {
         _spawnPos = transform.position;
         _spiritState = SpiritState.Spawning;
+        AudioController.PlayAudio(_audioSource, _spawnAudio);
         StartCoroutine(SpawnCoroutine());
     }
 
@@ -98,6 +115,7 @@ public class Spirit : MonoBehaviour
                 {
                     _possessedPossessable.OnPossessionCompleted(this);
                     _spiritState = SpiritState.Possessing;
+                    AudioController.PlayAudio(_audioSource, _completePossessionAudio);
                 }
 
                 break;
@@ -115,6 +133,10 @@ public class Spirit : MonoBehaviour
     }
 
     private bool IsPossessingPlant => (_spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession) && _possessedPossessable is Plant;
+
+    public Transform Transform => transform;
+
+    public GameObject GameObject => gameObject;
 
     private void StealPossessedPlant()
     {
@@ -236,6 +258,7 @@ public class Spirit : MonoBehaviour
             _possessedPossessable.OnPossessionStarted(this);
             transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
             _spiritState = SpiritState.StartingPossession;
+            AudioController.PlayAudio(_audioSource, _beginPossessingAudio);
 
             if (possessable is SpiritWall)
             {
@@ -260,5 +283,39 @@ public class Spirit : MonoBehaviour
         //    transform.position = trickPlant.transform.position;
         //}
 
+    }
+
+    public bool CanInteractWith(IInteractor interactor)
+    {
+        switch (interactor)
+        {
+            case Flask _:
+                return CanBeBanished && interactor.CanInteractWith(this);
+            default:
+                return false;
+        }
+    }
+
+    public void OnInteractWith(IInteractor interactor)
+    {
+        switch (interactor)
+        {
+            case Flask _:
+                Banish();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool DestroyOnInteract(IInteractor interactor)
+    {
+        switch (interactor)
+        {
+            case Flask _:
+                return true;
+            default:
+                return false;
+        }
     }
 }

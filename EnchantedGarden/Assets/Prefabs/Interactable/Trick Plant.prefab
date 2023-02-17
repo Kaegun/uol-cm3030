@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9058112424979511733}
   - component: {fileID: 2185519465696266567}
-  - component: {fileID: 6807273381548449310}
   - component: {fileID: 5336562938313598438}
   m_Layer: 9
   m_Name: Trick Plant
@@ -50,6 +49,7 @@ MonoBehaviour:
   _adjustmentPosition: {x: 0, y: 0, z: 0}
   _adjustmentRotation: {x: 0, y: 0, z: 0}
   _adjustmentScaleFactor: 100
+  _indicatorAdjustmentPosition: {x: 0, y: 2, z: 0}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0
@@ -58,20 +58,6 @@ MonoBehaviour:
   _trapDuration: 5
   _normalMaterial: {fileID: 0}
   _trappedMaterial: {fileID: 0}
---- !u!136 &6807273381548449310
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017128806680820391}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!136 &5336562938313598438
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -82,7 +68,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
+  m_Radius: 0.27
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
