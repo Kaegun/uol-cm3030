@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.33
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.9
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4912,22 +4912,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireAmbientAudio: {fileID: 11400000, guid: d545532b2a55bb340b8f73e39d7fd5be, type: 2}
   _fireAddLogAudio: {fileID: 11400000, guid: 0695dff1abbee774e9bbb76ef8fc7481, type: 2}
-  _fireLifetime: 45
+  _fireLifetime: 60
   _fireParticles: {fileID: 3516513796403995339}
+  _smokeParticles: {fileID: 1449690405387479320}
   _highFireParameters:
-    StartLifeTime: 1.5
+    StartLifeTime: 1.3
     StartSpeed: 0.9
     StartSize: 0.8
   _highFireLogs: {fileID: 1922471347041041397}
   _mediumFireParameters:
-    StartLifeTime: 1.1
+    StartLifeTime: 1.2
     StartSpeed: 0.7
-    StartSize: 0.5
+    StartSize: 0.7
   _mediumFireLogs: {fileID: 1922471347587450834}
   _lowFireParameters:
-    StartLifeTime: 0.6
-    StartSpeed: 0.4
-    StartSize: 0.2
+    StartLifeTime: 0.8
+    StartSpeed: 0.6
+    StartSize: 0.5
   _lowFireLogs: {fileID: 1922471347193755548}
 --- !u!82 &6203605888092575427
 AudioSource:
@@ -5049,7 +5050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2341687235461408195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.112, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6259581250538826730}
@@ -5922,7 +5923,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 60
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2

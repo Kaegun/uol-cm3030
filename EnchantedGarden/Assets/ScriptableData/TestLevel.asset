@@ -16,7 +16,7 @@ MonoBehaviour:
   _waves:
   - Count: 1
     Delay: 3
-    MoveSpeedMultiplier: 0.1
+    MoveSpeedMultiplier: 0.6
     PossessionRateMultiplier: 0.6
   - Count: 1
     Delay: 20

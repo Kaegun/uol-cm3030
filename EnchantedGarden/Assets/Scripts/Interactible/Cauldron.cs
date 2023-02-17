@@ -19,12 +19,7 @@ public class Cauldron : MonoBehaviour, IInteractable
 	[SerializeField]
 	private GameObject _cauldronContents;
 	[SerializeField]
-	private GameObject _cauldronContentsParticles;
-
-	// Think these are unnecessary as combination time is handled by the combinable
-	//[SerializeField]
-	//private float _combineDuration;
-	//private float _combineProgress;
+	private GameObject _cauldronContentsParticles;	
 
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
@@ -34,7 +29,6 @@ public class Cauldron : MonoBehaviour, IInteractable
 		_fireSystem.AddLog();
 	}
 
-	// TODO: Make private once updated to be handled as interaction
 	private void AddIngredient()
 	{
 		_currentUses = _maxUses;
@@ -42,12 +36,7 @@ public class Cauldron : MonoBehaviour, IInteractable
 		{			
 			StartCoroutine(CauldronCombineCoroutine());
 		}
-	}
-
-	//public void FillPesticideSpray(PesticideSpray pesticideSpray)
-	//{
-	//	//	Do pesticide stuff
-	//}
+	}	
 
 	// Start is called before the first frame update
 	private void Start()
@@ -93,31 +82,7 @@ public class Cauldron : MonoBehaviour, IInteractable
             {
 				_cauldronContentsParticles.SetActive(true);
             }
-        }
-		//	TODO: Could we use a Trigger Collider here?
-		//var combinables = Physics.OverlapSphere(transform.position, 2f)
-		//	.Where(c => c.GetComponent<ICombinable>() != null && c.GetComponent<ICombinable>().CanBeCombined)
-		//	.Select(c => c.GetComponent<ICombinable>())
-		//	.ToList();
-
-		//	Could this be done in a Co-Routine?
-		//if (combinables.Count > 0 && CanUseCauldron)
-		//{
-		//	//_progressDots.SetActive(true);
-		//	_combineProgress += Time.deltaTime;
-		//	if (_combineProgress >= _combineDuration)
-		//	{
-		//		UsePotion();
-		//		//combinables[0].OnCombine();
-		//		_combineProgress = 0;
-		//		StartCoroutine(CauldronCombineCoroutine());
-		//	}
-		//}
-		//else
-		//{
-		//	//_progressDots.SetActive(false);
-		//	_combineProgress = 0;
-		//}
+        }		
 	}
 
 	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;

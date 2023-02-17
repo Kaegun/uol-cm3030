@@ -23,10 +23,13 @@ public class FireSystem : MonoBehaviour
 
 	[Header("Fire particles")]
 	[SerializeField]
-	private float _fireLifetime = 10.0f;
+	private float _fireLifetime = 60.0f;
 
 	[SerializeField]
 	private ParticleSystem _fireParticles;
+
+	[SerializeField]
+	private ParticleSystem _smokeParticles;
 
 	[Header("High")]
 	[SerializeField]
@@ -100,6 +103,7 @@ public class FireSystem : MonoBehaviour
 		_fireAudioSource = GetComponent<AudioSource>();
 		Assert.IsNotNull(_fireAudioSource);
 		Assert.IsNotNull(_fireParticles);
+		Assert.IsNotNull(_smokeParticles);
 
 		_currentFireLevel = _fireLifetime;
 		_fireLifetimeStep = _fireLifetime / 3;
@@ -120,6 +124,7 @@ public class FireSystem : MonoBehaviour
 			DisableLogs();
 			_fireParticles.Stop();
 			_fireAudioSource.Stop();
+			_smokeParticles.Stop();
 		}
 		else if (_currentFireLevel < _fireLifetime - _fireLifetimeStep * 2)
 		{
@@ -138,6 +143,8 @@ public class FireSystem : MonoBehaviour
 		psMain.startLifetime = parameters.StartLifeTime;
 		psMain.startSpeed = parameters.StartSpeed;
 		DisableLogs();
+
+		_smokeParticles.Play();
 
 		logs.SetActive(true);
 	}
