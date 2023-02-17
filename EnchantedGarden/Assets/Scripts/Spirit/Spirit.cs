@@ -38,6 +38,10 @@ public class Spirit : MonoBehaviour, IInteractable
 
     private Vector3 _moveDirection;
     //private float _moveTime = 0;
+    private float _moveSpeedMultiplier = 1f;
+    private float _possessionRateMultiplier = 1f;
+
+    public float PossessionRateMultiplier => _possessionRateMultiplier;
 
     private SpiritState _spiritState;
     private IPossessable _possessedPossessable;
@@ -45,6 +49,12 @@ public class Spirit : MonoBehaviour, IInteractable
     private IPossessable _targetPossessable = null;
 
     public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
+
+    public void SetPropsOnSpawn(float moveSpeedMultiplier, float possessionRateMultiplier)
+    {
+        _moveSpeedMultiplier = moveSpeedMultiplier;
+        _possessionRateMultiplier = possessionRateMultiplier;
+    }
 
     public void Banish()
     {
@@ -73,42 +83,6 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         switch (_spiritState)
         {
-            case SpiritState.Searching:
-                // TODO: DELETE random movement
-                //  random movement for testing purposes
-                /*_moveTime += Time.deltaTime;
-                if (_moveTime >= Random.Range(2.5f, 4f))
-                {
-                    _moveDirection = Vector3.Distance(transform.position, Vector3.zero) > 20
-                        ? transform.position.normalized * -1
-                        : new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-
-                    _moveDirection.y = 0;
-                    _moveDirection = _moveDirection.normalized;
-                    _moveTime = 0;
-                }*/
-
-                // If target plant is not a valid target, use raycasts to search for new valid target
-                /*if (_targetPlant == null || !_targetPlant.CanBePossessed)
-                {
-                    // Set LayerMask based on duration of search
-                    int layerMask = CommonTypes.LayerAsLayerMask(CommonTypes.Layers.Plant);
-                    if (Physics.Raycast(transform.position, transform.position + transform.rotation * Vector3.forward, out RaycastHit hit, 100f, layerMask)
-                        && hit.collider.TryGetComponent(out Plant hitPlant)
-                        && hitPlant.CanBePossessed)
-                    {
-                        _targetPlant = hitPlant;
-                    }
-                    transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + transform.rotation * Vector3.right * (Mathf.PingPong(Time.time, 2) - 1), Time.deltaTime * _turnSpeed / 8);
-                }
-
-                // If current target is a valid target move towards current target
-                else
-                {
-                    _moveDirection = (_targetPlant.transform.position - transform.position).normalized;
-                    Move();
-                }*/
-                break;
             case SpiritState.StartingPossession:
                 _possessedPossessable.WhileCompletingPossession(this);
                 if (_possessedPossessable.PossessionCompleted)
@@ -147,25 +121,21 @@ public class Spirit : MonoBehaviour, IInteractable
 
     private void Move(float speedFactor = 1.0f)
     {
-        // Prevent movement on y axis
-        // TODO: Replace _moveDirection with Vector2?
         _moveDirection.y = 0;
         _moveDirection = _moveDirection.normalized;
         transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + _moveDirection, _turnSpeed * Time.deltaTime);
-        transform.position += _moveSpeed * Time.deltaTime * _moveDirection * speedFactor;
+        transform.position += _moveSpeed * Time.deltaTime * _moveDirection * _moveSpeedMultiplier * speedFactor;
 
     }
 
     private void DeactivateBody()
     {
-        //	TODO: We may not want to do this
         _bodyObj.SetActive(false);
     }
 
     // Not sure there is any instance we'll need this but will keep it for now
     private void ActivateBody()
     {
-        //	TODO: We may not want to do this
         _bodyObj.SetActive(true);
     }
 
