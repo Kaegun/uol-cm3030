@@ -54,8 +54,9 @@ public class ForestSpawner : MonoBehaviour
 			}
 		}
 
+		//	Re-randomize the seed after spawning the trees
 		if (_seed > 0)
-			Random.InitState(0);
+			Random.InitState(System.Environment.TickCount);
 	}
 
 	// Update is called once per frame

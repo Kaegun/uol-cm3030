@@ -64,6 +64,7 @@
     <Compile Include="Assets\Imported\SkythianCat\Glowing_Forest\Scripts\WaterGroup.cs" />
     <Compile Include="Assets\Scripts\Common\CauldronSettings.cs" />
     <Compile Include="Assets\Scripts\Common\CommonTypes.cs" />
+    <Compile Include="Assets\Scripts\Common\DestroyAfterDuration.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoMesh.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoSphere.cs" />
     <Compile Include="Assets\Scripts\Common\DrawGizmoText.cs" />
@@ -85,10 +86,11 @@
     <Compile Include="Assets\Scripts\Fox\FoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\Interactible\Cauldron.cs" />
     <Compile Include="Assets\Scripts\Interactible\FireSystem.cs" />
+    <Compile Include="Assets\Scripts\Interactible\Flask.cs" />
+    <Compile Include="Assets\Scripts\Interactible\FlaskSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\Ingredient.cs" />
     <Compile Include="Assets\Scripts\Interactible\IngredientSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\Log.cs" />
-    <Compile Include="Assets\Scripts\Interactible\PesticideSpray.cs" />
     <Compile Include="Assets\Scripts\Interactible\Plant.cs" />
     <Compile Include="Assets\Scripts\Interactible\Shovel.cs" />
     <Compile Include="Assets\Scripts\Interactible\SpiritWall.cs" />
@@ -144,6 +146,7 @@
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\EyeLash.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Shadows.cginc" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Translucency.shader" />
+    <None Include="Assets\Imported\SimpleFlatKeys\README.txt" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\Vegetation.shader" />
     <None Include="Assets\Imported\3DGameKit\Art\Shaders\MirrorWater.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
