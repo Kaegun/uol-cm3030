@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -30,7 +31,6 @@ public class GameManager : SingletonBase<GameManager>
 	public void ScorePoints(int points)
 	{
 		_score += points;
-		//_scoreText.text = $"Score: {_score}";
 	}
 
 	public void RestartGame()
@@ -44,9 +44,9 @@ public class GameManager : SingletonBase<GameManager>
 
 	// Should probably be in the AudioController, would likely need to make it a Singleton though
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
-    {
-		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);		
-    }
+	{
+		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
+	}
 
 	//	TODO: Here we might be able to use an SO to raise events to all things that need to know about Game Ending, i.e. Sounds, etc.
 	private void EndGame()
@@ -63,6 +63,8 @@ public class GameManager : SingletonBase<GameManager>
 	//	Start is called before the first frame update
 	private void Start()
 	{
+		Assert.IsTrue(_levels.Length > 0);
+
 		_score = 0;
 		_level = _levels[0];
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
