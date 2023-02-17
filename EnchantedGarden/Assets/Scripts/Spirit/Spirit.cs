@@ -123,9 +123,17 @@ public class Spirit : MonoBehaviour, IInteractable
     {
         _moveDirection.y = 0;
         _moveDirection = _moveDirection.normalized;
-        transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + _moveDirection, _turnSpeed * Time.deltaTime);
-        transform.position += _moveSpeed * Time.deltaTime * _moveDirection * _moveSpeedMultiplier * speedFactor;
 
+        // Use sin wave to calculate oscillating vector perpendicular to movement direction
+        var perpMoveDir = 0.5f * Mathf.Sin(Time.time * 2) * (Quaternion.Euler(0, 90, 0) * _moveDirection).normalized;
+        var moveDir = (_moveDirection + perpMoveDir).normalized;
+
+        transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + moveDir, _turnSpeed * Time.deltaTime);
+        transform.position += _moveSpeed * Time.deltaTime * moveDir * _moveSpeedMultiplier * speedFactor;
+
+        // Use cos wave to make spirit bob up and down as it moves
+        var bobAmount = 0.0075f * Mathf.Cos(Time.time * 3.5f);
+        transform.position += Vector3.up * bobAmount;
     }
 
     private void DeactivateBody()
@@ -170,8 +178,7 @@ public class Spirit : MonoBehaviour, IInteractable
             // If target is not valid carry out searching behaviour to find vaild possession target
             if (_targetPossessable == null || !_targetPossessable.CanBePossessed)
             {
-                // For 2 seconds rotate spirit and use raycast to search for valid possessable
-                // Spirits target closest possessable found
+                // For 2 seconds rotate spirit and use raycast to search for valid possessable                
                 float t = 0;
                 HashSet<IPossessable> hitPossessables = new HashSet<IPossessable>();
                 while (t < 2)
@@ -183,13 +190,14 @@ public class Spirit : MonoBehaviour, IInteractable
                         Debug.DrawRay(transform.position, (transform.rotation * Vector3.forward).normalized * hit.distance, Color.yellow);
                         hitPossessables.Add(hitPossessable);
                     }
-                    float bounce = Mathf.PingPong(Time.time, 1.6f) - 0.8f;
+                    var bounce = Mathf.Sin(Time.time * 2f) * 0.8f;
                     transform.rotation = transform.rotation.RotateTowards(transform.position,
-                        transform.position + transform.rotation * Vector3.right * bounce,
+                        transform.position + transform.right * bounce,
                         Time.deltaTime * _turnSpeed / 8);
                     t += Time.deltaTime;
                     yield return new WaitForFixedUpdate();
                 }
+                // Spirits target closest possessable found
                 _targetPossessable = hitPossessables.OrderBy(p => Vector3.Distance(p.Transform.position, transform.position)).FirstOrDefault();
                 // For three seconds if vaild possessable has not been found, move towards origin
                 _moveDirection = Quaternion.Euler(new Vector3(0, Random.Range(-60, 60), 0)) * transform.position.normalized * -1;
