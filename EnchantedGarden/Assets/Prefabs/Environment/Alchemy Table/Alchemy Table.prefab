@@ -142,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnedPrefab: {fileID: 2017128806680820391, guid: 7e699bd45987b7641945329f2baf7c17,
     type: 3}
+  _pickUpIndicatorAdjustment: {x: 0, y: 0, z: 0}
 --- !u!135 &465344454195361767
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -283,7 +284,7 @@ MonoBehaviour:
     _prefab: {fileID: 6500175262706509814, guid: f018bfff99019124997da5116bc59f08,
       type: 3}
     _position: {fileID: 4417145759998793801}
-    _localScale: 1
+    _localScale: 2
     _spawnRadius: 1
     _numberToSpawn: 1
   _potion:

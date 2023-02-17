@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25efd4bb3efacf47a4e35d3d9b764f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spirit: {fileID: 7931279852990355854, guid: a46afc212a9efb44aac9291be18046ed, type: 3}
+  _spirit: {fileID: 6675575830417691765, guid: 77ac89df52bd3e845b9b70f348b91a0c, type: 3}
   _level: {fileID: 11400000, guid: 53f78de3cb19c074d86dfcc544dba116, type: 2}
   _spawnPoints:
   - {fileID: 0}

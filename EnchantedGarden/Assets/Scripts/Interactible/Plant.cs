@@ -49,6 +49,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     private float _possessionProgress;
     private float _replantingProgress;
     private bool _planted;
+    private Vector3 _startPossessionPos;
 
     public bool CanBeReplanted()
     {
@@ -59,7 +60,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     public void Replant(PlantPatch parent)
     {
         _planted = true;
-        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         _plantPatch = parent;
         _replantingProgress = 0;
         SetModelNormal();
@@ -77,14 +77,14 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     {
         SetModelNormal();
         _plantState = PlantState.BecomingPossessed;
+        _startPossessionPos = transform.position;
         _worldEvents.OnPlantPossessing(transform.position);
     }
 
     public void WhileCompletingPossession(Spirit possessor)
     {
-        _possessionProgress += _planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.ActiveLevel.UnplantedFactor;
-        // TODO: Refactor to move smoothly to a specific position on the spirit
-        transform.position = Vector3.Lerp(transform.position, possessor.transform.position, Time.deltaTime * _possessionProgress / GameManager.Instance.ActiveLevel.PossessionThreshold);
+        _possessionProgress += possessor.PossessionRateMultiplier * (_planted ? Time.deltaTime : Time.deltaTime * GameManager.Instance.ActiveLevel.UnplantedFactor);
+        transform.position = Vector3.Lerp(_startPossessionPos, possessor.transform.position, _possessionProgress / GameManager.Instance.ActiveLevel.PossessionThreshold);
     }
 
     public void OnPossessionCompleted(Spirit possessor)
@@ -114,36 +114,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
         {
             SetModelDropped();
         }
-    }
-
-    //public void StartPossession()
-    //{
-    //	_plantState = PlantState.BecomingPossessed;
-    //	_worldEvents.OnPlantPossessing(transform.position);
-    //}
-
-    //	TODO: Property
-    //public bool PossessionThresholdReached => _possessionProgress >= GameManager.Instance.Level.PossessionThreshold;
-
-    //public void CompletePossession()
-    //{
-    //	_plantState = PlantState.Carried;
-    //	_possessionProgress = GameManager.Instance.Level.PossessionThreshold;
-    //	if (_plantPatch != null)
-    //	{
-    //		_plantPatch.RemovePlant();
-    //		_plantPatch = null;
-    //	}
-    //	transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
-    //
-    //	_worldEvents.OnPlantPossessed(transform.position);
-    //}
-
-    //public void Dispossess()
-    //{
-    //	_plantState = PlantState.Default;
-    //	_possessionProgress = 0;
-    //}
+    }    
 
     public override bool CanBePickedUp => _plantState == PlantState.Default;
 
@@ -151,10 +122,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
     public override bool CanBeDropped => base.CanBeDropped && Physics.OverlapSphere(transform.position, 2.0f).
                 Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
                 ToList().Count > 0;
-
-
-    //	This could be a Scriptable Object
-    //public Transform PickupAdjustment => throw new System.NotImplementedException();
+    
 
     public override void OnPickUp(Transform pickupTransform)
     {
@@ -250,7 +218,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
             default:
                 break;
         }
-
     }
 
     public bool DestroyOnInteract(IInteractor interactor)

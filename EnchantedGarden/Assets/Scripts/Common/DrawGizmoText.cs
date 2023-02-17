@@ -4,6 +4,7 @@ using UnityEngine;
 //	Found here: https://gist.github.com/Arakade/9dd844c2f9c10e97e3d0
 public class DrawGizmoText : MonoBehaviour
 {
+#if UNITY_EDITOR
 	[SerializeField]
 	private int _textSize = 15;
 
@@ -25,10 +26,9 @@ public class DrawGizmoText : MonoBehaviour
 		set { _text = value; }
 	}
 
-#if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
-		DrawText( _showName ? name : _text);
+		DrawText(_showName ? name : _text);
 	}
 
 	protected void DrawText(string text)

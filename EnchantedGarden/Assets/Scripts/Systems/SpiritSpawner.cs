@@ -41,21 +41,21 @@ public class SpiritSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnWave(SpiritWave wave)
-    {
-        var spawnLocations = new Vector3[wave.Count];
-        for (int i = 0; i < wave.Count; i++)
-        {
-            // Random seed seems to always be the same and is an awkward seed
-            // Should think about how we're handling randoms
-            int rand = Random.Range(0, _spawnPoints.Length);
-            spawnLocations[i] = _spawnPoints[rand].transform.position;
-            Instantiate(_spirit, spawnLocations[i] + 3 * Utility.RandomUnitVec3().ZeroY(), Quaternion.identity, transform);
-        }
-
-        //	Alert any interested parties that a wave has spawned
-        _worldEvents?.OnSpiritWaveSpawned(spawnLocations);
-    }
+    //private void SpawnWave(SpiritWave wave)
+    //{
+    //    var spawnLocations = new Vector3[wave.Count];
+    //    for (int i = 0; i < wave.Count; i++)
+    //    {
+    //        // Random seed seems to always be the same and is an awkward seed
+    //        // Should think about how we're handling randoms
+    //        int rand = Random.Range(0, _spawnPoints.Length);
+    //        spawnLocations[i] = _spawnPoints[rand].transform.position;
+    //        Instantiate(_spirit, spawnLocations[i] + 3 * Utility.RandomUnitVec3().ZeroY(), Quaternion.identity, transform);
+    //    }
+    //
+    //    //	Alert any interested parties that a wave has spawned
+    //    _worldEvents?.OnSpiritWaveSpawned(spawnLocations);
+    //}
 
     private IEnumerator SpawnWaveCoroutine(SpiritWave wave)
     {
@@ -65,7 +65,8 @@ public class SpiritSpawner : MonoBehaviour
             int rand = Random.Range(0, _spawnPoints.Length);
             var pos = _spawnPoints[rand].transform.position + 3 * Utility.RandomUnitVec3().ZeroY();
             spawnLocations[i] = pos;
-            Instantiate(_spirit, pos, Quaternion.identity, transform);
+            Instantiate(_spirit, pos, Quaternion.identity, transform).TryGetComponent(out Spirit spirit);
+            spirit?.SetPropsOnSpawn(wave.MoveSpeedMultiplier, wave.PossessionRateMultiplier);
             yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
         //	Alert any interested parties that a wave has spawned
