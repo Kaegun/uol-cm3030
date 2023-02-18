@@ -23,9 +23,6 @@ public class FireSystem : MonoBehaviour
 
 	[Header("Fire particles")]
 	[SerializeField]
-	private float _fireLifetime = 60.0f;
-
-	[SerializeField]
 	private ParticleSystem _fireParticles;
 
 	[SerializeField]
@@ -55,20 +52,19 @@ public class FireSystem : MonoBehaviour
 	public bool IsAlive => _currentFireLevel > 0;
 
 	private AudioSource _fireAudioSource;
-	private float _currentFireLevel, _fireLifetimeStep;
+	private float _currentFireLevel, _fireLifetimeStep, _fireLifetime;
 
 	public void AddLog()
 	{
 		Debug.Log("Entering AddLog");
 		_currentFireLevel = _fireLifetime;
 		AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
-		_currentFireLevel = _fireLifetime;
 		SetParticleSystem(_highFireParameters, _highFireLogs);
 		//	Restart particles if stopped
 		if (_fireParticles.isStopped)
 		{
 			_fireParticles.Play();
-			//	Play ambient audio - maybe delayed via CoR?
+			//	Play ambient audio
 			StartCoroutine(StartAmbientAudioCoRoutine());
 		}
 	}
@@ -80,23 +76,6 @@ public class FireSystem : MonoBehaviour
 		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
 	}
 
-	//  TODO: Does this need to be in a CoRoutine?
-	//private IEnumerator FireCoroutine()
-	//{
-	//	_currentFuel = _maxFuel;
-	//	_fireParticles.SetActive(true);
-	//	// Play add log to fire noise
-	//	AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
-	//	yield return new WaitForSeconds(_fireAddLogAudio.clip.length * 0.6f);
-	//	// Play fire ambient noise
-	//	AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
-	//	yield return new WaitForSeconds(_maxFuel - _fireAddLogAudio.clip.length * 0.6f);
-	//	// Stop fire
-	//	_fireAudioSource.Stop();
-	//	_fireParticles.SetActive(false);
-	//	_currentFuel = 0;
-	//}
-
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -105,7 +84,7 @@ public class FireSystem : MonoBehaviour
 		Assert.IsNotNull(_fireParticles);
 		Assert.IsNotNull(_smokeParticles);
 
-		_currentFireLevel = _fireLifetime;
+		_currentFireLevel = _fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
 		_fireLifetimeStep = _fireLifetime / 3;
 
 		//	Start Fire Audio
@@ -117,6 +96,8 @@ public class FireSystem : MonoBehaviour
 	{
 		//	Set fire animations based on fire timer level
 		_currentFireLevel -= Time.deltaTime;
+		//	JU: Not a fan
+		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentFireLevel = _currentFireLevel;
 
 		if (!IsAlive)
 		{
@@ -130,7 +111,7 @@ public class FireSystem : MonoBehaviour
 		{
 			SetParticleSystem(_lowFireParameters, _lowFireLogs);
 		}
-		else if (_currentFireLevel < _fireLifetime - _fireLifetimeStep)
+		else if (_currentFireLevel < _fireLifetimeStep)
 		{
 			SetParticleSystem(_mediumFireParameters, _mediumFireLogs);
 		}

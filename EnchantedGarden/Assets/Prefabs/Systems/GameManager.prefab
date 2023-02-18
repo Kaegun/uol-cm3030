@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee79eafd05c9854984554a0f1f3f686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _levels: []
   _backgroundMusicAudioSource: {fileID: 3935216101442718748}
   _detachedAudioSourcePrefab: {fileID: 3958828404382933102, guid: 76ae88a5df59ef046bb8cf1345e71eaa,
     type: 3}
+  _gameOverMusic: {fileID: 11400000, guid: 5e93eabd20df1954390e37cc0ac23354, type: 2}
 --- !u!82 &3935216101442718748
 AudioSource:
   m_ObjectHideFlags: 0

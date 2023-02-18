@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Spirit : MonoBehaviour, IInteractable
 {
@@ -14,6 +15,11 @@ public class Spirit : MonoBehaviour, IInteractable
         Trapped,
     }
 
+    [Header("Events")]
+    [SerializeField]
+    private ScriptableWorldEventHandler _worldEvents;
+
+    [Header("Movement")]
     [SerializeField]
     private float _moveSpeed;
 
@@ -29,15 +35,17 @@ public class Spirit : MonoBehaviour, IInteractable
 
     [SerializeField]
     private ScriptableAudioClip _spawnAudio;
+
     [SerializeField]
     private ScriptableAudioClip _beginPossessingAudio;
+
     [SerializeField]
     private ScriptableAudioClip _completePossessionAudio;
+
     [SerializeField]
     private ScriptableAudioClip _bansihAudio;
 
     private Vector3 _moveDirection;
-    //private float _moveTime = 0;
     private float _moveSpeedMultiplier = 1f;
     private float _possessionRateMultiplier = 1f;
 
@@ -72,6 +80,8 @@ public class Spirit : MonoBehaviour, IInteractable
     //  Start is called before the first frame update
     private void Start()
     {
+        Assert.IsNotNull(_worldEvents);
+
         _spawnPos = transform.position;
         _spiritState = SpiritState.Spawning;
         AudioController.PlayAudio(_audioSource, _spawnAudio);
@@ -114,6 +124,10 @@ public class Spirit : MonoBehaviour, IInteractable
 
     private void StealPossessedPlant()
     {
+        //  Alert the world a plant is dead
+        _worldEvents.OnPlantStolen(transform.position);
+
+        //  TODO: I don't think we should do negative points
         GameManager.Instance.ScorePoints(-100);
         Destroy(_possessedPossessable.GameObject);
         Destroy(gameObject);

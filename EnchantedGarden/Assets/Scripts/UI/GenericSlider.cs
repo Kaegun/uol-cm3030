@@ -24,6 +24,7 @@ public class GenericSlider : MonoBehaviour, ISettable<float>
 
 	public void SetValue(float value)
 	{
+		Debug.Log($"Setting Slider value: {value} / {_maximumValue}");
 		_slider.value = value / _maximumValue;
 		if (_showText)
 			_text.text = $"{value} / {_maximumValue}";
