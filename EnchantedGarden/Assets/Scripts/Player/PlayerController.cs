@@ -443,31 +443,55 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
-        //Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
-        if (other.TryGetComponent<IPickUp>(out var pickup))
+        if (other.TryGetComponent<IPickUp>(out var pickup) && !_pickups.Contains(pickup))
         {
             if (pickup.CanBePickedUp)
+            {
                 _pickups.Add(pickup);
+            }
             //Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
         }
-        else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
+        if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner) && spawner != _spawner)
         {
             if (_spawner == null || Vector3.Distance(transform.position, spawner.transform.position) < Vector3.Distance(transform.position, _spawner.transform.position))
             {
                 _spawner = spawner;
             }
-        }
-        else if (other.TryGetComponent<Cauldron>(out var cauldron))
-        {
-            _cauldron = cauldron;
-        }
-        if (other.TryGetComponent<IInteractable>(out var interactable))
+        }        
+        if (other.TryGetComponent<IInteractable>(out var interactable) && !_interactables.Contains(interactable))
         {
             _interactables.Add(interactable);
         }
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Debug.Log($"PlayerController.OnTriggerEnter: {other.name}");
+    //    if (other.TryGetComponent<IPickUp>(out var pickup))
+    //    {
+    //        if (pickup.CanBePickedUp)
+    //            _pickups.Add(pickup);
+    //        //Debug.Log($"PlayerController.OnTriggerEnter:{other.gameObject.name} - {pickup.CanBePickedUp}: {_pickups.Count}");
+    //    }
+    //    else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
+    //    {
+    //        if (_spawner == null || Vector3.Distance(transform.position, spawner.transform.position) < Vector3.Distance(transform.position, _spawner.transform.position))
+    //        {
+    //            _spawner = spawner;
+    //        }
+    //    }
+    //    else if (other.TryGetComponent<Cauldron>(out var cauldron))
+    //    {
+    //        _cauldron = cauldron;
+    //    }
+    //    if (other.TryGetComponent<IInteractable>(out var interactable))
+    //    {
+    //        _interactables.Add(interactable);
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {
