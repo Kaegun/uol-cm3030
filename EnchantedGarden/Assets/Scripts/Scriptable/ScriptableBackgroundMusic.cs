@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewScriptableBackgroundMusic", menuName = "Scriptable/BackgroundMusic")]
+[CreateAssetMenu(fileName = "NewScriptableBackgroundMusic", menuName = "Scriptable/Audio/BackgroundMusic")]
 public class ScriptableBackgroundMusic : ScriptableObject
 {
     public ScriptableAudioClip lowIntensityAudio;

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Level", menuName = "Scriptable/LevelDefinition")]
+[CreateAssetMenu(fileName = "NewLevelDefinition", menuName = "Scriptable/LevelDefinition")]
 public class ScriptableLevelDefinition : ScriptableObject
 {
 	//	The duration of a level
