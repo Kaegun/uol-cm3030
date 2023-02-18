@@ -95,7 +95,7 @@ public class FoxBehaviour : MonoBehaviour
 		Debug.Log($"Fox Behaviour: Plant Possessed - [{e}]");
 	}
 
-	private void SpiritWaveSpawned(object sender, Vector3[] e)
+	private void SpiritWaveSpawned(object sender, Spirit[] e)
 	{
 		//	The fox might not do much here
 		//	Could also use the camera for some of it

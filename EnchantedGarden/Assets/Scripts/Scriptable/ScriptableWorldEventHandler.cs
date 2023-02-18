@@ -4,19 +4,35 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Events/WorldEvents")]
 public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
+	//	Spirit Events
+	public event EventHandler<Spirit[]> SpiritWaveSpawned;
+	public event EventHandler<Spirit> SpiritWallSpawned;
+	public event EventHandler<Spirit> SpiritBanished;
+
 	//	Plant Events
-	public event EventHandler<Vector3[]> SpiritWaveSpawned;
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
 	public event EventHandler<Vector3> PlantStolen;
 
-	//	UI Events
+	//	Fire Events
+	public event EventHandler<Vector3> FireDied;
+	public event EventHandler<Vector3> FireMediumWarning;
+	public event EventHandler<Vector3> FireLowWarning;
 
-	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
+	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
 	}
 
+	public void OnSpiritWallSpawned(Spirit location)
+	{
+		ExecuteEvent(SpiritWallSpawned, location);
+	}
+
+	public void OnSpiritBanished(Spirit location)
+	{
+		ExecuteEvent(SpiritBanished, location);
+	}
 	public void OnPlantPossessing(Vector3 location)
 	{
 		ExecuteEvent(PlantPossessing, location);
@@ -30,5 +46,20 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnPlantStolen(Vector3 location)
 	{
 		ExecuteEvent(PlantStolen, location);
+	}
+
+	public void OnPFireDied(Vector3 location)
+	{
+		ExecuteEvent(FireDied, location);
+	}
+
+	public void OnFireMediumWarning(Vector3 location)
+	{
+		ExecuteEvent(FireMediumWarning, location);
+	}
+
+	public void OnFireLowWarning(Vector3 location)
+	{
+		ExecuteEvent(FireLowWarning, location);
 	}
 }
