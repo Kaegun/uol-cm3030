@@ -6,6 +6,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
 	//	Spirit Events
 	public event EventHandler<Spirit[]> SpiritWaveSpawned;
+	public event EventHandler<Spirit> SpiritSpawned;
 	public event EventHandler<Spirit> SpiritWallSpawned;
 	public event EventHandler<Spirit> SpiritBanished;
 
@@ -26,6 +27,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
 	}
+
+	public void OnSpiritSpawned(Spirit spirit)
+    {
+		ExecuteEvent(SpiritSpawned, spirit);
+    }
 
 	public void OnSpiritWallSpawned(Spirit location)
 	{
