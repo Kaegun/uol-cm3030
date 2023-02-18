@@ -19,6 +19,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3> FireMediumWarning;
 	public event EventHandler<Vector3> FireLowWarning;
 
+	//	Low Ingredients
+	public event EventHandler<Vector3> IngredientsLowWarning;
+
 	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
@@ -48,7 +51,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(PlantStolen, location);
 	}
 
-	public void OnPFireDied(Vector3 location)
+	public void OnFireDied(Vector3 location)
 	{
 		ExecuteEvent(FireDied, location);
 	}
@@ -61,5 +64,10 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnFireLowWarning(Vector3 location)
 	{
 		ExecuteEvent(FireLowWarning, location);
+	}
+
+	public void OnIngredientsLowWarning(Vector3 location)
+	{
+		ExecuteEvent(IngredientsLowWarning, location);
 	}
 }
