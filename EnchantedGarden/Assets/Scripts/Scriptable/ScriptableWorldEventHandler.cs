@@ -8,8 +8,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3[]> SpiritWaveSpawned;
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
+	public event EventHandler<Vector3> PlantStolen;
 
-//	UI Events
+	//	UI Events
 
 	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
 	{
@@ -24,5 +25,10 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnPlantPossessed(Vector3 location)
 	{
 		ExecuteEvent(PlantPossessed, location);
+	}
+
+	public void OnPlantStolen(Vector3 location)
+	{
+		ExecuteEvent(PlantStolen, location);
 	}
 }

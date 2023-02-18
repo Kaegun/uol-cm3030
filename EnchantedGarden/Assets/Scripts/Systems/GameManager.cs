@@ -3,9 +3,11 @@ using UnityEngine.Assertions;
 
 public class GameManager : SingletonBase<GameManager>
 {
+	[Header("Events")]
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
+	[Header("Levels")]
 	//	TODO: Multiple levels
 	[SerializeField]
 	private ScriptableLevelDefinition[] _levels;
@@ -15,11 +17,15 @@ public class GameManager : SingletonBase<GameManager>
 	private ScriptableLevelDefinition _level;
 	public ScriptableLevelDefinition ActiveLevel => _level;
 
+	[Header("Audio")]
 	[SerializeField]
 	private AudioSource _backgroundMusicAudioSource;
 
 	[SerializeField]
 	private AudioSource _detachedAudioSourcePrefab;
+
+	[SerializeField]
+	private ScriptableAudioClip _gameOverMusic;
 
 	public float Elapsed => _elapsedTime;
 
@@ -56,6 +62,9 @@ public class GameManager : SingletonBase<GameManager>
 		_gameOver = true;
 		Time.timeScale = 0.0f;
 
+		//	Play End of Game Audio loop
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _gameOverMusic);
+
 		//	Load Game Over Screen
 		SceneLoader.LoadScene(CommonTypes.Scenes.GameOver, true);
 	}
@@ -80,14 +89,14 @@ public class GameManager : SingletonBase<GameManager>
 		Assert.IsTrue(_levels.Length > 0);
 		Assert.IsNotNull(_worldEvents);
 
-		_worldEvents.PlantPossessed += PlantPossessed;
+		_worldEvents.PlantStolen += PlantStolen;
 
 		_score = 0;
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
 	}
 
-	private void PlantPossessed(object sender, Vector3 e)
+	private void PlantStolen(object sender, Vector3 e)
 	{
 		ActiveLevel.CurrentNumberOfPlants--;
 	}
