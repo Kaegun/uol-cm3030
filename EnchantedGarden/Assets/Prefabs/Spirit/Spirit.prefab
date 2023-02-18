@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03007b0f4cae9841a05f8c84c9f8642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _moveSpeed: 3
   _turnSpeed: 10
   _bodyObj: {fileID: 3262456472504981868}

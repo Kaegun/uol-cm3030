@@ -79,7 +79,6 @@
     <Compile Include="Assets\Scripts\Deprecated\MoveTowardsCentre.cs" />
     <Compile Include="Assets\Scripts\Deprecated\PickUpStore.cs" />
     <Compile Include="Assets\Scripts\Deprecated\ProgressDots.cs" />
-    <Compile Include="Assets\Scripts\Deprecated\SpiritSineMovement.cs" />
     <Compile Include="Assets\Scripts\Environment\AlchemyToolSpawner.cs" />
     <Compile Include="Assets\Scripts\Environment\ForestSpawner.cs" />
     <Compile Include="Assets\Scripts\Environment\PlantPatch.cs" />
@@ -117,7 +116,7 @@
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\Systems\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
-    <Compile Include="Assets\Scripts\Systems\UiSceneLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\GameOverCredits.cs" />
     <Compile Include="Assets\Scripts\UI\GenericSlider.cs" />
     <Compile Include="Assets\Scripts\UI\LevelTimerSlider.cs" />
     <Compile Include="Assets\Scripts\UI\UiEventManager.cs" />
