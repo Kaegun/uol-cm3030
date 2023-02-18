@@ -6,6 +6,14 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(AudioSource))]
 public class FireSystem : MonoBehaviour
 {
+	private enum FireState
+	{
+		Dead,
+		High,
+		Medium,
+		Low,
+	}
+
 	[Serializable]
 	public class FireSystemParameters
 	{
@@ -13,6 +21,10 @@ public class FireSystem : MonoBehaviour
 		public float StartSpeed;
 		public float StartSize;
 	}
+
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
 
 	[Header("Audio")]
 	[SerializeField]
@@ -53,11 +65,13 @@ public class FireSystem : MonoBehaviour
 
 	private AudioSource _fireAudioSource;
 	private float _currentFireLevel, _fireLifetimeStep, _fireLifetime;
+	private FireState _fireState = FireState.High;
 
 	public void AddLog()
 	{
 		Debug.Log("Entering AddLog");
 		_currentFireLevel = _fireLifetime;
+		_fireState = FireState.High;
 		AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
 		SetParticleSystem(_highFireParameters, _highFireLogs);
 		//	Restart particles if stopped
@@ -79,6 +93,8 @@ public class FireSystem : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
+		Assert.IsNotNull(_worldEvents);
+
 		_fireAudioSource = GetComponent<AudioSource>();
 		Assert.IsNotNull(_fireAudioSource);
 		Assert.IsNotNull(_fireParticles);
@@ -102,18 +118,34 @@ public class FireSystem : MonoBehaviour
 		if (!IsAlive)
 		{
 			//	Fire is dead
-			DisableLogs();
-			_fireParticles.Stop();
-			_fireAudioSource.Stop();
-			_smokeParticles.Stop();
+			if (_fireState != FireState.Dead)
+			{
+				DisableLogs();
+				_fireParticles.Stop();
+				_fireAudioSource.Stop();
+				_smokeParticles.Stop();
+
+				_worldEvents.OnFireDied(transform.position);
+				_fireState = FireState.Dead;
+			}
 		}
 		else if (_currentFireLevel < _fireLifetime - _fireLifetimeStep * 2)
 		{
-			SetParticleSystem(_lowFireParameters, _lowFireLogs);
+			if (_fireState != FireState.Medium)
+			{
+				SetParticleSystem(_lowFireParameters, _lowFireLogs);
+				_worldEvents.OnFireLowWarning(transform.position);
+				_fireState = FireState.Medium;
+			}
 		}
 		else if (_currentFireLevel < _fireLifetimeStep)
 		{
-			SetParticleSystem(_mediumFireParameters, _mediumFireLogs);
+			if (_fireState != FireState.Low)
+			{
+				SetParticleSystem(_mediumFireParameters, _mediumFireLogs);
+				_worldEvents.OnFireMediumWarning(transform.position);
+				_fireState = FireState.Low;
+			}
 		}
 	}
 
