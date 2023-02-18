@@ -22,6 +22,10 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	//	Low Ingredients
 	public event EventHandler<Vector3> IngredientsLowWarning;
 
+	//	Fox
+	public event EventHandler<GameObject> FoxAlert;
+	public event EventHandler<GameObject> FoxAlertEnded;
+
 	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
@@ -69,5 +73,15 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnIngredientsLowWarning(Vector3 location)
 	{
 		ExecuteEvent(IngredientsLowWarning, location);
+	}
+
+	public void OnFoxAlert(GameObject location)
+	{
+		ExecuteEvent(FoxAlert, location);
+	}
+
+	public void OnFoxAlertEnded(GameObject location)
+	{
+		ExecuteEvent(FoxAlertEnded, location);
 	}
 }

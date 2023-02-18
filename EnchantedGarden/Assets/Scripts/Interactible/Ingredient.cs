@@ -45,7 +45,7 @@ public class Ingredient : PickUpBase, IInteractor
     // Start is called before the first frame update
     private void Start()
     {
-        Assert.IsNotNull(_ingredientPrefabs);
+        Assert.IsNotNull(_ingredientPrefabs, Utility.AssertNotNullMessage(nameof(_ingredientPrefabs)));
         Assert.IsTrue(_ingredientPrefabs.Length > 0);
 
         Debug.Log("Where are the ingredients?");

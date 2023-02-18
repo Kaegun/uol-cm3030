@@ -93,12 +93,12 @@ public class FireSystem : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
-		Assert.IsNotNull(_worldEvents);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
 		_fireAudioSource = GetComponent<AudioSource>();
-		Assert.IsNotNull(_fireAudioSource);
-		Assert.IsNotNull(_fireParticles);
-		Assert.IsNotNull(_smokeParticles);
+		Assert.IsNotNull(_fireAudioSource, Utility.AssertNotNullMessage(nameof(_fireAudioSource)));
+		Assert.IsNotNull(_fireParticles, Utility.AssertNotNullMessage(nameof(_fireParticles)));
+		Assert.IsNotNull(_smokeParticles, Utility.AssertNotNullMessage(nameof(_smokeParticles)));
 
 		_currentFireLevel = _fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
 		_fireLifetimeStep = _fireLifetime / 3;

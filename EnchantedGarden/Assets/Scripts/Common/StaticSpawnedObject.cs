@@ -28,9 +28,9 @@ public class StaticSpawnedObject
 
 	public static void Valid(StaticSpawnedObject spawnedObject)
 	{
-		Assert.IsNotNull(spawnedObject);
-		Assert.IsNotNull(spawnedObject.Prefab);
-		Assert.IsNotNull(spawnedObject.Position);
+		Assert.IsNotNull(spawnedObject, Utility.AssertNotNullMessage(nameof(spawnedObject)));
+		Assert.IsNotNull(spawnedObject.Prefab, Utility.AssertNotNullMessage(nameof(spawnedObject.Prefab)));
+		Assert.IsNotNull(spawnedObject.Position, Utility.AssertNotNullMessage(nameof(spawnedObject.Position)));
 	}
 
 	public List<GameObject> Spawn()
