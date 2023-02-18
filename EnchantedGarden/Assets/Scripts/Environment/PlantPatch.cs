@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 public class PlantPatch : MonoBehaviour
@@ -34,8 +33,8 @@ public class PlantPatch : MonoBehaviour
 
 	private void Start()
 	{
-			Assert.IsNotNull(_droppedPosition);
-		Assert.IsNotNull(_plantedPosition);
+		Assert.IsNotNull(_droppedPosition, Utility.AssertNotNullMessage(nameof(_droppedPosition)));
+		Assert.IsNotNull(_plantedPosition, Utility.AssertNotNullMessage(nameof(_plantedPosition)));
 
 		//	Instantiate a plant at the start of the level if flag is set
 		if (_containsPlant)

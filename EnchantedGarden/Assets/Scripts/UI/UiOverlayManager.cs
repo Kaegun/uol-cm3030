@@ -19,29 +19,24 @@ public class UiOverlayManager : MonoBehaviour
 
 	private void Start()
 	{
-		Assert.IsNotNull(_fireSlider);
-		Assert.IsNotNull(_plantSlider);
-		Assert.IsNotNull(_usesSlider);
+		Assert.IsNotNull(_fireSlider, Utility.AssertNotNullMessage(nameof(_fireSlider)));
+		Assert.IsNotNull(_plantSlider, Utility.AssertNotNullMessage(nameof(_plantSlider)));
+		Assert.IsNotNull(_usesSlider, Utility.AssertNotNullMessage(nameof(_usesSlider)));
 
 		if (!_fireSlider.TryGetComponent(out _fireSliderSettable))
-			Assert.IsTrue(false, "Fire Slider is not a valid ISettable");
+			Assert.IsTrue(false, Utility.TraceMessage("Fire Slider is not a valid ISettable"));
 
 		if (!_plantSlider.TryGetComponent(out _plantSliderSettable))
-			Assert.IsTrue(false, "Plant Slider is not a valid ISettable");
+			Assert.IsTrue(false, Utility.TraceMessage("Plant Slider is not a valid ISettable"));
 
 		if (!_usesSlider.TryGetComponent(out _usesSliderSettable))
-			Assert.IsTrue(false, "Uses Slider is not a valid ISettable");
-
-		Debug.Log($"UI: {GameManager.Instance.ActiveLevel.StartNumberOfPlants}");
+			Assert.IsTrue(false, Utility.TraceMessage("Uses Slider is not a valid ISettable"));
 
 		_fireSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration);
-		_fireSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration);
-
 		_plantSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
-		_plantSliderSettable.SetValue(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
-
 		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses);
-		_usesSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses);
+
+		Debug.Log("Leaving UIOverlayManager:Start");
 	}
 
 	private void Update()

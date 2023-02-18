@@ -116,6 +116,7 @@
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\Systems\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
+    <Compile Include="Assets\Scripts\Systems\VirtualCameraController.cs" />
     <Compile Include="Assets\Scripts\UI\GameOverCredits.cs" />
     <Compile Include="Assets\Scripts\UI\GenericSlider.cs" />
     <Compile Include="Assets\Scripts\UI\LevelTimerSlider.cs" />

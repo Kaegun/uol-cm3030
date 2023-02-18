@@ -99,7 +99,6 @@ MonoBehaviour:
     type: 2}
   _cauldronCombineAudio: {fileID: 11400000, guid: 8d8ba2c4888880c44b1470874ea0d090,
     type: 2}
-  _maxUses: 5
   _cauldronContents: {fileID: 6058634154690378662}
   _cauldronContentsParticles: {fileID: 5389204591758614667}
 --- !u!82 &800947263938588532
@@ -433,6 +432,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4006564793226087218}
     m_Modifications:
+    - target: {fileID: -4820066694288246712, guid: 2f62940594adf4044b9077377e138cb4,
+        type: 3}
+      propertyPath: _worldEvents
+      value: 
+      objectReference: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1,
+        type: 2}
     - target: {fileID: 622966596031392450, guid: 2f62940594adf4044b9077377e138cb4,
         type: 3}
       propertyPath: m_IsActive

@@ -24,7 +24,7 @@ public class SpiritSpawner : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
-		Assert.IsNotNull(_worldEvents);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
 		_waveQueue = new Queue<SpiritWave>(_level.Waves);
 		_nextWave = NextWaveDelay();

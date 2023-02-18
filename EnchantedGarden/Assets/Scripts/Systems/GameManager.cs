@@ -48,6 +48,15 @@ public class GameManager : SingletonBase<GameManager>
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
 	}
 
+	public void ContinueGame()
+	{
+		//	Restart time
+		Time.timeScale = 1.0f;
+
+		//	TODO: Track scene that caused the pause?
+		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
+	}
+
 	// Should probably be in the AudioController, would likely need to make it a Singleton though
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
 	{
@@ -87,7 +96,7 @@ public class GameManager : SingletonBase<GameManager>
 	private void Start()
 	{
 		Assert.IsTrue(_levels.Length > 0);
-		Assert.IsNotNull(_worldEvents);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
 		_worldEvents.PlantStolen += PlantStolen;
 

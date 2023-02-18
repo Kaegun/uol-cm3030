@@ -22,6 +22,7 @@ public class GenericSlider : MonoBehaviour, ISettable<float>
 		_maximumValue = value;
 	}
 
+	//	Don't call this before Update in any caller
 	public void SetValue(float value)
 	{
 		_slider.value = value / _maximumValue;
@@ -38,8 +39,8 @@ public class GenericSlider : MonoBehaviour, ISettable<float>
 		if (_text == null)
 			_text = GetComponentInChildren<TMPro.TMP_Text>();
 
-		Assert.IsNotNull(_slider);
-		Assert.IsNotNull(_text);
+		Assert.IsNotNull(_slider, Utility.AssertNotNullMessage(nameof(_slider)));
+		Assert.IsNotNull(_text, Utility.AssertNotNullMessage(nameof(_text)));
 
 		if (!_showText)
 			_text.text = string.Empty;
