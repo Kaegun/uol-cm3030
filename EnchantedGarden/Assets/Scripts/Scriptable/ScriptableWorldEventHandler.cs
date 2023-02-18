@@ -4,17 +4,28 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Events/WorldEvents")]
 public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
-	//	Plant Events
+	//	Spirit Events
 	public event EventHandler<Vector3[]> SpiritWaveSpawned;
+	public event EventHandler<Vector3> SpiritWallSpawned;
+
+	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
 	public event EventHandler<Vector3> PlantStolen;
 
-	//	UI Events
+	//	Fire Events
+	public event EventHandler<Vector3> FireDied;
+	public event EventHandler<Vector3> FireMediumWarning;
+	public event EventHandler<Vector3> FireLowWarning;
 
 	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
+	}
+
+	public void OnSpiritWallSpawned(Vector3 location)
+	{
+		ExecuteEvent(SpiritWallSpawned, location);
 	}
 
 	public void OnPlantPossessing(Vector3 location)
@@ -30,5 +41,20 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnPlantStolen(Vector3 location)
 	{
 		ExecuteEvent(PlantStolen, location);
+	}
+
+	public void OnPFireDied(Vector3 location)
+	{
+		ExecuteEvent(FireDied, location);
+	}
+
+	public void OnFireMediumWarning(Vector3 location)
+	{
+		ExecuteEvent(FireMediumWarning, location);
+	}
+
+	public void OnFireLowWarning(Vector3 location)
+	{
+		ExecuteEvent(FireLowWarning, location);
 	}
 }
