@@ -5,8 +5,9 @@ using UnityEngine;
 public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
 	//	Spirit Events
-	public event EventHandler<Vector3[]> SpiritWaveSpawned;
-	public event EventHandler<Vector3> SpiritWallSpawned;
+	public event EventHandler<Spirit[]> SpiritWaveSpawned;
+	public event EventHandler<Spirit> SpiritWallSpawned;
+	public event EventHandler<Spirit> SpiritBanished;
 
 	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
@@ -18,16 +19,20 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3> FireMediumWarning;
 	public event EventHandler<Vector3> FireLowWarning;
 
-	public void OnSpiritWaveSpawned(Vector3[] spawnLocations)
+	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
 	}
 
-	public void OnSpiritWallSpawned(Vector3 location)
+	public void OnSpiritWallSpawned(Spirit location)
 	{
 		ExecuteEvent(SpiritWallSpawned, location);
 	}
 
+	public void OnSpiritBanished(Spirit location)
+	{
+		ExecuteEvent(SpiritBanished, location);
+	}
 	public void OnPlantPossessing(Vector3 location)
 	{
 		ExecuteEvent(PlantPossessing, location);
