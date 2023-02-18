@@ -58,4 +58,4 @@ MonoBehaviour:
   _cauldronSettings:
     _startNumberOfUses: 5
     _maximumUses: 5
-    _fireDuration: 30
+    _fireDuration: 90
