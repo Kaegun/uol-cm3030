@@ -281,9 +281,11 @@ public class FoxBehaviour : MonoBehaviour
 	private IEnumerator SpeechTextCoroutine(string text)
 	{
 		//	Use a CoRoutine to despawn after a period.
+		_worldEvents.OnFoxAlert(gameObject);
 		_speechText.text = text;
 		_speechCanvas.gameObject.SetActive(true);
 		yield return new WaitForSeconds(_speechBubbleTimeout);
 		_speechCanvas.gameObject.SetActive(false);
+		_worldEvents.OnFoxAlertEnded(gameObject);
 	}
 }
