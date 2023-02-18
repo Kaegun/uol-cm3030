@@ -23,6 +23,6 @@ public class LevelTimerSlider : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		_slider.value = GameManager.Instance.Elapsed / GameManager.Instance.ActiveLevel.LevelDuration;
+		_slider.value = Time.timeSinceLevelLoad / GameManager.Instance.ActiveLevel.LevelDuration;
 	}
 }

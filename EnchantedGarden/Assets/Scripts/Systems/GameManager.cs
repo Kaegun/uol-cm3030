@@ -27,10 +27,7 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private ScriptableAudioClip _gameOverMusic;
 
-	public float Elapsed => _elapsedTime;
-
 	private int _score;
-	private float _elapsedTime = 0f;
 	private bool _gameOver = false;
 
 	//	TODO: Fix scoring - We can use a SO for this
@@ -107,15 +104,15 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void PlantStolen(object sender, Vector3 e)
 	{
-		ActiveLevel.CurrentNumberOfPlants--;
+		ActiveLevel.CurrentNumberOfPlants -= 1;
+		if (ActiveLevel.CurrentNumberOfPlants <= 0)
+			EndGame();
 	}
 
 	//	Update is called once per frame
 	private void Update()
 	{
-		_elapsedTime += Time.deltaTime;
-
-		if (_elapsedTime >= ActiveLevel.LevelDuration && !_gameOver)
+		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
 		}
