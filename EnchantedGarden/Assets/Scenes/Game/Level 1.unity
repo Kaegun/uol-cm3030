@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1963,14 +1963,34 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
         type: 3}
+      propertyPath: _logs
+      value: 
+      objectReference: {fileID: 2058890410935583568}
+    - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
+        type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 494375881}
     - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
         type: 3}
+      propertyPath: _shovel
+      value: 
+      objectReference: {fileID: 1313088977}
+    - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
+        type: 3}
+      propertyPath: _cauldron
+      value: 
+      objectReference: {fileID: 1977636030}
+    - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
+        type: 3}
       propertyPath: _turnSpeed
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: -7216831443062659578, guid: 30a0723dcd3b8ef4caf75644d668f078,
+        type: 3}
+      propertyPath: _alchemyTable
+      value: 
+      objectReference: {fileID: 1866482722}
     - target: {fileID: 4020983980232809014, guid: 30a0723dcd3b8ef4caf75644d668f078,
         type: 3}
       propertyPath: m_Name
@@ -3894,7 +3914,7 @@ PrefabInstance:
     - target: {fileID: 6689965096717609098, guid: 06146a1bfadad7644a3277e6a015c03f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6689965096717609098, guid: 06146a1bfadad7644a3277e6a015c03f,
         type: 3}
@@ -5370,7 +5390,7 @@ PrefabInstance:
     - target: {fileID: 5186434215141483372, guid: c5b9449b2dc34ca4897223fd9be3233a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5186434215141483372, guid: c5b9449b2dc34ca4897223fd9be3233a,
         type: 3}
@@ -5647,25 +5667,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1645732036}
     m_Modifications:
-    - target: {fileID: 1165445027539920944, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
-        type: 3}
-      propertyPath: _fireLifetime
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160314228633334451, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
-        type: 3}
-      propertyPath: CollisionModule.m_Bounce.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160314228633334451, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
-        type: 3}
-      propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 524288
-      objectReference: {fileID: 0}
     - target: {fileID: 4006564793226087218, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4006564793226087218, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
         type: 3}

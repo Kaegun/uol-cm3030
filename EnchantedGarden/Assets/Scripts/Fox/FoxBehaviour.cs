@@ -7,12 +7,7 @@ using UnityEngine.Assertions;
 
 public class FoxBehaviour : MonoBehaviour
 {
-	/*
-	 * This behaviour must listen for world events, and then instruct the Fox to react to them
-	 * Test 1 - When a spirit Spawns
-	 * 
-	 * 
-	 */
+	//	This behaviour must listen for world events, and then instruct the Fox to react to them
 	private enum FoxState
 	{
 		Idle,
@@ -75,23 +70,23 @@ public class FoxBehaviour : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
-		Assert.IsNotNull(_worldEvents);
-		Assert.IsNotNull(_speechCanvas);
-		Assert.IsNotNull(_player);
-		Assert.IsNotNull(_logs);
-		Assert.IsNotNull(_alchemyTable);
-		Assert.IsNotNull(_cauldron);
-		Assert.IsNotNull(_shovel);
-		Assert.IsNotNull(_alertSound);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+		Assert.IsNotNull(_speechCanvas, Utility.AssertNotNullMessage(nameof(_speechCanvas)));
+		Assert.IsNotNull(_player, Utility.AssertNotNullMessage(nameof(_player)));
+		Assert.IsNotNull(_logs, Utility.AssertNotNullMessage(nameof(_logs)));
+		Assert.IsNotNull(_alchemyTable, Utility.AssertNotNullMessage(nameof(_alchemyTable)));
+		Assert.IsNotNull(_cauldron, Utility.AssertNotNullMessage(nameof(_cauldron)));
+		Assert.IsNotNull(_shovel, Utility.AssertNotNullMessage(nameof(_shovel)));
+		Assert.IsNotNull(_alertSound, Utility.AssertNotNullMessage(nameof(_alertSound)));
 
 		_animator = GetComponentInChildren<Animator>();
-		Assert.IsNotNull(_animator);
+		Assert.IsNotNull(_animator, Utility.AssertNotNullMessage(nameof(_animator)));
 
 		_audioSource = GetComponentInChildren<AudioSource>();
-		Assert.IsNotNull(_audioSource);
+		Assert.IsNotNull(_audioSource, Utility.AssertNotNullMessage(nameof(_audioSource)));
 
 		_speechText = _speechCanvas.GetComponentInChildren<TMP_Text>();
-		Assert.IsNotNull(_speechText);
+		Assert.IsNotNull(_speechText, Utility.AssertNotNullMessage(nameof(_speechText)));
 		//	Hide the speech bubble on start up
 		_speechCanvas.gameObject.SetActive(false);
 

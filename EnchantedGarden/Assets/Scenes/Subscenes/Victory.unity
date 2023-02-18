@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 1531456787}
   - component: {fileID: 1531456786}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Winner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: WINNER!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f99c98eb963e2f40999f70dba7ec888, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 55f4640161735fe40b0b51cb97a2b012, type: 2}

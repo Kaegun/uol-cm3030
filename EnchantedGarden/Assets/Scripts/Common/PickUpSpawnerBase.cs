@@ -8,20 +8,20 @@ using UnityEngine.Assertions;
 
 public abstract class PickUpSpawnerBase : MonoBehaviour
 {
-    [Header("Pickup Prefab")]
-    [SerializeField]
-    private PickUpBase _spawnedPrefab;
+	[Header("Pickup Prefab")]
+	[SerializeField]
+	private PickUpBase _spawnedPrefab;
 
-    [Header("Pickup Indicator Position")]
-    [SerializeField]
-    private Vector3 _pickUpIndicatorAdjustment;
+	[Header("Pickup Indicator Position")]
+	[SerializeField]
+	private Vector3 _pickUpIndicatorAdjustment;
 
-    public Vector3 IndicatorPosition => transform.position + _pickUpIndicatorAdjustment;
+	public Vector3 IndicatorPosition => transform.position + _pickUpIndicatorAdjustment;
 
-    public IPickUp SpawnPickUp()
-    {
-        var pickUp = Instantiate(_spawnedPrefab);
-        Assert.IsNotNull(pickUp);
-        return pickUp;
-    }
+	public IPickUp SpawnPickUp()
+	{
+		var pickUp = Instantiate(_spawnedPrefab);
+		Assert.IsNotNull(pickUp, Utility.AssertNotNullMessage(nameof(pickUp)));
+		return pickUp;
+	}
 }

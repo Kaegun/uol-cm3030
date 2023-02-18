@@ -80,7 +80,7 @@ public class Spirit : MonoBehaviour, IInteractable
     //  Start is called before the first frame update
     private void Start()
     {
-        Assert.IsNotNull(_worldEvents);
+        Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
         _spawnPos = transform.position;
         _spiritState = SpiritState.Spawning;
