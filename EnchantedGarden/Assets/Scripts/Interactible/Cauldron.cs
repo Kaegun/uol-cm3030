@@ -12,15 +12,14 @@ public class Cauldron : MonoBehaviour, IInteractable
 	[SerializeField]
 	private ScriptableAudioClip _cauldronCombineAudio;
 
-	[SerializeField]
-	private int _maxUses = 5;
-	private int _currentUses;
-
+	[Header("Particles")]
 	[SerializeField]
 	private GameObject _cauldronContents;
-	[SerializeField]
-	private GameObject _cauldronContentsParticles;	
 
+	[SerializeField]
+	private GameObject _cauldronContentsParticles;
+
+	private int _maxUses;
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
 
@@ -31,12 +30,12 @@ public class Cauldron : MonoBehaviour, IInteractable
 
 	private void AddIngredient()
 	{
-		_currentUses = _maxUses;
+		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = _maxUses;
 		if (_fireSystem.IsAlive)
-		{			
+		{
 			StartCoroutine(CauldronCombineCoroutine());
 		}
-	}	
+	}
 
 	// Start is called before the first frame update
 	private void Start()
@@ -48,7 +47,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 			Assert.IsNotNull(_cauldronAudioSource);
 		}
 
-		_currentUses = _maxUses;
+		_maxUses = GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses;
+		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = GameManager.Instance.ActiveLevel.CauldronSettings.StartNumberOfUses;
+
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
@@ -56,46 +57,40 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private void Update()
 	{
 		if (!CanUseCauldron)
-        {
+		{
 			_cauldronAudioSource.Stop();
-			if (_currentUses > 0)
-            {
+			if (GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses > 0)
+			{
 				_cauldronContentsParticles.SetActive(false);
 			}
 			else
-            {
+			{
 				_cauldronContents.SetActive(false);
-            }
-			
-        }
+			}
+
+		}
 		if (CanUseCauldron)
-        {
+		{
 			if (!_cauldronAudioSource.isPlaying)
-            {
+			{
 				AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 			}
 			if (!_cauldronContents.activeSelf)
-            {
+			{
 				_cauldronContents.SetActive(true);
-            }
+			}
 			if (!_cauldronContentsParticles.activeSelf)
-            {
+			{
 				_cauldronContentsParticles.SetActive(true);
-            }
-        }		
+			}
+		}
 	}
 
-	private bool CanUseCauldron => _currentUses > 0 && _fireSystem.IsAlive;
+	private bool CanUseCauldron => GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses > 0 && _fireSystem.IsAlive;
 
-    public Transform Transform => transform;
+	public Transform Transform => transform;
 
-    public GameObject GameObject => gameObject;
-
-    private void UsePotion()
-	{
-		_currentUses -= 1;
-		//_usesText.text = $"{_currentUses}/{_maxUses}";
-	}
+	public GameObject GameObject => gameObject;
 
 	private IEnumerator CauldronCombineCoroutine()
 	{
@@ -104,8 +99,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
-    public bool CanInteractWith(IInteractor interactor)
-    {
+	public bool CanInteractWith(IInteractor interactor)
+	{
 		switch (interactor)
 		{
 			case ICombinable _:
@@ -119,15 +114,15 @@ public class Cauldron : MonoBehaviour, IInteractable
 		}
 	}
 
-    public void OnInteractWith(IInteractor interactor)
-    {
+	public void OnInteractWith(IInteractor interactor)
+	{
 		switch (interactor)
 		{
 			case ICombinable combinable:
 				if (combinable.Combining())
-                {
+				{
 					StartCoroutine(CauldronCombineCoroutine());
-                }
+				}
 				break;
 			case Log _:
 				AddLog();
@@ -140,8 +135,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 		}
 	}
 
-    public bool DestroyOnInteract(IInteractor interactor)
-    {
+	public bool DestroyOnInteract(IInteractor interactor)
+	{
 		return false;
-    }
+	}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Remoting.Messaging;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/LevelDefinition")]
 public class ScriptableLevelDefinition : ScriptableObject
@@ -9,6 +10,7 @@ public class ScriptableLevelDefinition : ScriptableObject
 	private float _levelDuration = 90f;
 	public float LevelDuration => _levelDuration;
 
+	[Header("Spirits and Possession")]
 	//	The definition of the spirit spawning frequency
 	[SerializeField]
 	private SpiritWave[] _waves;
@@ -23,6 +25,13 @@ public class ScriptableLevelDefinition : ScriptableObject
 	[SerializeField]
 	private float _possessionThreshold = 10f;
 	public float PossessionThreshold => _possessionThreshold;
+
+	[Header("Plants")]
+	[SerializeField]
+	private int _startNumberOfPlants;
+	public int StartNumberOfPlants => _startNumberOfPlants;
+
+	public int CurrentNumberOfPlants { get; set; }
 
 	//  Threshold for amount of time taken to replant a plant
 	[SerializeField]

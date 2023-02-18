@@ -3,6 +3,9 @@ using UnityEngine.Assertions;
 
 public class GameManager : SingletonBase<GameManager>
 {
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
 	//	TODO: Multiple levels
 	[SerializeField]
 	private ScriptableLevelDefinition[] _levels;
@@ -20,12 +23,9 @@ public class GameManager : SingletonBase<GameManager>
 
 	public float Elapsed => _elapsedTime;
 
-	public int NumberOfPlants => _numberOfPlants;
-
 	private int _score;
 	private float _elapsedTime = 0f;
 	private bool _gameOver = false;
-	private int _numberOfPlants = 5;
 
 	//	TODO: Fix scoring - We can use a SO for this
 	public void ScorePoints(int points)
@@ -35,10 +35,10 @@ public class GameManager : SingletonBase<GameManager>
 
 	public void RestartGame()
 	{
+		//	Restart time
+		Time.timeScale = 1.0f;
+
 		//	TODO: Restart game at current level?
-
-		Time.timeScale = 0.0f;
-
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
 	}
 
@@ -60,15 +60,36 @@ public class GameManager : SingletonBase<GameManager>
 		SceneLoader.LoadScene(CommonTypes.Scenes.GameOver, true);
 	}
 
+	//	TODO: Level change logic
+	private void SetCurrentActiveLevel()
+	{
+		_level = _levels[0];
+		ActiveLevel.CurrentNumberOfPlants = ActiveLevel.StartNumberOfPlants;
+	}
+
+	//	Awake is called before Start
+	protected override void Awake()
+	{
+		base.Awake();
+		SetCurrentActiveLevel();
+	}
+
 	//	Start is called before the first frame update
 	private void Start()
 	{
 		Assert.IsTrue(_levels.Length > 0);
+		Assert.IsNotNull(_worldEvents);
+
+		_worldEvents.PlantPossessed += PlantPossessed;
 
 		_score = 0;
-		_level = _levels[0];
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+	}
+
+	private void PlantPossessed(object sender, Vector3 e)
+	{
+		ActiveLevel.CurrentNumberOfPlants--;
 	}
 
 	//	Update is called once per frame

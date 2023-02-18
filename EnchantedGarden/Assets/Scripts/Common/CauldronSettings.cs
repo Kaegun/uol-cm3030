@@ -5,6 +5,10 @@ using UnityEngine;
 public class CauldronSettings
 {
 	[SerializeField]
+	private int _startNumberOfUses;
+	public int StartNumberOfUses => _startNumberOfUses;
+
+	[SerializeField]
 	private int _maximumUses;
 	public int MaximumUses => _maximumUses;
 
@@ -12,10 +16,6 @@ public class CauldronSettings
 	private float _fireDuration = 30.0f;
 	public float FireDuration => _fireDuration;
 
-	public int NumberOfUses { get; set; }
-
-	public CauldronSettings()
-	{
-		NumberOfUses = _maximumUses;
-	}
+	public int CurrentNumberOfUses { get; set; }
+	public float CurrentFireLevel { get; set; }
 }

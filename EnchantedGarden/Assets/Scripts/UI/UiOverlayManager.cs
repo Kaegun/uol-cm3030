@@ -5,9 +5,6 @@ using UnityEngine.Assertions;
 public class UiOverlayManager : MonoBehaviour
 {
 	[SerializeField]
-	private ScriptableWorldEventHandler _worldEvents;
-
-	[SerializeField]
 	private GameObject _fireSlider;
 
 	[SerializeField]
@@ -22,8 +19,6 @@ public class UiOverlayManager : MonoBehaviour
 
 	private void Start()
 	{
-		Assert.IsNotNull(_worldEvents);
-
 		Assert.IsNotNull(_fireSlider);
 		Assert.IsNotNull(_plantSlider);
 		Assert.IsNotNull(_usesSlider);
@@ -37,11 +32,22 @@ public class UiOverlayManager : MonoBehaviour
 		if (!_usesSlider.TryGetComponent(out _usesSliderSettable))
 			Assert.IsTrue(false, "Uses Slider is not a valid ISettable");
 
+		Debug.Log($"UI: {GameManager.Instance.ActiveLevel.StartNumberOfPlants}");
+
 		_fireSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration);
 		_fireSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration);
-		_plantSliderSettable.SetMaximum(GameManager.Instance.NumberOfPlants);
-		_plantSliderSettable.SetValue(GameManager.Instance.NumberOfPlants);
-		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.NumberOfUses);
-		_usesSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.NumberOfUses);
+
+		_plantSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
+		_plantSliderSettable.SetValue(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
+
+		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses);
+		_usesSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses);
+	}
+
+	private void Update()
+	{
+		_usesSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses);
+		_plantSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CurrentNumberOfPlants);
+		_fireSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentFireLevel);
 	}
 }

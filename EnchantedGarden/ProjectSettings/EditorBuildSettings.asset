@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Subscenes/Game Over.unity
     guid: 30eb30413711b0642a57b222a3d85cab
   - enabled: 1
-    path: Assets/Scenes/Template.unity
-    guid: ddf742f04d5bc4e44aa8788871046078
+    path: Assets/Scenes/Game/Level 1.unity
+    guid: c474a30c2a7757d4ea97310cbdd39763
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7b52f3648676e194dace18e95d10dd52,
       type: 2}
