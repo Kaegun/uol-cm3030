@@ -53,7 +53,7 @@ public class SpiritSpawner : MonoBehaviour
 			var pos = _spawnPoints[rand].transform.position + 3 * Utility.RandomUnitVec3().ZeroY();
 			if (Instantiate(_spirit, pos, Quaternion.identity, transform).TryGetComponent(out spirits[i]))
 				spirits[i].SetPropsOnSpawn(wave.MoveSpeedMultiplier, wave.PossessionRateMultiplier);
-
+			_worldEvents.OnSpiritSpawned(spirits[i]);
 			yield return new WaitForSeconds(Random.Range(1f, 3f));
 		}
 
