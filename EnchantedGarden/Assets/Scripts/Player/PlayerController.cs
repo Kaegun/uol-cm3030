@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private GameObject _pickUpIndicator;
 
+	[SerializeField]
+	private GameObject _carryIndicator;
+
 	[Header("Interaction")]
 	[SerializeField]
 	private Transform _heldObjectTransform;
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
-		//	TODO: I know there's some issues with this approach
+		//	Fetch the main camera
 		_camera = Camera.main;
 
 		_inputEventHandler.Movement += OnMovement;
@@ -81,6 +84,9 @@ public class PlayerController : MonoBehaviour
 				AudioController.PlayAudio(_audioSource, _pickUpAudio);
 				_heldObject = PickupCorrectObject();
 				_heldObject.OnPickUp(_heldObjectTransform);
+
+				//	Enable Icon to indicate carried object
+				SetCarryIndicator(true, _heldObject);
 				break;
 			default:
 				break;
@@ -122,6 +128,7 @@ public class PlayerController : MonoBehaviour
 
 		_heldObject?.OnDrop(destroy);
 		_heldObject = null;
+		SetCarryIndicator(false);
 	}
 
 	private void OnInteractionReleased(object sender, float e)
@@ -145,6 +152,16 @@ public class PlayerController : MonoBehaviour
 			_pickUpIndicator.transform.position = position.Value;
 		}
 		_pickUpIndicator.transform.LookAt(_camera.transform.position.ZeroY());
+	}
+
+	private void SetCarryIndicator(bool enabled, IPickUp held = null)
+	{
+		if (held != null)
+		{
+			var spriteRenderer = _carryIndicator.GetComponentInChildren<SpriteRenderer>();
+			spriteRenderer.sprite = held.CarryIcon;
+		}
+		_carryIndicator.SetActive(enabled);
 	}
 
 	// Update is called once per frame
@@ -174,13 +191,13 @@ public class PlayerController : MonoBehaviour
 						}
 						Destroy(interactor.GameObject);
 						_heldObject = null;
+						SetCarryIndicator(false);
 					}
 					break;
 				}
 			default:
 				break;
 		}
-
 
 		var closestPickUp = _pickups.OrderBy(p => Vector3.Distance(p.Transform.position, transform.position)).FirstOrDefault();
 		switch (closestPickUp == null)
@@ -221,6 +238,12 @@ public class PlayerController : MonoBehaviour
 			_movementSpeed = 0.0f;
 			_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _movementSpeed);
 		}
+
+		//	Showing pickup indicator
+		if (_carryIndicator.activeSelf)
+		{
+			_carryIndicator.transform.LookAt(_camera.transform.position.ZeroZ());
+		}
 	}
 
 	private void FixedUpdate()
@@ -228,18 +251,8 @@ public class PlayerController : MonoBehaviour
 		//	If there are any keys down, we should move
 		if (IsMoving)
 		{
-			// Calculate vector from camera to player
-			//Vector3 camToPlayer = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(_camera.transform.position.x, 0, _camera.transform.position.z);
-
 			// Calculate camera's rotation about the y axis
 			Quaternion cameraRotation = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
-
-			// Calculate angle of vector from camera to player about the y axis
-			// This is the angle by which player input needs to be translated
-			//float camToPlayerAngle = Vector3.SignedAngle(Vector3.forward, camToPlayer, Vector3.up);
-
-			// Vector3 representation of player input adjusted for camera
-			//Vector3 moveV3 = (Quaternion.Euler(0, camToPlayerAngle, 0) * new Vector3(_moveDirection.x, 0, _moveDirection.y)).normalized;
 
 			// Apply camera rotation to move direction
 			Vector3 moveV3 = cameraRotation * new Vector3(_moveDirection.x, 0, _moveDirection.y);
@@ -254,10 +267,6 @@ public class PlayerController : MonoBehaviour
 
 			// Apply velocity change to rigidbody in desired direction of movement
 			_rb.AddForce(_acceleration * Time.deltaTime * moveV3, ForceMode.VelocityChange);
-
-			// Prevent character sliding in a direction that the player is not trying to move in
-			// Capture velocity adjusted to be relative to player input directions
-			//var adjustedVelocity = Quaternion.Euler(0, -camToPlayerAngle, 0) * _rb.velocity;
 
 			// Calculate rigidbody velocity rotated to align with player input
 			var adjustedVelocity = cameraRotation * -_rb.velocity;
@@ -280,9 +289,6 @@ public class PlayerController : MonoBehaviour
 				adjustedVelocity.z = 0;
 			}
 
-			// Apply velocity adjustments
-			//_rb.velocity = Quaternion.Euler(0, camToPlayerAngle, 0) * adjustedVelocity;
-
 			// Apply velocity adjustments to the rigidbody
 			_rb.velocity = cameraRotation * adjustedVelocity;
 
@@ -299,7 +305,6 @@ public class PlayerController : MonoBehaviour
 			_rb.angularVelocity = Vector3.zero;
 		}
 	}
-
 
 	private void OnTriggerStay(Collider other)
 	{

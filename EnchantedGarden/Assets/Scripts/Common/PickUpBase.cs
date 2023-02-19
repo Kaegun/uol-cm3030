@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public abstract class PickUpBase : MonoBehaviour, IPickUp
 {
@@ -12,9 +13,12 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected float _adjustmentScaleFactor = 100f;
 
-	[Header("Pickup Indicator Position")]
+	[Header("Pickup Indicator")]
 	[SerializeField]
-	protected Vector3 _indicatorAdjustmentPosition;	
+	protected Vector3 _indicatorAdjustmentPosition;
+
+	[SerializeField]
+	protected Sprite _carryIcon;
 
 	[Header("Despawns")]
 	[SerializeField]
@@ -45,10 +49,13 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	public virtual bool PlayAnimation => _playAnimation;
 
-    public Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
+	public virtual Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
 
-    protected bool _held = false, _canBePickedUp = true;
+	public virtual Sprite CarryIcon => _carryIcon;
+
+	protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
+	private const float _playerModelScaleFix = 100.0f;
 
 	public virtual void OnDrop(bool destroy = false)
 	{
@@ -65,18 +72,29 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 			_despawnTimer = 0.0f;
 			//	Randomize Y rotation of dropped object - could be parameterized
 			transform.SetPositionAndRotation(new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity.RandomizeY());
+
+			//	There's a problem on the player model that scales the items down by 100
+			transform.localScale /= _adjustmentScaleFactor;
 		}
 	}
 
 	public virtual void OnPickUp(Transform pickupTransform)
 	{
 		_held = true;
+		//	Reset the despawn timer
+		_despawnTimer = 0.0f;
 
 		transform.SetParent(pickupTransform, false);
 
 		transform.localPosition = Vector3.zero + _adjustmentPosition;
 		transform.localRotation = Quaternion.Euler(_adjustmentRotation.x, _adjustmentRotation.y, _adjustmentRotation.z);
-		transform.localScale *= _adjustmentScaleFactor;
+		//	There's a problem on the player model that scales the items down by 100
+		transform.localScale *= _adjustmentScaleFactor * _playerModelScaleFix;
+	}
+
+	private void Start()
+	{
+		Assert.IsNotNull(_carryIcon, Utility.AssertNotNullMessage(nameof(_carryIcon)));
 	}
 
 	private void Update()
