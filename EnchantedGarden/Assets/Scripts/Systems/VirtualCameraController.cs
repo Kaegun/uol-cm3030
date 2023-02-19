@@ -22,18 +22,15 @@ public class VirtualCameraController : MonoBehaviour
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
-		_worldEvents.SpiritWaveSpawned += SpiritWaveSpawned;
+		_worldEvents.SpiritSpawned += SpiritSpawned;
 		_worldEvents.SpiritBanished += SpiritBanished;
 		_worldEvents.FoxAlert += FoxAlert;
 		_worldEvents.FoxAlertEnded += FoxAlertEnded;
 	}
 
-	private void SpiritWaveSpawned(object sender, Spirit[] e)
-	{
-		foreach (Spirit spirit in e)
-		{
-			AddToTargetGroup(spirit.transform);
-		}
+	private void SpiritSpawned(object sender, Spirit e)
+	{		
+		AddToTargetGroup(e.transform);		
 	}
 
 	private void SpiritBanished(object sender, Spirit e)
@@ -53,7 +50,10 @@ public class VirtualCameraController : MonoBehaviour
 
 	private void AddToTargetGroup(Transform t, float? weight = null, float? radius = null)
 	{
-		_targetGroup.AddMember(t, weight == null ? _defaultTargetWeight : weight.Value, radius == null ? _defaultTargetRadius : radius.Value);
+		if (_targetGroup.FindMember(t) == -1)
+        {
+			_targetGroup.AddMember(t, weight == null ? _defaultTargetWeight : weight.Value, radius == null ? _defaultTargetRadius : radius.Value);
+		}		
 	}
 
 	private void RemoveFromTargetGroup(Transform t)

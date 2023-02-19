@@ -102,7 +102,7 @@ public class GameManager : SingletonBase<GameManager>
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
 	}
 
-	private void PlantStolen(object sender, Vector3 e)
+	private void PlantStolen(object sender, GameObject e)
 	{
 		ActiveLevel.CurrentNumberOfPlants -= 1;
 		if (ActiveLevel.CurrentNumberOfPlants <= 0)

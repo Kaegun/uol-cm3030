@@ -6,13 +6,14 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 {
 	//	Spirit Events
 	public event EventHandler<Spirit[]> SpiritWaveSpawned;
+	public event EventHandler<Spirit> SpiritSpawned;
 	public event EventHandler<Spirit> SpiritWallSpawned;
 	public event EventHandler<Spirit> SpiritBanished;
 
 	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
-	public event EventHandler<Vector3> PlantStolen;
+	public event EventHandler<GameObject> PlantStolen;
 
 	//	Fire Events
 	public event EventHandler<Vector3> FireDied;
@@ -29,6 +30,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
 	{
 		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
+	}
+
+	public void OnSpiritSpawned(Spirit spirit)
+	{
+		ExecuteEvent(SpiritSpawned, spirit);
 	}
 
 	public void OnSpiritWallSpawned(Spirit location)
@@ -50,9 +56,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(PlantPossessed, location);
 	}
 
-	public void OnPlantStolen(Vector3 location)
+	public void OnPlantStolen(GameObject plant)
 	{
-		ExecuteEvent(PlantStolen, location);
+		ExecuteEvent(PlantStolen, plant);
 	}
 
 	public void OnFireDied(Vector3 location)

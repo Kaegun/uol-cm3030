@@ -6,14 +6,6 @@ public class LevelTimerSlider : MonoBehaviour
 	[SerializeField]
 	private Slider _slider;
 
-	//[SerializeField]
-	//private float _cycleTime = 30;
-	//public float CycleTime
-	//{
-	//	get { return _cycleTime; }
-	//	set { _cycleTime = value; }
-	//}
-
 	private void Start()
 	{
 		if (_slider == null)
