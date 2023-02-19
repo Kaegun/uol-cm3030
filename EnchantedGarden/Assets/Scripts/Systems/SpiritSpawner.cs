@@ -9,9 +9,6 @@ public class SpiritSpawner : MonoBehaviour
 	GameObject _spirit;
 
 	[SerializeField]
-	private ScriptableLevelDefinition _level;
-
-	[SerializeField]
 	private Transform[] _spawnPoints;
 
 	[SerializeField]
@@ -26,7 +23,7 @@ public class SpiritSpawner : MonoBehaviour
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
-		_waveQueue = new Queue<SpiritWave>(_level.Waves);
+		_waveQueue = new Queue<SpiritWave>(GameManager.Instance.ActiveLevel.Waves);
 		_nextWave = NextWaveDelay();
 	}
 
@@ -54,7 +51,8 @@ public class SpiritSpawner : MonoBehaviour
 			if (Instantiate(_spirit, pos, Quaternion.identity, transform).TryGetComponent(out spirits[i]))
 				spirits[i].SetPropsOnSpawn(wave.MoveSpeedMultiplier, wave.PossessionRateMultiplier);
 			_worldEvents.OnSpiritSpawned(spirits[i]);
-			yield return new WaitForSeconds(Random.Range(1f, 3f));
+			//	Delay to wait for next spawn in a wave
+			yield return new WaitForSeconds(wave.Delay == 0.0f ? Random.Range(1.0f, 3.0f) : Random.Range(Mathf.Min(0.5f, wave.Delay), wave.Delay));
 		}
 
 		//	Alert any interested parties that a wave has spawned

@@ -16,7 +16,7 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	private enum Events
-    {
+	{
 		SpiritSpawned,
 		PlantPossessed,
 		SpiritWallPossessed,
@@ -24,7 +24,7 @@ public class FoxBehaviour : MonoBehaviour
 		FireLow,
 		FireDied,
 		CauldronLow
-    }
+	}
 
 	[Header("Events")]
 	[SerializeField]
@@ -125,25 +125,25 @@ public class FoxBehaviour : MonoBehaviour
 		_worldEvents.FireLowWarning += FireLowWarning;
 		_worldEvents.FireMediumWarning += FireMediumWarning;
 
-		_worldEvents.IngredientsLowWarning += IngredientsLowWarning;		
+		_worldEvents.IngredientsLowWarning += IngredientsLowWarning;
 	}
 
 	// Update is called once per frame
 	private void Update()
-	{		
+	{
 		if (_behaviourQueue.Count > 0 && _activeBehaviourCoroutine == null)
-        {
+		{
 			_activeBehaviourCoroutine = StartCoroutine(_behaviourQueue.Dequeue());
 			_worldEvents.OnFoxAlert(gameObject);
 			SetAlert();
-        }
-		
+		}
+
 		if (_state == FoxState.Idle)
-        {
+		{
 			if (!Mathf.Approximately(Vector3.Dot(transform.position, _player.forward), 0))
 			{
 				//transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
-		
+
 				//	TODO: Set turning anim.
 			}
 		}
@@ -192,51 +192,52 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_speechCanvas.transform.LookAt(_camera.transform.position.ZeroY());
 		}
-	}	
+	}
 
 	private IEnumerator MoveToTargetCoroutine(Transform target)
-    {
+	{
 		while (Vector3.Distance(transform.position, target.position) > 4f)
-        {			
+		{
 			Move(target.position);
 			yield return new WaitForEndOfFrame();
-        }
+		}
 		BehaviourCoroutineCompleted();
 	}
 
-	private IEnumerator AlertCoroutine(float duration)
-	{
-		AudioController.PlayAudio(_audioSource, _alertSound);
-		// Activate alert icon
-		_worldEvents.OnFoxAlert(gameObject);
-		_speechText.text = "!";
-		_speechCanvas.gameObject.SetActive(true);
-		yield return new WaitForSeconds(duration);
-		// Diable alert icon
-		_speechCanvas.gameObject.SetActive(false);
+	//private IEnumerator AlertCoroutine(float duration)
+	//{
+	//	AudioController.PlayAudio(_audioSource, _alertSound);
+	//	// Activate alert icon
+	//	_worldEvents.OnFoxAlert(gameObject);
+	//	_speechText.text = "!";
+	//	_speechCanvas.gameObject.SetActive(true);
+	//	yield return new WaitForSeconds(duration);
+	//	// Disable alert icon
+	//	_speechCanvas.gameObject.SetActive(false);
 
-		BehaviourCoroutineCompleted();
-	}
+	//	BehaviourCoroutineCompleted();
+	//}
 
 	// Rotation not working
 	private IEnumerator AlertCoroutine(float duration, Transform target)
-    {
-		AudioController.PlayAudio(_audioSource, _alertSound);
-		// Activate alert icon
-		_worldEvents.OnFoxAlert(gameObject);
-		_speechText.text = "!";
-		_speechCanvas.gameObject.SetActive(true);
-		float t = 0f;
-		while (t < duration)
-        {			
-			transform.rotation.RotateTowards(transform.position, target.position, _turnSpeed * Time.deltaTime);			
-			t += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
-		// Diable alert icon
-		_speechCanvas.gameObject.SetActive(false);
+	{
+		return AlertCoroutine(duration, target.position);
+		//AudioController.PlayAudio(_audioSource, _alertSound);
+		//// Activate alert icon
+		//_worldEvents.OnFoxAlert(gameObject);
+		//_speechText.text = "!";
+		//_speechCanvas.gameObject.SetActive(true);
+		//float t = 0f;
+		//while (t < duration)
+		//{
+		//	transform.rotation.RotateTowards(transform.position, target.position, _turnSpeed * Time.deltaTime);
+		//	t += Time.deltaTime;
+		//	yield return new WaitForEndOfFrame();
+		//}
+		//// Disable alert icon
+		//_speechCanvas.gameObject.SetActive(false);
 
-		BehaviourCoroutineCompleted();
+		//BehaviourCoroutineCompleted();
 	}
 
 	// Rotation not working
@@ -249,19 +250,19 @@ public class FoxBehaviour : MonoBehaviour
 		_speechCanvas.gameObject.SetActive(true);
 		float t = 0f;
 		while (t < duration)
-		{			
-			transform.rotation.RotateTowards(transform.position, target, _turnSpeed * Time.deltaTime);		
+		{
+			transform.rotation.RotateTowards(transform.position, target, _turnSpeed * Time.deltaTime);
 			t += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		// Diable alert icon
+		// Disable alert icon
 		_speechCanvas.gameObject.SetActive(false);
 
 		BehaviourCoroutineCompleted();
 	}
 
 	private IEnumerator InstructionCoroutine(string text, float duration)
-    {
+	{
 		// TODO: Different sound than alert for instruction?
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate instruction icon
@@ -274,17 +275,16 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	private void BehaviourCoroutineCompleted()
-    {
+	{
 		_activeBehaviourCoroutine = null;
 		SetIdle();
-		_worldEvents.OnFoxAlertEnded(gameObject);		
-    }
+		_worldEvents.OnFoxAlertEnded(gameObject);
+	}
 
 	private void Move(Vector3 targetPosition)
 	{
 		_currentSpeed = Mathf.Clamp(_currentSpeed + _acceleration * Time.deltaTime, 0.0f, _maxSpeed);
 
-		//	TODO: Check whether this works?
 		transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, targetPosition, _currentSpeed * Time.deltaTime),
 			transform.rotation.RotateTowards(transform.position, targetPosition, _turnSpeed * Time.deltaTime));
 	}
@@ -300,7 +300,7 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	private void SetAlert()
-    {
+	{
 		_state = FoxState.Alert;
 	}
 
@@ -324,17 +324,17 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	private void SpiritSpawned(object sender, Spirit e)
-    {
+	{
 		//SetAlert(e.transform.position, $"A spirit has spawned! It'll try to steal your plants!");
 
-		if (!_handledEvents.Contains(Events.SpiritSpawned)) 
+		if (!_handledEvents.Contains(Events.SpiritSpawned))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			_behaviourQueue.Enqueue(InstructionCoroutine("A spirit has spawned! It'll try to steal your plants!", _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritSpawned);
 		}
-    }
+	}
 
 	private void SpiritBanished(object sender, Spirit e)
 	{
@@ -383,14 +383,14 @@ public class FoxBehaviour : MonoBehaviour
 		Debug.Log($"Fox Behaviour: Plant Possessed - [{e}]");
 	}
 
-	private void PlantStolen(object sender, Vector3 e)
+	private void PlantStolen(object sender, GameObject e)
 	{
 		Debug.Log("Fox Behaviour: A plant has been stolen!");
 
 		//SetAlert(e, "Oh no! A spirit has stolen your plant! Don't let them steal them all!");
 		if (!_handledEvents.Contains(Events.SpiritStolen))
 		{
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			_behaviourQueue.Enqueue(InstructionCoroutine("Oh no! A spirit has stolen one of your plants! If they steal all of them you'll lose!", _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritStolen);
@@ -427,13 +427,13 @@ public class FoxBehaviour : MonoBehaviour
 
 		//SetAlert(e, "The cauldron's fire has died. You won't be able to make potions to banish the spirits.");
 		//SetAlert(_logs.position, "Fetch another log from the wood pile and add take it to the cauldron.");
-		
+
 		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
 		_behaviourQueue.Enqueue(InstructionCoroutine("The fire has died!", _defaultInstructionDuration));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_logs));
 		_behaviourQueue.Enqueue(InstructionCoroutine("Take a log to the cauldron to reignite the fire!", _defaultInstructionDuration));
-			
+
 	}
 
 	private void IngredientsLowWarning(object sender, Vector3 e)
@@ -443,7 +443,7 @@ public class FoxBehaviour : MonoBehaviour
 		//SetAlert(e, "The cauldron's ingredients are running low. You won't be able to make potions to banish the spirits.");
 		//SetAlert(_alchemyTable.position, "Fetch another herb from the table and add take it to the cauldron.");
 		//SetAlert(_cauldron.position, "Add the herb to the cauldron to refill your ingredient stock.");
-		
+
 		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
 		_behaviourQueue.Enqueue(InstructionCoroutine("The potion is running out!", _defaultInstructionDuration));

@@ -18,7 +18,6 @@ public static class Utility
 	public static Vector3 RandomUnitVec3()
 	{
 		return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
-
 	}
 
 	public static Quaternion RotateTowards(this Quaternion q, Vector3 position, Vector3 target, float t)
@@ -51,7 +50,6 @@ public static class Utility
 	public static bool IsLayer(this GameObject go, Layers layer) => go.layer == (int)layer;
 
 	// Check whether the game object is in a selection of layers
-	// Is there a better name for this?
 	public static bool IsInLayers(this GameObject go, Layers[] layers) => layers.Contains((Layers)go.layer);
 
 	// Convert layers to layer mask
