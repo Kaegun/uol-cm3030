@@ -9,24 +9,23 @@ public class SpiritSpawner : MonoBehaviour
 	GameObject _spirit;
 
 	[SerializeField]
-	private ScriptableLevelDefinition _level;
-
-	[SerializeField]
 	private Transform[] _spawnPoints;
 
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
 	private float _nextWave = 0;
-	private float _elapsedTime = 0;
 	private Queue<SpiritWave> _waveQueue;
+
+	private const float _minimumSpawnDelay = 0.5f,
+		_maximumSpawnDelay = 6.0f;
 
 	// Start is called before the first frame update
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
-		_waveQueue = new Queue<SpiritWave>(_level.Waves);
+		_waveQueue = new Queue<SpiritWave>(GameManager.Instance.ActiveLevel.Waves);
 		_nextWave = NextWaveDelay();
 	}
 
@@ -35,11 +34,11 @@ public class SpiritSpawner : MonoBehaviour
 	{
 		if (_waveQueue.Count > 0)
 		{
-			_elapsedTime += Time.deltaTime;
-			if (_elapsedTime > _nextWave)
+			if (Time.timeSinceLevelLoad > _nextWave)
 			{
 				StartCoroutine(SpawnWaveCoroutine(_waveQueue.Dequeue()));
 				_nextWave = NextWaveDelay();
+				Debug.Log($"SpiritSpawner NextWave: {_nextWave}");
 			}
 		}
 	}
@@ -52,14 +51,18 @@ public class SpiritSpawner : MonoBehaviour
 			int rand = Random.Range(0, _spawnPoints.Length);
 			var pos = _spawnPoints[rand].transform.position + 3 * Utility.RandomUnitVec3().ZeroY();
 			if (Instantiate(_spirit, pos, Quaternion.identity, transform).TryGetComponent(out spirits[i]))
+			{
 				spirits[i].SetPropsOnSpawn(wave.MoveSpeedMultiplier, wave.PossessionRateMultiplier);
+			}
+
 			_worldEvents.OnSpiritSpawned(spirits[i]);
-			yield return new WaitForSeconds(Random.Range(1f, 3f));
+			//	Delay to wait for next spawn in a wave
+			yield return new WaitForSeconds(Random.Range(_minimumSpawnDelay, Mathf.Min(wave.SpiritSpawnDelay, _maximumSpawnDelay)));
 		}
 
 		//	Alert any interested parties that a wave has spawned
 		_worldEvents.OnSpiritWaveSpawned(spirits);
 	}
 
-	private float NextWaveDelay() => _waveQueue.Count > 0 ? _nextWave + _waveQueue.Peek().Delay : 0.0f;
+	private float NextWaveDelay() => _waveQueue.Count > 0 ? _nextWave + _waveQueue.Peek().WaveDelay : 0.0f;
 }

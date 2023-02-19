@@ -13,7 +13,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
-	public event EventHandler<Vector3> PlantStolen;
+	public event EventHandler<GameObject> PlantStolen;
 
 	//	Fire Events
 	public event EventHandler<Vector3> FireDied;
@@ -27,24 +27,24 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<GameObject> FoxAlert;
 	public event EventHandler<GameObject> FoxAlertEnded;
 
-	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
+	public void OnSpiritWaveSpawned(Spirit[] spirits)
 	{
-		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
+		ExecuteEvent(SpiritWaveSpawned, spirits);
 	}
 
 	public void OnSpiritSpawned(Spirit spirit)
-    {
-		ExecuteEvent(SpiritSpawned, spirit);
-    }
-
-	public void OnSpiritWallSpawned(Spirit location)
 	{
-		ExecuteEvent(SpiritWallSpawned, location);
+		ExecuteEvent(SpiritSpawned, spirit);
 	}
 
-	public void OnSpiritBanished(Spirit location)
+	public void OnSpiritWallSpawned(Spirit spirit)
 	{
-		ExecuteEvent(SpiritBanished, location);
+		ExecuteEvent(SpiritWallSpawned, spirit);
+	}
+
+	public void OnSpiritBanished(Spirit spirit)
+	{
+		ExecuteEvent(SpiritBanished, spirit);
 	}
 	public void OnPlantPossessing(Vector3 location)
 	{
@@ -56,9 +56,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(PlantPossessed, location);
 	}
 
-	public void OnPlantStolen(Vector3 location)
+	public void OnPlantStolen(GameObject plant)
 	{
-		ExecuteEvent(PlantStolen, location);
+		ExecuteEvent(PlantStolen, plant);
 	}
 
 	public void OnFireDied(Vector3 location)
@@ -81,13 +81,13 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(IngredientsLowWarning, location);
 	}
 
-	public void OnFoxAlert(GameObject location)
+	public void OnFoxAlert(GameObject fox)
 	{
-		ExecuteEvent(FoxAlert, location);
+		ExecuteEvent(FoxAlert, fox);
 	}
 
-	public void OnFoxAlertEnded(GameObject location)
+	public void OnFoxAlertEnded(GameObject fox)
 	{
-		ExecuteEvent(FoxAlertEnded, location);
+		ExecuteEvent(FoxAlertEnded, fox);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -27,10 +28,7 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private ScriptableAudioClip _gameOverMusic;
 
-	public float Elapsed => _elapsedTime;
-
 	private int _score;
-	private float _elapsedTime = 0f;
 	private bool _gameOver = false;
 
 	//	TODO: Fix scoring - We can use a SO for this
@@ -63,7 +61,6 @@ public class GameManager : SingletonBase<GameManager>
 		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
 	}
 
-	//	TODO: Here we might be able to use an SO to raise events to all things that need to know about Game Ending, i.e. Sounds, etc.
 	private void EndGame()
 	{
 		Debug.Log("Game Over");
@@ -98,6 +95,15 @@ public class GameManager : SingletonBase<GameManager>
 		Assert.IsTrue(_levels.Length > 0);
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
+		//	Testing
+		var numPlants = 0;
+		foreach (var go in SceneManager.GetActiveScene().GetRootGameObjects())
+		{
+			numPlants += go.GetComponentsInChildren<Plant>().Length;
+		}
+
+		Debug.Log($"Dynamic number of plants [{numPlants}]");
+
 		_worldEvents.PlantStolen += PlantStolen;
 
 		_score = 0;
@@ -105,17 +111,17 @@ public class GameManager : SingletonBase<GameManager>
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
 	}
 
-	private void PlantStolen(object sender, Vector3 e)
+	private void PlantStolen(object sender, GameObject e)
 	{
-		ActiveLevel.CurrentNumberOfPlants--;
+		ActiveLevel.CurrentNumberOfPlants -= 1;
+		if (ActiveLevel.CurrentNumberOfPlants <= 0)
+			EndGame();
 	}
 
 	//	Update is called once per frame
 	private void Update()
 	{
-		_elapsedTime += Time.deltaTime;
-
-		if (_elapsedTime >= ActiveLevel.LevelDuration && !_gameOver)
+		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
 		}
