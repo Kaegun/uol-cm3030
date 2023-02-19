@@ -27,9 +27,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<GameObject> FoxAlert;
 	public event EventHandler<GameObject> FoxAlertEnded;
 
-	public void OnSpiritWaveSpawned(Spirit[] spawnLocations)
+	public void OnSpiritWaveSpawned(Spirit[] spirits)
 	{
-		ExecuteEvent(SpiritWaveSpawned, spawnLocations);
+		ExecuteEvent(SpiritWaveSpawned, spirits);
 	}
 
 	public void OnSpiritSpawned(Spirit spirit)
@@ -37,14 +37,14 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(SpiritSpawned, spirit);
 	}
 
-	public void OnSpiritWallSpawned(Spirit location)
+	public void OnSpiritWallSpawned(Spirit spirit)
 	{
-		ExecuteEvent(SpiritWallSpawned, location);
+		ExecuteEvent(SpiritWallSpawned, spirit);
 	}
 
-	public void OnSpiritBanished(Spirit location)
+	public void OnSpiritBanished(Spirit spirit)
 	{
-		ExecuteEvent(SpiritBanished, location);
+		ExecuteEvent(SpiritBanished, spirit);
 	}
 	public void OnPlantPossessing(Vector3 location)
 	{
@@ -81,13 +81,13 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(IngredientsLowWarning, location);
 	}
 
-	public void OnFoxAlert(GameObject location)
+	public void OnFoxAlert(GameObject fox)
 	{
-		ExecuteEvent(FoxAlert, location);
+		ExecuteEvent(FoxAlert, fox);
 	}
 
-	public void OnFoxAlertEnded(GameObject location)
+	public void OnFoxAlertEnded(GameObject fox)
 	{
-		ExecuteEvent(FoxAlertEnded, location);
+		ExecuteEvent(FoxAlertEnded, fox);
 	}
 }

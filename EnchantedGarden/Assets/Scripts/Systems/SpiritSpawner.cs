@@ -15,8 +15,10 @@ public class SpiritSpawner : MonoBehaviour
 	private ScriptableWorldEventHandler _worldEvents;
 
 	private float _nextWave = 0;
-	private float _elapsedTime = 0;
 	private Queue<SpiritWave> _waveQueue;
+
+	private const float _minimumSpawnDelay = 0.5f,
+		_maximumSpawnDelay = 6.0f;
 
 	// Start is called before the first frame update
 	private void Start()
@@ -32,11 +34,11 @@ public class SpiritSpawner : MonoBehaviour
 	{
 		if (_waveQueue.Count > 0)
 		{
-			_elapsedTime += Time.deltaTime;
-			if (_elapsedTime > _nextWave)
+			if (Time.timeSinceLevelLoad > _nextWave)
 			{
 				StartCoroutine(SpawnWaveCoroutine(_waveQueue.Dequeue()));
 				_nextWave = NextWaveDelay();
+				Debug.Log($"SpiritSpawner NextWave: {_nextWave}");
 			}
 		}
 	}
@@ -49,15 +51,18 @@ public class SpiritSpawner : MonoBehaviour
 			int rand = Random.Range(0, _spawnPoints.Length);
 			var pos = _spawnPoints[rand].transform.position + 3 * Utility.RandomUnitVec3().ZeroY();
 			if (Instantiate(_spirit, pos, Quaternion.identity, transform).TryGetComponent(out spirits[i]))
+			{
 				spirits[i].SetPropsOnSpawn(wave.MoveSpeedMultiplier, wave.PossessionRateMultiplier);
+			}
+
 			_worldEvents.OnSpiritSpawned(spirits[i]);
 			//	Delay to wait for next spawn in a wave
-			yield return new WaitForSeconds(wave.Delay == 0.0f ? Random.Range(1.0f, 3.0f) : Random.Range(Mathf.Min(0.5f, wave.Delay), wave.Delay));
+			yield return new WaitForSeconds(Random.Range(_minimumSpawnDelay, Mathf.Min(wave.SpiritSpawnDelay, _maximumSpawnDelay)));
 		}
 
 		//	Alert any interested parties that a wave has spawned
 		_worldEvents.OnSpiritWaveSpawned(spirits);
 	}
 
-	private float NextWaveDelay() => _waveQueue.Count > 0 ? _nextWave + _waveQueue.Peek().Delay : 0.0f;
+	private float NextWaveDelay() => _waveQueue.Count > 0 ? _nextWave + _waveQueue.Peek().WaveDelay : 0.0f;
 }

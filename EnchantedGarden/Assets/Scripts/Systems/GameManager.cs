@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -60,7 +61,6 @@ public class GameManager : SingletonBase<GameManager>
 		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
 	}
 
-	//	TODO: Here we might be able to use an SO to raise events to all things that need to know about Game Ending, i.e. Sounds, etc.
 	private void EndGame()
 	{
 		Debug.Log("Game Over");
@@ -94,6 +94,15 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		Assert.IsTrue(_levels.Length > 0);
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+
+		//	Testing
+		var numPlants = 0;
+		foreach (var go in SceneManager.GetActiveScene().GetRootGameObjects())
+		{
+			numPlants += go.GetComponentsInChildren<Plant>().Length;
+		}
+
+		Debug.Log($"Dynamic number of plants [{numPlants}]");
 
 		_worldEvents.PlantStolen += PlantStolen;
 

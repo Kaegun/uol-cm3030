@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpiritBody-Banishable
+  m_Shader: {fileID: -6465566751694194690, guid: 41cb31b545a9597439610588b9ce70dd,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - Vector1_31CEE2AA: 1.38
+    - Vector1_7B0D7500: 1.5
+    m_Colors:
+    - Color_962C92FC: {r: 0.8732574, g: 0.48118263, b: 1.782158, a: 0.50980395}
+    - Color_CE1F1BEC: {r: 0.29411766, g: 0.8509804, b: 0.45882353, a: 1}
+    - Vector3_2C87DE24: {r: 0, g: 0.75, b: 0, a: 0}

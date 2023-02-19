@@ -15,39 +15,48 @@ MonoBehaviour:
   _levelDuration: 150
   _waves:
   - Count: 1
-    Delay: 3
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 0.6
     PossessionRateMultiplier: 0.6
   - Count: 1
-    Delay: 20
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 0.8
     PossessionRateMultiplier: 0.8
   - Count: 1
-    Delay: 15
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 1
-    Delay: 8
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 1
-    Delay: 8
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1.2
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 0
+    SpiritSpawnDelay: 0
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 3
-    Delay: 16
+    WaveDelay: 5
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   _unplantedFactor: 5

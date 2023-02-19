@@ -110,11 +110,13 @@
     <Compile Include="Assets\Scripts\Scriptable\ScriptableLevelDefinition.cs" />
     <Compile Include="Assets\Scripts\Scriptable\ScriptableWorldEventHandler.cs" />
     <Compile Include="Assets\Scripts\Spirit\Spirit.cs" />
+    <Compile Include="Assets\Scripts\Spirit\SpiritBody.cs" />
     <Compile Include="Assets\Scripts\Systems\AudioController.cs" />
     <Compile Include="Assets\Scripts\Systems\CameraController.cs" />
     <Compile Include="Assets\Scripts\Systems\CinemachineInputProviderEx.cs" />
     <Compile Include="Assets\Scripts\Systems\GameManager.cs" />
     <Compile Include="Assets\Scripts\Systems\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\Systems\ScoreController.cs" />
     <Compile Include="Assets\Scripts\Systems\SpiritSpawner.cs" />
     <Compile Include="Assets\Scripts\Systems\VirtualCameraController.cs" />
     <Compile Include="Assets\Scripts\UI\GameOverCredits.cs" />

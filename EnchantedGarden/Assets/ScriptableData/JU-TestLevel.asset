@@ -12,42 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2dc88a8646e694dbc8b000abf0be43, type: 3}
   m_Name: JU-TestLevel
   m_EditorClassIdentifier: 
-  _levelDuration: 150
+  _levelDuration: 120
   _waves:
-  - Count: 8
-    Delay: 1
-    MoveSpeedMultiplier: 5
-    PossessionRateMultiplier: 5
+  - Count: 2
+    WaveDelay: 3
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 0.6
+    PossessionRateMultiplier: 0.6
   - Count: 1
-    Delay: 20
+    WaveDelay: 20
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 0.8
     PossessionRateMultiplier: 0.8
   - Count: 1
-    Delay: 15
+    WaveDelay: 15
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 1
-    Delay: 8
+    WaveDelay: 8
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 1
-    Delay: 8
+    WaveDelay: 8
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1.2
     PossessionRateMultiplier: 1
   - Count: 2
-    Delay: 16
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 3
-    Delay: 16
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   _unplantedFactor: 5
@@ -58,4 +67,4 @@ MonoBehaviour:
   _cauldronSettings:
     _startNumberOfUses: 5
     _maximumUses: 5
-    _fireDuration: 30
+    _fireDuration: 90

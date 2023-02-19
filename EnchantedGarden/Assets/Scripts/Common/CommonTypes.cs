@@ -38,4 +38,12 @@ public static class CommonTypes
 		public const string Loading = "Loading";
 		public const string Victory = "Victory";
 	}
+
+	public static class ScoreValues
+	{
+		public const int BanishedSpirit = 1000;
+		public const int BanishedWall = 1000;
+		public const int ReplantedPlant = 1000;
+		public const int MadeAPotion = 1000;
+	}
 }

@@ -45,16 +45,25 @@ public class Spirit : MonoBehaviour, IInteractable
 	[SerializeField]
 	private ScriptableAudioClip _bansihAudio;
 
+	[Header("VFX")]
+	[SerializeField]
+	private Material _banishMaterial;
+
+	private SpiritBody _spiritBody;
 	private Vector3 _moveDirection;
 	private float _moveSpeedMultiplier = 1f;
 	private float _possessionRateMultiplier = 1f;
-
 	public float PossessionRateMultiplier => _possessionRateMultiplier;
 
 	private SpiritState _spiritState;
 	private IPossessable _possessedPossessable;
 	private Vector3 _spawnPos;
 	private IPossessable _targetPossessable = null;
+
+	private const float _possessedSpeedFactor = 0.5f,
+		_justSpawnedMovementFactor = 0.5f,
+		_spawnMovementDelay = 2.0f,
+		_widenSearchThreshold = 10.0f;
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
@@ -66,14 +75,10 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	public void Banish()
 	{
-		if (_possessedPossessable != null)
-		{
-			_possessedPossessable.OnDispossess();
-		}
+		_possessedPossessable?.OnDispossess();
+		_worldEvents.OnSpiritBanished(this);
 		// Spirit is destroyed before audio plays
-		// TODO: Fix audio not playing due to spirit object being destroyed
 		AudioController.PlayAudioDetached(_bansihAudio, transform.position);
-		GameManager.Instance.ScorePoints(50);
 		Destroy(gameObject);
 	}
 
@@ -81,6 +86,9 @@ public class Spirit : MonoBehaviour, IInteractable
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+		Assert.IsNotNull(_banishMaterial, Utility.AssertNotNullMessage(nameof(_banishMaterial)));
+		_spiritBody = GetComponentInChildren<SpiritBody>();
+		Assert.IsNotNull(_spiritBody, Utility.AssertNotNullMessage(nameof(_spiritBody)));
 
 		_spawnPos = transform.position;
 		_spiritState = SpiritState.Spawning;
@@ -108,7 +116,7 @@ public class Spirit : MonoBehaviour, IInteractable
 				{
 					plant.transform.position = transform.position;
 					_moveDirection = (_spawnPos - transform.position).normalized;
-					Move(0.5f);
+					Move(_possessedSpeedFactor);
 				}
 				break;
 			default:
@@ -140,8 +148,8 @@ public class Spirit : MonoBehaviour, IInteractable
 		var perpMoveDir = 0.5f * Mathf.Sin(Time.time * 2) * (Quaternion.Euler(0, 90, 0) * _moveDirection).normalized;
 		var moveDir = (_moveDirection + perpMoveDir).normalized;
 
-		transform.SetPositionAndRotation(_moveSpeed * _moveSpeedMultiplier * speedFactor * Time.deltaTime * moveDir,
-			transform.rotation.RotateTowards(transform.position, transform.position + moveDir, _turnSpeed * Time.deltaTime));
+		transform.rotation = transform.rotation.RotateTowards(transform.position, transform.position + moveDir, _turnSpeed * Time.deltaTime);
+		transform.position += _moveSpeed * _moveSpeedMultiplier * speedFactor * Time.deltaTime * moveDir;
 
 		// Use cos wave to make spirit bob up and down as it moves
 		var bobAmount = 0.0075f * Mathf.Cos(Time.time * 3.5f);
@@ -164,9 +172,9 @@ public class Spirit : MonoBehaviour, IInteractable
 		// Set move direction towards origin with random roation applied
 		_moveDirection = Quaternion.Euler(new Vector3(0, Random.Range(-60, 60), 0)) * transform.position.normalized * -1;
 		float t = 0;
-		while (t < 2f)
+		while (t < _spawnMovementDelay)
 		{
-			Move(0.5f);
+			Move(_justSpawnedMovementFactor);
 			t += Time.deltaTime;
 			yield return new WaitForFixedUpdate();
 		}
@@ -184,7 +192,7 @@ public class Spirit : MonoBehaviour, IInteractable
 			float time = Time.time;
 			// Add possessable layers based on how long the spirit has been searching for something to possess
 			int layerMask = Utility.LayersAsLayerMask(CommonTypes.Layers.Plant);
-			if (searchDuration > 10)
+			if (searchDuration > _widenSearchThreshold)
 			{
 				layerMask = Utility.LayersAsLayerMask(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall });
 			}
@@ -247,6 +255,7 @@ public class Spirit : MonoBehaviour, IInteractable
 			&& possessable == _targetPossessable
 			&& _spiritState == SpiritState.Searching)
 		{
+			Debug.Log("Spirit start possessing");
 			// Stop searching coroutine
 			StopAllCoroutines();
 			_possessedPossessable = possessable;
@@ -258,6 +267,10 @@ public class Spirit : MonoBehaviour, IInteractable
 			if (possessable is SpiritWall)
 			{
 				DeactivateBody();
+			}
+			else
+			{
+				_spiritBody.SetMaterial(_banishMaterial);
 			}
 		}
 		else if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
