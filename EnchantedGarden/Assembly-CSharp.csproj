@@ -97,7 +97,6 @@
     <Compile Include="Assets\Scripts\Interactible\TrickPlantSpawner.cs" />
     <Compile Include="Assets\Scripts\Interactible\WoodPile.cs" />
     <Compile Include="Assets\Scripts\Interface\ICombinable.cs" />
-    <Compile Include="Assets\Scripts\Interface\IIndicator.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interface\IInteractor.cs" />
     <Compile Include="Assets\Scripts\Interface\IPickUp.cs" />
