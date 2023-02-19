@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _adjustmentPosition: {x: 0, y: 0, z: 0}
   _adjustmentRotation: {x: 0, y: 0, z: 0}
-  _adjustmentScaleFactor: 100
+  _adjustmentScaleFactor: 1
   _indicatorAdjustmentPosition: {x: 0, y: 1, z: 0}
+  _carryIcon: {fileID: 21300000, guid: 8c500d54ff99a5546a4409724f9b5579, type: 3}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0

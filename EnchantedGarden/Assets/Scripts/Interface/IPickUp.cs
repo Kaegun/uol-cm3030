@@ -8,6 +8,7 @@ public interface IPickUp
     bool CanBeDropped { get; }
     bool PlayAnimation { get; }
     Vector3 IndicatorPostion { get; }
+    Sprite CarryIcon { get; }
     void OnPickUp(Transform pickupTransform);
     void OnDrop(bool destroy);
 }
