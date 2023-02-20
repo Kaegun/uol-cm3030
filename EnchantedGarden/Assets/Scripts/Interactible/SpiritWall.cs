@@ -22,6 +22,7 @@ public class SpiritWall : MonoBehaviour, IPossessable
         _isPossessed = false;
         _wallObj.SetActive(false);
         // Score points
+        GameManager.Instance.ScorePoints(50);
     }
 
     public void OnPossessionStarted(Spirit possessor)

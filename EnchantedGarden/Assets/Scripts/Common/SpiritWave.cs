@@ -8,5 +8,14 @@ public class SpiritWave
 	public int Count;
 
 	//	Delay from previous wave to this wave
-	public float Delay;
+	public float WaveDelay;
+
+	//	Delay between spirits spawning in the wave
+	public float SpiritSpawnDelay;
+
+	// Movement speed multiplier for spirits in this wave
+	public float MoveSpeedMultiplier = 1f;
+
+	// Possession rate multiplier for spirits in this wave
+	public float PossessionRateMultiplier = 1f;
 }

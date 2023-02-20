@@ -1,98 +1,125 @@
-﻿using System.Linq;
+﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Flask : PickUpBase, ICombinable, IInteractor
 {
-    [SerializeField]
-    private GameObject _contents;
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
 
-    [SerializeField]
-    private bool _full;
+	[Header("Contents")]
+	[SerializeField]
+	private GameObject _contents;
 
-    [SerializeField]
-    private float _combinationThreshold = 1f;
-    private float _combinationProgress = 0f;
+	[SerializeField]
+	private bool _full;
 
-    [SerializeField]
-    private ScriptableAudioClip _flaskSmashAudio;
+	[SerializeField]
+	private float _combinationThreshold = 1f;
+	public float CombinationThreshold => _combinationThreshold;
 
-    public bool CanUseFlask => _full;
+	public event EventHandler<float> CombineProgress;
 
-    private void UseFlask()
-    {
-        _full = false;
-        _contents.SetActive(false);
-        AudioController.PlayAudioDetached(_flaskSmashAudio, transform.position);
-    }
+	[Header("Audio")]
+	[SerializeField]
+	private ScriptableAudioClip _flaskSmashAudio;
 
-    public bool Combining()
-    {
-        _combinationProgress += Time.deltaTime;
-        if (_combinationProgress >= _combinationThreshold)
-        {
-            OnCombine();
-            return true;
-        }
-        return false;
-    }
+	public bool CanUseFlask => _full;
 
-    public void OnCombine()
-    {
-        _full = true;
-        _contents.SetActive(true);
-        _combinationProgress = 0f;
-    }
+	private float _combinationProgress = 0f;
 
-    public bool CanBeCombined => _held && !_full;
+	private void UseFlask()
+	{
+		_full = false;
+		_contents.SetActive(false);
+		AudioController.PlayAudioDetached(_flaskSmashAudio, transform.position);
+	}
 
-    public GameObject GameObject => gameObject;
+	public bool Combining()
+	{
+		_combinationProgress += Time.deltaTime;
+		ExecuteEvent(CombineProgress, _combinationProgress);
 
-    public bool CanInteractWith(IInteractable interactable)
-    {
-        switch (interactable)
-        {
-            case Cauldron _:
-                return CanBeCombined;
-            case Spirit _:
-                return CanUseFlask;
-            default:
-                return false;
-        }
-    }
+		if (_combinationProgress >= _combinationThreshold)
+		{
+			OnCombine();
+			return true;
+		}
 
-    public void OnInteract(IInteractable interactable)
-    {
-        switch (interactable)
-        {
-            case Spirit _:
-                UseFlask();
-                break;
-            default:
-                break;
-        }
-    }
+		return false;
+	}
 
-    public bool DestroyAfterInteract(IInteractable interactable)
-    {
-        switch (interactable)
-        {
-            case Spirit _:
-                return true;
-            default:
-                return false;
-        }
-    }
+	public void OnCombine()
+	{
+		_full = true;
+		_contents.SetActive(true);
+		_combinationProgress = 0f;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        _full = false;
-        _contents.SetActive(false);
-    }
+		//  Reduce the number of uses in the Cauldron
+		//  TODO: Not a fan of the below being in the Flask
+		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
+		GameManager.Instance.CheckIngredientsLow();
+	}
 
-    // Update is called once per frame
-    private void Update()
-    {
+	public bool CanBeCombined => _held && !_full;
 
-    }
+	public GameObject GameObject => gameObject;
+
+	public bool CanInteractWith(IInteractable interactable)
+	{
+		switch (interactable)
+		{
+			case Cauldron _:
+				return CanBeCombined;
+			case Spirit _:
+				return CanUseFlask;
+			default:
+				return false;
+		}
+	}
+
+	public void OnInteract(IInteractable interactable)
+	{
+		switch (interactable)
+		{
+			case Spirit _:
+				UseFlask();
+				break;
+			default:
+				break;
+		}
+	}
+
+	public bool DestroyAfterInteract(IInteractable interactable)
+	{
+		switch (interactable)
+		{
+			case Spirit _:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	private void ExecuteEvent<T>(EventHandler<T> handler, T e)
+	{
+		if (handler != null)
+		{
+			foreach (var evt in handler.GetInvocationList())
+			{
+				evt.DynamicInvoke(this, e);
+			}
+		}
+	}
+
+	// Start is called before the first frame update
+	protected override void Start()
+	{
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+
+		_full = false;
+		_contents.SetActive(false);
+		base.Start();
+	}
 }

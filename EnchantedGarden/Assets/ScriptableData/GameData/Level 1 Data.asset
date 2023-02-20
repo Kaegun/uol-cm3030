@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2dc88a8646e694dbc8b000abf0be43, type: 3}
+  m_Name: Level 1 Data
+  m_EditorClassIdentifier: 
+  _levelDuration: 150
+  _waves:
+  - Count: 1
+    WaveDelay: 3
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 0.6
+    PossessionRateMultiplier: 0.6
+  - Count: 1
+    WaveDelay: 20
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 0.8
+    PossessionRateMultiplier: 0.8
+  - Count: 1
+    WaveDelay: 15
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 2
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 2
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 8
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 8
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1.2
+    PossessionRateMultiplier: 1
+  - Count: 2
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 3
+    WaveDelay: 16
+    SpiritSpawnDelay: 3
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  _unplantedFactor: 5
+  _possessionThreshold: 10
+  _startNumberOfPlants: 6
+  _replantingThreshold: 2
+  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
+  _cauldronSettings:
+    _startNumberOfUses: 5
+    _maximumUses: 5
+    _fireDuration: 90

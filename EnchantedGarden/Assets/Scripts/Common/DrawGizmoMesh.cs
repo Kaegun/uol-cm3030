@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DrawGizmoMesh : MonoBehaviour
 {
+#if UNITY_EDITOR
 	[SerializeField]
 	private Color _color = Color.blue;
 
-#if UNITY_EDITOR
 	private void OnDrawGizmos()
 	{
 		var mesh = GetComponent<MeshFilter>().sharedMesh;

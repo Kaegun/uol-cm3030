@@ -12,4 +12,9 @@ public class UiEventManager : MonoBehaviour
 	{
 		GameManager.Instance.RestartGame();
 	}
+
+	public void OnClick_ContinueGame()
+	{
+		GameManager.Instance.ContinueGame();
+	}
 }

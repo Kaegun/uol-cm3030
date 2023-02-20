@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
 {
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
+	[Header("Levels")]
 	//	TODO: Multiple levels
 	[SerializeField]
 	private ScriptableLevelDefinition[] _levels;
@@ -11,44 +18,55 @@ public class GameManager : SingletonBase<GameManager>
 	private ScriptableLevelDefinition _level;
 	public ScriptableLevelDefinition ActiveLevel => _level;
 
+	[Header("Audio")]
 	[SerializeField]
 	private AudioSource _backgroundMusicAudioSource;
 
 	[SerializeField]
 	private AudioSource _detachedAudioSourcePrefab;
 
-	public float Elapsed => _elapsedTime;
-
-	public int NumberOfPlants => _numberOfPlants;
+	[SerializeField]
+	private ScriptableAudioClip _gameOverMusic;
 
 	private int _score;
-	private float _elapsedTime = 0f;
 	private bool _gameOver = false;
-	private int _numberOfPlants = 5;
 
 	//	TODO: Fix scoring - We can use a SO for this
 	public void ScorePoints(int points)
 	{
 		_score += points;
-		//_scoreText.text = $"Score: {_score}";
 	}
 
 	public void RestartGame()
 	{
+		//	Restart time
+		Time.timeScale = 1.0f;
+
 		//	TODO: Restart game at current level?
-
-		Time.timeScale = 0.0f;
-
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
+	}
+
+	public void ContinueGame()
+	{
+		//	Restart time
+		Time.timeScale = 1.0f;
+
+		//	TODO: Track scene that caused the pause?
+		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
 	}
 
 	// Should probably be in the AudioController, would likely need to make it a Singleton though
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
-    {
-		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);		
-    }
+	{
+		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
+	}
 
-	//	TODO: Here we might be able to use an SO to raise events to all things that need to know about Game Ending, i.e. Sounds, etc.
+	public void CheckIngredientsLow()
+	{
+		if ((float)ActiveLevel.CauldronSettings.CurrentNumberOfUses / ActiveLevel.CauldronSettings.MaximumUses < CommonTypes.Constants.UsesThreshold)
+			_worldEvents.OnIngredientsLowWarning(transform.position);
+	}
+
 	private void EndGame()
 	{
 		Debug.Log("Game Over");
@@ -56,25 +74,60 @@ public class GameManager : SingletonBase<GameManager>
 		_gameOver = true;
 		Time.timeScale = 0.0f;
 
+		//	Play End of Game Audio loop
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _gameOverMusic);
+
 		//	Load Game Over Screen
 		SceneLoader.LoadScene(CommonTypes.Scenes.GameOver, true);
+	}
+
+	//	TODO: Level change logic
+	private void SetCurrentActiveLevel()
+	{
+		_level = _levels[0];
+		ActiveLevel.CurrentNumberOfPlants = ActiveLevel.StartNumberOfPlants;
+	}
+
+	//	Awake is called before Start
+	protected override void Awake()
+	{
+		base.Awake();
+		SetCurrentActiveLevel();
 	}
 
 	//	Start is called before the first frame update
 	private void Start()
 	{
+		Assert.IsTrue(_levels.Length > 0);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+
+		//	Testing
+		var numPlants = 0;
+		foreach (var go in SceneManager.GetActiveScene().GetRootGameObjects())
+		{
+			numPlants += go.GetComponentsInChildren<Plant>().Length;
+		}
+
+		Debug.Log($"Dynamic number of plants [{numPlants}]");
+
+		_worldEvents.PlantStolen += PlantStolen;
+
 		_score = 0;
-		_level = _levels[0];
 		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+	}
+
+	private void PlantStolen(object sender, GameObject e)
+	{
+		ActiveLevel.CurrentNumberOfPlants -= 1;
+		if (ActiveLevel.CurrentNumberOfPlants <= 0)
+			EndGame();
 	}
 
 	//	Update is called once per frame
 	private void Update()
 	{
-		_elapsedTime += Time.deltaTime;
-
-		if (_elapsedTime >= ActiveLevel.LevelDuration && !_gameOver)
+		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
 		}

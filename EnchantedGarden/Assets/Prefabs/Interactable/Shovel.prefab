@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _adjustmentPosition: {x: 11, y: -76.8, z: 4.6}
   _adjustmentRotation: {x: -8.815, y: 114.074, z: -0.47}
-  _adjustmentScaleFactor: 100
+  _adjustmentScaleFactor: 1
   _indicatorAdjustmentPosition: {x: 0, y: 2.2, z: 0}
+  _carryIcon: {fileID: 21300000, guid: 798a0192e5e2a1c45a1f6786703af909, type: 3}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0
@@ -82,6 +83,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782931358447222, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782931358447222, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6620782931358447222, guid: b935d8de81c259742861dcba19d2f33f,
         type: 3}
