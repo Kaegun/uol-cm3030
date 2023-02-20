@@ -22,7 +22,6 @@ public class IngredientSpawner : PickUpSpawnerBase
 		_worldEvents.IngredientsLowWarning += IngredientsLowWarning;
 		_worldEvents.IngredientsFull += IngredientsFull;
 
-		//	Fingers crossed
 		GameManager.Instance.CheckIngredientsLow();
 	}
 

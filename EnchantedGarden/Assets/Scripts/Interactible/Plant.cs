@@ -51,12 +51,8 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	private bool _planted;
 	private Vector3 _startPossessionPos;
 
-	public bool CanBeReplanted()
-	{
-		return _plantState == PlantState.Default && _plantPatch != null && !_planted;
-	}
+	public bool CanBeReplanted => _plantState == PlantState.Default && _plantPatch != null && !_planted;
 
-	//	TODO: Not sure this is correct
 	public void Replant(PlantPatch parent)
 	{
 		_planted = true;
@@ -116,7 +112,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		}
 	}
 
-	public override bool CanBePickedUp => _plantState == PlantState.Default;
+	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted;
 
 	//	TODO: Convert to Trigger + Layer  
 	public override bool CanBeDropped => base.CanBeDropped && Physics.OverlapSphere(transform.position, 2.0f).
@@ -159,14 +155,15 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	}
 
 	//  Start is called before the first frame update
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 		_possessionProgress = 0;
 	}
 
 	//  Update is called once per frame
-	private void Update()
+	protected override void Update()
 	{
 		//if (_plantState == PlantState.BecomingPossessed)
 		//{
@@ -197,7 +194,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		switch (interactor)
 		{
 			case Shovel _:
-				return CanBeReplanted() && interactor.CanInteractWith(this);
+				return CanBeReplanted && interactor.CanInteractWith(this);
 			default:
 				return false;
 		}

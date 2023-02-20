@@ -60,7 +60,7 @@ public class TrickPlant : PickUpBase
 	}
 
 	//	Update is called once per frame
-	private void Update()
+	protected override void Update()
 	{
 		switch (_plantState)
 		{
