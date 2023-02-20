@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Flask : PickUpBase, ICombinable, IInteractor
 {
@@ -10,12 +11,16 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 
 	[SerializeField]
 	private float _combinationThreshold = 1f;
-	private float _combinationProgress = 0f;
+	public float CombinationThreshold => _combinationThreshold;
+
+	public event EventHandler<float> CombineProgress;
 
 	[SerializeField]
 	private ScriptableAudioClip _flaskSmashAudio;
 
 	public bool CanUseFlask => _full;
+
+	private float _combinationProgress = 0f;
 
 	private void UseFlask()
 	{
@@ -27,11 +32,14 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	public bool Combining()
 	{
 		_combinationProgress += Time.deltaTime;
+		ExecuteEvent(CombineProgress, _combinationProgress);
+
 		if (_combinationProgress >= _combinationThreshold)
 		{
 			OnCombine();
 			return true;
 		}
+
 		return false;
 	}
 
@@ -85,16 +93,21 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 		}
 	}
 
+	private void ExecuteEvent<T>(EventHandler<T> handler, T e)
+	{
+		if (handler != null)
+		{
+			foreach (var evt in handler.GetInvocationList())
+			{
+				evt.DynamicInvoke(this, e);
+			}
+		}
+	}
+
 	// Start is called before the first frame update
 	private void Start()
 	{
 		_full = false;
 		_contents.SetActive(false);
-	}
-
-	// Update is called once per frame
-	private void Update()
-	{
-
 	}
 }
