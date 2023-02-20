@@ -54,17 +54,12 @@ MonoBehaviour:
     SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
-  - Count: 3
-    WaveDelay: 16
-    SpiritSpawnDelay: 3
-    MoveSpeedMultiplier: 1
-    PossessionRateMultiplier: 1
   _unplantedFactor: 5
   _possessionThreshold: 10
   _startNumberOfPlants: 6
   _replantingThreshold: 2
   _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
-    _startNumberOfUses: 5
+    _startNumberOfUses: 2
     _maximumUses: 5
-    _fireDuration: 90
+    _fireDuration: 15

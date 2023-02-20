@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488eaac5c5f07134f99bdf9d52e9f4e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _cauldronBubbleAudio: {fileID: 11400000, guid: a90deaca6cc39da48803a9f5bdccf635,
     type: 2}
   _cauldronCombineAudio: {fileID: 11400000, guid: 8d8ba2c4888880c44b1470874ea0d090,
@@ -432,17 +433,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4006564793226087218}
     m_Modifications:
-    - target: {fileID: -4820066694288246712, guid: 2f62940594adf4044b9077377e138cb4,
-        type: 3}
-      propertyPath: _worldEvents
-      value: 
-      objectReference: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1,
-        type: 2}
-    - target: {fileID: 622966596031392450, guid: 2f62940594adf4044b9077377e138cb4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1922471347698105605, guid: 2f62940594adf4044b9077377e138cb4,
         type: 3}
       propertyPath: m_RootOrder
@@ -451,7 +441,7 @@ PrefabInstance:
     - target: {fileID: 1922471347698105605, guid: 2f62940594adf4044b9077377e138cb4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.018
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1922471347698105605, guid: 2f62940594adf4044b9077377e138cb4,
         type: 3}

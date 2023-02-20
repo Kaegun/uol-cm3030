@@ -17,11 +17,13 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 
 	//	Fire Events
 	public event EventHandler<Vector3> FireDied;
+	public event EventHandler<Vector3> FireFull;
 	public event EventHandler<Vector3> FireMediumWarning;
 	public event EventHandler<Vector3> FireLowWarning;
 
-	//	Low Ingredients
+	//	Ingredients
 	public event EventHandler<Vector3> IngredientsLowWarning;
+	public event EventHandler<Vector3> IngredientsFull;
 
 	//	Fox
 	public event EventHandler<GameObject> FoxAlert;
@@ -66,6 +68,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(FireDied, location);
 	}
 
+	public void OnFireFull(Vector3 location)
+	{
+		ExecuteEvent(FireFull, location);
+	}
+
 	public void OnFireMediumWarning(Vector3 location)
 	{
 		ExecuteEvent(FireMediumWarning, location);
@@ -79,6 +86,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public void OnIngredientsLowWarning(Vector3 location)
 	{
 		ExecuteEvent(IngredientsLowWarning, location);
+	}
+
+	public void OnIngredientsFull(Vector3 location)
+	{
+		ExecuteEvent(IngredientsFull, location);
 	}
 
 	public void OnFoxAlert(GameObject fox)

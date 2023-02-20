@@ -61,6 +61,12 @@ public class GameManager : SingletonBase<GameManager>
 		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
 	}
 
+	public void CheckIngredientsLow()
+	{
+		if ((float)ActiveLevel.CauldronSettings.CurrentNumberOfUses / ActiveLevel.CauldronSettings.MaximumUses < CommonTypes.Constants.UsesThreshold)
+			_worldEvents.OnIngredientsLowWarning(transform.position);
+	}
+
 	private void EndGame()
 	{
 		Debug.Log("Game Over");

@@ -1,8 +1,14 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Flask : PickUpBase, ICombinable, IInteractor
 {
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
+	[Header("Contents")]
 	[SerializeField]
 	private GameObject _contents;
 
@@ -15,6 +21,7 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 
 	public event EventHandler<float> CombineProgress;
 
+	[Header("Audio")]
 	[SerializeField]
 	private ScriptableAudioClip _flaskSmashAudio;
 
@@ -49,8 +56,10 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 		_contents.SetActive(true);
 		_combinationProgress = 0f;
 
-		//  Reduce the number of uses in the Cauldron - JU: Not a fan
+		//  Reduce the number of uses in the Cauldron
+		//  TODO: Not a fan of the below being in the Flask
 		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
+		GameManager.Instance.CheckIngredientsLow();
 	}
 
 	public bool CanBeCombined => _held && !_full;
@@ -105,9 +114,12 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	}
 
 	// Start is called before the first frame update
-	private void Start()
+	protected override void Start()
 	{
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+
 		_full = false;
 		_contents.SetActive(false);
+		base.Start();
 	}
 }

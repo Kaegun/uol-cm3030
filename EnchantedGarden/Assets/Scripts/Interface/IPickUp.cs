@@ -4,6 +4,7 @@ public interface IPickUp
 {
 	Transform Transform { get; }
 	bool Despawns { get; set; }
+	bool Despawned { get; }
 	bool CanBePickedUp { get; set; }
 	bool CanBeDropped { get; }
 	bool PlayAnimation { get; }
