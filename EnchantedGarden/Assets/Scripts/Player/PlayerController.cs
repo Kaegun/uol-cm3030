@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Pick Up UI")]
 	[SerializeField]
-	private GameObject _pickUpIndicator;
+	private PickUpIndicator _pickUpIndicator;
 
 	[SerializeField]
-	private GameObject _carryIndicator;
+	private PickUpIndicator _carryIndicator;
 
 	[Header("Interaction")]
 	[SerializeField]
@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody _rb;
 	private Animator _animator;
 	private Camera _camera;
-	private SpriteRenderer _carrySpriteRenderer;
 	private float _movementSpeed;
 
 	// HashSet to prevent duplicates
@@ -66,7 +65,6 @@ public class PlayerController : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
-		_carrySpriteRenderer = _carryIndicator.GetComponentInChildren<SpriteRenderer>();
 
 		//	Fetch the main camera
 		_camera = Camera.main;
@@ -95,10 +93,15 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 	}
+	private IPickUp GetClosestPickup()
+	{
+		//	TODO: Rare bug when pickup has despawned after been added to the list, should rather clean them out of the list after despawn.
+		return _pickups.Where(p => p.CanBePickedUp).OrderBy(p => Vector3.Distance(transform.position, p.Transform.position)).FirstOrDefault();
+	}
 
 	private IPickUp PickupCorrectObject()
 	{
-		IPickUp closestPickUp = _pickups.OrderBy(p => Vector3.Distance(transform.position, p.Transform.position)).FirstOrDefault();
+		IPickUp closestPickUp = GetClosestPickup();
 		switch (closestPickUp == null)
 		{
 			case true when _spawner != null:
@@ -146,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
 	private void SetPickUpIndicator(bool active, Vector3? position = null)
 	{
-		if (_pickUpIndicator.activeSelf != active)
+		if (_pickUpIndicator.Active != active)
 		{
 			_pickUpIndicator.SetActive(active);
 		}
@@ -161,8 +164,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if (held != null)
 		{
-			_carrySpriteRenderer.sprite = held.CarryIcon;
-			_carrySpriteRenderer.color = held.CarryIconBaseColor;
+			_carryIndicator.SetIcon(held.CarryIcon);
+			_carryIndicator.SetIconColor(held.CarryIconBaseColor);
 		}
 
 		_carryIndicator.SetActive(enabled);
@@ -171,6 +174,13 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
+		//	Clear any PickUps that have despawned from the list
+		if (_pickups.Count > 0 && _pickups.Where(p => p.Despawned).Count() > 0)
+		{
+			foreach (var p in _pickups.Where(p => p.Despawned))
+				_pickups.Remove(p);
+		}
+
 		switch (_heldObject)
 		{
 			case IInteractor interactor when _interactables.Where(i => i.CanInteractWith(interactor)).ToList() is var interactables && interactables.Count > 0:
@@ -203,7 +213,7 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 
-		var closestPickUp = _pickups.OrderBy(p => Vector3.Distance(p.Transform.position, transform.position)).FirstOrDefault();
+		var closestPickUp = GetClosestPickup();
 		switch (closestPickUp == null)
 		{
 			case true when _spawner != null && _heldObject == null:
@@ -241,12 +251,6 @@ public class PlayerController : MonoBehaviour
 		{
 			_movementSpeed = 0.0f;
 			_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _movementSpeed);
-		}
-
-		//	Showing pickup indicator
-		if (_carryIndicator.activeSelf)
-		{
-			_carryIndicator.transform.LookAt(_camera.transform.position.ZeroZ());
 		}
 	}
 
@@ -339,7 +343,7 @@ public class PlayerController : MonoBehaviour
 	private void CombineProgress(object sender, float e)
 	{
 		var pickup = ((IPickUp)sender);
-		_carrySpriteRenderer.color = Color.Lerp(pickup.CarryIconBaseColor, pickup.CarryIconCombineColor, e / ((ICombinable)sender).CombinationThreshold);
+		_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor, pickup.CarryIconCombineColor, e / ((ICombinable)sender).CombinationThreshold));
 	}
 
 	private void OnTriggerExit(Collider other)

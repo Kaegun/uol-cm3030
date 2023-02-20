@@ -64,9 +64,12 @@ MonoBehaviour:
   _adjustmentScaleFactor: 1
   _indicatorAdjustmentPosition: {x: 0, y: 1.2, z: 0}
   _carryIcon: {fileID: 21300000, guid: 1cb023a73f5d18a46932d97b15db34c7, type: 3}
+  _carryIconBaseColor: {r: 1, g: 1, b: 1, a: 1}
+  _carryIconCombineColor: {r: 0, g: 1, b: 0, a: 1}
   _despawns: 1
   _despawnTimeout: 5
   _playAnimation: 0
+  _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _contents: {fileID: 8042439846279555346}
   _full: 0
   _combinationThreshold: 1

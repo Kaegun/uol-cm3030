@@ -43,7 +43,12 @@ public static class CommonTypes
 	{
 		public const int BanishedSpirit = 1000;
 		public const int BanishedWall = 1000;
-		public const int ReplantedPlant = 1000;
-		public const int MadeAPotion = 1000;
+
+		//	TODO: Define other scoring events
+	}
+
+	public static class Constants
+	{
+		public const float UsesThreshold = 0.5f;
 	}
 }

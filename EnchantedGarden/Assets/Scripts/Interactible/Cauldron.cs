@@ -5,6 +5,10 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(AudioSource))]
 public class Cauldron : MonoBehaviour, IInteractable
 {
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
 	[Header("Audio")]
 	[SerializeField]
 	private ScriptableAudioClip _cauldronBubbleAudio;
@@ -30,9 +34,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 
 	private void AddIngredient()
 	{
-		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = _maxUses;
 		if (_fireSystem.IsAlive)
 		{
+			GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = _maxUses;
+			_worldEvents.OnIngredientsFull(transform.position);
 			StartCoroutine(CauldronCombineCoroutine());
 		}
 	}
@@ -40,12 +45,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 	// Start is called before the first frame update
 	private void Start()
 	{
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 		_fireSystem = GetComponentInChildren<FireSystem>();
 		Assert.IsNotNull(_fireSystem, Utility.AssertNotNullMessage(nameof(_fireSystem)));
-		if (!TryGetComponent(out _cauldronAudioSource))
-		{
-			Assert.IsNotNull(_cauldronAudioSource, Utility.AssertNotNullMessage(nameof(_cauldronAudioSource)));
-		}
+		Assert.IsTrue(TryGetComponent(out _cauldronAudioSource), Utility.AssertNotNullMessage(nameof(_cauldronAudioSource)));
 
 		_maxUses = GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses;
 		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = GameManager.Instance.ActiveLevel.CauldronSettings.StartNumberOfUses;

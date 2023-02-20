@@ -81,6 +81,8 @@ public class FireSystem : MonoBehaviour
 			//	Play ambient audio
 			StartCoroutine(StartAmbientAudioCoRoutine());
 		}
+
+		_worldEvents.OnFireFull(transform.position);
 	}
 
 	private IEnumerator StartAmbientAudioCoRoutine()

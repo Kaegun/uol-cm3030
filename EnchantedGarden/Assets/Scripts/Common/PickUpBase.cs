@@ -53,6 +53,9 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 		set { _despawns = value; }
 	}
 
+	private bool _despawned = false;
+	public virtual bool Despawned => _despawned;
+
 	public virtual bool PlayAnimation => _playAnimation;
 
 	public virtual Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
@@ -114,6 +117,8 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 			_despawnTimer += Time.deltaTime;
 			if (_despawnTimer > _despawnTimeout)
 			{
+				_canBePickedUp = false;
+				_despawned = true;
 				Destroy(gameObject);
 			}
 		}
