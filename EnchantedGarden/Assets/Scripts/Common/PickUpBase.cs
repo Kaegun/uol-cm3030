@@ -20,6 +20,12 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected Sprite _carryIcon;
 
+	[SerializeField]
+	protected Color _carryIconBaseColor = Color.white;
+
+	[SerializeField]
+	protected Color _carryIconCombineColor = Color.green;
+
 	[Header("Despawns")]
 	[SerializeField]
 	protected bool _despawns = false;
@@ -52,6 +58,10 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	public virtual Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
 
 	public virtual Sprite CarryIcon => _carryIcon;
+
+	public virtual Color CarryIconBaseColor => _carryIconBaseColor;
+
+	public virtual Color CarryIconCombineColor => _carryIconCombineColor;
 
 	protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
@@ -92,12 +102,12 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 		transform.localScale *= _adjustmentScaleFactor * _playerModelScaleFix;
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
 		Assert.IsNotNull(_carryIcon, Utility.AssertNotNullMessage(nameof(_carryIcon)));
 	}
 
-	private void Update()
+	protected virtual void Update()
 	{
 		if (!_held && _despawns)
 		{

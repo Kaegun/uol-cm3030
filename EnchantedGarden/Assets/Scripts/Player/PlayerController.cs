@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody _rb;
 	private Animator _animator;
 	private Camera _camera;
+	private SpriteRenderer _carrySpriteRenderer;
 	private float _movementSpeed;
 
 	// HashSet to prevent duplicates
@@ -65,6 +66,8 @@ public class PlayerController : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
+		_carrySpriteRenderer = _carryIndicator.GetComponentInChildren<SpriteRenderer>();
+
 		//	Fetch the main camera
 		_camera = Camera.main;
 
@@ -158,9 +161,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (held != null)
 		{
-			var spriteRenderer = _carryIndicator.GetComponentInChildren<SpriteRenderer>();
-			spriteRenderer.sprite = held.CarryIcon;
+			_carrySpriteRenderer.sprite = held.CarryIcon;
+			_carrySpriteRenderer.color = held.CarryIconBaseColor;
 		}
+
 		_carryIndicator.SetActive(enabled);
 	}
 
@@ -314,6 +318,10 @@ public class PlayerController : MonoBehaviour
 			{
 				_pickups.Add(pickup);
 			}
+			if (other.TryGetComponent<ICombinable>(out var combinable))
+			{
+				combinable.CombineProgress += CombineProgress;
+			}
 		}
 		if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner) && spawner != _spawner)
 		{
@@ -326,6 +334,12 @@ public class PlayerController : MonoBehaviour
 		{
 			_interactables.Add(interactable);
 		}
+	}
+
+	private void CombineProgress(object sender, float e)
+	{
+		var pickup = ((IPickUp)sender);
+		_carrySpriteRenderer.color = Color.Lerp(pickup.CarryIconBaseColor, pickup.CarryIconCombineColor, e / ((ICombinable)sender).CombinationThreshold);
 	}
 
 	private void OnTriggerExit(Collider other)
