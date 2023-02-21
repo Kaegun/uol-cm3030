@@ -85,8 +85,6 @@ public class FoxBehaviour : MonoBehaviour
 	private readonly HashSet<Events> _handledEvents = new HashSet<Events>();
 	private Coroutine _activeBehaviourCoroutine;
 
-	private readonly float _idleFollowDistance = 2.0f;
-
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -140,54 +138,18 @@ public class FoxBehaviour : MonoBehaviour
 
 		if (_state == FoxState.Idle)
 		{
-			if (!Mathf.Approximately(Vector3.Dot(transform.position, _player.forward), 0))
-			{
-				//transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
+			//if (!Mathf.Approximately(Vector3.Dot(transform.position, _player.forward), 0))
+			//{
+			//	//transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
 
-				//	TODO: Set turning anim.
-			}
+			//	//	TODO: Set turning anim.
+			//}
 		}
-
-		//switch (_state)
-		//{
-		//	case FoxState.Idle:
-		//		//	Align fox's view to player's
-		//		if (!Mathf.Approximately(Vector3.Dot(transform.position, _player.forward), 0))
-		//		{
-		//			transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
-		//
-		//			//	TODO: Set turning anim.
-		//		}
-		//
-		//		_state = (_player.position - transform.position).magnitude > _idleFollowDistance ? FoxState.Follow : FoxState.Idle;
-		//		break;
-		//
-		//	case FoxState.Follow:
-		//		//	Move the fox towards the player, whenever no other state is active
-		//		Move(_player.position);
-		//		break;
-		//	case FoxState.Alert:
-		//		if (_alerts.Count == 0)
-		//		{
-		//			Debug.LogWarning("Fox: Alerting with nothing to be alert about!");
-		//			SetIdle();
-		//			break;
-		//		}
-		//		var currentAlert = _alerts.Peek();
-		//		Debug.Log($"Fox is alert! {currentAlert.Item1} - {currentAlert.Item2}");
-		//		Move(currentAlert.Item1);
-		//		if ((currentAlert.Item1 - transform.position).magnitude < _idleFollowDistance)
-		//		{
-		//			StartCoroutine(SpeechTextCoroutine(currentAlert.Item2));
-		//			SetIdle();
-		//			_alerts.Dequeue();
-		//		}
-		//		break;
-		//}
 
 		_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _currentSpeed);
 
 		//	If speech bubble is active, rotate it to face the camera
+		//	TODO: Could move this to the Update method on a script on the Canvas itself.
 		if (_speechCanvas.isActiveAndEnabled)
 		{
 			_speechCanvas.transform.LookAt(_camera.transform.position.ZeroY());
@@ -204,40 +166,10 @@ public class FoxBehaviour : MonoBehaviour
 		BehaviourCoroutineCompleted();
 	}
 
-	//private IEnumerator AlertCoroutine(float duration)
-	//{
-	//	AudioController.PlayAudio(_audioSource, _alertSound);
-	//	// Activate alert icon
-	//	_worldEvents.OnFoxAlert(gameObject);
-	//	_speechText.text = "!";
-	//	_speechCanvas.gameObject.SetActive(true);
-	//	yield return new WaitForSeconds(duration);
-	//	// Disable alert icon
-	//	_speechCanvas.gameObject.SetActive(false);
-
-	//	BehaviourCoroutineCompleted();
-	//}
-
 	// Rotation not working
 	private IEnumerator AlertCoroutine(float duration, Transform target)
 	{
 		return AlertCoroutine(duration, target.position);
-		//AudioController.PlayAudio(_audioSource, _alertSound);
-		//// Activate alert icon
-		//_worldEvents.OnFoxAlert(gameObject);
-		//_speechText.text = "!";
-		//_speechCanvas.gameObject.SetActive(true);
-		//float t = 0f;
-		//while (t < duration)
-		//{
-		//	transform.rotation.RotateTowards(transform.position, target.position, _turnSpeed * Time.deltaTime);
-		//	t += Time.deltaTime;
-		//	yield return new WaitForEndOfFrame();
-		//}
-		//// Disable alert icon
-		//_speechCanvas.gameObject.SetActive(false);
-
-		//BehaviourCoroutineCompleted();
 	}
 
 	// Rotation not working
@@ -304,29 +236,16 @@ public class FoxBehaviour : MonoBehaviour
 		_state = FoxState.Alert;
 	}
 
-	private void SetAlert(Vector3 alertPosition, string alertText)
-	{
-		_state = FoxState.Alert;
-		_alerts.Enqueue(new Tuple<Vector3, string>(alertPosition, alertText));
-
-		//	Play a sound
-		AudioController.PlayAudio(_audioSource, _alertSound);
-	}
-
 	// Covered by SpiritSpawned
 	private void SpiritWaveSpawned(object sender, Spirit[] e)
 	{
 		//	The fox might not do much here
 		//	Could also use the camera for some of it
 		Debug.Log($"Fox Behaviour: Spirit Wave Spawned - [{e.Length}]");
-
-		//SetAlert(e[0].gameObject.transform.position, $"{(e.Length > 0 ? "Spirits have" : "A Spirit has")} spawned! They'll try steal your plants!");
 	}
 
 	private void SpiritSpawned(object sender, Spirit e)
 	{
-		//SetAlert(e.transform.position, $"A spirit has spawned! It'll try to steal your plants!");
-
 		if (!_handledEvents.Contains(Events.SpiritSpawned))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
@@ -344,7 +263,7 @@ public class FoxBehaviour : MonoBehaviour
 	private void SpiritWallSpawned(object sender, Spirit e)
 	{
 		Debug.Log("Fox Behaviour: Spirit wall spawned!");
-		//SetAlert(e.gameObject.transform.position, "A spirit wall has formed. You can banish it with the Flask on the Table!");
+
 		if (!_handledEvents.Contains(Events.SpiritWallPossessed))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
@@ -359,9 +278,6 @@ public class FoxBehaviour : MonoBehaviour
 		//	Alert the player
 		//	Move fox and focus the camera on the fox
 		Debug.Log($"Fox Behaviour: Plant Possessing - [{e}]");
-		//SetAlert(e, "A spirit is possessing your plant. You can banish it with the Flask on the Table!");
-		//SetAlert(_alchemyTable.position, "Use the Flask on the Table to banish a spirit.");
-		//SetAlert(_cauldron.position, "Remember to fill the Flask from the cauldron before you can banish a spirit.");
 
 		if (!_handledEvents.Contains(Events.PlantPossessed))
 		{
@@ -416,49 +332,27 @@ public class FoxBehaviour : MonoBehaviour
 	private void FireLowWarning(object sender, Vector3 e)
 	{
 		Debug.Log("Fox Behaviour: The fire is LOW!!");
-
-		//SetAlert(e, "The cauldron's fire is critically low. When the fire dies, you can't make potions to banish the spirits.");
-		//SetAlert(_logs.position, "Fetch another log from the wood pile and add take it to the cauldron.");
 	}
 
 	private void FireDied(object sender, Vector3 e)
 	{
 		Debug.Log("Fox Behaviour: The fire has DIED!!!");
 
-		//SetAlert(e, "The cauldron's fire has died. You won't be able to make potions to banish the spirits.");
-		//SetAlert(_logs.position, "Fetch another log from the wood pile and add take it to the cauldron.");
-
 		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
 		_behaviourQueue.Enqueue(InstructionCoroutine("The fire has died!", _defaultInstructionDuration));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_logs));
 		_behaviourQueue.Enqueue(InstructionCoroutine("Take a log to the cauldron to reignite the fire!", _defaultInstructionDuration));
-
 	}
 
 	private void IngredientsLowWarning(object sender, Vector3 e)
 	{
 		Debug.Log("Fox Behaviour: The ingredients are low!");
 
-		//SetAlert(e, "The cauldron's ingredients are running low. You won't be able to make potions to banish the spirits.");
-		//SetAlert(_alchemyTable.position, "Fetch another herb from the table and add take it to the cauldron.");
-		//SetAlert(_cauldron.position, "Add the herb to the cauldron to refill your ingredient stock.");
-
 		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
 		_behaviourQueue.Enqueue(InstructionCoroutine("The potion is running out!", _defaultInstructionDuration));
 		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
 		_behaviourQueue.Enqueue(InstructionCoroutine("Fetch a herb and take it to the cauldron to refill the potion!", _defaultInstructionDuration));
-	}
-
-	private IEnumerator SpeechTextCoroutine(string text)
-	{
-		//	Use a CoRoutine to despawn after a period.
-		_worldEvents.OnFoxAlert(gameObject);
-		_speechText.text = text;
-		_speechCanvas.gameObject.SetActive(true);
-		yield return new WaitForSeconds(_speechBubbleTimeout);
-		_speechCanvas.gameObject.SetActive(false);
-		_worldEvents.OnFoxAlertEnded(gameObject);
 	}
 }
