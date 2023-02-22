@@ -56,10 +56,11 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 		_contents.SetActive(true);
 		_combinationProgress = 0f;
 
+		//	Moved to be handled by cauldron, can delete
 		//  Reduce the number of uses in the Cauldron
 		//  TODO: Not a fan of the below being in the Flask
-		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
-		GameManager.Instance.CheckIngredientsLow();
+		//GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
+		//GameManager.Instance.CheckIngredientsLow();
 	}
 
 	public bool CanBeCombined => _held && !_full;

@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
 		{
 			_pickUpIndicator.transform.position = position.Value;
 		}
-		_pickUpIndicator.transform.LookAt(_camera.transform.position.ZeroY());
+		//_pickUpIndicator.transform.LookAt(_camera.transform.position.ZeroY());		
 	}
 
 	private void SetCarryIndicator(bool enabled, IPickUp held = null)

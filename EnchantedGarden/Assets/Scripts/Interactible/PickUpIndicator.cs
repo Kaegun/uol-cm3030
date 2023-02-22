@@ -33,6 +33,7 @@ public class PickUpIndicator : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		transform.LookAt(_camera.transform.position.ZeroY());
+		//transform.LookAt(_camera.transform.position.ZeroY());
+		transform.rotation = Quaternion.Euler(-_camera.transform.rotation.eulerAngles);
 	}
 }
