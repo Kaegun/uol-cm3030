@@ -1089,6 +1089,9 @@ MonoBehaviour:
   _refillPotionSprite: {fileID: 21300000, guid: 3cee8a559dfa92d449c628fdb18e0931,
     type: 3}
   _refuelFireSprite: {fileID: 21300000, guid: caaa4a8d56eb1d14198881c0a6d8d8e6, type: 3}
+  _lostPlantSprite: {fileID: 21300000, guid: f821fb6a401b19f4cafa16bcd6b7d685, type: 3}
+  _zeroPlantsIsLoseSprite: {fileID: 21300000, guid: 1c0af887c9e33f14d95ba24eebf42cf4,
+    type: 3}
   _player: {fileID: 0}
   _logs: {fileID: 0}
   _alchemyTable: {fileID: 0}
