@@ -1073,6 +1073,7 @@ MonoBehaviour:
   _instructionCanvas: {fileID: 1301200878}
   _defaultAlertDuration: 1
   _defaultInstructionDuration: 3
+  _respondsTo: 000000000100000002000000030000000400000005000000
   _alertSprite: {fileID: 21300000, guid: 8355587f88f9b7a4abc985b25e535a8c, type: 3}
   _spiritSpawnedSprite: {fileID: 21300000, guid: 253bd5be2cb2cea408c6978d3da2eaed,
     type: 3}

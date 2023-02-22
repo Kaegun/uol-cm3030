@@ -23,6 +23,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 	[SerializeField]
 	private GameObject _cauldronContentsParticles;
 
+	[Header("Canvas")]
+	[SerializeField]
+	private Canvas _cauldronCanvas;
+
 	private int _maxUses;
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
@@ -40,6 +44,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 			_worldEvents.OnIngredientsFull(transform.position);
 			StartCoroutine(CauldronCombineCoroutine());
 		}
+		else
+        {
+			StartCoroutine(CannotAddIngredientCoroutine());
+        }
 	}
 
 	// Start is called before the first frame update
@@ -49,6 +57,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 		_fireSystem = GetComponentInChildren<FireSystem>();
 		Assert.IsNotNull(_fireSystem, Utility.AssertNotNullMessage(nameof(_fireSystem)));
 		Assert.IsTrue(TryGetComponent(out _cauldronAudioSource), Utility.AssertNotNullMessage(nameof(_cauldronAudioSource)));
+		Assert.IsNotNull(_cauldronCanvas, Utility.AssertNotNullMessage(nameof(_cauldronCanvas)));
+		_cauldronCanvas.gameObject.SetActive(false);
 
 		_maxUses = GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses;
 		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = GameManager.Instance.ActiveLevel.CauldronSettings.StartNumberOfUses;
@@ -102,6 +112,13 @@ public class Cauldron : MonoBehaviour, IInteractable
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
+	private IEnumerator CannotAddIngredientCoroutine()
+    {
+		_cauldronCanvas.gameObject.SetActive(true);
+		yield return new WaitForSeconds(1f);
+		_cauldronCanvas.gameObject.SetActive(false);
+    }
+
 	public bool CanInteractWith(IInteractor interactor)
 	{
 		switch (interactor)
@@ -125,6 +142,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 				if (combinable.Combining())
 				{
 					StartCoroutine(CauldronCombineCoroutine());
+					GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
+					GameManager.Instance.CheckIngredientsLow();
+					GameManager.Instance.CheckIngredientsEmpty();
 				}
 				break;
 			case Log _:

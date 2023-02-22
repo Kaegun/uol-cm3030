@@ -24,6 +24,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	//	Ingredients
 	public event EventHandler<Vector3> IngredientsLowWarning;
 	public event EventHandler<Vector3> IngredientsFull;
+	public event EventHandler<Vector3> IngredientsEmpty;
 
 	//	Fox
 	public event EventHandler<GameObject> FoxAlert;
@@ -92,6 +93,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(IngredientsFull, location);
 	}
+
+	public void OnIngredientsEmpty(Vector3 location)
+    {
+		ExecuteEvent(IngredientsEmpty, location);
+    }
 
 	public void OnFoxAlert(GameObject fox)
 	{
