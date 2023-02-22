@@ -98,7 +98,11 @@ MonoBehaviour:
   _adjustmentRotation: {x: 180, y: 0, z: 0}
   _adjustmentScaleFactor: 1
   _indicatorAdjustmentPosition: {x: 0, y: 2.2, z: 0}
-  _carryIcon: {fileID: 21300000, guid: e6d90fea7c6f7be4fb361575b0b18ab6, type: 3}
+  _carryIcon: {fileID: 21300000, guid: 4682a794ffa80564ebab83b776c021bc, type: 3}
+  _carryIconSecondary: {fileID: 21300000, guid: 4682a794ffa80564ebab83b776c021bc,
+    type: 3}
+  _carryIconBaseColor: {r: 1, g: 1, b: 1, a: 1}
+  _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
   _playAnimation: 0

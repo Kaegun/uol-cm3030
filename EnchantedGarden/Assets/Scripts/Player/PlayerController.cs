@@ -166,6 +166,8 @@ public class PlayerController : MonoBehaviour
 		{
 			_carryIndicator.SetIcon(held.CarryIcon);
 			_carryIndicator.SetIconColor(held.CarryIconBaseColor);
+			_carryIndicator.SetSecondaryIcon(held.CarryIconSecondary);
+			_carryIndicator.SetSecondaryIconColor(held.CarryIconSecondaryColor);
 		}
 
 		_carryIndicator.SetActive(enabled);
@@ -343,7 +345,8 @@ public class PlayerController : MonoBehaviour
 	private void CombineProgress(object sender, float e)
 	{
 		var pickup = ((IPickUp)sender);
-		_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor, pickup.CarryIconCombineColor, e / ((ICombinable)sender).CombinationThreshold));
+		_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor.MaxAlpha(), pickup.CarryIconBaseColor.ZeroAlpha(), e / ((ICombinable)sender).CombinationThreshold));
+		_carryIndicator.SetSecondaryIconColor(Color.Lerp(pickup.CarryIconSecondaryColor.ZeroAlpha(), pickup.CarryIconSecondaryColor.MaxAlpha(), e / ((ICombinable)sender).CombinationThreshold));
 	}
 
 	private void OnTriggerExit(Collider other)

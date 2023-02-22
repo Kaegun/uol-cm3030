@@ -10,8 +10,9 @@ public interface IPickUp
 	bool PlayAnimation { get; }
 	Vector3 IndicatorPostion { get; }
 	Sprite CarryIcon { get; }
+	Sprite CarryIconSecondary { get; }
 	Color CarryIconBaseColor { get; }
-	Color CarryIconCombineColor { get; }
+	Color CarryIconSecondaryColor { get; }
 	void OnPickUp(Transform pickupTransform);
 	void OnDrop(bool destroy);
 }
