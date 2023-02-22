@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelDuration: 180
   _waves:
-  - Count: 2
+  - Count: 1
     WaveDelay: 3
     SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 0.6
@@ -29,19 +29,19 @@ MonoBehaviour:
     SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
-  - Count: 4
-    WaveDelay: 7
-    SpiritSpawnDelay: 2
-    MoveSpeedMultiplier: 1
-    PossessionRateMultiplier: 1
-  - Count: 6
+  - Count: 3
     WaveDelay: 9
     SpiritSpawnDelay: 2
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
-  - Count: 2
+  - Count: 4
     WaveDelay: 12
-    SpiritSpawnDelay: 3
+    SpiritSpawnDelay: 2
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 3
+    WaveDelay: 12
+    SpiritSpawnDelay: 1
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
   - Count: 4
