@@ -248,6 +248,21 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private void OnTriggerEnter(Collider other)
 	{
+		// Handle trick plants
+		if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
+		    && other.TryGetComponent(out TrickPlant trickPlant)
+		    && trickPlant.CanBePossessed
+			&& _spiritState == SpiritState.Searching)
+		{
+			StopAllCoroutines();
+			_possessedPossessable = trickPlant;
+			_possessedPossessable.OnPossessionStarted(this);
+		    _spiritState = SpiritState.Trapped;
+			transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
+			_spiritState = SpiritState.StartingPossession;
+			_spiritBody.SetMaterial(_banishMaterial);
+		}
+
 		//	TODO: Handle all layers for possession
 		if (other.gameObject.IsInLayers(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall })
 			&& other.TryGetComponent(out IPossessable possessable)
@@ -277,19 +292,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		{
 			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();
-		}
-
-		// TODO: Rework trick plants
-		//else if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
-		//    && other.TryGetComponent(out TrickPlant trickPlant)
-		//    && trickPlant.CanTrapSpirit)
-		//{
-		//    //  handle trick plants
-		//    trickPlant.TrapSpirit(this);
-		//    DeactivateBody();
-		//    _spiritState = SpiritState.Trapped;
-		//    transform.position = trickPlant.transform.position;
-		//}
+		}		
 	}
 
 	public bool CanInteractWith(IInteractor interactor)
