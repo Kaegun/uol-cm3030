@@ -11,11 +11,18 @@ public class TrickPlant : PickUpBase, IPossessable
 	}
 
 	[SerializeField]
+	private ScriptableWorldEventHandler _worldEvents;
+
+	[SerializeField]
 	private float _growthDuration = 1.0f;
 
 	[SerializeField]
 	private float _growthTarget = 2.0f;
-	
+
+	[Header("Canvas")]
+	[SerializeField]
+	private Canvas _canvas;
+
 
 	private PlantState _plantState;
 	private float _growthProgress = 0;
@@ -35,6 +42,8 @@ public class TrickPlant : PickUpBase, IPossessable
 	{
 		// Set CanBePossessed false
 		_plantState = PlantState.Possessed;
+		_canvas.transform.rotation = Quaternion.Euler(-Camera.main.transform.rotation.eulerAngles);
+		_canvas.gameObject.SetActive(true);
 	}
 
 	public void WhileCompletingPossession(Spirit possessor)
@@ -50,6 +59,7 @@ public class TrickPlant : PickUpBase, IPossessable
 	public void OnDispossess()
 	{
 		_plantState = PlantState.Default;
+		_canvas.gameObject.SetActive(false);
 	}
 
 	public override void OnDrop(bool despawn = false)
@@ -62,18 +72,25 @@ public class TrickPlant : PickUpBase, IPossessable
 
 	public override void OnPickUp(Transform pickupTransform)
 	{
+		_worldEvents.OnPickUpTrickPlant(gameObject);
 		_plantState = PlantState.Carried;
 		_growthProgress = 0f;
-		base.OnPickUp(pickupTransform);
+		base.OnPickUp(pickupTransform);		
 	}
 
 	private IEnumerator GrowOnDropCoroutine()
-    {
+	{
 		while (!_held && _growthProgress <= _growthDuration)
-        {
+		{
 			transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(_growthTarget, _growthTarget, _growthTarget), (_growthProgress / _growthDuration));
 			_growthProgress += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-    }	 
+	}
+
+	protected override void Start()
+    {
+		base.Start();
+		_canvas.gameObject.SetActive(false);
+    }
 }
