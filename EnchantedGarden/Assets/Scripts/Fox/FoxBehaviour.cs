@@ -23,7 +23,8 @@ public class FoxBehaviour : MonoBehaviour
 		FireDied,
 		IngredientsEmpty,
 		PlantStolen,
-		SpiritWallSpawned
+		SpiritWallSpawned,
+		TrickPlantPickedUp
 	}
 
 	[Header("Events")]
@@ -51,12 +52,14 @@ public class FoxBehaviour : MonoBehaviour
 	private float _defaultInstructionDuration = 3.0f;
 
 	[SerializeField]
-	private List<Events> _respondsTo = new List<Events> {Events.SpiritSpawned,
+	private List<Events> _respondsTo = new List<Events> {
+		Events.SpiritSpawned,
 		Events.PlantPossessed,
 		Events.FireDied,
 		Events.IngredientsEmpty,
 		Events.PlantStolen,
-		Events.SpiritWallSpawned
+		Events.SpiritWallSpawned,
+		Events.TrickPlantPickedUp
 	};
 
 	[Header("Instruction Sprites")]
@@ -92,6 +95,15 @@ public class FoxBehaviour : MonoBehaviour
 
 	[SerializeField]
 	private Sprite _zeroPlantsIsLoseSprite;
+
+	[SerializeField]
+	private Sprite _trickPlantTrapSprite;
+
+	[SerializeField]
+	private Sprite _spiritWallNoEntrySprite;
+
+	[SerializeField]
+	private Sprite _spritWallBanishSprite;
 
 	//[SerializeField]
 	//private float _speechBubbleTimeout = 3.0f;
@@ -174,6 +186,8 @@ public class FoxBehaviour : MonoBehaviour
 
 		//_worldEvents.IngredientsLowWarning += IngredientsLowWarning;
 		_worldEvents.IngredientsEmpty += IngredientsEmpty;
+
+		_worldEvents.PickUpTrickPlant += PickUpTrickPlant;
 	}
 
 	// Update is called once per frame
@@ -315,7 +329,7 @@ public class FoxBehaviour : MonoBehaviour
 		if (_respondsTo.Contains(Events.SpiritSpawned) && !_handledEvents.Contains(Events.SpiritSpawned))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
-			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritSpawned);
@@ -336,7 +350,8 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			// TODO: Add spirit wall instruction
+			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWallNoEntrySprite, _defaultInstructionDuration));
+			_behaviourQueue.Enqueue(InstructionCoroutine(_spritWallBanishSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritWallSpawned);
 		}
 	}
@@ -377,7 +392,7 @@ public class FoxBehaviour : MonoBehaviour
 		if (_respondsTo.Contains(Events.PlantStolen) && !_handledEvents.Contains(Events.PlantStolen))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
-			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			// TODO: Add plant stolen and lose lives instruction
 			_behaviourQueue.Enqueue(InstructionCoroutine(_lostPlantSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_zeroPlantsIsLoseSprite, 4f));
@@ -447,6 +462,17 @@ public class FoxBehaviour : MonoBehaviour
 			_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_refillPotionSprite, _defaultInstructionDuration));
+		}
+	}
+
+	private void PickUpTrickPlant(object send, GameObject e)
+    {
+		if (_respondsTo.Contains(Events.TrickPlantPickedUp) && !_handledEvents.Contains(Events.TrickPlantPickedUp))
+		{
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _player));			
+			_behaviourQueue.Enqueue(InstructionCoroutine(_trickPlantTrapSprite, _defaultInstructionDuration));
+			_handledEvents.Add(Events.TrickPlantPickedUp);
 		}
 	}
 }

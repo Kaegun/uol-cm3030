@@ -14,6 +14,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
 	public event EventHandler<GameObject> PlantStolen;
+	public event EventHandler<GameObject> PickUpTrickPlant;
 
 	//	Fire Events
 	public event EventHandler<Vector3> FireDied;
@@ -63,6 +64,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(PlantStolen, plant);
 	}
+
+	public void OnPickUpTrickPlant(GameObject trickPlant)
+    {
+		ExecuteEvent(PickUpTrickPlant, trickPlant);
+    }
 
 	public void OnFireDied(Vector3 location)
 	{
