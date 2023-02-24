@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SpiritPossessingAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: f24d47d17780b0248b5a8578b1e19c97, type: 3}
-  volume: 0.4
+  volume: 0.3
   loop: 0
   spatialBlend: 1

@@ -365,7 +365,6 @@ public class PlayerController : MonoBehaviour
 			_carryIndicator.transform.position += Vector3.up * bounce * 0.015f;
 			if (bounce <= -0.999f && bounce < prevBounce)
             {
-				Debug.Log("Playing dig audio");
 				AudioController.PlayAudio(_audioSource, _digAudio);
             }
         }
