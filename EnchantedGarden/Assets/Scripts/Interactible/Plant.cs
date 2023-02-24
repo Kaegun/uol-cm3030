@@ -92,6 +92,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 			_plantPatch.RemovePlant();
 			_plantPatch = null;
 		}
+		_planted = false;
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10));
 
 		_worldEvents.OnPlantPossessed(transform.position);

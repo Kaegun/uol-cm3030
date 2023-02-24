@@ -1,92 +1,96 @@
 ﻿using UnityEngine;
+using System.Collections;
 
-public class TrickPlant : PickUpBase
+public class TrickPlant : PickUpBase, IPossessable
 {
 	enum PlantState
 	{
-		Inactive,
-		Planted,
-		TrappingSpirit,
+		Default,
+		Possessed,
+		Carried,
 	}
 
 	[SerializeField]
-	private float _growthDuration = 3.0f;
+	private ScriptableWorldEventHandler _worldEvents;
+
+	[SerializeField]
+	private float _growthDuration = 1.0f;
 
 	[SerializeField]
 	private float _growthTarget = 2.0f;
 
+	[Header("Canvas")]
 	[SerializeField]
-	private float _trapDuration = 5.0f;
+	private Canvas _canvas;
 
-	//	TODO: VFX
-	[SerializeField]
-	private Material _normalMaterial;
-
-	[SerializeField]
-	private Material _trappedMaterial;
 
 	private PlantState _plantState;
 	private float _growthProgress = 0;
-	private float _trapProgress = 0;
-	private Spirit _trappedSpirit;
 
-	public bool CanTrapSpirit => FullyGrown && _plantState == PlantState.Planted;
+	private bool FullyGrown => _growthProgress >= _growthDuration;	
 
-	private bool FullyGrown => _growthProgress >= _growthDuration;
+	public override bool CanBePickedUp => _plantState == PlantState.Default;
 
-	public void TrapSpirit(Spirit spirit)
+    public bool CanBePossessed => FullyGrown && _plantState == PlantState.Default;
+
+	// Possession cannot be completed as the spirit is stuck possessing the trick plant until banished. Therefore this will always return false
+	public bool PossessionCompleted => false;
+
+    public GameObject GameObject => gameObject;
+
+	public void OnPossessionStarted(Spirit possessor)
 	{
-		_trappedSpirit = spirit;
-		_plantState = PlantState.TrappingSpirit;
+		// Set CanBePossessed false
+		_plantState = PlantState.Possessed;
+		_canvas.transform.rotation = Quaternion.Euler(-Camera.main.transform.rotation.eulerAngles);
+		_canvas.gameObject.SetActive(true);
 	}
 
-	public override bool CanBePickedUp => _plantState == PlantState.Inactive || _plantState == PlantState.Planted;
+	public void WhileCompletingPossession(Spirit possessor)
+	{
+		// Do nothing here
+	}
 
-	//	TODO: Change to use trigger collider
+	public void OnPossessionCompleted(Spirit possessor)
+	{
+		// Possession cannot be completed as the spirit is stuck possessing the trick plant until banished. Therefore do nothing here
+	}
+
+	public void OnDispossess()
+	{
+		_plantState = PlantState.Default;
+		_canvas.gameObject.SetActive(false);
+	}
+
 	public override void OnDrop(bool despawn = false)
 	{
-		//	Can be dropped anywhere
-		_plantState = PlantState.Planted;
-		_canBePickedUp = false;
-
 		base.OnDrop();
+		_plantState = PlantState.Default;
+		transform.localScale /= _growthTarget;
+		StartCoroutine(GrowOnDropCoroutine());
 	}
 
-	//	TODO: Consider passing in the attach point to this method
 	public override void OnPickUp(Transform pickupTransform)
 	{
-		_plantState = PlantState.Inactive;
-		base.OnPickUp(pickupTransform);
+		_worldEvents.OnPickUpTrickPlant(gameObject);
+		_plantState = PlantState.Carried;
+		_growthProgress = 0f;
+		base.OnPickUp(pickupTransform);		
 	}
 
-	//	Update is called once per frame
-	protected override void Update()
+	private IEnumerator GrowOnDropCoroutine()
 	{
-		switch (_plantState)
+		while (!_held && _growthProgress <= _growthDuration)
 		{
-			case PlantState.Inactive:
-				break;
-			case PlantState.Planted:
-				if (!FullyGrown)
-				{
-					transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(_growthTarget, _growthTarget, _growthTarget), (_growthProgress / _growthDuration));
-					_growthProgress += Time.deltaTime;
-				}
-				break;
-			case PlantState.TrappingSpirit:
-				_trapProgress += Time.deltaTime;
-				if (_trapProgress >= _trapDuration)
-				{
-					_trappedSpirit.Banish();
-					Destroy(gameObject);
-				}
-				break;
-			default:
-				break;
+			transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(_growthTarget, _growthTarget, _growthTarget), (_growthProgress / _growthDuration));
+			_growthProgress += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
 		}
-
-		//	TODO: Replace with VFX 
-		//	Lerp material based on spirit trapped
-		//_mesh.material.Lerp(_normalMaterial, _trappedMaterial, _trapProgress / _trapDuration);
 	}
+
+	protected override void Start()
+    {
+		base.Start();
+		_canvas.gameObject.SetActive(false);
+    }
 }

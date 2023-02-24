@@ -46,6 +46,16 @@ public static class Utility
 		return new Vector3(Mathf.Cos(AngleToRadians(angle)), 0.0f, Mathf.Sin(AngleToRadians(angle)));
 	}
 
+	public static Color ZeroAlpha(this Color c)
+    {
+		return new Color(c.r, c.g, c.b, 0f);
+    }
+
+	public static Color MaxAlpha(this Color c)
+    {
+		return new Color(c.r, c.g, c.b, 1f);
+    }
+
 	//	Check whether the layer equals the layer enum
 	public static bool IsLayer(this GameObject go, Layers layer) => go.layer == (int)layer;
 
