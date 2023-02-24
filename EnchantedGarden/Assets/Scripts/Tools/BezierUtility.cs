@@ -1,14 +1,7 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-public static class ToolUtility
+public static class BezierUtility
 {
-	//	Transform rotation to Tool local in Editor
-	public static Quaternion HandleRotation(this Transform transform)
-	{
-		return Tools.pivotRotation == PivotRotation.Local ? transform.rotation : Quaternion.identity;
-	}
-
 	//	Lerp between 3 points
 	public static Vector3 LerpPoints(Vector3 p0, Vector3 p1, Vector3 p2, float t)
 	{

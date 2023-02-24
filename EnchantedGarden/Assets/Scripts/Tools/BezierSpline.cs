@@ -62,13 +62,13 @@ public class BezierSpline : MonoBehaviour
 	public Vector3 GetWorldPoint(float t)
 	{
 		var i = CalculateCurveOffset(ref t);
-		return ToolUtility.GetPoint(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t);
+		return BezierUtility.GetPoint(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t);
 	}
 
 	public Vector3 GetWorldVelocity(float t)
 	{
 		var i = CalculateCurveOffset(ref t);
-		return ToolUtility.GetFirstDerivative(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t);
+		return BezierUtility.GetFirstDerivative(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t);
 	}
 
 	public Vector3 GetWorldDirection(float t) => GetWorldVelocity(t).normalized;
@@ -76,13 +76,13 @@ public class BezierSpline : MonoBehaviour
 	public Vector3 GetPoint(float t)
 	{
 		var i = CalculateCurveOffset(ref t);
-		return transform.TransformPoint(ToolUtility.GetPoint(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t));
+		return transform.TransformPoint(BezierUtility.GetPoint(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t));
 	}
 
 	public Vector3 GetVelocity(float t)
 	{
 		var i = CalculateCurveOffset(ref t);
-		return transform.TransformPoint(ToolUtility.GetFirstDerivative(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t)) - transform.position;
+		return transform.TransformPoint(BezierUtility.GetFirstDerivative(_points[i], _points[i + 1], _points[i + 2], _points[i + 3], t)) - transform.position;
 	}
 
 	public Vector3 GetDirection(float t) => GetVelocity(t).normalized;
