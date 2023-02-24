@@ -329,7 +329,7 @@ public class FoxBehaviour : MonoBehaviour
 		if (_respondsTo.Contains(Events.SpiritSpawned) && !_handledEvents.Contains(Events.SpiritSpawned))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
-			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritSpawned);
@@ -392,7 +392,7 @@ public class FoxBehaviour : MonoBehaviour
 		if (_respondsTo.Contains(Events.PlantStolen) && !_handledEvents.Contains(Events.PlantStolen))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
-			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 			// TODO: Add plant stolen and lose lives instruction
 			_behaviourQueue.Enqueue(InstructionCoroutine(_lostPlantSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_zeroPlantsIsLoseSprite, 4f));
