@@ -67,6 +67,12 @@ public class GameManager : SingletonBase<GameManager>
 			_worldEvents.OnIngredientsLowWarning(transform.position);
 	}
 
+	public void CheckIngredientsEmpty()
+    {
+		if (ActiveLevel.CauldronSettings.CurrentNumberOfUses == 0)
+			_worldEvents.OnIngredientsEmpty(transform.position);
+	}
+
 	private void EndGame()
 	{
 		Debug.Log("Game Over");

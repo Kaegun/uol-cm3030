@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bcdb5e6b0c1a4a9e2344c0dd9039f, type: 3}
   m_Name: PlayerDigAudio
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
-  volume: 0
+  clip: {fileID: 8300000, guid: b57578f257e164544b347dd5386ed55f, type: 3}
+  volume: 1
   loop: 0
-  spatialBlend: 0
+  spatialBlend: 1

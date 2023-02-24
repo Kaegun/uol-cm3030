@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FireAddLogAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: a851d7b1335263a478117f4614446d36, type: 3}
-  volume: 1
+  volume: 0.7
   loop: 0
   spatialBlend: 1

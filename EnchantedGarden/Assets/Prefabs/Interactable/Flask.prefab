@@ -63,9 +63,11 @@ MonoBehaviour:
   _adjustmentRotation: {x: 180, y: 0, z: 0}
   _adjustmentScaleFactor: 1
   _indicatorAdjustmentPosition: {x: 0, y: 1.2, z: 0}
-  _carryIcon: {fileID: 21300000, guid: 1cb023a73f5d18a46932d97b15db34c7, type: 3}
+  _carryIcon: {fileID: 21300000, guid: 942a1cd52fd5c154499a2c5e10298d77, type: 3}
+  _carryIconSecondary: {fileID: 21300000, guid: 5aa217e3f6d490b4eb2a61b0fa86fb0e,
+    type: 3}
   _carryIconBaseColor: {r: 1, g: 1, b: 1, a: 1}
-  _carryIconCombineColor: {r: 0, g: 1, b: 0, a: 1}
+  _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 0}
   _despawns: 1
   _despawnTimeout: 5
   _playAnimation: 0
@@ -84,6 +86,10 @@ PrefabInstance:
     - target: {fileID: 1168909231551738, guid: a6c678b612474bd4e8aa131111dfbead, type: 3}
       propertyPath: m_Name
       value: Flask_EG_Custom
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945279606826350, guid: a6c678b612474bd4e8aa131111dfbead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4217735132095886, guid: a6c678b612474bd4e8aa131111dfbead, type: 3}
       propertyPath: m_RootOrder
@@ -141,6 +147,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23562206933551608, guid: a6c678b612474bd4e8aa131111dfbead,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 24cb62afd7999cd4fbf0c0969591ad35, type: 2}
     - target: {fileID: 23998233011239610, guid: a6c678b612474bd4e8aa131111dfbead,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

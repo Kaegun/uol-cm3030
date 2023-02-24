@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475707280554230199}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: -1.65}
+  m_LocalPosition: {x: -0.04, y: 1.3, z: -1.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8137116997393921975}
@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 385895737321599249}
   - component: {fileID: 5087239244546211219}
   - component: {fileID: 9214685483645853711}
-  - component: {fileID: 6148302126787736348}
   - component: {fileID: 465344454195361767}
   m_Layer: 0
   m_Name: Trick Plant Position
@@ -105,7 +104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6965466810908475853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: 1.3, z: -0.45}
+  m_LocalPosition: {x: 1.62, y: 1.3, z: -0.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8137116997393921975}
@@ -142,21 +141,6 @@ MonoBehaviour:
   _text: gizmo text
   _showName: 1
   _anchor: {x: 0, y: 3}
---- !u!114 &6148302126787736348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6965466810908475853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a347a7463728f4692daf8b48ce06c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnedPrefab: {fileID: 2017128806680820391, guid: 7e699bd45987b7641945329f2baf7c17,
-    type: 3}
-  _pickUpIndicatorAdjustment: {x: 0, y: 0, z: 0}
 --- !u!135 &465344454195361767
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -196,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7175782575260627793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6, y: 1.3, z: -0.45}
+  m_LocalPosition: {x: -1.6, y: 1.3, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8137116997393921975}

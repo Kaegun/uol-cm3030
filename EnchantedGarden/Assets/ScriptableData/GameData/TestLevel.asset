@@ -65,6 +65,6 @@ MonoBehaviour:
   _replantingThreshold: 2
   _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
-    _startNumberOfUses: 5
-    _maximumUses: 5
-    _fireDuration: 90
+    _startNumberOfUses: 8
+    _maximumUses: 8
+    _fireDuration: 75

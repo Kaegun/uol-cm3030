@@ -5,6 +5,9 @@ public class PickUpIndicator : MonoBehaviour
 	[SerializeField]
 	private SpriteRenderer _icon;
 
+	[SerializeField]
+	private SpriteRenderer _secondaryIcon;
+
 	private Camera _camera;
 
 	public void SetIcon(Sprite icon)
@@ -12,9 +15,19 @@ public class PickUpIndicator : MonoBehaviour
 		_icon.sprite = icon;
 	}
 
+	public void SetSecondaryIcon(Sprite icon)
+    {
+		_secondaryIcon.sprite = icon;
+	}
+
 	public void SetIconColor(Color color)
 	{
 		_icon.color = color;
+	}
+
+	public void SetSecondaryIconColor(Color color)
+	{
+		_secondaryIcon.color = color;
 	}
 
 	public bool Active => gameObject.activeSelf;
@@ -33,6 +46,7 @@ public class PickUpIndicator : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		transform.LookAt(_camera.transform.position.ZeroY());
+		//transform.LookAt(_camera.transform.position.ZeroY());
+		transform.rotation = Quaternion.Euler(-_camera.transform.rotation.eulerAngles);
 	}
 }

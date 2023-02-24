@@ -21,6 +21,9 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	protected Sprite _carryIcon;
 
 	[SerializeField]
+	protected Sprite _carryIconSecondary;
+
+	[SerializeField]
 	protected Color _carryIconBaseColor = Color.white;
 
 	[SerializeField]
@@ -62,9 +65,11 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	public virtual Sprite CarryIcon => _carryIcon;
 
+	public virtual Sprite CarryIconSecondary => _carryIconSecondary;
+
 	public virtual Color CarryIconBaseColor => _carryIconBaseColor;
 
-	public virtual Color CarryIconCombineColor => _carryIconCombineColor;
+	public virtual Color CarryIconSecondaryColor => _carryIconCombineColor;
 
 	protected bool _held = false, _canBePickedUp = true;
 	private float _despawnTimer;
