@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
 	private HashSet<IInteractable> _interactables = new HashSet<IInteractable>();
 	private IPickUp _heldObject = null;
 	private PickUpSpawnerBase _spawner;
+	private float _carryIndicatorLocalY;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
@@ -72,6 +73,9 @@ public class PlayerController : MonoBehaviour
 		_inputEventHandler.Movement += OnMovement;
 		_inputEventHandler.InteractionPressed += OnInteractionPressed;
 		_inputEventHandler.InteractionReleased += OnInteractionReleased;
+		Shovel.DigEvent += OnDig;
+
+		_carryIndicatorLocalY = _carryIndicator.transform.localPosition.y;
 	}
 
 	private void OnInteractionPressed(object sender, float e)
@@ -83,6 +87,8 @@ public class PlayerController : MonoBehaviour
 				break;
 			case true when _pickups.Count > 0 || _spawner != null:
 				AudioController.PlayAudio(_audioSource, _pickUpAudio);
+				// Reset local position of carry indicator to account for shovel bounce implementation
+				_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
 				_heldObject = PickupCorrectObject();
 				_heldObject.OnPickUp(_heldObjectTransform);
 
@@ -324,6 +330,7 @@ public class PlayerController : MonoBehaviour
 			{
 				_pickups.Add(pickup);
 			}
+			// This is causing the PlayerController to subscribe to the event multiple times
 			if (other.TryGetComponent<ICombinable>(out var combinable))
 			{
 				combinable.CombineProgress += CombineProgress;
@@ -349,23 +356,34 @@ public class PlayerController : MonoBehaviour
 		_carryIndicator.SetSecondaryIconColor(Color.Lerp(pickup.CarryIconSecondaryColor.ZeroAlpha(), pickup.CarryIconSecondaryColor.MaxAlpha(), e / ((ICombinable)sender).CombinationThreshold));
 	}
 
+	private void OnDig(object sender, IPickUp e)
+    {
+		if (e == _heldObject)
+        {
+			var bounce = Mathf.Sin(Time.time * 8);
+			var prevBounce = Mathf.Sin((Time.time - Time.deltaTime) * 8);
+			_carryIndicator.transform.position += Vector3.up * bounce * 0.015f;
+			if (bounce <= -0.999f && bounce < prevBounce)
+            {
+				Debug.Log("Playing dig audio");
+				AudioController.PlayAudio(_audioSource, _digAudio);
+            }
+        }
+    }
+
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.TryGetComponent<IPickUp>(out var pickup))
 		{
 			_pickups.Remove(pickup);
 		}
-		else if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
+		if (other.TryGetComponent<PickUpSpawnerBase>(out var spawner))
 		{
 			if (spawner == _spawner)
 			{
 				_spawner = null;
 			}
-		}
-		else if (other.TryGetComponent<Cauldron>(out var _))
-		{
-			//  Doing nothing
-		}
+		}		
 		if (other.TryGetComponent<IInteractable>(out var interactable))
 		{
 			_interactables.Remove(interactable);
