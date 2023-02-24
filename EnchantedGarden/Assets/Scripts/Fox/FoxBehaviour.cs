@@ -52,7 +52,8 @@ public class FoxBehaviour : MonoBehaviour
 	private float _defaultInstructionDuration = 3.0f;
 
 	[SerializeField]
-	private List<Events> _respondsTo = new List<Events> {Events.SpiritSpawned,
+	private List<Events> _respondsTo = new List<Events> {
+		Events.SpiritSpawned,
 		Events.PlantPossessed,
 		Events.FireDied,
 		Events.IngredientsEmpty,
@@ -97,6 +98,12 @@ public class FoxBehaviour : MonoBehaviour
 
 	[SerializeField]
 	private Sprite _trickPlantTrapSprite;
+
+	[SerializeField]
+	private Sprite _spiritWallNoEntrySprite;
+
+	[SerializeField]
+	private Sprite _spritWallBanishSprite;
 
 	//[SerializeField]
 	//private float _speechBubbleTimeout = 3.0f;
@@ -343,7 +350,8 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			// TODO: Add spirit wall instruction
+			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWallNoEntrySprite, _defaultInstructionDuration));
+			_behaviourQueue.Enqueue(InstructionCoroutine(_spritWallBanishSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritWallSpawned);
 		}
 	}

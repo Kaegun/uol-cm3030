@@ -1094,6 +1094,10 @@ MonoBehaviour:
     type: 3}
   _trickPlantTrapSprite: {fileID: 21300000, guid: d345d4b466d356140b3c63f38d850c67,
     type: 3}
+  _spiritWallNoEntrySprite: {fileID: 21300000, guid: eaf36834ad5142940a34197a7f95d703,
+    type: 3}
+  _spritWallBanishSprite: {fileID: 21300000, guid: ad2fa00461ede0344bd7a49c18ef41fe,
+    type: 3}
   _player: {fileID: 0}
   _logs: {fileID: 0}
   _alchemyTable: {fileID: 0}
