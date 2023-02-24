@@ -538,7 +538,7 @@ PrefabInstance:
     - target: {fileID: 5027561791973494709, guid: e035868401b74284896da0d3281b612b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5027561791973494709, guid: e035868401b74284896da0d3281b612b,
         type: 3}
@@ -599,6 +599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spirit Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
@@ -685,6 +690,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spirit Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
@@ -2536,8 +2546,8 @@ Transform:
   - {fileID: 906078836496271273}
   - {fileID: 1514408372}
   - {fileID: 279958563}
-  - {fileID: 1909216188}
   - {fileID: 204315603}
+  - {fileID: 1909216188}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3322,6 +3332,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spirit Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
 --- !u!4 &1514408372 stripped
@@ -3973,6 +3988,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1645732036}
     m_Modifications:
+    - target: {fileID: 6115810935421353933, guid: 4e63cc30a8022334c8a17c230e1828a6,
+        type: 3}
+      propertyPath: _trickPlant._numberToSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6965466810908475853, guid: 4e63cc30a8022334c8a17c230e1828a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8137116997393921975, guid: 4e63cc30a8022334c8a17c230e1828a6,
         type: 3}
       propertyPath: m_RootOrder
@@ -4373,7 +4398,7 @@ Transform:
   - {fileID: 794321590}
   - {fileID: 1239722711}
   m_Father: {fileID: 1152537066}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1919620738
 PrefabInstance:
@@ -5783,6 +5808,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1645732036}
     m_Modifications:
+    - target: {fileID: 800947263938588532, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 800947263938588532, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
+        type: 3}
+      propertyPath: MinDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1165445027539920944, guid: ffc34575a79a8cd499ae0cdc5f1cd242,
         type: 3}
       propertyPath: _worldEvents
