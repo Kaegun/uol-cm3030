@@ -21,38 +21,44 @@ public class SplineMeshGenerator : MonoBehaviour
 	private void Start()
 	{
 		Assert.IsTrue(TryGetComponent(out _spline), Utility.AssertNotNullMessage(nameof(_spline)));
-		Assert.IsTrue(TryGetComponent<MeshFilter>(out var meshFilter), Utility.AssertNotNullMessage(nameof(meshFilter)));
-		var mesh = meshFilter.mesh != null ? meshFilter.mesh : new Mesh();
-		var vertices = new List<Vector3>();
-		var triangles = new List<int>();
-		var uvs = new List<Vector2>();
-
-		var numQuads = _spline.Points.Length * _quadsPerPoint;
-		_height = _width * (1f + Random.Range(0, _widthNoiseFactor));
-
-		for (int i = 0; i <= numQuads; i++)
+		if (TryGetComponent<MeshFilter>(out var meshFilter))
 		{
-			vertices.AddRange(MakeQuad(i));
-			//uvs.AddRange(new Vector2[] { new Vector2(i * StepSize, 0), new Vector2((i + 1) * StepSize, 0), new Vector2(i * StepSize, 1), new Vector2((i + 1) * StepSize, 1), });
-			if (i % 2 == 0)
-				uvs.AddRange(new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1), });
-			else
-				uvs.AddRange(new Vector2[] { new Vector2(1, 1), new Vector2(0, 1), new Vector2(1, 0), new Vector2(0, 0), });
-			triangles.AddRange(new int[] { i * 4 + 0, i * 4 + 2, i * 4 + 1, i * 4 + 3, i * 4 + 1, i * 4 + 2 });
+			var mesh = meshFilter.mesh != null ? meshFilter.mesh : new Mesh();
+			var vertices = new List<Vector3>();
+			var triangles = new List<int>();
+			var uvs = new List<Vector2>();
+
+			var numQuads = _spline.Points.Length * _quadsPerPoint;
+			_height = _width * (1f + Random.Range(0, _widthNoiseFactor));
+
+			for (int i = 0; i <= numQuads; i++)
+			{
+				vertices.AddRange(MakeQuad(i));
+				//uvs.AddRange(new Vector2[] { new Vector2(i * StepSize, 0), new Vector2((i + 1) * StepSize, 0), new Vector2(i * StepSize, 1), new Vector2((i + 1) * StepSize, 1), });
+				if (i % 2 == 0)
+					uvs.AddRange(new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1), });
+				else
+					uvs.AddRange(new Vector2[] { new Vector2(1, 1), new Vector2(0, 1), new Vector2(1, 0), new Vector2(0, 0), });
+				triangles.AddRange(new int[] { i * 4 + 0, i * 4 + 2, i * 4 + 1, i * 4 + 3, i * 4 + 1, i * 4 + 2 });
+			}
+
+			mesh.vertices = vertices.ToArray();
+			mesh.triangles = triangles.ToArray();
+			mesh.uv = uvs.ToArray();
+
+			mesh.Optimize();
+			mesh.RecalculateNormals();
+			meshFilter.mesh = mesh;
+
+			Debug.Log($"# UV: {mesh.uv.Length}");
+			foreach (var uv in mesh.uv)
+			{
+				Debug.Log(uv);
+			}
 		}
-
-		mesh.vertices = vertices.ToArray();
-		mesh.triangles = triangles.ToArray();
-		mesh.uv = uvs.ToArray();
-
-		mesh.Optimize();
-		mesh.RecalculateNormals();
-		meshFilter.mesh = mesh;
-
-		Debug.Log($"# UV: {mesh.uv.Length}");
-		foreach (var uv in mesh.uv)
+		else
 		{
-			Debug.Log(uv);
+			Utility.AssertNotNullMessage(nameof(meshFilter));
 		}
 	}
 
