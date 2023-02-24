@@ -55,7 +55,7 @@ MonoBehaviour:
     type: 3}
   _pickUpIndicatorAdjustment: {x: 0, y: 1, z: 0}
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
-  _alertIconColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _alertIconColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!65 &224730340511124191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -414,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 8050615248281840782, guid: 2cfa8fb8a550e504199f809f56628025,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.951
+      value: 0.698
       objectReference: {fileID: 0}
     - target: {fileID: 8050615248281840782, guid: 2cfa8fb8a550e504199f809f56628025,
         type: 3}
@@ -435,17 +435,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8c500d54ff99a5546a4409724f9b5579,
+      objectReference: {fileID: 21300000, guid: 21366e19c3175db4fb33b030cc3b1dc7,
         type: 3}
     - target: {fileID: 8050615249763117790, guid: 2cfa8fb8a550e504199f809f56628025,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8050615249763117790, guid: 2cfa8fb8a550e504199f809f56628025,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050615249763117790, guid: 2cfa8fb8a550e504199f809f56628025,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cfa8fb8a550e504199f809f56628025, type: 3}

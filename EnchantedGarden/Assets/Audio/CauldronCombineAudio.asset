@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CauldronCombineAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: fc9f9822ae8c5a84d84782f82c14649f, type: 3}
-  volume: 1
+  volume: 0.5
   loop: 0
   spatialBlend: 1

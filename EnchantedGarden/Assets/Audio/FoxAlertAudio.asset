@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FoxAlertAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 53c60e9cba7d7a446b36f160858707fa, type: 3}
-  volume: 1
+  volume: 0.6
   loop: 0
   spatialBlend: 1
