@@ -15,6 +15,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Vector3> PlantPossessing;
 	public event EventHandler<GameObject> PlantStolen;
 	public event EventHandler<GameObject> PickUpTrickPlant;
+	public event EventHandler<GameObject> PlantDroppedOutOfPatch;
 
 	//	Fire Events
 	public event EventHandler<Vector3> FireDied;
@@ -30,6 +31,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	//	Fox
 	public event EventHandler<GameObject> FoxAlert;
 	public event EventHandler<GameObject> FoxAlertEnded;
+
+	// Game Events
+	public event EventHandler<string> LevelStarted;
 
 	public void OnSpiritWaveSpawned(Spirit[] spirits)
 	{
@@ -64,6 +68,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(PlantStolen, plant);
 	}
+
+	public void OnPlantDroppedOutOfPatch(GameObject plant)
+    {
+		ExecuteEvent(PlantDroppedOutOfPatch, plant);
+    }
 
 	public void OnPickUpTrickPlant(GameObject trickPlant)
     {
@@ -114,4 +123,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(FoxAlertEnded, fox);
 	}
+
+	public void OnLevelStarted(string levelName)
+    {
+		ExecuteEvent(LevelStarted, levelName);
+    }
 }

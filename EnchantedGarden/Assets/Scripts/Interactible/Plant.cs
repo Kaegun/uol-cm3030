@@ -110,6 +110,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		else
 		{
 			SetModelDropped();
+			_worldEvents.OnPlantDroppedOutOfPatch(gameObject);
 		}
 	}
 

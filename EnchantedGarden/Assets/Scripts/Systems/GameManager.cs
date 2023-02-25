@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
-{
+{	
 	[Header("Events")]
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
@@ -28,8 +29,19 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private ScriptableAudioClip _gameOverMusic;
 
+	[SerializeField]
+	private int _midIntensityMusicThreshold;
+
+	[SerializeField]
+	private int _highIntensityMusicThreshold;
+
+	[Header("UI")]
+	[SerializeField]
+	private bool _useUiOverlay = true;
+
 	private int _score;
 	private bool _gameOver = false;
+	private int _activeSpiritCount = 0;
 
 	//	TODO: Fix scoring - We can use a SO for this
 	public void ScorePoints(int points)
@@ -117,10 +129,16 @@ public class GameManager : SingletonBase<GameManager>
 		Debug.Log($"Dynamic number of plants [{numPlants}]");
 
 		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritBanished += SpiritBanished;
 
 		_score = 0;
-		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		if (_useUiOverlay)
+		{
+			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		}
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
 	}
 
 	private void PlantStolen(object sender, GameObject e)
@@ -130,12 +148,46 @@ public class GameManager : SingletonBase<GameManager>
 			EndGame();
 	}
 
+	private void SpiritSpawned(object sender, Spirit e)
+	{
+		_activeSpiritCount++;
+	}
+
+	private void SpiritBanished(object sender, Spirit e)
+	{
+		_activeSpiritCount--;
+	}
+
+	private IEnumerator LevelStartedEventCoroutine(string level)
+    {
+		yield return new WaitForEndOfFrame();
+		_worldEvents.OnLevelStarted(level);
+
+	}
+
 	//	Update is called once per frame
 	private void Update()
 	{
 		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
+		}
+
+		if (!_gameOver && _backgroundMusicAudioSource.timeSamples > _backgroundMusicAudioSource.clip.samples * 0.999f)
+        {
+			if (_activeSpiritCount < _midIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+			}
+			else if (_activeSpiritCount >= _midIntensityMusicThreshold && _activeSpiritCount < _highIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.midIntensityAudio);
+            }
+			else if (_activeSpiritCount >= _highIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.highIntensityAudio);
+			}
+
 		}
 	}
 }
