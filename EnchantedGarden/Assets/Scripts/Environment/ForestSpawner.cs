@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ForestSpawner : MonoBehaviour
 {
@@ -22,36 +23,35 @@ public class ForestSpawner : MonoBehaviour
 
 		//  Clamp density to 0 - 1
 		_density = Mathf.Clamp(_density, 0, 1);
-		var mesh = GetComponent<MeshFilter>().sharedMesh;
-		var x = mesh.bounds.size.x * transform.localScale.x;
-		var z = mesh.bounds.size.z * transform.localScale.z;
-
-		var area = x * z;
-		//  Calculate the average tree area
-		float treeArea = 0.0f;
-		foreach (var t in _treePrefabs)
+		if (TryGetComponent<MeshFilter>(out var meshFilter))
 		{
-			treeArea += GetAreaOfObject(t);
-		}
-		treeArea /= (_treePrefabs.Length ^ 2);
+			var mesh = meshFilter.sharedMesh;
 
-		int number = Mathf.CeilToInt(area / (treeArea / 4) * _density),
-			i = 0;
-		List<Vector3> positions = new List<Vector3>();
-		var guard = 0;
-		while (i < number)
-		{
-			//	Select tree
-			var tree = _treePrefabs[Random.Range(0, _treePrefabs.Length - 1)];
-			var pos = new Vector3(Random.Range(-x / 2, x / 2), 0, Random.Range(-z / 2, z / 2));
-			if (positions.Where(p => (pos - p).sqrMagnitude / 4 < treeArea / 4).Count() == 0 || guard++ > 5)
+			//	Calculate average radius of the tree prefabs
+			float radius = 0.0f;
+			for (int i = 0; i < _treePrefabs.Length; i++)
 			{
-				var newTree = Instantiate(tree, transform.position + transform.rotation * pos, Quaternion.identity);
-				newTree.transform.SetParent(transform);
-				positions.Add(pos);
-				i++;
-				guard = 0;
+				//	Approximate the radius using the square of the area
+				radius += Mathf.Sqrt(GetAreaOfObject(_treePrefabs[i]));
 			}
+			var avgRadius = radius / _treePrefabs.Length;
+
+			//	Track spawned trees to avoid overlaps
+			List<Vector3> positions = new List<Vector3>();
+
+			//	Need to split the mesh into quads
+			// # Quads - Account for fewer tris to make full quads
+			var numQuads = mesh.triangles.Length - mesh.triangles.Length % 4;
+			var totalTrees = 0;
+			for (int i = 0; i < numQuads; i += 4)
+			{
+				totalTrees += FillQuad(GetQuad(i, mesh), avgRadius, positions);
+			}
+			Debug.Log($"Spawned: {totalTrees} trees!");
+		}
+		else
+		{
+			Assert.IsNull(meshFilter, Utility.AssertNotNullMessage(nameof(meshFilter)));
 		}
 
 		//	Re-randomize the seed after spawning the trees
@@ -77,5 +77,63 @@ public class ForestSpawner : MonoBehaviour
 		}
 
 		return x * z;
+	}
+
+	private int FillQuad(Vector4 quad, float avgRadius, List<Vector3> positions)
+	{
+		var area = quad.z * quad.w;
+
+		int number = Mathf.CeilToInt(area / avgRadius * _density),
+				i = 0, guard = 0, spawns = 0;
+
+		GameObject tree = null;
+		float radius = 0.0f;
+		while (i < number)
+		{
+			//	Select tree
+			if (tree == null)
+			{
+				tree = _treePrefabs[Random.Range(0, _treePrefabs.Length)];
+				radius = Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
+			}
+			var pos = new Vector3(quad.x - quad.z / 2 + Random.Range(-quad.z / 2, quad.z / 2), 0, quad.y - quad.w / 2 + Random.Range(-quad.w / 2, quad.w / 2));
+			if (guard++ < 5)
+			{
+				if (positions.All(p => (pos - p).magnitude > radius))
+				{
+					var newTree = Instantiate(tree, transform.position + transform.rotation * pos, Quaternion.identity);
+					newTree.transform.SetParent(transform);
+					positions.Add(pos);
+					i++;
+					guard = 0;
+					spawns++;
+					tree = null;
+				}
+			}
+			else
+			{
+				guard = 0;
+				//	Skip it if we can't find a place to plant it.
+				i++;
+			}
+		}
+
+		return spawns;
+	}
+
+	private Vector4 GetQuad(int startIdx, Mesh mesh)
+	{
+		float minX = float.MaxValue, minZ = float.MaxValue,
+			maxX = float.MinValue, maxZ = float.MinValue;
+		for (int i = startIdx; i < startIdx + 4; i++)
+		{
+			minX = Mathf.Min(mesh.vertices[mesh.triangles[i]].x * transform.localScale.x, minX);
+			minZ = Mathf.Min(mesh.vertices[mesh.triangles[i]].z * transform.localScale.z, minZ);
+
+			maxX = Mathf.Max(mesh.vertices[mesh.triangles[i]].x * transform.localScale.x, maxX);
+			maxZ = Mathf.Max(mesh.vertices[mesh.triangles[i]].z * transform.localScale.z, maxZ);
+		}
+
+		return new Vector4(maxX, maxZ, maxX - minX, maxZ - minZ);
 	}
 }

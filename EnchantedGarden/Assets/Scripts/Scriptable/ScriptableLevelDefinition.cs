@@ -8,11 +8,16 @@ public class ScriptableLevelDefinition : ScriptableObject
 	private CommonTypes.Levels _level;
 	public CommonTypes.Levels Level => _level;
 
+	[Header("Level")]
 	//	The duration of a level
 	[SerializeField]
 	[Range(15f, 600f)]
 	private float _levelDuration = 90f;
 	public float LevelDuration => _levelDuration;
+
+	[SerializeField]
+	private bool _infiniteLevel = false;
+	public bool InfiniteLevel => _infiniteLevel;
 
 	[Header("Spirits and Possession")]
 	//	The definition of the spirit spawning frequency
