@@ -5,7 +5,7 @@ public class UiEventManager : MonoBehaviour
 {
 	public void OnClick_LaunchGame()
 	{
-		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
+		SceneLoader.LoadScene(CommonTypes.Scenes.Level0);
 	}
 
 	public void OnClick_RestartGame()
@@ -16,5 +16,10 @@ public class UiEventManager : MonoBehaviour
 	public void OnClick_ContinueGame()
 	{
 		GameManager.Instance.ContinueGame();
+	}
+
+	public void OnClick_VictorySceneContinue()
+    {
+		GameManager.Instance.LoadNextLevel();
 	}
 }

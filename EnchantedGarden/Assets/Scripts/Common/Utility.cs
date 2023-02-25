@@ -95,4 +95,25 @@ public static class Utility
 	{
 		return TraceMessage($"[{name}] must not be NULL.", filePath, caller, lineNumber);
 	}
+
+	public static string SceneName(this Levels level)
+    {
+        switch (level)
+        {
+            case Levels.Level0:
+                return Scenes.Level0;
+            case Levels.Level1:
+				return Scenes.Level1;
+			case Levels.Level2:
+				return Scenes.Level2;
+			case Levels.Level3:
+				return Scenes.Level3;
+			case Levels.Level4:
+				return Scenes.Level4;
+			case Levels.Template:
+				return Scenes.TemplateLevel;
+			default:
+				return Scenes.Level0;
+		}
+    }
 }
