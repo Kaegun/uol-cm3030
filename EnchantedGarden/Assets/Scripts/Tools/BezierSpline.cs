@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+//	REF: https://catlikecoding.com/unity/tutorials/curves-and-splines/
 public class BezierSpline : MonoBehaviour
 {
 	public enum ControlPointMode

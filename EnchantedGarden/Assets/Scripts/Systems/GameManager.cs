@@ -5,13 +5,12 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
-{	
+{
 	[Header("Events")]
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
 
 	[Header("Levels")]
-	//	TODO: Multiple levels
 	[SerializeField]
 	private ScriptableLevelDefinition[] _gameLevels;
 	public ScriptableLevelDefinition[] GameLevels => _gameLevels;
@@ -41,11 +40,11 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private bool _useUiOverlay = true;
 
-	private int _score;
 	private bool _gameOver = false;
 	private int _activeSpiritCount = 0;
 
 	//	TODO: Fix scoring - We can use a SO for this
+	private int _score;
 	public void ScorePoints(int points)
 	{
 		_score += points;
@@ -86,19 +85,19 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	public void LoadNextLevel()
-    {
+	{
 		int currentLevelIndex = Array.IndexOf(_gameLevels, _activeLevel);
 		if (currentLevelIndex < _gameLevels.Length - 1)
-        {
+		{
 			var nextLevel = _gameLevels[currentLevelIndex + 1];
 			SceneLoader.LoadScene(nextLevel.Level.SceneName());
 		}
 		else
-        {
+		{
 			// Load credits scene
 			//SceneLoader.LoadScene(CommonTypes.Scenes.Credits);
 		}
-    }	
+	}
 
 	private void LevelFailed()
 	{
@@ -115,31 +114,33 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	private void EndLevel(bool victory)
-    {
+	{
 		Debug.Log("Level finished");
 
 		_gameOver = true;
 		Time.timeScale = 0.0f;
 
 		if (victory)
-        {
+		{
 			LoadVictoryScene();
 		}
 		else
-        {
+		{
 			LevelFailed();
-        }		
+		}
 	}
 
 	private void LoadVictoryScene()
-    {
+	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
 	}
 
 	//	TODO: Level change logic
 	private void SetCurrentActiveLevel()
 	{
-		//_level = _levels[0];
+		//	TODO: Check this?
+		if (_activeLevel == null)
+			_activeLevel = _gameLevels[0];
 		ActiveLevel.CurrentNumberOfPlants = ActiveLevel.StartNumberOfPlants;
 	}
 
@@ -197,7 +198,7 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	private IEnumerator LevelStartedEventCoroutine(string level)
-    {
+	{
 		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
 
@@ -212,17 +213,17 @@ public class GameManager : SingletonBase<GameManager>
 		}
 
 		if (!_gameOver && _backgroundMusicAudioSource.timeSamples > _backgroundMusicAudioSource.clip.samples * 0.999f)
-        {
+		{
 			if (_activeSpiritCount < _midIntensityMusicThreshold)
-            {
+			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 			}
 			else if (_activeSpiritCount >= _midIntensityMusicThreshold && _activeSpiritCount < _highIntensityMusicThreshold)
-            {
+			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.midIntensityAudio);
-            }
+			}
 			else if (_activeSpiritCount >= _highIntensityMusicThreshold)
-            {
+			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.highIntensityAudio);
 			}
 

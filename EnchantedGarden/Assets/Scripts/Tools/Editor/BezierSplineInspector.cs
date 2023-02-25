@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+//	REF: https://catlikecoding.com/unity/tutorials/curves-and-splines/
 [CustomEditor(typeof(BezierSpline))]
 public class BezierSplineInspector : Editor
 {

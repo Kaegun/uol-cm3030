@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+//	REF: https://catlikecoding.com/unity/tutorials/curves-and-splines/
 public static class EditorUtilityEx
 {
 	//	Transform rotation to Tool local in Editor

@@ -36,9 +36,10 @@ public class ForestSpawner : MonoBehaviour
 			}
 			var avgRadius = radius / _treePrefabs.Length;
 
-			//	Need to split the mesh into quads
-
+			//	Track spawned trees to avoid overlaps
 			List<Vector3> positions = new List<Vector3>();
+
+			//	Need to split the mesh into quads
 			// # Quads - Account for fewer tris to make full quads
 			var numQuads = mesh.triangles.Length - mesh.triangles.Length % 4;
 			var totalTrees = 0;
@@ -85,8 +86,6 @@ public class ForestSpawner : MonoBehaviour
 		int number = Mathf.CeilToInt(area / avgRadius * _density),
 				i = 0, guard = 0, spawns = 0;
 
-		Debug.Log($"Quad: ({quad}) | Area: [{area}] | avgRadius: [{avgRadius}] | Number: [{number}]");
-
 		GameObject tree = null;
 		float radius = 0.0f;
 		while (i < number)
@@ -118,7 +117,7 @@ public class ForestSpawner : MonoBehaviour
 				i++;
 			}
 		}
-		Debug.Log($"Spawned: {spawns} / {number}");
+
 		return spawns;
 	}
 
