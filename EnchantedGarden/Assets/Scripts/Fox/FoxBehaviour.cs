@@ -109,6 +109,9 @@ public class FoxBehaviour : MonoBehaviour
 	[SerializeField]
 	private Sprite _spritWallBanishSprite;
 
+	[SerializeField]
+	private Sprite _moveControlsSprite;
+
 	//[SerializeField]
 	//private float _speechBubbleTimeout = 3.0f;
 
@@ -336,14 +339,14 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void LevelStarted(object sender, string e)
 	{
+		Debug.Log("Fox behaviour: Level started");
 		if (_respondsTo.Contains(Events.LevelStarted) && !_handledEvents.Contains(Events.LevelStarted))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
 			if (e == CommonTypes.Scenes.Level0)
             {
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-				// Give move controls instruction
-				//_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
+				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
 			}			
 			_handledEvents.Add(Events.LevelStarted);
 		}
@@ -391,8 +394,7 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			// TODO: Add spirit possessing instruction
-			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
+			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_fillFlaskSprite, 4f));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_banishSpiritSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.PlantPossessed);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
@@ -128,7 +129,7 @@ public class GameManager : SingletonBase<GameManager>
 			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		}
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
-		_worldEvents.OnLevelStarted(CommonTypes.Scenes.Level0);
+		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
 	}
 
 	private void PlantStolen(object sender, GameObject e)
@@ -136,6 +137,13 @@ public class GameManager : SingletonBase<GameManager>
 		ActiveLevel.CurrentNumberOfPlants -= 1;
 		if (ActiveLevel.CurrentNumberOfPlants <= 0)
 			EndGame();
+	}
+
+	private IEnumerator LevelStartedEventCoroutine(string level)
+    {
+		yield return new WaitForEndOfFrame();
+		_worldEvents.OnLevelStarted(level);
+
 	}
 
 	//	Update is called once per frame
