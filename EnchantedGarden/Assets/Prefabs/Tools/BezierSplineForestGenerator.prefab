@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 616948483295942734}
   - component: {fileID: 616948483295942737}
+  - component: {fileID: 4394407300546221171}
   - component: {fileID: 616948483295942735}
   - component: {fileID: 616948483295942733}
   - component: {fileID: 616948483295942732}
   m_Layer: 0
-  m_Name: BezierSpline
+  m_Name: BezierSplineForestGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,6 +53,7 @@ MonoBehaviour:
   - {x: 3, y: 0, z: 0}
   - {x: 4, y: 0, z: 0}
   _modes: 0000000000000000
+  _loop: 0
   _lineColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _pointColours:
   - {r: 1, g: 1, b: 1, a: 1}
@@ -60,6 +62,25 @@ MonoBehaviour:
   _velocityColour: {r: 0, g: 1, b: 0, a: 1}
   _texture: {fileID: 0}
   _width: 2
+--- !u!114 &4394407300546221171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616948483295942736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bec932cf404554cb1704b2d58f4e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _treePrefabs:
+  - {fileID: 1483114160548464, guid: a47d7ad739a48614babdcba6106ead5f, type: 3}
+  - {fileID: 1975661288262788, guid: 97fa5d2e177822c4084dda50fa0986c6, type: 3}
+  - {fileID: 1550143109349068, guid: 13f47203b7fe8ff479a289d12f2f47ed, type: 3}
+  - {fileID: 1323533898846632, guid: 07232b84fecc54e45b2e071b6885bb96, type: 3}
+  _seed: 2
+  _density: 0.75
 --- !u!114 &616948483295942735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quadsPerPoint: 5
-  _width: 2
+  _width: 8
   _widthNoiseFactor: 0.5
 --- !u!33 &616948483295942733
 MeshFilter:
@@ -101,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f845059d4547a84fb214db70ac97ef2, type: 2}
+  - {fileID: 2100000, guid: 7b05b6994670a91419be34b8c2355afb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
