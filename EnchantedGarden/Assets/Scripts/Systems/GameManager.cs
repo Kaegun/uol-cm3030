@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -12,12 +13,13 @@ public class GameManager : SingletonBase<GameManager>
 	[Header("Levels")]
 	//	TODO: Multiple levels
 	[SerializeField]
-	private ScriptableLevelDefinition[] _levels;
-	public ScriptableLevelDefinition[] Levels => _levels;
+	private ScriptableLevelDefinition[] _gameLevels;
+	public ScriptableLevelDefinition[] GameLevels => _gameLevels;
 
 	//	Track the currently active level
-	private ScriptableLevelDefinition _level;
-	public ScriptableLevelDefinition ActiveLevel => _level;
+	[SerializeField]
+	private ScriptableLevelDefinition _activeLevel;
+	public ScriptableLevelDefinition ActiveLevel => _activeLevel;
 
 	[Header("Audio")]
 	[SerializeField]
@@ -49,24 +51,6 @@ public class GameManager : SingletonBase<GameManager>
 		_score += points;
 	}
 
-	public void RestartGame()
-	{
-		//	Restart time
-		Time.timeScale = 1.0f;
-
-		//	TODO: Restart game at current level?
-		SceneLoader.LoadScene(CommonTypes.Scenes.Level1);
-	}
-
-	public void ContinueGame()
-	{
-		//	Restart time
-		Time.timeScale = 1.0f;
-
-		//	TODO: Track scene that caused the pause?
-		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
-	}
-
 	// Should probably be in the AudioController, would likely need to make it a Singleton though
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
 	{
@@ -80,12 +64,43 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	public void CheckIngredientsEmpty()
-    {
+	{
 		if (ActiveLevel.CauldronSettings.CurrentNumberOfUses == 0)
 			_worldEvents.OnIngredientsEmpty(transform.position);
 	}
 
-	private void EndGame()
+	public void RestartGame()
+	{
+		//	Restart time
+		//Time.timeScale = 1.0f;
+		SceneLoader.LoadScene(_activeLevel.Level.SceneName());
+	}
+
+	public void ContinueGame()
+	{
+		//	Restart time
+		Time.timeScale = 1.0f;
+
+		//	TODO: Track scene that caused the pause?
+		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
+	}
+
+	public void LoadNextLevel()
+    {
+		int currentLevelIndex = Array.IndexOf(_gameLevels, _activeLevel);
+		if (currentLevelIndex < _gameLevels.Length - 1)
+        {
+			var nextLevel = _gameLevels[currentLevelIndex + 1];
+			SceneLoader.LoadScene(nextLevel.Level.SceneName());
+		}
+		else
+        {
+			// Load credits scene
+			//SceneLoader.LoadScene(CommonTypes.Scenes.Credits);
+		}
+    }	
+
+	private void LevelFailed()
 	{
 		Debug.Log("Game Over");
 
@@ -99,10 +114,32 @@ public class GameManager : SingletonBase<GameManager>
 		SceneLoader.LoadScene(CommonTypes.Scenes.GameOver, true);
 	}
 
+	private void EndLevel(bool victory)
+    {
+		Debug.Log("Level finished");
+
+		_gameOver = true;
+		Time.timeScale = 0.0f;
+
+		if (victory)
+        {
+			LoadVictoryScene();
+		}
+		else
+        {
+			LevelFailed();
+        }		
+	}
+
+	private void LoadVictoryScene()
+    {
+		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
+	}
+
 	//	TODO: Level change logic
 	private void SetCurrentActiveLevel()
 	{
-		_level = _levels[0];
+		//_level = _levels[0];
 		ActiveLevel.CurrentNumberOfPlants = ActiveLevel.StartNumberOfPlants;
 	}
 
@@ -116,7 +153,7 @@ public class GameManager : SingletonBase<GameManager>
 	//	Start is called before the first frame update
 	private void Start()
 	{
-		Assert.IsTrue(_levels.Length > 0);
+		Assert.IsTrue(_gameLevels.Length > 0);
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
 		//	Testing
@@ -137,15 +174,16 @@ public class GameManager : SingletonBase<GameManager>
 		{
 			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		}
-		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
+		Time.timeScale = 1.0f;
 	}
 
 	private void PlantStolen(object sender, GameObject e)
 	{
 		ActiveLevel.CurrentNumberOfPlants -= 1;
 		if (ActiveLevel.CurrentNumberOfPlants <= 0)
-			EndGame();
+			EndLevel(false);
 	}
 
 	private void SpiritSpawned(object sender, Spirit e)
@@ -160,7 +198,7 @@ public class GameManager : SingletonBase<GameManager>
 
 	private IEnumerator LevelStartedEventCoroutine(string level)
     {
-		yield return new WaitForEndOfFrame();
+		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
 
 	}
@@ -170,22 +208,22 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
-			EndGame();
+			EndLevel(true);
 		}
 
 		if (!_gameOver && _backgroundMusicAudioSource.timeSamples > _backgroundMusicAudioSource.clip.samples * 0.999f)
         {
 			if (_activeSpiritCount < _midIntensityMusicThreshold)
             {
-				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 			}
 			else if (_activeSpiritCount >= _midIntensityMusicThreshold && _activeSpiritCount < _highIntensityMusicThreshold)
             {
-				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.midIntensityAudio);
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.midIntensityAudio);
             }
 			else if (_activeSpiritCount >= _highIntensityMusicThreshold)
             {
-				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.highIntensityAudio);
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.highIntensityAudio);
 			}
 
 		}

@@ -29,6 +29,12 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 
 	private float _combinationProgress = 0f;
 
+	public override void OnPickUp(Transform pickupTransform)
+    {
+		base.OnPickUp(pickupTransform);
+		ExecuteEvent(CombineProgress, _combinationProgress);
+	}
+
 	private void UseFlask()
 	{
 		_full = false;
@@ -54,7 +60,8 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	{
 		_full = true;
 		_contents.SetActive(true);
-		_combinationProgress = 0f;
+		//_combinationProgress = 0f;
+		_combinationProgress = _combinationThreshold;
 
 		//	Moved to be handled by cauldron, can delete
 		//  Reduce the number of uses in the Cauldron

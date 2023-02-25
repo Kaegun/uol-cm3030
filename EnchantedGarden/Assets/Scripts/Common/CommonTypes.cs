@@ -35,10 +35,22 @@ public static class CommonTypes
 		public const string Level1 = "Level 1";
 		public const string Level2 = "Level 2";
 		public const string Level3 = "Level 3";
+		public const string Level4 = "Level 4";
 		public const string Options = "Options";
 		public const string Loading = "Loading";
 		public const string Victory = "Victory";
+		public const string TemplateLevel = "Template";
 	}
+	
+	public enum Levels
+    {
+		Level0,
+		Level1,
+		Level2,
+		Level3,
+		Level4,
+		Template
+    }
 
 	public static class ScoreValues
 	{

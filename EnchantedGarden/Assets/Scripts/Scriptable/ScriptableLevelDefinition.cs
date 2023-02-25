@@ -4,6 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewLevelDefinition", menuName = "Scriptable/LevelDefinition")]
 public class ScriptableLevelDefinition : ScriptableObject
 {
+	[SerializeField]
+	private CommonTypes.Levels _level;
+	public CommonTypes.Levels Level => _level;
+
 	//	The duration of a level
 	[SerializeField]
 	[Range(15f, 600f)]
