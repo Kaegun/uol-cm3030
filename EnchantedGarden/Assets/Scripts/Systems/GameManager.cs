@@ -29,12 +29,19 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private ScriptableAudioClip _gameOverMusic;
 
+	[SerializeField]
+	private int _midIntensityMusicThreshold;
+
+	[SerializeField]
+	private int _highIntensityMusicThreshold;
+
 	[Header("UI")]
 	[SerializeField]
 	private bool _useUiOverlay = true;
 
 	private int _score;
 	private bool _gameOver = false;
+	private int _activeSpiritCount = 0;
 
 	//	TODO: Fix scoring - We can use a SO for this
 	public void ScorePoints(int points)
@@ -122,6 +129,8 @@ public class GameManager : SingletonBase<GameManager>
 		Debug.Log($"Dynamic number of plants [{numPlants}]");
 
 		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritBanished += SpiritBanished;
 
 		_score = 0;
 		if (_useUiOverlay)
@@ -139,6 +148,16 @@ public class GameManager : SingletonBase<GameManager>
 			EndGame();
 	}
 
+	private void SpiritSpawned(object sender, Spirit e)
+	{
+		_activeSpiritCount++;
+	}
+
+	private void SpiritBanished(object sender, Spirit e)
+	{
+		_activeSpiritCount--;
+	}
+
 	private IEnumerator LevelStartedEventCoroutine(string level)
     {
 		yield return new WaitForEndOfFrame();
@@ -152,6 +171,23 @@ public class GameManager : SingletonBase<GameManager>
 		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndGame();
+		}
+
+		if (!_gameOver && _backgroundMusicAudioSource.timeSamples > _backgroundMusicAudioSource.clip.samples * 0.999f)
+        {
+			if (_activeSpiritCount < _midIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+			}
+			else if (_activeSpiritCount >= _midIntensityMusicThreshold && _activeSpiritCount < _highIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.midIntensityAudio);
+            }
+			else if (_activeSpiritCount >= _highIntensityMusicThreshold)
+            {
+				AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.highIntensityAudio);
+			}
+
 		}
 	}
 }
