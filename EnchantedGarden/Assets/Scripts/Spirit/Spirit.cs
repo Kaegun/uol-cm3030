@@ -67,7 +67,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
-	public void SetPropsOnSpawn(float moveSpeedMultiplier, float possessionRateMultiplier)
+	public void SetPropertiesOnSpawn(float moveSpeedMultiplier, float possessionRateMultiplier)
 	{
 		_moveSpeedMultiplier = moveSpeedMultiplier;
 		_possessionRateMultiplier = possessionRateMultiplier;
@@ -250,14 +250,14 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		// Handle trick plants
 		if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
-		    && other.TryGetComponent(out TrickPlant trickPlant)
-		    && trickPlant.CanBePossessed
+			&& other.TryGetComponent(out TrickPlant trickPlant)
+			&& trickPlant.CanBePossessed
 			&& _spiritState == SpiritState.Searching)
 		{
 			StopAllCoroutines();
 			_possessedPossessable = trickPlant;
 			_possessedPossessable.OnPossessionStarted(this);
-		    _spiritState = SpiritState.Trapped;
+			_spiritState = SpiritState.Trapped;
 			transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
 			_spiritState = SpiritState.StartingPossession;
 			_spiritBody.SetMaterial(_banishMaterial);
@@ -292,7 +292,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		{
 			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();
-		}		
+		}
 	}
 
 	public bool CanInteractWith(IInteractor interactor)

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PickUpIndicator : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PickUpIndicator : MonoBehaviour
 	}
 
 	public void SetSecondaryIcon(Sprite icon)
-    {
+	{
 		_secondaryIcon.sprite = icon;
 	}
 
@@ -37,8 +38,8 @@ public class PickUpIndicator : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
-		//_spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
-		//Assert.IsNotNull(_spriteRenderer, Utility.AssertNotNullMessage(nameof(_spriteRenderer)));
+		Assert.IsNotNull(_icon, Utility.AssertNotNullMessage(nameof(_icon)));
+		Assert.IsNotNull(_secondaryIcon, Utility.AssertNotNullMessage(nameof(_secondaryIcon)));
 
 		_camera = Camera.main;
 	}
@@ -46,7 +47,6 @@ public class PickUpIndicator : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		//transform.LookAt(_camera.transform.position.ZeroY());
 		transform.rotation = Quaternion.Euler(-_camera.transform.rotation.eulerAngles);
 	}
 }
