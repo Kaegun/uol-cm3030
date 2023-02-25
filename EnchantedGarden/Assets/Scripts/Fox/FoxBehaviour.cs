@@ -18,8 +18,10 @@ public class FoxBehaviour : MonoBehaviour
 
 	private enum Events
 	{
+		LevelStarted,
 		SpiritSpawned,
 		PlantPossessed,
+		PlantDroppedOutOfPatch,
 		FireDied,
 		IngredientsEmpty,
 		PlantStolen,
@@ -53,8 +55,10 @@ public class FoxBehaviour : MonoBehaviour
 
 	[SerializeField]
 	private List<Events> _respondsTo = new List<Events> {
+		Events.LevelStarted,
 		Events.SpiritSpawned,
 		Events.PlantPossessed,
+		Events.PlantDroppedOutOfPatch,
 		Events.FireDied,
 		Events.IngredientsEmpty,
 		Events.PlantStolen,
@@ -171,6 +175,8 @@ public class FoxBehaviour : MonoBehaviour
 
 		_camera = Camera.main;
 
+		_worldEvents.LevelStarted += LevelStarted;
+
 		//_worldEvents.SpiritWaveSpawned += SpiritWaveSpawned;
 		_worldEvents.SpiritSpawned += SpiritSpawned;
 		_worldEvents.SpiritWallSpawned += SpiritWallSpawned;
@@ -179,6 +185,7 @@ public class FoxBehaviour : MonoBehaviour
 		_worldEvents.PlantPossessing += PlantPossessing;
 		//_worldEvents.PlantPossessed += PlantPossessed;
 		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.PlantDroppedOutOfPatch += PlantDroppedOutOfPatch;
 
 		_worldEvents.FireDied += FireDied;
 		//_worldEvents.FireLowWarning += FireLowWarning;
@@ -240,7 +247,7 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	// Rotation not working
-	private IEnumerator AlertCoroutine(float duration, Vector3 target)
+	private IEnumerator AlertCoroutine(float duration, Vector3? target = null)
 	{
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate alert icon
@@ -250,7 +257,10 @@ public class FoxBehaviour : MonoBehaviour
 		float t = 0f;
 		while (t < duration)
 		{
-			transform.rotation.RotateTowards(transform.position, target, _turnSpeed * Time.deltaTime);
+			if (target != null)
+            {
+				transform.rotation.RotateTowards(transform.position, target.Value, _turnSpeed * Time.deltaTime);
+			}			
 			t += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
@@ -324,6 +334,21 @@ public class FoxBehaviour : MonoBehaviour
 	//	Debug.Log($"Fox Behaviour: Spirit Wave Spawned - [{e.Length}]");
 	//}
 
+	private void LevelStarted(object sender, string e)
+	{
+		if (_respondsTo.Contains(Events.LevelStarted) && !_handledEvents.Contains(Events.LevelStarted))
+		{
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
+			if (e == CommonTypes.Scenes.Level0)
+            {
+				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+				// Give move controls instruction
+				//_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
+			}			
+			_handledEvents.Add(Events.LevelStarted);
+		}
+	}
+
 	private void SpiritSpawned(object sender, Spirit e)
 	{
 		if (_respondsTo.Contains(Events.SpiritSpawned) && !_handledEvents.Contains(Events.SpiritSpawned))
@@ -387,16 +412,25 @@ public class FoxBehaviour : MonoBehaviour
 	private void PlantStolen(object sender, GameObject e)
 	{
 		Debug.Log("Fox Behaviour: A plant has been stolen!");
-
-		//SetAlert(e, "Oh no! A spirit has stolen your plant! Don't let them steal them all!");
 		if (_respondsTo.Contains(Events.PlantStolen) && !_handledEvents.Contains(Events.PlantStolen))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			// TODO: Add plant stolen and lose lives instruction
 			_behaviourQueue.Enqueue(InstructionCoroutine(_lostPlantSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_zeroPlantsIsLoseSprite, 4f));
 			_handledEvents.Add(Events.PlantStolen);
+		}
+	}
+
+	private void PlantDroppedOutOfPatch (object sender, GameObject e)
+	{
+		Debug.Log("Fox Behaviour: A has been dropped outside of a plant patch");
+		if (_respondsTo.Contains(Events.PlantDroppedOutOfPatch) && !_handledEvents.Contains(Events.PlantDroppedOutOfPatch))
+		{
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));
+			_behaviourQueue.Enqueue(InstructionCoroutine(_replantPlantSprite, _defaultInstructionDuration));
+			_handledEvents.Add(Events.PlantDroppedOutOfPatch);
 		}
 	}
 

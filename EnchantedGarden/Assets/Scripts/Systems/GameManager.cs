@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
-{
+{	
 	[Header("Events")]
 	[SerializeField]
 	private ScriptableWorldEventHandler _worldEvents;
@@ -27,6 +27,10 @@ public class GameManager : SingletonBase<GameManager>
 
 	[SerializeField]
 	private ScriptableAudioClip _gameOverMusic;
+
+	[Header("UI")]
+	[SerializeField]
+	private bool _useUiOverlay = true;
 
 	private int _score;
 	private bool _gameOver = false;
@@ -119,8 +123,12 @@ public class GameManager : SingletonBase<GameManager>
 		_worldEvents.PlantStolen += PlantStolen;
 
 		_score = 0;
-		SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		if (_useUiOverlay)
+		{
+			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		}
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _level.BackgroundMusic.lowIntensityAudio);
+		_worldEvents.OnLevelStarted(CommonTypes.Scenes.Level0);
 	}
 
 	private void PlantStolen(object sender, GameObject e)
