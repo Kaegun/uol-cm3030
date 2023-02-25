@@ -135,7 +135,6 @@ public class GameManager : SingletonBase<GameManager>
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
 	}
 
-	//	TODO: Level change logic
 	private void SetCurrentActiveLevel()
 	{
 		//	TODO: Check this?
@@ -207,7 +206,7 @@ public class GameManager : SingletonBase<GameManager>
 	//	Update is called once per frame
 	private void Update()
 	{
-		if (Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
+		if (!ActiveLevel.InfiniteLevel && Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndLevel(true);
 		}
