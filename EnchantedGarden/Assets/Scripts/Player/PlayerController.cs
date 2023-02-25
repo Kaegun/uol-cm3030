@@ -90,10 +90,9 @@ public class PlayerController : MonoBehaviour
 				// Reset local position of carry indicator to account for shovel bounce implementation
 				_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
 				_heldObject = PickupCorrectObject();
-				_heldObject.OnPickUp(_heldObjectTransform);
-
-				//	Enable Icon to indicate carried object
+				//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
 				SetCarryIndicator(true, _heldObject);
+				_heldObject.OnPickUp(_heldObjectTransform);				
 				break;
 			default:
 				break;
@@ -183,9 +182,9 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		//	Clear any PickUps that have despawned from the list
-		if (_pickups.Count > 0 && _pickups.Where(p => p.Despawned).Count() > 0)
+		if (_pickups.Count > 0 && _pickups.Where(p => p.Despawned).ToList() is var pickupList && pickupList.Count() > 0)
 		{
-			foreach (var p in _pickups.Where(p => p.Despawned))
+			foreach (var p in pickupList)
 				_pickups.Remove(p);
 		}
 
@@ -330,9 +329,10 @@ public class PlayerController : MonoBehaviour
 			{
 				_pickups.Add(pickup);
 			}
-			// This is causing the PlayerController to subscribe to the event multiple times
 			if (other.TryGetComponent<ICombinable>(out var combinable))
 			{
+				// Attempts to remove event before adding it. This ensures the event is only subscribed to once by this
+				combinable.CombineProgress -= CombineProgress;
 				combinable.CombineProgress += CombineProgress;
 			}
 		}
@@ -351,9 +351,12 @@ public class PlayerController : MonoBehaviour
 
 	private void CombineProgress(object sender, float e)
 	{
-		var pickup = ((IPickUp)sender);
-		_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor.MaxAlpha(), pickup.CarryIconBaseColor.ZeroAlpha(), e / ((ICombinable)sender).CombinationThreshold));
-		_carryIndicator.SetSecondaryIconColor(Color.Lerp(pickup.CarryIconSecondaryColor.ZeroAlpha(), pickup.CarryIconSecondaryColor.MaxAlpha(), e / ((ICombinable)sender).CombinationThreshold));
+		var pickup = (IPickUp)sender;
+		if (pickup == _heldObject)
+        {
+			_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor.MaxAlpha(), pickup.CarryIconBaseColor.ZeroAlpha(), e / ((ICombinable)sender).CombinationThreshold));
+			_carryIndicator.SetSecondaryIconColor(Color.Lerp(pickup.CarryIconSecondaryColor.ZeroAlpha(), pickup.CarryIconSecondaryColor.MaxAlpha(), e / ((ICombinable)sender).CombinationThreshold));
+		}		
 	}
 
 	private void OnDig(object sender, IPickUp e)
