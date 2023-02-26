@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df2dc88a8646e694dbc8b000abf0be43, type: 3}
-  m_Name: Lvl3Data
+  m_Name: Level 3 Data
   m_EditorClassIdentifier: 
   _levelDuration: 180
   _waves:
