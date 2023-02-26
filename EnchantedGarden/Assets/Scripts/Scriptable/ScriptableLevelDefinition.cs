@@ -19,6 +19,15 @@ public class ScriptableLevelDefinition : ScriptableObject
 	private bool _infiniteLevel = false;
 	public bool InfiniteLevel => _infiniteLevel;
 
+	[Header("Scoring")]
+	[SerializeField]
+	private int _twoStarScoreThreshold = 0;
+	public int TwoStarScoreThreshold => _twoStarScoreThreshold;
+
+	[SerializeField]
+	private int _threeStarScoreThreshold = 0;
+	public int ThreeStarScoreThreshold => _threeStarScoreThreshold;
+
 	[Header("Spirits and Possession")]
 	//	The definition of the spirit spawning frequency
 	[SerializeField]

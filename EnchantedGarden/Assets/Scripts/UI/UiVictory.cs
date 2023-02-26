@@ -30,6 +30,6 @@ public class UiVictory : MonoBehaviour
 		}
 
 		//  Set Score
-		_scoreText.text = $"{score.Score:# ##0}";
+		_scoreText.text = $"{score.FinalScore:# ##0}";
 	}
 }
