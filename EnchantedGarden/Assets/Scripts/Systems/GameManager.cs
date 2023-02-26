@@ -69,7 +69,7 @@ public class GameManager : SingletonBase<GameManager>
 
 	public void RestartGame()
 	{
-		SceneLoader.LoadScene(CommonTypes.Scenes.Launcher);
+		SceneLoader.LoadScene(CommonTypes.Scenes.Level0);
 	}
 
 	public void RestartLevel()
