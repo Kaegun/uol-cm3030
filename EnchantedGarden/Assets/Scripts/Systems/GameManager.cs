@@ -136,6 +136,7 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void LoadVictoryScene()
 	{
+		Score.CalculateRating(ActiveLevel.CurrentNumberOfPlants, ActiveLevel.TwoStarScoreThreshold, ActiveLevel.ThreeStarScoreThreshold);
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
 	}
 
