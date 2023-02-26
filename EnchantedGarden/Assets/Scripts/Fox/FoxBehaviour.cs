@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -112,9 +110,6 @@ public class FoxBehaviour : MonoBehaviour
 	[SerializeField]
 	private Sprite _moveControlsSprite;
 
-	//[SerializeField]
-	//private float _speechBubbleTimeout = 3.0f;
-
 	[Header("Points of Interest")]
 	[SerializeField]
 	private Transform _player;
@@ -130,7 +125,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	[SerializeField]
 	private Transform _shovel;
-
 
 	[Header("Audio")]
 	[SerializeField]
@@ -149,7 +143,7 @@ public class FoxBehaviour : MonoBehaviour
 	private Coroutine _activeBehaviourCoroutine;
 
 	private void SubscribeToWorldEvents()
-    {
+	{
 		_worldEvents.LevelStarted += LevelStarted;
 
 		_worldEvents.SpiritSpawned += SpiritSpawned;
@@ -223,33 +217,25 @@ public class FoxBehaviour : MonoBehaviour
 
 		if (_state == FoxState.Idle)
 		{
-			//if (!Mathf.Approximately(Vector3.Dot(transform.position, _player.forward), 0))
-			//{
-			//	//transform.rotation = transform.rotation.RotateTowards(transform.position, _player.forward, _turnSpeed * Time.deltaTime);
-
-			//	//	TODO: Set turning anim.
-			//}
 		}
 
 		_animator.SetFloat(CommonTypes.AnimatorActions.ForwardSpeed, _currentSpeed);
 
 		//	If speech bubble is active, rotate it to face the camera
-		//	TODO: Could move this to the Update method on a script on the Canvas itself.
 		if (_instructionCanvas.isActiveAndEnabled)
 		{
-			//_speechCanvas.transform.LookAt(_camera.transform.position.ZeroY());
 			var rotation = _camera.transform.rotation.eulerAngles;
 			rotation.z = 0f;
 			_instructionCanvas.transform.rotation = Quaternion.Euler(rotation);
 		}
 	}
 
-    private void OnDestroy()
-    {
+	private void OnDestroy()
+	{
 		UnsubscribeFromWorldEvents();
-    }
+	}
 
-    private IEnumerator MoveToTargetCoroutine(Transform target)
+	private IEnumerator MoveToTargetCoroutine(Transform target)
 	{
 		while (Vector3.Distance(transform.position, target.position) > 4f)
 		{
@@ -277,9 +263,9 @@ public class FoxBehaviour : MonoBehaviour
 		while (t < duration)
 		{
 			if (target != null)
-            {
+			{
 				transform.rotation.RotateTowards(transform.position, target.Value, _turnSpeed * Time.deltaTime);
-			}			
+			}
 			t += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
@@ -289,22 +275,8 @@ public class FoxBehaviour : MonoBehaviour
 		BehaviourCoroutineCompleted();
 	}
 
-	//private IEnumerator InstructionCoroutine(string text, float duration)
-	//{
-	//	// TODO: Different sound than alert for instruction?
-	//	AudioController.PlayAudio(_audioSource, _alertSound);
-	//	// Activate instruction icon
-	//	_speechText.text = text;
-	//	_instructionCanvas.gameObject.SetActive(true);
-	//	yield return new WaitForSeconds(duration);
-	//	// Disable instruction icon
-	//	_instructionCanvas.gameObject.SetActive(false);
-	//	BehaviourCoroutineCompleted();
-	//}
-
 	private IEnumerator InstructionCoroutine(Sprite instruction, float duration)
 	{
-		// TODO: Different sound than alert for instruction?
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate instruction icon
 		_instructionImage.sprite = instruction;
@@ -333,10 +305,8 @@ public class FoxBehaviour : MonoBehaviour
 	private void SetIdle()
 	{
 		_state = FoxState.Idle;
-		//	TODO: A bit abrupt
 		_currentSpeed = 0f;
 
-		//	TODO: Test Alert animation
 		_animator.SetTrigger(CommonTypes.AnimatorActions.Alert);
 	}
 
@@ -345,14 +315,6 @@ public class FoxBehaviour : MonoBehaviour
 		_state = FoxState.Alert;
 	}
 
-	// Covered by SpiritSpawned
-	//private void SpiritWaveSpawned(object sender, Spirit[] e)
-	//{
-	//	//	The fox might not do much here
-	//	//	Could also use the camera for some of it
-	//	Debug.Log($"Fox Behaviour: Spirit Wave Spawned - [{e.Length}]");
-	//}
-
 	private void LevelStarted(object sender, string e)
 	{
 		Debug.Log("Fox behaviour: Level started");
@@ -360,7 +322,7 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			//_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
 			if (e == CommonTypes.Scenes.Level0)
-            {
+			{
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
@@ -383,12 +345,6 @@ public class FoxBehaviour : MonoBehaviour
 			_handledEvents.Add(Events.SpiritSpawned);
 		}
 	}
-
-	// Unnecessary for fox to track
-	//private void SpiritBanished(object sender, Spirit e)
-	//{
-	//	Debug.Log("Fox Behaviour: Spirit was banished!");
-	//}
 
 	private void SpiritWallSpawned(object sender, Spirit e)
 	{
@@ -421,16 +377,6 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	// Covered by plant possessing
-	//private void PlantPossessed(object sender, Vector3 e)
-	//{
-	//	//	Alert the player
-	//	//	Move fox and focus the camera on the fox
-	//	//	More insistent
-	//	//	Run to the bug sprayer
-	//	Debug.Log($"Fox Behaviour: Plant Possessed - [{e}]");
-	//}
-
 	private void PlantStolen(object sender, GameObject e)
 	{
 		Debug.Log("Fox Behaviour: A plant has been stolen!");
@@ -444,9 +390,9 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	private void PlantDroppedOutOfPatch (object sender, GameObject e)
+	private void PlantDroppedOutOfPatch(object sender, GameObject e)
 	{
-		Debug.Log("Fox Behaviour: A has been dropped outside of a plant patch");
+		Debug.Log("Fox Behaviour: A plant has been dropped outside of a plant patch");
 		if (_respondsTo.Contains(Events.PlantDroppedOutOfPatch) && !_handledEvents.Contains(Events.PlantDroppedOutOfPatch))
 		{
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));			
@@ -456,29 +402,6 @@ public class FoxBehaviour : MonoBehaviour
 			_handledEvents.Add(Events.PlantDroppedOutOfPatch);
 		}
 	}
-
-
-	// Only alert on fire died
-	//private void FireMediumWarning(object sender, Vector3 e)
-	//{
-	//	Debug.Log("Fox Behaviour: The fire is at Medium.");
-	//
-	//	//SetAlert(e, "The cauldron's fire is starting to run low. Add another log from the wood pile.");
-	//	//SetAlert(_logs.position, "Fetch another log from the wood pile and add take it to the cauldron.");
-	//	if (!_handledEvents.Contains(Events.FireLow))
-	//	{
-	//		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
-	//		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
-	//		//_behaviourQueue.Enqueue(InstructionCoroutine("The cauldron's fire is starting to run low!", _defaultInstructionDuration));
-	//		_handledEvents.Add(Events.FireLow);
-	//	}
-	//}
-
-	//// I think just one warning at medium is enough
-	//private void FireLowWarning(object sender, Vector3 e)
-	//{
-	//	Debug.Log("Fox Behaviour: The fire is LOW!!");
-	//}
 
 	private void FireDied(object sender, Vector3 e)
 	{
@@ -493,24 +416,8 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	// Only alert on ingredients empty
-	//private void IngredientsLowWarning(object sender, Vector3 e)
-	//{
-	//	Debug.Log("Fox Behaviour: The ingredients are low!");
-	//	if (_respondsTo.Contains(Events.SpiritSpawned))
-	//	{
-	//		_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
-	//		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
-	//		//_behaviourQueue.Enqueue(InstructionCoroutine("The potion is running out!", _defaultInstructionDuration));
-	//		_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, _defaultInstructionDuration));
-	//		_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
-	//		//_behaviourQueue.Enqueue(InstructionCoroutine("Fetch a herb and take it to the cauldron to refill the potion!", _defaultInstructionDuration));
-	//		_behaviourQueue.Enqueue(InstructionCoroutine(_refillPotionSprite, _defaultInstructionDuration));
-	//	}
-	//}
-
 	private void IngredientsEmpty(object send, Vector3 e)
-    {
+	{
 		Debug.Log("Fox Behaviour: The ingredients are empty");
 		if (_respondsTo.Contains(Events.IngredientsEmpty))
 		{
@@ -523,11 +430,11 @@ public class FoxBehaviour : MonoBehaviour
 	}
 
 	private void PickUpTrickPlant(object send, GameObject e)
-    {
+	{
 		if (_respondsTo.Contains(Events.TrickPlantPickedUp) && !_handledEvents.Contains(Events.TrickPlantPickedUp))
 		{
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _player));			
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _player));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_trickPlantTrapSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.TrickPlantPickedUp);
 		}

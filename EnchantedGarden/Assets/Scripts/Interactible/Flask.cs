@@ -27,6 +27,8 @@ public class Flask : PickUpBase, ICombinable, IInteractor, IEventPublisher
 
 	public bool CanUseFlask => _full;
 
+	public bool CanBeCombined => _held && !_full;
+
 	private float _combinationProgress = 0f;
 
 	public override void OnPickUp(Transform pickupTransform)
@@ -60,19 +62,8 @@ public class Flask : PickUpBase, ICombinable, IInteractor, IEventPublisher
 	{
 		_full = true;
 		_contents.SetActive(true);
-		//_combinationProgress = 0f;
 		_combinationProgress = _combinationThreshold;
-
-		//	Moved to be handled by cauldron, can delete
-		//  Reduce the number of uses in the Cauldron
-		//  TODO: Not a fan of the below being in the Flask
-		//GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
-		//GameManager.Instance.CheckIngredientsLow();
 	}
-
-	public bool CanBeCombined => _held && !_full;
-
-	public GameObject GameObject => gameObject;
 
 	public bool CanInteractWith(IInteractable interactable)
 	{
@@ -108,6 +99,11 @@ public class Flask : PickUpBase, ICombinable, IInteractor, IEventPublisher
 			default:
 				return false;
 		}
+	}
+
+	public void DestroyInteractor()
+	{
+		Destroy(gameObject);
 	}
 
 	// Start is called before the first frame update

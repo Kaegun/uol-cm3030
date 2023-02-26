@@ -58,7 +58,8 @@ MonoBehaviour:
   _completePossessionAudio: {fileID: 11400000, guid: 4af8480d1331b5a4d86567aebf22725b,
     type: 2}
   _bansihAudio: {fileID: 11400000, guid: 0829bc61580c0e748819a52239f81672, type: 2}
-  _banishMaterial: {fileID: 2100000, guid: 591f75c3e05cd85488d10d57d229c07f, type: 2}
+  _banishableMaterial: {fileID: 2100000, guid: 591f75c3e05cd85488d10d57d229c07f, type: 2}
+  _banishedMaterial: {fileID: 2100000, guid: a49d53391384f3c43826e843d1a0607e, type: 2}
 --- !u!135 &4107769748018646644
 SphereCollider:
   m_ObjectHideFlags: 0

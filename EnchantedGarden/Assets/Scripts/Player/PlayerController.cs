@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
 					if (destroyInteractable)
 					{
 						_interactables.Remove(interactable);
-						Destroy(interactable.GameObject);
+						interactable.DestroyInteractable();
 					}
 					if (destroyInteractor)
 					{
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
 						{
 							_pickups.Remove(interactor as IPickUp);
 						}
-						Destroy(interactor.GameObject);
+						interactor.DestroyInteractor();
 						_heldObject = null;
 						SetCarryIndicator(false);
 					}
