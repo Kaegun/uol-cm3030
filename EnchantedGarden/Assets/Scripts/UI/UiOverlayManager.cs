@@ -5,6 +5,15 @@ using UnityEngine.Assertions;
 //	General UI handling code
 public class UiOverlayManager : MonoBehaviour
 {
+	public enum OverlayElements
+    {
+		Fire,
+		Cauldron,
+		Time,
+		Score,
+		Plants
+    }
+
 	[Header("Events")]
 	[SerializeField]
 	private ScriptableWorldEventHandler _events;
@@ -21,6 +30,9 @@ public class UiOverlayManager : MonoBehaviour
 
 	[SerializeField]
 	private GameObject _score;
+
+	[SerializeField]
+	private GameObject _timeSlider;
 
 	[Header("Scoring")]
 	[SerializeField]
@@ -60,6 +72,30 @@ public class UiOverlayManager : MonoBehaviour
 		_fireSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration);
 		_plantSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
 		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses);
+
+        foreach (var overlayElement in GameManager.Instance.DisabledOverlayElements)
+        {
+            switch (overlayElement)
+            {
+                case OverlayElements.Fire:
+					_fireSlider.SetActive(false);
+                    break;
+                case OverlayElements.Cauldron:
+					_usesSlider.SetActive(false);
+                    break;
+                case OverlayElements.Time:
+					_timeSlider.SetActive(false);
+                    break;
+                case OverlayElements.Score:
+					_score.SetActive(false);
+                    break;
+                case OverlayElements.Plants:
+					_plantSlider.SetActive(false);
+                    break;
+                default:
+                    break;
+            }
+        }
 
 		_events.Score += Score;
 		_scoreSettable.SetValue(0);
