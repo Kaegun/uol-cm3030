@@ -41,7 +41,7 @@ public class PlantPatch : MonoBehaviour
 		{
 			//	Instantiate on the "planted" spot, set plant state to planted
 			_plant = Instantiate(_plantPrefab, _plantedPosition.position, Quaternion.identity.RandomizeY());
-			_plant.Replant(this);
+			_plant.PlantPlant(this);
 		}
 	}
 }

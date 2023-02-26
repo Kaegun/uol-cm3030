@@ -61,7 +61,9 @@ public static class CommonTypes
 
 	public static class ScoreValues
 	{
-		public const int BanishedSpirit = 1000;
+		public const int BanishedSpiritBeforeFinishedPossession = 1000;
+		public const int BanishedSpiritAfterFinishedPossession = 500;
+		public const int ReplantedPlant = 500;
 		public const int BanishedWall = 1000;
 
 		//	TODO: Define other scoring events

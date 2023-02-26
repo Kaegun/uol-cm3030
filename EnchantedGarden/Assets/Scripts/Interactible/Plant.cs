@@ -48,12 +48,18 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
 	public bool CanBeReplanted => _plantState == PlantState.Default && _plantPatch != null && !_planted;
 
-	public void Replant(PlantPatch parent)
-	{
+	public void PlantPlant(PlantPatch parent)
+    {
 		_planted = true;
 		_plantPatch = parent;
 		_replantingProgress = 0;
 		SetModelNormal();
+	}
+
+	private void Replant(PlantPatch parent)
+	{
+		PlantPlant(parent);
+		_worldEvents.OnPlantReplanted(transform.position);
 	}
 
 	public bool CanBePossessed => _plantState == PlantState.Default;
