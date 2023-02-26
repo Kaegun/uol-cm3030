@@ -17,10 +17,10 @@ public class ScoreSettable : MonoBehaviour, ISettable<float>
 	public void SetValue(float value)
 	{
 		Debug.Log("Setting the score");
-		_scoreUpdating = StartCoroutine("ScoreUpdatingCoroutine", value);
+		_scoreUpdating = StartCoroutine(ScoreUpdatingCoroutine(value));
 	}
 
-	private IEnumerable ScoreUpdatingCoroutine(float score)
+	private IEnumerator ScoreUpdatingCoroutine(float score)
 	{
 		Debug.Log($"Score Coroutine: {score} | {GameManager.Instance.Score.Score}");
 

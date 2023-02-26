@@ -25,6 +25,8 @@ public static class CommonTypes
 	{
 		public const string ForwardSpeed = "ForwardSpeed";
 		public const string Alert = "Alert";
+		public const string PickUp = "PickUp";
+		public const string Digging = "Digging";
 	}
 
 	public static class Scenes
@@ -44,16 +46,16 @@ public static class CommonTypes
 		public const string TemplateLevel = "Template";
 		public const string Credits = "Credits";
 	}
-	
+
 	public enum Levels
-    {
+	{
 		Level0,
 		Level1,
 		Level2,
 		Level3,
 		Level4,
 		Template
-    }
+	}
 
 	public static class ScoreValues
 	{
