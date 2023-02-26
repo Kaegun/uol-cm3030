@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,8 +65,10 @@ public class PlayerController : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
-		_rb = GetComponent<Rigidbody>();
 		_animator = GetComponentInChildren<Animator>();
+		Assert.IsNotNull(_animator, Utility.AssertNotNullMessage(nameof(_animator)));
+		if (!TryGetComponent(out _rb))
+			Assert.IsNotNull(_rb, Utility.AssertNotNullMessage(nameof(_rb)));
 
 		//	Fetch the main camera
 		_camera = Camera.main;
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
 				_heldObject = PickupCorrectObject();
 				//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
 				SetCarryIndicator(true, _heldObject);
-				_heldObject.OnPickUp(_heldObjectTransform);				
+				_heldObject.OnPickUp(_heldObjectTransform);
 				break;
 			default:
 				break;
@@ -353,25 +356,25 @@ public class PlayerController : MonoBehaviour
 	{
 		var pickup = (IPickUp)sender;
 		if (pickup == _heldObject)
-        {
+		{
 			_carryIndicator.SetIconColor(Color.Lerp(pickup.CarryIconBaseColor.MaxAlpha(), pickup.CarryIconBaseColor.ZeroAlpha(), e / ((ICombinable)sender).CombinationThreshold));
 			_carryIndicator.SetSecondaryIconColor(Color.Lerp(pickup.CarryIconSecondaryColor.ZeroAlpha(), pickup.CarryIconSecondaryColor.MaxAlpha(), e / ((ICombinable)sender).CombinationThreshold));
-		}		
+		}
 	}
 
 	private void OnDig(object sender, IPickUp e)
-    {
+	{
 		if (e == _heldObject)
-        {
+		{
 			var bounce = Mathf.Sin(Time.time * 8);
 			var prevBounce = Mathf.Sin((Time.time - Time.deltaTime) * 8);
 			_carryIndicator.transform.position += Vector3.up * bounce * 0.015f;
 			if (bounce <= -0.999f && bounce < prevBounce)
-            {
+			{
 				AudioController.PlayAudio(_audioSource, _digAudio);
-            }
-        }
-    }
+			}
+		}
+	}
 
 	private void OnTriggerExit(Collider other)
 	{
@@ -385,10 +388,18 @@ public class PlayerController : MonoBehaviour
 			{
 				_spawner = null;
 			}
-		}		
+		}
 		if (other.TryGetComponent<IInteractable>(out var interactable))
 		{
 			_interactables.Remove(interactable);
 		}
+	}
+
+	private void OnDestroy()
+	{
+		//	Disconnect event handlers
+		_inputEventHandler.Movement -= OnMovement;
+		_inputEventHandler.InteractionPressed -= OnInteractionPressed;
+		_inputEventHandler.InteractionReleased -= OnInteractionReleased;
 	}
 }

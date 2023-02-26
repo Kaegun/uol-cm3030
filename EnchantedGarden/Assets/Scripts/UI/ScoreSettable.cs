@@ -22,9 +22,16 @@ public class ScoreSettable : MonoBehaviour, ISettable<float>
 
 	private IEnumerable ScoreUpdatingCoroutine(float score)
 	{
-		Debug.Log($"SCore Coroutine: {score} | {GameManager.Instance.Score.Score}");
-		_text.text = $"SCORE: {GameManager.Instance.Score.Score:# ##0}";
+		Debug.Log($"Score Coroutine: {score} | {GameManager.Instance.Score.Score}");
+
+		//	TODO: Animate the score text in some way to make it pop when the player scores points.
+
 		yield return new WaitForEndOfFrame();
+	}
+
+	private void Update()
+	{
+		_text.text = $"SCORE: {GameManager.Instance.Score.Score:# ##0}";
 	}
 }
 
