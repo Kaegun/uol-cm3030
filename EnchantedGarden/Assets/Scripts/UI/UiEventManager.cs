@@ -9,9 +9,9 @@ public class UiEventManager : MonoBehaviour
 	}
 
 	public void OnClick_RestartGame()
-    {
+	{
 		GameManager.Instance.RestartGame();
-    }
+	}
 
 	public void OnClick_RestartLevel()
 	{
@@ -24,7 +24,7 @@ public class UiEventManager : MonoBehaviour
 	}
 
 	public void OnClick_VictorySceneContinue()
-    {
+	{
 		GameManager.Instance.LoadNextLevel();
 	}
 }
