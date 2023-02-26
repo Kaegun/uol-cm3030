@@ -13,6 +13,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		StartingPossession,
 		Possessing,
 		Trapped,
+		Banished,
 	}
 
 	[Header("Events")]
@@ -47,7 +48,10 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	[Header("VFX")]
 	[SerializeField]
-	private Material _banishMaterial;
+	private Material _banishableMaterial;
+
+	[SerializeField]
+	private Material _banishedMaterial;
 
 	private SpiritBody _spiritBody;
 	private Vector3 _moveDirection;
@@ -64,7 +68,8 @@ public class Spirit : MonoBehaviour, IInteractable
 	private const float _possessedSpeedFactor = 0.5f,
 		_justSpawnedMovementFactor = 0.5f,
 		_spawnMovementDelay = 2.0f,
-		_widenSearchThreshold = 10.0f;
+		_widenSearchThreshold = 10.0f,
+		_banishTimeout = 0.6f;
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
@@ -74,20 +79,75 @@ public class Spirit : MonoBehaviour, IInteractable
 		_possessionRateMultiplier = possessionRateMultiplier;
 	}
 
-	public void Banish()
+	private bool IsPossessingPlant => (_spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession) && _possessedPossessable is Plant;
+
+	public Transform Transform => transform;
+
+	public bool CanInteractWith(IInteractor interactor)
 	{
+		switch (interactor)
+		{
+			case Flask _:
+				return CanBeBanished && interactor.CanInteractWith(this);
+			default:
+				return false;
+		}
+	}
+
+	public void OnInteractWith(IInteractor interactor)
+	{
+		switch (interactor)
+		{
+			case Flask _:
+				Banish();
+				break;
+			default:
+				break;
+		}
+	}
+
+	public bool DestroyOnInteract(IInteractor interactor)
+	{
+		switch (interactor)
+		{
+			case Flask _:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	public void DestroyInteractable()
+	{
+		//	Wait for the effect to finish
+		Destroy(gameObject, _banishTimeout);
+	}
+
+	private void StealPossessedPlant()
+	{
+		//  Alert the world a plant is dead
+		_worldEvents.OnPlantStolen(_possessedPossessable.GameObject);
+
+		Destroy(_possessedPossessable.GameObject);
+		Destroy(gameObject);
+	}
+
+	private void Banish()
+	{
+		_spiritBody.SetMaterial(_banishedMaterial, true);
 		_possessedPossessable?.OnDispossess();
 		_worldEvents.OnSpiritBanished(this);
 		// Spirit is destroyed before audio plays
 		AudioController.PlayAudioDetached(_bansihAudio, transform.position);
-		Destroy(gameObject);
+		_spiritState = SpiritState.Banished;
 	}
 
 	//  Start is called before the first frame update
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
-		Assert.IsNotNull(_banishMaterial, Utility.AssertNotNullMessage(nameof(_banishMaterial)));
+		Assert.IsNotNull(_banishableMaterial, Utility.AssertNotNullMessage(nameof(_banishableMaterial)));
+		Assert.IsNotNull(_banishedMaterial, Utility.AssertNotNullMessage(nameof(_banishedMaterial)));
 		_spiritBody = GetComponentInChildren<SpiritBody>();
 		Assert.IsNotNull(_spiritBody, Utility.AssertNotNullMessage(nameof(_spiritBody)));
 
@@ -116,28 +176,13 @@ public class Spirit : MonoBehaviour, IInteractable
 			case SpiritState.Possessing:
 				if (_possessedPossessable is Plant plant)
 				{
-					plant.transform.position = transform.position;					
+					plant.transform.position = transform.position;
 					Move(_possessedSpeedFactor);
 				}
 				break;
 			default:
 				break;
 		}
-	}
-
-	private bool IsPossessingPlant => (_spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession) && _possessedPossessable is Plant;
-
-	public Transform Transform => transform;
-
-	public GameObject GameObject => gameObject;
-
-	private void StealPossessedPlant()
-	{
-		//  Alert the world a plant is dead
-		_worldEvents.OnPlantStolen(_possessedPossessable.GameObject);
-
-		Destroy(_possessedPossessable.GameObject);
-		Destroy(gameObject);
 	}
 
 	private void Move(float speedFactor = 1.0f)
@@ -261,7 +306,7 @@ public class Spirit : MonoBehaviour, IInteractable
 			_spiritState = SpiritState.Trapped;
 			transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
 			_spiritState = SpiritState.StartingPossession;
-			_spiritBody.SetMaterial(_banishMaterial);
+			_spiritBody.SetMaterial(_banishableMaterial);
 		}
 
 		//	TODO: Handle all layers for possession
@@ -286,47 +331,13 @@ public class Spirit : MonoBehaviour, IInteractable
 			}
 			else
 			{
-				_spiritBody.SetMaterial(_banishMaterial);
+				_spiritBody.SetMaterial(_banishableMaterial);
 			}
 		}
+
 		if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
 		{
-			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();
-		}
-	}
-
-	public bool CanInteractWith(IInteractor interactor)
-	{
-		switch (interactor)
-		{
-			case Flask _:
-				return CanBeBanished && interactor.CanInteractWith(this);
-			default:
-				return false;
-		}
-	}
-
-	public void OnInteractWith(IInteractor interactor)
-	{
-		switch (interactor)
-		{
-			case Flask _:
-				Banish();
-				break;
-			default:
-				break;
-		}
-	}
-
-	public bool DestroyOnInteract(IInteractor interactor)
-	{
-		switch (interactor)
-		{
-			case Flask _:
-				return true;
-			default:
-				return false;
 		}
 	}
 }
