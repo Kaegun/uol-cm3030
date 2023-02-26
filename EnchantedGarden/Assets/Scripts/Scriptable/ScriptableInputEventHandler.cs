@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "Scriptable/Events/InputEvents")]
-public class ScriptableInputEventHandler : ScriptableEventHandler
+public class ScriptableInputEventHandler : ScriptableObject, IEventPublisher
 {
 	public event EventHandler<float> InteractionPressed;
 	public event EventHandler<float> InteractionReleased;
@@ -12,17 +12,16 @@ public class ScriptableInputEventHandler : ScriptableEventHandler
 	public void OnInteractionPressed(InputAction.CallbackContext context)
 	{
 		if (HandleInputDown(context, out float pressed))
-			ExecuteEvent(InteractionPressed, pressed);
+			this.ExecuteEvent(InteractionPressed, pressed);
 
 		if (HandleInputUp(context, out float up))
-			ExecuteEvent(InteractionReleased, up);
+			this.ExecuteEvent(InteractionReleased, up);
 	}
 
 	public void OnMove(InputAction.CallbackContext context)
 	{
-		Vector2 movement;
-		if (HandleInputDown(context, out movement) || HandleInputUp(context, out movement))
-			ExecuteEvent(Movement, movement);
+		if (HandleInputDown(context, out Vector2 movement) || HandleInputUp(context, out movement))
+			this.ExecuteEvent(Movement, movement);
 	}
 
 	private bool HandleInputDown<T>(InputAction.CallbackContext context, out T result) where T : struct

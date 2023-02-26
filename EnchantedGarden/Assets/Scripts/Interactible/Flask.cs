@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Flask : PickUpBase, ICombinable, IInteractor
+public class Flask : PickUpBase, ICombinable, IInteractor, IEventPublisher
 {
 	[Header("Events")]
 	[SerializeField]
@@ -30,9 +30,9 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	private float _combinationProgress = 0f;
 
 	public override void OnPickUp(Transform pickupTransform)
-    {
+	{
 		base.OnPickUp(pickupTransform);
-		ExecuteEvent(CombineProgress, _combinationProgress);
+		this.ExecuteEvent(CombineProgress, _combinationProgress);
 	}
 
 	private void UseFlask()
@@ -45,7 +45,7 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	public bool Combining()
 	{
 		_combinationProgress += Time.deltaTime;
-		ExecuteEvent(CombineProgress, _combinationProgress);
+		this.ExecuteEvent(CombineProgress, _combinationProgress);
 
 		if (_combinationProgress >= _combinationThreshold)
 		{
@@ -107,17 +107,6 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 				return true;
 			default:
 				return false;
-		}
-	}
-
-	private void ExecuteEvent<T>(EventHandler<T> handler, T e)
-	{
-		if (handler != null)
-		{
-			foreach (var evt in handler.GetInvocationList())
-			{
-				evt.DynamicInvoke(this, e);
-			}
 		}
 	}
 

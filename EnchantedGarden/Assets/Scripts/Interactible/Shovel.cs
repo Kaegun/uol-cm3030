@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Shovel : PickUpBase, IInteractor
+public class Shovel : PickUpBase, IInteractor, IEventPublisher
 {
     public GameObject GameObject => gameObject;
 
@@ -23,7 +23,7 @@ public class Shovel : PickUpBase, IInteractor
         switch (interactable)
         {
             case Plant _:
-                ExecuteEvent(DigEvent, this);
+                this.ExecuteEvent(DigEvent, this);
                 break;
             default:
                 break;
@@ -34,15 +34,4 @@ public class Shovel : PickUpBase, IInteractor
     {
         return false;
     }
-
-    private void ExecuteEvent<T>(EventHandler<T> handler, IPickUp pickUp)
-    {
-        if (handler != null)
-        {
-            foreach (var evt in handler.GetInvocationList())
-            {
-                evt.DynamicInvoke(this, pickUp);
-            }
-        }
-    }    
 }

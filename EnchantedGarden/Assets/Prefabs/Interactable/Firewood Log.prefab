@@ -56,7 +56,8 @@ MonoBehaviour:
   _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
-  _playAnimation: 0
+  _playPickupAnimation: 1
+  _playDropAnimation: 1
 --- !u!136 &5132206957325479266
 CapsuleCollider:
   m_ObjectHideFlags: 0
