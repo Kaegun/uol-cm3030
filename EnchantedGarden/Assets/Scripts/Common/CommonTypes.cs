@@ -29,8 +29,10 @@ public static class CommonTypes
 
 	public static class Scenes
 	{
+		public const string Launcher = "Launcher";
 		public const string UI = "UI Overlay";
 		public const string GameOver = "Game Over";
+		public const string LevelFailed = "Level Failed";
 		public const string Level0 = "Level 0";
 		public const string Level1 = "Level 1";
 		public const string Level2 = "Level 2";
@@ -40,6 +42,7 @@ public static class CommonTypes
 		public const string Loading = "Loading";
 		public const string Victory = "Victory";
 		public const string TemplateLevel = "Template";
+		public const string Credits = "Credits";
 	}
 	
 	public enum Levels
