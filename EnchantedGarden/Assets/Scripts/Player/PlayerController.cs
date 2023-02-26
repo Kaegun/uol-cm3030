@@ -157,8 +157,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnMovement(object sender, Vector2 e)
 	{
-		if (_canMove)
-			_moveDirection = e;
+		_moveDirection = e;
 	}
 
 	private void SetPickUpIndicator(bool active, Vector3? position = null)
@@ -312,8 +311,8 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		//	If there are any keys down, we should move
-		if (IsMoving)
+		//	If there are any keys down, we should move, unless a stationary animation is playing
+		if (_canMove && IsMoving)
 		{
 			// Calculate camera's rotation about the y axis
 			Quaternion cameraRotation = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
