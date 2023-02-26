@@ -4,9 +4,11 @@ public class ScoreController
 {
 	private ScriptableWorldEventHandler _events;
 	private float _score = 0;
+	private int _finalScore = 0;
 	private int _rating;
 
 	public float Score => _score;
+	public int FinalScore => _finalScore;
 
 	public int Rating => _rating;
 
@@ -24,13 +26,16 @@ public class ScoreController
 		_events.SpiritWallBanished -= SpiritWallBanished;
 	}
 
-	public int CalculateRating(int numPlantsRemaining, int maxPlants)
-	{
-		//	TODO: Calculate final score and rating
-		var plantRatio = numPlantsRemaining / (float)maxPlants;
-		_score *= plantRatio > 0.8f ? 3 : plantRatio > 0.5f ? 2 : 1;
+	private void CalculateFinalScore(int numPlantsRemaining)
+    {
+		// Final score is score +50% for each plant remaining
+		_finalScore = (int)(_score * (1 + 0.5f * numPlantsRemaining));
+	}
 
-		return _rating = _score > 10000 ? 3 : _score > 5000 ? 2 : 1;
+	public int CalculateRating(int numPlantsRemaining, int twoStarThreshold, int threeStarThreshold)
+	{
+		CalculateFinalScore(numPlantsRemaining);
+		return _rating = _finalScore >= threeStarThreshold ? 3 : _finalScore >= twoStarThreshold ? 2 : 1;
 	}
 
 	private void SpiritBanished(object sender, Spirit e)
