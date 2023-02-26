@@ -39,6 +39,11 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private bool _useUiOverlay = true;
 
+	[SerializeField]
+	private UiOverlayManager.OverlayElements[] _disabledOverlayElements;
+
+	public UiOverlayManager.OverlayElements[] DisabledOverlayElements => _disabledOverlayElements;
+
 	private bool _gameOver = false;
 	private int _activeSpiritCount = 0;
 

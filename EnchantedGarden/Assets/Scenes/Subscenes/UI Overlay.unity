@@ -171,6 +171,7 @@ MonoBehaviour:
   _plantSlider: {fileID: 1585647249}
   _usesSlider: {fileID: 1624249523}
   _score: {fileID: 582091734}
+  _timeSlider: {fileID: 1503862731}
   _canvas: {fileID: 385067823}
   _floatingScorePrefab: {fileID: 2525525767991169270, guid: 450094858f4ae784fa371ee3ccfeebef,
     type: 3}
@@ -758,6 +759,12 @@ PrefabInstance:
 --- !u!224 &1503862730 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 421334407366130155, guid: 3107c897b830cc24db06153ecc4e1e38,
+    type: 3}
+  m_PrefabInstance: {fileID: 1503862729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1503862731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 421334407366130154, guid: 3107c897b830cc24db06153ecc4e1e38,
     type: 3}
   m_PrefabInstance: {fileID: 1503862729}
   m_PrefabAsset: {fileID: 0}
