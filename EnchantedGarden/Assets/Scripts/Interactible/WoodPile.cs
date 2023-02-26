@@ -19,17 +19,27 @@ public class WoodPile : PickUpSpawnerBase
 		Assert.IsNotNull(_pickUpIndicator, Utility.AssertNotNullMessage(nameof(_pickUpIndicator)));
 
 		_pickUpIndicator.SetIconColor(_alertIconColor);
-		_worldEvents.FireDied += FireDied;
-		_worldEvents.FireFull += FireFull;
+		SubscribeToWorldEvents();
 	}
 
     private void OnDestroy()
     {
+		UnsubscribeFromWorldEvents();
+	}
+
+	private void SubscribeToWorldEvents()
+	{
+		_worldEvents.FireDied += FireDied;
+		_worldEvents.FireFull += FireFull;
+	}
+
+	private void UnsubscribeFromWorldEvents()
+	{
 		_worldEvents.FireDied -= FireDied;
 		_worldEvents.FireFull -= FireFull;
 	}
 
-    private void FireDied(object _, Vector3 e)
+	private void FireDied(object _, Vector3 e)
 	{
 		_pickUpIndicator.SetActive(true);
 	}

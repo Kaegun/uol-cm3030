@@ -139,7 +139,7 @@ public class FoxBehaviour : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _audioSource;
 	//private TMP_Text _speechText;
-	private Image _inscructionImage;
+	private Image _instructionImage;
 	private Camera _camera;
 
 	private FoxState _state;
@@ -200,8 +200,8 @@ public class FoxBehaviour : MonoBehaviour
 		_audioSource = GetComponentInChildren<AudioSource>();
 		Assert.IsNotNull(_audioSource, Utility.AssertNotNullMessage(nameof(_audioSource)));
 
-		_inscructionImage = _instructionCanvas.GetComponentInChildren<Image>();
-		Assert.IsNotNull(_inscructionImage, Utility.AssertNotNullMessage(nameof(_inscructionImage)));
+		_instructionImage = _instructionCanvas.GetComponentInChildren<Image>();
+		Assert.IsNotNull(_instructionImage, Utility.AssertNotNullMessage(nameof(_instructionImage)));
 
 		// Hide instruction canvas
 		_instructionCanvas.gameObject.SetActive(false);
@@ -270,7 +270,7 @@ public class FoxBehaviour : MonoBehaviour
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate alert icon
 		_worldEvents.OnFoxAlert(gameObject);
-		_inscructionImage.sprite = _alertSprite;
+		_instructionImage.sprite = _alertSprite;
 		_instructionCanvas.gameObject.SetActive(true);
 		float t = 0f;
 		while (t < duration)
@@ -306,7 +306,7 @@ public class FoxBehaviour : MonoBehaviour
 		// TODO: Different sound than alert for instruction?
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate instruction icon
-		_inscructionImage.sprite = instruction;
+		_instructionImage.sprite = instruction;
 		_instructionCanvas.gameObject.SetActive(true);
 		yield return new WaitForSeconds(duration);
 		// Disable instruction icon
