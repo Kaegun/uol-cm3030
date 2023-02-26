@@ -19,10 +19,26 @@ public class IngredientSpawner : PickUpSpawnerBase
 		Assert.IsNotNull(_pickUpIndicator, Utility.AssertNotNullMessage(nameof(_pickUpIndicator)));
 
 		_pickUpIndicator.SetIconColor(_alertIconColor);
+
+		SubscribeToWorldEvents();
+		GameManager.Instance.CheckIngredientsLow();
+	}
+
+    private void OnDestroy()
+    {
+		UnsubscribeFromWorldEvents();
+	}
+
+	private void SubscribeToWorldEvents()
+	{
 		_worldEvents.IngredientsEmpty += IngredientsEmptyWarning;
 		_worldEvents.IngredientsFull += IngredientsFull;
+	}
 
-		GameManager.Instance.CheckIngredientsLow();
+	private void UnsubscribeFromWorldEvents()
+	{
+		_worldEvents.IngredientsEmpty -= IngredientsEmptyWarning;
+		_worldEvents.IngredientsFull -= IngredientsFull;
 	}
 
 	private void IngredientsEmptyWarning(object _, Vector3 e)

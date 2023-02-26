@@ -139,7 +139,7 @@ public class FoxBehaviour : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _audioSource;
 	//private TMP_Text _speechText;
-	private Image _inscructionImage;
+	private Image _instructionImage;
 	private Camera _camera;
 
 	private FoxState _state;
@@ -147,6 +147,40 @@ public class FoxBehaviour : MonoBehaviour
 	private readonly Queue<IEnumerator> _behaviourQueue = new Queue<IEnumerator>();
 	private readonly HashSet<Events> _handledEvents = new HashSet<Events>();
 	private Coroutine _activeBehaviourCoroutine;
+
+	private void SubscribeToWorldEvents()
+    {
+		_worldEvents.LevelStarted += LevelStarted;
+
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritWallSpawned += SpiritWallSpawned;
+
+		_worldEvents.PlantPossessing += PlantPossessing;
+		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.PlantDroppedOutOfPatch += PlantDroppedOutOfPatch;
+
+		_worldEvents.FireDied += FireDied;
+		_worldEvents.IngredientsEmpty += IngredientsEmpty;
+
+		_worldEvents.PickUpTrickPlant += PickUpTrickPlant;
+	}
+
+	private void UnsubscribeFromWorldEvents()
+	{
+		_worldEvents.LevelStarted -= LevelStarted;
+
+		_worldEvents.SpiritSpawned -= SpiritSpawned;
+		_worldEvents.SpiritWallSpawned -= SpiritWallSpawned;
+
+		_worldEvents.PlantPossessing -= PlantPossessing;
+		_worldEvents.PlantStolen -= PlantStolen;
+		_worldEvents.PlantDroppedOutOfPatch -= PlantDroppedOutOfPatch;
+
+		_worldEvents.FireDied -= FireDied;
+		_worldEvents.IngredientsEmpty -= IngredientsEmpty;
+
+		_worldEvents.PickUpTrickPlant -= PickUpTrickPlant;
+	}
 
 	// Start is called before the first frame update
 	private void Start()
@@ -166,38 +200,14 @@ public class FoxBehaviour : MonoBehaviour
 		_audioSource = GetComponentInChildren<AudioSource>();
 		Assert.IsNotNull(_audioSource, Utility.AssertNotNullMessage(nameof(_audioSource)));
 
-		//_speechText = _instructionCanvas.GetComponentInChildren<TMP_Text>();
-		//Assert.IsNotNull(_speechText, Utility.AssertNotNullMessage(nameof(_speechText)));
-
-		_inscructionImage = _instructionCanvas.GetComponentInChildren<Image>();
-		Assert.IsNotNull(_inscructionImage, Utility.AssertNotNullMessage(nameof(_inscructionImage)));
+		_instructionImage = _instructionCanvas.GetComponentInChildren<Image>();
+		Assert.IsNotNull(_instructionImage, Utility.AssertNotNullMessage(nameof(_instructionImage)));
 
 		// Hide instruction canvas
 		_instructionCanvas.gameObject.SetActive(false);
-
-
 		_camera = Camera.main;
 
-		_worldEvents.LevelStarted += LevelStarted;
-
-		//_worldEvents.SpiritWaveSpawned += SpiritWaveSpawned;
-		_worldEvents.SpiritSpawned += SpiritSpawned;
-		_worldEvents.SpiritWallSpawned += SpiritWallSpawned;
-		//_worldEvents.SpiritBanished += SpiritBanished;
-
-		_worldEvents.PlantPossessing += PlantPossessing;
-		//_worldEvents.PlantPossessed += PlantPossessed;
-		_worldEvents.PlantStolen += PlantStolen;
-		_worldEvents.PlantDroppedOutOfPatch += PlantDroppedOutOfPatch;
-
-		_worldEvents.FireDied += FireDied;
-		//_worldEvents.FireLowWarning += FireLowWarning;
-		//_worldEvents.FireMediumWarning += FireMediumWarning;
-
-		//_worldEvents.IngredientsLowWarning += IngredientsLowWarning;
-		_worldEvents.IngredientsEmpty += IngredientsEmpty;
-
-		_worldEvents.PickUpTrickPlant += PickUpTrickPlant;
+		SubscribeToWorldEvents();
 	}
 
 	// Update is called once per frame
@@ -233,7 +243,12 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	private IEnumerator MoveToTargetCoroutine(Transform target)
+    private void OnDestroy()
+    {
+		UnsubscribeFromWorldEvents();
+    }
+
+    private IEnumerator MoveToTargetCoroutine(Transform target)
 	{
 		while (Vector3.Distance(transform.position, target.position) > 4f)
 		{
@@ -255,7 +270,7 @@ public class FoxBehaviour : MonoBehaviour
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate alert icon
 		_worldEvents.OnFoxAlert(gameObject);
-		_inscructionImage.sprite = _alertSprite;
+		_instructionImage.sprite = _alertSprite;
 		_instructionCanvas.gameObject.SetActive(true);
 		float t = 0f;
 		while (t < duration)
@@ -291,7 +306,7 @@ public class FoxBehaviour : MonoBehaviour
 		// TODO: Different sound than alert for instruction?
 		AudioController.PlayAudio(_audioSource, _alertSound);
 		// Activate instruction icon
-		_inscructionImage.sprite = instruction;
+		_instructionImage.sprite = instruction;
 		_instructionCanvas.gameObject.SetActive(true);
 		yield return new WaitForSeconds(duration);
 		// Disable instruction icon
