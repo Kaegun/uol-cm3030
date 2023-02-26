@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -59,48 +60,50 @@ public class PlayerController : MonoBehaviour
 	private IPickUp _heldObject = null;
 	private PickUpSpawnerBase _spawner;
 	private float _carryIndicatorLocalY;
+	private bool _canMove = true;   //	Set this when an animation is playing.
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
-	// Start is called before the first frame update
-	private void Start()
-	{
-		_animator = GetComponentInChildren<Animator>();
-		Assert.IsNotNull(_animator, Utility.AssertNotNullMessage(nameof(_animator)));
-		if (!TryGetComponent(out _rb))
-			Assert.IsNotNull(_rb, Utility.AssertNotNullMessage(nameof(_rb)));
-
-		//	Fetch the main camera
-		_camera = Camera.main;
-
-		_inputEventHandler.Movement += OnMovement;
-		_inputEventHandler.InteractionPressed += OnInteractionPressed;
-		_inputEventHandler.InteractionReleased += OnInteractionReleased;
-		Shovel.DigEvent += OnDig;
-
-		_carryIndicatorLocalY = _carryIndicator.transform.localPosition.y;
-	}
-
 	private void OnInteractionPressed(object sender, float e)
 	{
-		switch (_heldObject == null)
+		if (_canMove)
 		{
-			case false when _heldObject.CanBeDropped:
-				HandleDropObject();
-				break;
-			case true when _pickups.Count > 0 || _spawner != null:
-				AudioController.PlayAudio(_audioSource, _pickUpAudio);
-				// Reset local position of carry indicator to account for shovel bounce implementation
-				_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
-				_heldObject = PickupCorrectObject();
-				//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
-				SetCarryIndicator(true, _heldObject);
-				_heldObject.OnPickUp(_heldObjectTransform);
-				break;
-			default:
-				break;
+			switch (_heldObject == null)
+			{
+				case false when _heldObject.CanBeDropped:
+					HandleDropObject();
+					break;
+				case true when _pickups.Count > 0 || _spawner != null:
+					StartCoroutine(PickUpObjectCoroutine());
+					break;
+				default:
+					break;
+			}
 		}
 	}
+
+	private IEnumerator PickUpObjectCoroutine()
+	{
+		AudioController.PlayAudio(_audioSource, _pickUpAudio);
+
+		// Reset local position of carry indicator to account for shovel bounce implementation
+		_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
+		_heldObject = PickupCorrectObject();
+
+		//	!! Animation clip uses left hand !! - may need CR
+		if (_heldObject.PlayAnimation)
+		{
+			_canMove = false;
+			//	Play the pickup animation and wait for it to complete
+			yield return AnimationHelper.TriggerAndWaitForAnimation(_animator, CommonTypes.AnimatorActions.PickUp);
+			_canMove = true;
+		}
+
+		//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
+		SetCarryIndicator(true, _heldObject);
+		_heldObject.OnPickUp(_heldObjectTransform);
+	}
+
 	private IPickUp GetClosestPickup()
 	{
 		//	TODO: Rare bug when pickup has despawned after been added to the list, should rather clean them out of the list after despawn.
@@ -152,7 +155,8 @@ public class PlayerController : MonoBehaviour
 
 	private void OnMovement(object sender, Vector2 e)
 	{
-		_moveDirection = e;
+		if (_canMove)
+			_moveDirection = e;
 	}
 
 	private void SetPickUpIndicator(bool active, Vector3? position = null)
@@ -179,6 +183,46 @@ public class PlayerController : MonoBehaviour
 		}
 
 		_carryIndicator.SetActive(enabled);
+	}
+
+	private void SubscribeToEvents()
+	{
+		_inputEventHandler.Movement += OnMovement;
+		_inputEventHandler.InteractionPressed += OnInteractionPressed;
+		_inputEventHandler.InteractionReleased += OnInteractionReleased;
+
+		Shovel.DigEvent += OnDig;
+	}
+
+	private void UnsubscribeFromEvents()
+	{
+		//	Disconnect event handlers
+		_inputEventHandler.Movement -= OnMovement;
+		_inputEventHandler.InteractionPressed -= OnInteractionPressed;
+		_inputEventHandler.InteractionReleased -= OnInteractionReleased;
+
+		Shovel.DigEvent -= OnDig;
+	}
+
+	private void OnDestroy()
+	{
+		UnsubscribeFromEvents();
+	}
+
+	// Start is called before the first frame update
+	private void Start()
+	{
+		_animator = GetComponentInChildren<Animator>();
+		Assert.IsNotNull(_animator, Utility.AssertNotNullMessage(nameof(_animator)));
+		if (!TryGetComponent(out _rb))
+			Assert.IsNotNull(_rb, Utility.AssertNotNullMessage(nameof(_rb)));
+
+		//	Fetch the main camera
+		_camera = Camera.main;
+
+		_carryIndicatorLocalY = _carryIndicator.transform.localPosition.y;
+
+		SubscribeToEvents();
 	}
 
 	// Update is called once per frame
@@ -366,6 +410,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if (e == _heldObject)
 		{
+			//	Play digging animation - TODO: prevent player moving until digging complete?
+			_animator.SetTrigger(CommonTypes.AnimatorActions.Digging);
 			var bounce = Mathf.Sin(Time.time * 8);
 			var prevBounce = Mathf.Sin((Time.time - Time.deltaTime) * 8);
 			_carryIndicator.transform.position += Vector3.up * bounce * 0.015f;
@@ -393,13 +439,5 @@ public class PlayerController : MonoBehaviour
 		{
 			_interactables.Remove(interactable);
 		}
-	}
-
-	private void OnDestroy()
-	{
-		//	Disconnect event handlers
-		_inputEventHandler.Movement -= OnMovement;
-		_inputEventHandler.InteractionPressed -= OnInteractionPressed;
-		_inputEventHandler.InteractionReleased -= OnInteractionReleased;
 	}
 }
