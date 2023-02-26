@@ -33,13 +33,9 @@ public class SpiritWall : MonoBehaviour, IPossessable
 	public void OnPossessionStarted(Spirit possessor)
 	{
 		_isPossessed = true;
-
 	}
 
-	public void WhileCompletingPossession(Spirit possessor)
-	{
-
-	}
+	public void WhileCompletingPossession(Spirit possessor) { }
 
 	public void OnPossessionCompleted(Spirit possessor)
 	{

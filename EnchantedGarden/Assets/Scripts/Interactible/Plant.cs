@@ -48,8 +48,16 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
 	public bool CanBeReplanted => _plantState == PlantState.Default && _plantPatch != null && !_planted;
 
+	public bool CanBePossessed => _plantState == PlantState.Default;
+
+	public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.ActiveLevel.PossessionThreshold;
+
+	public override Transform Transform => transform;
+
+	public GameObject GameObject => gameObject;
+
 	public void PlantPlant(PlantPatch parent)
-    {
+	{
 		_planted = true;
 		_plantPatch = parent;
 		_replantingProgress = 0;
@@ -61,14 +69,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		PlantPlant(parent);
 		_worldEvents.OnPlantReplanted(transform.position);
 	}
-
-	public bool CanBePossessed => _plantState == PlantState.Default;
-
-	public bool PossessionCompleted => _possessionProgress >= GameManager.Instance.ActiveLevel.PossessionThreshold;
-
-	public override Transform Transform => transform;
-
-	public GameObject GameObject => gameObject;
 
 	public void OnPossessionStarted(Spirit possessor)
 	{
@@ -206,6 +206,11 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 			default:
 				break;
 		}
+	}
+
+	public void DestroyInteractable()
+	{
+		//	Do nothing
 	}
 
 	public bool DestroyOnInteract(IInteractor interactor)
