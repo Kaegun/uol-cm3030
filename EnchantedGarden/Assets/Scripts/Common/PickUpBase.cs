@@ -36,9 +36,12 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	[SerializeField]
 	protected float _despawnTimeout = 5.0f;
 
-	[Header("Pickup Animation")]
+	[Header("Animations")]
 	[SerializeField]
-	protected bool _playAnimation = false;
+	protected bool _playPickupAnimation = false;
+
+	[SerializeField]
+	protected bool _playDropAnimation = false;
 
 	public virtual Transform Transform => transform;
 
@@ -59,7 +62,9 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 	private bool _despawned = false;
 	public virtual bool Despawned => _despawned;
 
-	public virtual bool PlayAnimation => _playAnimation;
+	public virtual bool PlayPickUpAnimation => _playPickupAnimation;
+
+	public virtual bool PlayDropAnimation => _playDropAnimation;
 
 	public virtual Vector3 IndicatorPostion => transform.position + _indicatorAdjustmentPosition;
 

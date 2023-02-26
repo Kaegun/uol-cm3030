@@ -7,7 +7,8 @@ public interface IPickUp
 	bool Despawned { get; }
 	bool CanBePickedUp { get; set; }
 	bool CanBeDropped { get; }
-	bool PlayAnimation { get; }
+	bool PlayPickUpAnimation { get; }
+	bool PlayDropAnimation { get; }
 	Vector3 IndicatorPostion { get; }
 	Sprite CarryIcon { get; }
 	Sprite CarryIconSecondary { get; }

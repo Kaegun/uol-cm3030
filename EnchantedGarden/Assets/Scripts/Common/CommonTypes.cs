@@ -23,10 +23,11 @@ public static class CommonTypes
 
 	public static class AnimatorActions
 	{
-		public const string ForwardSpeed = "ForwardSpeed";
 		public const string Alert = "Alert";
-		public const string PickUp = "PickUp";
 		public const string Digging = "Digging";
+		public const string Drop = "Drop";
+		public const string ForwardSpeed = "ForwardSpeed";
+		public const string PickUp = "PickUp";
 	}
 
 	public static class Scenes
