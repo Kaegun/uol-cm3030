@@ -25,7 +25,13 @@ public class IngredientSpawner : PickUpSpawnerBase
 		GameManager.Instance.CheckIngredientsLow();
 	}
 
-	private void IngredientsEmptyWarning(object _, Vector3 e)
+    private void OnDestroy()
+    {
+		_worldEvents.IngredientsEmpty -= IngredientsEmptyWarning;
+		_worldEvents.IngredientsFull -= IngredientsFull;
+	}
+
+    private void IngredientsEmptyWarning(object _, Vector3 e)
 	{
 		_pickUpIndicator.SetActive(true);
 	}

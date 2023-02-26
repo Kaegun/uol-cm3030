@@ -23,7 +23,13 @@ public class WoodPile : PickUpSpawnerBase
 		_worldEvents.FireFull += FireFull;
 	}
 
-	private void FireDied(object _, Vector3 e)
+    private void OnDestroy()
+    {
+		_worldEvents.FireDied -= FireDied;
+		_worldEvents.FireFull -= FireFull;
+	}
+
+    private void FireDied(object _, Vector3 e)
 	{
 		_pickUpIndicator.SetActive(true);
 	}

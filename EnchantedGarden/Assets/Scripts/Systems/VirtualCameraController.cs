@@ -28,7 +28,15 @@ public class VirtualCameraController : MonoBehaviour
 		_worldEvents.FoxAlertEnded += FoxAlertEnded;
 	}
 
-	private void SpiritSpawned(object sender, Spirit e)
+    private void OnDestroy()
+    {
+		_worldEvents.SpiritSpawned -= SpiritSpawned;
+		_worldEvents.SpiritBanished -= SpiritBanished;
+		_worldEvents.FoxAlert -= FoxAlert;
+		_worldEvents.FoxAlertEnded -= FoxAlertEnded;
+	}
+
+    private void SpiritSpawned(object sender, Spirit e)
 	{		
 		AddToTargetGroup(e.transform);		
 	}

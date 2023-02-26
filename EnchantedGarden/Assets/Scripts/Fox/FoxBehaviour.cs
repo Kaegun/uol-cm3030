@@ -148,6 +148,40 @@ public class FoxBehaviour : MonoBehaviour
 	private readonly HashSet<Events> _handledEvents = new HashSet<Events>();
 	private Coroutine _activeBehaviourCoroutine;
 
+	private void SubscribeToWorldEvents()
+    {
+		_worldEvents.LevelStarted += LevelStarted;
+
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritWallSpawned += SpiritWallSpawned;
+
+		_worldEvents.PlantPossessing += PlantPossessing;
+		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.PlantDroppedOutOfPatch += PlantDroppedOutOfPatch;
+
+		_worldEvents.FireDied += FireDied;
+		_worldEvents.IngredientsEmpty += IngredientsEmpty;
+
+		_worldEvents.PickUpTrickPlant += PickUpTrickPlant;
+	}
+
+	private void UnsubscribeFromWorldEvents()
+	{
+		_worldEvents.LevelStarted -= LevelStarted;
+
+		_worldEvents.SpiritSpawned -= SpiritSpawned;
+		_worldEvents.SpiritWallSpawned -= SpiritWallSpawned;
+
+		_worldEvents.PlantPossessing -= PlantPossessing;
+		_worldEvents.PlantStolen -= PlantStolen;
+		_worldEvents.PlantDroppedOutOfPatch -= PlantDroppedOutOfPatch;
+
+		_worldEvents.FireDied -= FireDied;
+		_worldEvents.IngredientsEmpty -= IngredientsEmpty;
+
+		_worldEvents.PickUpTrickPlant -= PickUpTrickPlant;
+	}
+
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -166,38 +200,14 @@ public class FoxBehaviour : MonoBehaviour
 		_audioSource = GetComponentInChildren<AudioSource>();
 		Assert.IsNotNull(_audioSource, Utility.AssertNotNullMessage(nameof(_audioSource)));
 
-		//_speechText = _instructionCanvas.GetComponentInChildren<TMP_Text>();
-		//Assert.IsNotNull(_speechText, Utility.AssertNotNullMessage(nameof(_speechText)));
-
 		_inscructionImage = _instructionCanvas.GetComponentInChildren<Image>();
 		Assert.IsNotNull(_inscructionImage, Utility.AssertNotNullMessage(nameof(_inscructionImage)));
 
 		// Hide instruction canvas
 		_instructionCanvas.gameObject.SetActive(false);
-
-
 		_camera = Camera.main;
 
-		_worldEvents.LevelStarted += LevelStarted;
-
-		//_worldEvents.SpiritWaveSpawned += SpiritWaveSpawned;
-		_worldEvents.SpiritSpawned += SpiritSpawned;
-		_worldEvents.SpiritWallSpawned += SpiritWallSpawned;
-		//_worldEvents.SpiritBanished += SpiritBanished;
-
-		_worldEvents.PlantPossessing += PlantPossessing;
-		//_worldEvents.PlantPossessed += PlantPossessed;
-		_worldEvents.PlantStolen += PlantStolen;
-		_worldEvents.PlantDroppedOutOfPatch += PlantDroppedOutOfPatch;
-
-		_worldEvents.FireDied += FireDied;
-		//_worldEvents.FireLowWarning += FireLowWarning;
-		//_worldEvents.FireMediumWarning += FireMediumWarning;
-
-		//_worldEvents.IngredientsLowWarning += IngredientsLowWarning;
-		_worldEvents.IngredientsEmpty += IngredientsEmpty;
-
-		_worldEvents.PickUpTrickPlant += PickUpTrickPlant;
+		SubscribeToWorldEvents();
 	}
 
 	// Update is called once per frame
@@ -233,7 +243,12 @@ public class FoxBehaviour : MonoBehaviour
 		}
 	}
 
-	private IEnumerator MoveToTargetCoroutine(Transform target)
+    private void OnDestroy()
+    {
+		UnsubscribeFromWorldEvents();
+    }
+
+    private IEnumerator MoveToTargetCoroutine(Transform target)
 	{
 		while (Vector3.Distance(transform.position, target.position) > 4f)
 		{
