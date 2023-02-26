@@ -108,14 +108,14 @@ public class Spirit : MonoBehaviour, IInteractable
 					_possessedPossessable.OnPossessionCompleted(this);
 					_spiritState = SpiritState.Possessing;
 					AudioController.PlayAudio(_audioSource, _completePossessionAudio);
+					_moveDirection = (_spawnPos - transform.position).normalized;
 				}
 
 				break;
 			case SpiritState.Possessing:
 				if (_possessedPossessable is Plant plant)
 				{
-					plant.transform.position = transform.position;
-					_moveDirection = (_spawnPos - transform.position).normalized;
+					plant.transform.position = transform.position;					
 					Move(_possessedSpeedFactor);
 				}
 				break;
@@ -288,7 +288,7 @@ public class Spirit : MonoBehaviour, IInteractable
 				_spiritBody.SetMaterial(_banishMaterial);
 			}
 		}
-		else if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
 		{
 			//	handle - we're off the edge of the map Jim
 			StealPossessedPlant();

@@ -172,15 +172,27 @@ public class GameManager : SingletonBase<GameManager>
 		_worldEvents.OnLevelStarted(level);
 	}
 
+	private void SubscribeToWorldEvents()
+    {
+		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritBanished += SpiritBanished;
+	}
+
+	private void UnsubscribeFromWorldEvents()
+    {
+		_worldEvents.PlantStolen -= PlantStolen;
+		_worldEvents.SpiritSpawned -= SpiritSpawned;
+		_worldEvents.SpiritBanished -= SpiritBanished;
+	}
+
 	//	Start is called before the first frame update
 	private void Start()
 	{
 		Assert.IsTrue(_gameLevels.Length > 0);
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
-		_worldEvents.PlantStolen += PlantStolen;
-		_worldEvents.SpiritSpawned += SpiritSpawned;
-		_worldEvents.SpiritBanished += SpiritBanished;
+		SubscribeToWorldEvents();
 
 		if (_useUiOverlay)
 		{
@@ -219,4 +231,9 @@ public class GameManager : SingletonBase<GameManager>
 
 		}
 	}
+
+    private void OnDestroy()
+    {
+		UnsubscribeFromWorldEvents();
+    }
 }
