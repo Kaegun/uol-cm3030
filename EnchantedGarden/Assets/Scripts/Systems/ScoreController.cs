@@ -20,6 +20,7 @@ public class ScoreController
 
 		_events.SpiritBanished += SpiritBanished;
 		_events.SpiritWallBanished += SpiritWallBanished;
+		_events.PlantReplanted += PlantReplanted;
 
 		Debug.Log("Score Controller Loaded");
 	}
@@ -38,15 +39,28 @@ public class ScoreController
 
 	private void SpiritBanished(object sender, Spirit e)
 	{
-		Debug.Log("ScoreController.SpiritBanished");
-		_score += CommonTypes.ScoreValues.BanishedSpirit;
-		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(CommonTypes.ScoreValues.BanishedSpirit, e.transform.position));
+		int scoreValue = 0;
+		if (e.ActiveSpiritState == Spirit.SpiritState.StartingPossession)
+        {
+			scoreValue = CommonTypes.ScoreValues.BanishedSpiritBeforeFinishedPossession;
+		}
+		else if (e.ActiveSpiritState == Spirit.SpiritState.Possessing)
+        {
+			scoreValue = CommonTypes.ScoreValues.BanishedSpiritAfterFinishedPossession;
+		}
+		_score += scoreValue;
+		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(scoreValue, e.transform.position));
 	}
 
 	private void SpiritWallBanished(object sender, SpiritWall e)
 	{
-		Debug.Log("ScoreController.SpiritWallBanished");
 		_score += CommonTypes.ScoreValues.BanishedWall;
 		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(CommonTypes.ScoreValues.BanishedWall, e.transform.position));
 	}
+
+	private void PlantReplanted(object sender, Vector3 e)
+    {
+		_score += CommonTypes.ScoreValues.ReplantedPlant;
+		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(CommonTypes.ScoreValues.ReplantedPlant, e));
+    }
 }

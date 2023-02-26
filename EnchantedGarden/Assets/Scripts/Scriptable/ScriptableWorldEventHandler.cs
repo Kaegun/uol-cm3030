@@ -14,6 +14,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
 	public event EventHandler<Vector3> PlantPossessing;
+	public event EventHandler<Vector3> PlantReplanted;
 	public event EventHandler<GameObject> PlantStolen;
 	public event EventHandler<GameObject> PickUpTrickPlant;
 	public event EventHandler<GameObject> PlantDroppedOutOfPatch;
@@ -73,6 +74,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(PlantPossessed, location);
 	}
+
+	public void OnPlantReplanted(Vector3 location)
+    {
+		ExecuteEvent(PlantReplanted, location);
+    }
 
 	public void OnPlantStolen(GameObject plant)
 	{

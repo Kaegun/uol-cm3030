@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 public class Spirit : MonoBehaviour, IInteractable
 {
-	enum SpiritState
+	public enum SpiritState
 	{
 		Spawning,
 		Searching,
@@ -56,6 +56,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	public float PossessionRateMultiplier => _possessionRateMultiplier;
 
 	private SpiritState _spiritState;
+	public SpiritState ActiveSpiritState => _spiritState;
 	private IPossessable _possessedPossessable;
 	private Vector3 _spawnPos;
 	private IPossessable _targetPossessable = null;
