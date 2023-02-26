@@ -34,7 +34,6 @@ public static class CommonTypes
 	{
 		public const string Launcher = "Launcher";
 		public const string UI = "UI Overlay";
-		public const string GameOver = "Game Over";
 		public const string LevelFailed = "Level Failed";
 		public const string Level0 = "Level 0";
 		public const string Level1 = "Level 1";

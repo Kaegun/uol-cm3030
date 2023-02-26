@@ -91,8 +91,8 @@ public class PlayerController : MonoBehaviour
 		_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
 		_heldObject = PickupCorrectObject();
 
-		//	!! Animation clip uses left hand !! - may need CR
-		if (_heldObject.PlayPickUpAnimation)
+		//	!! Animation clip uses left hand !! - Assuming _spawner will be null if the player is picking up something from the ground.
+		if (_heldObject.PlayPickUpAnimation && (_spawner == null || _spawner.PlayPickUpAnimation))
 		{
 			_canMove = false;
 			//	Play the pickup animation and wait for it to complete

@@ -54,6 +54,7 @@ MonoBehaviour:
   _spawnedPrefab: {fileID: 441588444738166568, guid: 9cab35710f502284d81138fc02ad2ee7,
     type: 3}
   _pickUpIndicatorAdjustment: {x: 0, y: 1, z: 0}
+  _playPickUpAnimation: 1
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _alertIconColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!65 &224730340511124191

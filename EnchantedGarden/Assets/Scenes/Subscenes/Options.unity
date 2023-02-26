@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creditsPanel: {fileID: 0}
+  _buttonText: {fileID: 0}
   _scrollSpeed: 12
 --- !u!1 &1531456784
 GameObject:
@@ -379,7 +380,7 @@ GameObject:
   - component: {fileID: 1531456787}
   - component: {fileID: 1531456786}
   m_Layer: 5
-  m_Name: Game Over
+  m_Name: Paused Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -665,7 +666,7 @@ PrefabInstance:
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
@@ -680,7 +681,12 @@ PrefabInstance:
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClick_RestartGame
+      value: OnClick_ContinueGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Options
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}

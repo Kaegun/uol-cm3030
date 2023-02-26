@@ -67,6 +67,11 @@ public class GameManager : SingletonBase<GameManager>
 			_worldEvents.OnIngredientsEmpty(transform.position);
 	}
 
+	public void ReturnToLauncher()
+	{
+		SceneLoader.LoadScene(CommonTypes.Scenes.Launcher);
+	}
+
 	public void RestartGame()
 	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Level0);
@@ -79,12 +84,12 @@ public class GameManager : SingletonBase<GameManager>
 		SceneLoader.LoadScene(_activeLevel.Level.SceneName());
 	}
 
-	public void ContinueGame()
+	public void ContinueGame(string sceneName)
 	{
 		//	Restart time
 		Time.timeScale = 1.0f;
 
-		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
+		SceneLoader.UnloadScene(sceneName);
 	}
 
 	public void LoadNextLevel()
@@ -98,6 +103,7 @@ public class GameManager : SingletonBase<GameManager>
 		else
 		{
 			// Load credits scene
+			SceneLoader.UnloadScene(CommonTypes.Scenes.UI);
 			SceneLoader.UnloadScene(CommonTypes.Scenes.Victory);
 			SceneLoader.LoadScene(CommonTypes.Scenes.Credits, true);
 		}

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 //	Handle UI Events
 public class UiEventManager : MonoBehaviour
@@ -19,9 +18,9 @@ public class UiEventManager : MonoBehaviour
 		GameManager.Instance.RestartLevel();
 	}
 
-	public void OnClick_ContinueGame()
+	public void OnClick_ContinueGame(string sceneName)
 	{
-		GameManager.Instance.ContinueGame();
+		GameManager.Instance.ContinueGame(sceneName);
 	}
 
 	public void OnClick_VictorySceneContinue()
@@ -36,14 +35,6 @@ public class UiEventManager : MonoBehaviour
 
 	public void OnClick_Credits()
 	{
-		var scene = SceneManager.GetActiveScene();
-		if (scene.name == CommonTypes.Scenes.Launcher)
-		{
-			//	Hide UI.
-			//	Or show a panel?
-			//	Rather change the credit scene's behaviour
-		}
-
 		SceneLoader.LoadScene(CommonTypes.Scenes.Credits, true);
 	}
 

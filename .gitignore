@@ -10,8 +10,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# Ignore csproj - Unity generates it every time so no need to check it in - avoids conflicts
+# Ignore csproj & sln - Unity generates it every time so no need to check it in - avoids conflicts
 *.csproj
+*sln
 
 # Build results
 [Dd]ebug/

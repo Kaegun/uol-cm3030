@@ -12,11 +12,17 @@ public abstract class PickUpSpawnerBase : MonoBehaviour
 	[SerializeField]
 	private PickUpBase _spawnedPrefab;
 
-	[Header("Pickup Indicator Position")]
+	[Header("Pickup Indicator")]
 	[SerializeField]
 	private Vector3 _pickUpIndicatorAdjustment;
 
+	[Header("Animations")]
+	[SerializeField]
+	private bool _playPickUpAnimation;
+
 	public Vector3 IndicatorPosition => transform.position + _pickUpIndicatorAdjustment;
+
+	public bool PlayPickUpAnimation => _playPickUpAnimation;
 
 	public IPickUp SpawnPickUp()
 	{
