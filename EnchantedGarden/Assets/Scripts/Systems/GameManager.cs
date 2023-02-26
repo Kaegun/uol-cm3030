@@ -63,6 +63,11 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	public void RestartGame()
+    {
+		SceneLoader.LoadScene(CommonTypes.Scenes.Launcher);
+	}
+
+	public void RestartLevel()
 	{
 		//	Restart time
 		//Time.timeScale = 1.0f;
@@ -88,13 +93,14 @@ public class GameManager : SingletonBase<GameManager>
 		else
 		{
 			// Load credits scene
-			//SceneLoader.LoadScene(CommonTypes.Scenes.Credits);
+			SceneLoader.UnloadScene(CommonTypes.Scenes.Victory);
+			SceneLoader.LoadScene(CommonTypes.Scenes.Credits, true);
 		}
 	}
 
 	private void LevelFailed()
 	{
-		Debug.Log("Game Over");
+		Debug.Log("Level Failed");
 
 		_gameOver = true;
 		Time.timeScale = 0.0f;
@@ -103,7 +109,7 @@ public class GameManager : SingletonBase<GameManager>
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _gameOverMusic);
 
 		//	Load Game Over Screen
-		SceneLoader.LoadScene(CommonTypes.Scenes.GameOver, true);
+		SceneLoader.LoadScene(CommonTypes.Scenes.LevelFailed, true);
 	}
 
 	private void EndLevel(bool victory)
