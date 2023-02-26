@@ -105,7 +105,7 @@ MonoBehaviour:
   _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
-  _playAnimation: 0
+  _playAnimation: 1
   _plantState: 0
   _plantMaterial: {fileID: 0}
   _spiritMaterial: {fileID: 0}
