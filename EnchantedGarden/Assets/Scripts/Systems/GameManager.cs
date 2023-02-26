@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -43,12 +42,7 @@ public class GameManager : SingletonBase<GameManager>
 	private bool _gameOver = false;
 	private int _activeSpiritCount = 0;
 
-	//	TODO: Fix scoring - We can use a SO for this
-	private int _score;
-	public void ScorePoints(int points)
-	{
-		_score += points;
-	}
+	public ScoreController Score { get; private set; }
 
 	// Should probably be in the AudioController, would likely need to make it a Singleton though
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
@@ -80,7 +74,6 @@ public class GameManager : SingletonBase<GameManager>
 		//	Restart time
 		Time.timeScale = 1.0f;
 
-		//	TODO: Track scene that caused the pause?
 		SceneLoader.UnloadScene(CommonTypes.Scenes.Options);
 	}
 
@@ -150,39 +143,9 @@ public class GameManager : SingletonBase<GameManager>
 		SetCurrentActiveLevel();
 	}
 
-	//	Start is called before the first frame update
-	private void Start()
-	{
-		Assert.IsTrue(_gameLevels.Length > 0);
-		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
-
-		//	Testing
-		var numPlants = 0;
-		foreach (var go in SceneManager.GetActiveScene().GetRootGameObjects())
-		{
-			numPlants += go.GetComponentsInChildren<Plant>().Length;
-		}
-
-		Debug.Log($"Dynamic number of plants [{numPlants}]");
-
-		_worldEvents.PlantStolen += PlantStolen;
-		_worldEvents.SpiritSpawned += SpiritSpawned;
-		_worldEvents.SpiritBanished += SpiritBanished;
-
-		_score = 0;
-		if (_useUiOverlay)
-		{
-			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
-		}
-		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
-		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
-		Time.timeScale = 1.0f;
-	}
-
 	private void PlantStolen(object sender, GameObject e)
 	{
-		ActiveLevel.CurrentNumberOfPlants -= 1;
-		if (ActiveLevel.CurrentNumberOfPlants <= 0)
+		if (--ActiveLevel.CurrentNumberOfPlants <= 0)
 			EndLevel(false);
 	}
 
@@ -200,7 +163,28 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
+	}
 
+	//	Start is called before the first frame update
+	private void Start()
+	{
+		Assert.IsTrue(_gameLevels.Length > 0);
+		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+
+		_worldEvents.PlantStolen += PlantStolen;
+		_worldEvents.SpiritSpawned += SpiritSpawned;
+		_worldEvents.SpiritBanished += SpiritBanished;
+
+		if (_useUiOverlay)
+		{
+			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
+		}
+
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
+		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
+		Time.timeScale = 1.0f;
+
+		Score = new ScoreController(_worldEvents);
 	}
 
 	//	Update is called once per frame

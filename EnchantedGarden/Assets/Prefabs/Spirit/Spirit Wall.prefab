@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148a69ba52593964a917caf0f46acdd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _events: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _isPossessed: 0
   _wallObj: {fileID: 4150981823389740390}
 --- !u!65 &2658438934650837774

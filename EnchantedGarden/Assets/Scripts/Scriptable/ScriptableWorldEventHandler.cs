@@ -9,6 +9,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<Spirit> SpiritSpawned;
 	public event EventHandler<Spirit> SpiritWallSpawned;
 	public event EventHandler<Spirit> SpiritBanished;
+	public event EventHandler<SpiritWall> SpiritWallBanished;
 
 	//	Plant Events
 	public event EventHandler<Vector3> PlantPossessed;
@@ -32,8 +33,11 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<GameObject> FoxAlert;
 	public event EventHandler<GameObject> FoxAlertEnded;
 
-	// Game Events
+	//	Game Events
 	public event EventHandler<string> LevelStarted;
+
+	//	Score Events
+	public event EventHandler<float> Score;
 
 	public void OnSpiritWaveSpawned(Spirit[] spirits)
 	{
@@ -54,6 +58,12 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	{
 		ExecuteEvent(SpiritBanished, spirit);
 	}
+
+	public void OnSpiritWallBanished(SpiritWall spirit)
+	{
+		ExecuteEvent(SpiritWallBanished, spirit);
+	}
+
 	public void OnPlantPossessing(Vector3 location)
 	{
 		ExecuteEvent(PlantPossessing, location);
@@ -70,14 +80,14 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	}
 
 	public void OnPlantDroppedOutOfPatch(GameObject plant)
-    {
+	{
 		ExecuteEvent(PlantDroppedOutOfPatch, plant);
-    }
+	}
 
 	public void OnPickUpTrickPlant(GameObject trickPlant)
-    {
+	{
 		ExecuteEvent(PickUpTrickPlant, trickPlant);
-    }
+	}
 
 	public void OnFireDied(Vector3 location)
 	{
@@ -110,9 +120,9 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	}
 
 	public void OnIngredientsEmpty(Vector3 location)
-    {
+	{
 		ExecuteEvent(IngredientsEmpty, location);
-    }
+	}
 
 	public void OnFoxAlert(GameObject fox)
 	{
@@ -125,7 +135,12 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	}
 
 	public void OnLevelStarted(string levelName)
-    {
+	{
 		ExecuteEvent(LevelStarted, levelName);
-    }
+	}
+
+	public void OnScore(float score)
+	{
+		ExecuteEvent(Score, score);
+	}
 }
