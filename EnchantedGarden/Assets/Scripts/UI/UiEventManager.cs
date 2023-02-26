@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //	Handle UI Events
 public class UiEventManager : MonoBehaviour
@@ -35,6 +36,14 @@ public class UiEventManager : MonoBehaviour
 
 	public void OnClick_Credits()
 	{
+		var scene = SceneManager.GetActiveScene();
+		if (scene.name == CommonTypes.Scenes.Launcher)
+		{
+			//	Hide UI.
+			//	Or show a panel?
+			//	Rather change the credit scene's behaviour
+		}
+
 		SceneLoader.LoadScene(CommonTypes.Scenes.Credits, true);
 	}
 
