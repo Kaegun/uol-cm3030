@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 //	General UI handling code
@@ -20,6 +21,16 @@ public class UiOverlayManager : MonoBehaviour
 
 	[SerializeField]
 	private GameObject _score;
+
+	[Header("Scoring")]
+	[SerializeField]
+	private Canvas _canvas;
+
+	[SerializeField]
+	private FloatingScoreIndicator _floatingScorePrefab;
+
+	[SerializeField]
+	private float _scoreTextduration;
 
 	private ISettable<float> _fireSliderSettable,
 		_plantSliderSettable,
@@ -54,11 +65,28 @@ public class UiOverlayManager : MonoBehaviour
 		_scoreSettable.SetValue(0);
 	}
 
-	private void Score(object sender, float e)
+	private void Score(object sender, ScriptableWorldEventHandler.ScoreEventArguments e)
 	{
-		Debug.Log($"Setting Score: {e}");
-		_scoreSettable.SetValue(e);
+		Debug.Log($"Scored Points: {e.Score}");
+		StartCoroutine(ScoreCoroutine(e));
 	}
+
+	private IEnumerator ScoreCoroutine(ScriptableWorldEventHandler.ScoreEventArguments e)
+    {		
+		var floatingScore = Instantiate(_floatingScorePrefab, Camera.main.WorldToScreenPoint(e.Position), Quaternion.identity, _canvas.transform);
+		floatingScore.SetProperties(e.Score);
+		var startPos = floatingScore.transform.position;
+		float t = 0f;
+		while (t <= _scoreTextduration)
+        {
+			//	TODO: Make score text movement better
+			floatingScore.transform.position = Vector3.Lerp(startPos, _scoreSettable.Transform.position, t / _scoreTextduration);
+			t += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+        }
+		Destroy(floatingScore.gameObject);
+		_scoreSettable.SetValue(e.Score);
+    }
 
 	private void Update()
 	{

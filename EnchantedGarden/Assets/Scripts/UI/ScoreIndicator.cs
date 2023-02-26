@@ -31,7 +31,7 @@ public class ScoreIndicator : MonoBehaviour
 		_events.Score += Score;
 	}
 
-	private void Score(object sender, float e)
+	private void Score(object sender, ScriptableWorldEventHandler.ScoreEventArguments scoreEventArguments)
 	{
 		//	Display the score indicator over the player
 		//	Do some animationy stuff

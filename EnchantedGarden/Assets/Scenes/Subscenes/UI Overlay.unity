@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -171,6 +171,10 @@ MonoBehaviour:
   _plantSlider: {fileID: 1585647249}
   _usesSlider: {fileID: 1624249523}
   _score: {fileID: 582091734}
+  _canvas: {fileID: 385067823}
+  _floatingScorePrefab: {fileID: 2525525767991169270, guid: 450094858f4ae784fa371ee3ccfeebef,
+    type: 3}
+  _scoreTextduration: 1
 --- !u!1 &385067819
 GameObject:
   m_ObjectHideFlags: 0
