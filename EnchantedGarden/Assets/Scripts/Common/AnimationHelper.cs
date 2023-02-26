@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class AnimationHelper
 {
-	public static IEnumerator TriggerAndWaitForAnimation(Animator animator, string trigger)
+	public static IEnumerator TriggerAndWaitForAnimation(this Animator animator, string trigger)
 	{
 		animator.SetTrigger(trigger);
 		//	Wait for transition to complete

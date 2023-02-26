@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
 	private PickUpSpawnerBase _spawner;
 	private float _carryIndicatorLocalY;
 	private bool _canMove = true;   //	Set this when an animation is playing.
+	private bool _digAnimationPlaying = false;
 
 	private bool IsMoving => _moveDirection.sqrMagnitude > 0;
 
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
 			switch (_heldObject == null)
 			{
 				case false when _heldObject.CanBeDropped:
-					HandleDropObject();
+					DropObject(false, true);
 					break;
 				case true when _pickups.Count > 0 || _spawner != null:
 					StartCoroutine(PickUpObjectCoroutine());
@@ -91,11 +92,11 @@ public class PlayerController : MonoBehaviour
 		_heldObject = PickupCorrectObject();
 
 		//	!! Animation clip uses left hand !! - may need CR
-		if (_heldObject.PlayAnimation)
+		if (_heldObject.PlayPickUpAnimation)
 		{
 			_canMove = false;
 			//	Play the pickup animation and wait for it to complete
-			yield return AnimationHelper.TriggerAndWaitForAnimation(_animator, CommonTypes.AnimatorActions.PickUp);
+			yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.PickUp);
 			_canMove = true;
 		}
 
@@ -106,7 +107,6 @@ public class PlayerController : MonoBehaviour
 
 	private IPickUp GetClosestPickup()
 	{
-		//	TODO: Rare bug when pickup has despawned after been added to the list, should rather clean them out of the list after despawn.
 		return _pickups.Where(p => p.CanBePickedUp).OrderBy(p => Vector3.Distance(transform.position, p.Transform.position)).FirstOrDefault();
 	}
 
@@ -126,21 +126,23 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void HandleDropObject()
-	{
-		switch (_heldObject)
-		{
-			default:
-				DropObject(false, true);
-				break;
-		}
-	}
-
 	private void DropObject(bool destroy, bool playAudio)
 	{
 		if (playAudio)
 		{
 			AudioController.PlayAudio(_audioSource, _putDownAudio);
+		}
+
+		StartCoroutine(DropObjectCoroutine(destroy));
+	}
+
+	private IEnumerator DropObjectCoroutine(bool destroy)
+	{
+		if (_heldObject?.PlayDropAnimation == true)
+		{
+			_canMove = false;
+			yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.Drop);
+			_canMove = true;
 		}
 
 		_heldObject?.OnDrop(destroy);
@@ -410,15 +412,29 @@ public class PlayerController : MonoBehaviour
 	{
 		if (e == _heldObject)
 		{
-			//	Play digging animation - TODO: prevent player moving until digging complete?
-			_animator.SetTrigger(CommonTypes.AnimatorActions.Digging);
+			StartCoroutine(DiggingCoroutine());
+
 			var bounce = Mathf.Sin(Time.time * 8);
 			var prevBounce = Mathf.Sin((Time.time - Time.deltaTime) * 8);
-			_carryIndicator.transform.position += Vector3.up * bounce * 0.015f;
+			_carryIndicator.transform.position += 0.015f * bounce * Vector3.up;
+
 			if (bounce <= -0.999f && bounce < prevBounce)
 			{
 				AudioController.PlayAudio(_audioSource, _digAudio);
 			}
+		}
+	}
+
+	private IEnumerator DiggingCoroutine()
+	{
+		if (!_digAnimationPlaying)
+		{
+			_digAnimationPlaying = true;
+			_canMove = false;
+			//	Make sure this is triggered only once.
+			yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.Digging);
+			_digAnimationPlaying = false;
+			_canMove = true;
 		}
 	}
 
