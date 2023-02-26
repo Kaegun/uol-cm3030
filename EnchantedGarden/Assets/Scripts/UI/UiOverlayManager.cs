@@ -51,10 +51,12 @@ public class UiOverlayManager : MonoBehaviour
 		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses);
 
 		_events.Score += Score;
+		_scoreSettable.SetValue(0);
 	}
 
 	private void Score(object sender, float e)
 	{
+		Debug.Log($"Setting Score: {e}");
 		_scoreSettable.SetValue(e);
 	}
 

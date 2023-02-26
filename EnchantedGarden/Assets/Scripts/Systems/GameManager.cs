@@ -63,7 +63,7 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	public void RestartGame()
-    {
+	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Launcher);
 	}
 
@@ -151,6 +151,7 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void PlantStolen(object sender, GameObject e)
 	{
+		Debug.Log($"GameManager.CurrentNumberOfPlants: {ActiveLevel.name}:{ActiveLevel.CurrentNumberOfPlants}");
 		if (--ActiveLevel.CurrentNumberOfPlants <= 0)
 			EndLevel(false);
 	}
