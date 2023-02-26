@@ -22,13 +22,31 @@ public class VirtualCameraController : MonoBehaviour
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+		SubscribeToWorldEvents();
+	}
+
+    private void OnDestroy()
+    {
+		UnsubscribeFromWorldEvents();
+	}
+
+	private void SubscribeToWorldEvents ()
+    {
 		_worldEvents.SpiritSpawned += SpiritSpawned;
 		_worldEvents.SpiritBanished += SpiritBanished;
 		_worldEvents.FoxAlert += FoxAlert;
 		_worldEvents.FoxAlertEnded += FoxAlertEnded;
 	}
 
-	private void SpiritSpawned(object sender, Spirit e)
+	private void UnsubscribeFromWorldEvents ()
+    {
+		_worldEvents.SpiritSpawned -= SpiritSpawned;
+		_worldEvents.SpiritBanished -= SpiritBanished;
+		_worldEvents.FoxAlert -= FoxAlert;
+		_worldEvents.FoxAlertEnded -= FoxAlertEnded;
+	}
+
+    private void SpiritSpawned(object sender, Spirit e)
 	{		
 		AddToTargetGroup(e.transform);		
 	}

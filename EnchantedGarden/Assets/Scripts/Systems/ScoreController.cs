@@ -35,13 +35,13 @@ public class ScoreController
 	{
 		Debug.Log("ScoreController.SpiritBanished");
 		_score += CommonTypes.ScoreValues.BanishedSpirit;
-		_events.OnScore(CommonTypes.ScoreValues.BanishedSpirit);
+		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(CommonTypes.ScoreValues.BanishedSpirit, e.transform.position));
 	}
 
 	private void SpiritWallBanished(object sender, SpiritWall e)
 	{
 		Debug.Log("ScoreController.SpiritWallBanished");
 		_score += CommonTypes.ScoreValues.BanishedWall;
-		_events.OnScore(CommonTypes.ScoreValues.BanishedWall);
+		_events.OnScore(new ScriptableWorldEventHandler.ScoreEventArguments(CommonTypes.ScoreValues.BanishedWall, e.transform.position));
 	}
 }

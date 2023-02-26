@@ -37,7 +37,7 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 	public event EventHandler<string> LevelStarted;
 
 	//	Score Events
-	public event EventHandler<float> Score;
+	public event EventHandler<ScoreEventArguments> Score;
 
 	public void OnSpiritWaveSpawned(Spirit[] spirits)
 	{
@@ -139,8 +139,22 @@ public class ScriptableWorldEventHandler : ScriptableEventHandler
 		ExecuteEvent(LevelStarted, levelName);
 	}
 
-	public void OnScore(float score)
+	public struct ScoreEventArguments
+    {
+		public ScoreEventArguments(float score, Vector3 position)
+        {
+			_score = score;
+			_position = position;
+        }
+		private float _score;
+		public float Score => _score;
+
+		private Vector3 _position;
+		public Vector3 Position => _position;
+    }
+
+	public void OnScore(ScoreEventArguments scoreEventArguments)
 	{
-		ExecuteEvent(Score, score);
+		ExecuteEvent(Score, scoreEventArguments);
 	}
 }
