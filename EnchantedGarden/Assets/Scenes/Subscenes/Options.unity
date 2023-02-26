@@ -644,6 +644,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.9150943
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.634523
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.8468855
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

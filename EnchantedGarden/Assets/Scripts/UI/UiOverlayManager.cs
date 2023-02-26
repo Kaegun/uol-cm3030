@@ -6,13 +6,13 @@ using UnityEngine.Assertions;
 public class UiOverlayManager : MonoBehaviour
 {
 	public enum OverlayElements
-    {
+	{
 		Fire,
 		Cauldron,
 		Time,
 		Score,
 		Plants
-    }
+	}
 
 	[Header("Events")]
 	[SerializeField]
@@ -49,6 +49,16 @@ public class UiOverlayManager : MonoBehaviour
 		_usesSliderSettable,
 		_scoreSettable;
 
+	private void SubscribeToEvents()
+	{
+		_events.Score += Score;
+	}
+
+	private void UnsubscribeFromEvents()
+	{
+		_events.Score -= Score;
+	}
+
 	private void Start()
 	{
 		Assert.IsNotNull(_events, Utility.AssertNotNullMessage(nameof(_events)));
@@ -73,31 +83,31 @@ public class UiOverlayManager : MonoBehaviour
 		_plantSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.StartNumberOfPlants);
 		_usesSliderSettable.SetMaximum(GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses);
 
-        foreach (var overlayElement in GameManager.Instance.DisabledOverlayElements)
-        {
-            switch (overlayElement)
-            {
-                case OverlayElements.Fire:
+		foreach (var overlayElement in GameManager.Instance.DisabledOverlayElements)
+		{
+			switch (overlayElement)
+			{
+				case OverlayElements.Fire:
 					_fireSlider.SetActive(false);
-                    break;
-                case OverlayElements.Cauldron:
+					break;
+				case OverlayElements.Cauldron:
 					_usesSlider.SetActive(false);
-                    break;
-                case OverlayElements.Time:
+					break;
+				case OverlayElements.Time:
 					_timeSlider.SetActive(false);
-                    break;
-                case OverlayElements.Score:
+					break;
+				case OverlayElements.Score:
 					_score.SetActive(false);
-                    break;
-                case OverlayElements.Plants:
+					break;
+				case OverlayElements.Plants:
 					_plantSlider.SetActive(false);
-                    break;
-                default:
-                    break;
-            }
-        }
+					break;
+				default:
+					break;
+			}
+		}
 
-		_events.Score += Score;
+		SubscribeToEvents();
 		_scoreSettable.SetValue(0);
 	}
 
@@ -108,26 +118,31 @@ public class UiOverlayManager : MonoBehaviour
 	}
 
 	private IEnumerator ScoreCoroutine(ScriptableWorldEventHandler.ScoreEventArguments e)
-    {		
+	{
 		var floatingScore = Instantiate(_floatingScorePrefab, Camera.main.WorldToScreenPoint(e.Position), Quaternion.identity, _canvas.transform);
 		floatingScore.SetProperties(e.Score);
 		var startPos = floatingScore.transform.position;
 		float t = 0f;
 		while (t <= _scoreTextduration)
-        {
+		{
 			//	TODO: Make score text movement better
 			floatingScore.transform.position = Vector3.Lerp(startPos, _scoreSettable.Transform.position, t / _scoreTextduration);
 			t += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
-        }
+		}
 		Destroy(floatingScore.gameObject);
 		_scoreSettable.SetValue(e.Score);
-    }
+	}
 
 	private void Update()
 	{
 		_usesSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses);
 		_plantSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CurrentNumberOfPlants);
 		_fireSliderSettable.SetValue(GameManager.Instance.ActiveLevel.CauldronSettings.CurrentFireLevel);
+	}
+
+	private void OnDestroy()
+	{
+		UnsubscribeFromEvents();
 	}
 }

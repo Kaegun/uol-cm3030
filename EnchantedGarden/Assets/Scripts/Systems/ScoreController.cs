@@ -14,14 +14,16 @@ public class ScoreController
 
 	public ScoreController(ScriptableWorldEventHandler events)
 	{
-		Debug.Log("Score Controller Loading");
-
 		_events = events;
 
 		_events.SpiritBanished += SpiritBanished;
 		_events.SpiritWallBanished += SpiritWallBanished;
+	}
 
-		Debug.Log("Score Controller Loaded");
+	public void Destroy()
+	{
+		_events.SpiritBanished -= SpiritBanished;
+		_events.SpiritWallBanished -= SpiritWallBanished;
 	}
 
 	private void CalculateFinalScore(int numPlantsRemaining)

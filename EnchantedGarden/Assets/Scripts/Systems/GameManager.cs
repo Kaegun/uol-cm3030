@@ -179,14 +179,14 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	private void SubscribeToWorldEvents()
-    {
+	{
 		_worldEvents.PlantStolen += PlantStolen;
 		_worldEvents.SpiritSpawned += SpiritSpawned;
 		_worldEvents.SpiritBanished += SpiritBanished;
 	}
 
 	private void UnsubscribeFromWorldEvents()
-    {
+	{
 		_worldEvents.PlantStolen -= PlantStolen;
 		_worldEvents.SpiritSpawned -= SpiritSpawned;
 		_worldEvents.SpiritBanished -= SpiritBanished;
@@ -238,8 +238,9 @@ public class GameManager : SingletonBase<GameManager>
 		}
 	}
 
-    private void OnDestroy()
-    {
+	private void OnDestroy()
+	{
 		UnsubscribeFromWorldEvents();
-    }
+		Score = null;
+	}
 }

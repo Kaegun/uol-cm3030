@@ -46,6 +46,7 @@ public static class CommonTypes
 		public const string Victory = "Victory";
 		public const string TemplateLevel = "Template";
 		public const string Credits = "Credits";
+		public const string Story = "Story";
 	}
 
 	public enum Levels
