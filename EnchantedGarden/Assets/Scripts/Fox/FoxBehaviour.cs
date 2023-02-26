@@ -208,6 +208,7 @@ public class FoxBehaviour : MonoBehaviour
 		_camera = Camera.main;
 
 		SubscribeToWorldEvents();
+		GameManager.Instance.CheckIngredientsEmpty();
 	}
 
 	// Update is called once per frame
@@ -357,11 +358,15 @@ public class FoxBehaviour : MonoBehaviour
 		Debug.Log("Fox behaviour: Level started");
 		if (_respondsTo.Contains(Events.LevelStarted) && !_handledEvents.Contains(Events.LevelStarted))
 		{
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
+			//_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
 			if (e == CommonTypes.Scenes.Level0)
             {
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
+				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
+				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
+				
 			}			
 			_handledEvents.Add(Events.LevelStarted);
 		}
@@ -371,10 +376,10 @@ public class FoxBehaviour : MonoBehaviour
 	{
 		if (_respondsTo.Contains(Events.SpiritSpawned) && !_handledEvents.Contains(Events.SpiritSpawned))
 		{
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
-			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
-			_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
+			//_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform));
+			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
+			//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
+			//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.SpiritSpawned);
 		}
 	}
@@ -407,9 +412,9 @@ public class FoxBehaviour : MonoBehaviour
 
 		if (_respondsTo.Contains(Events.PlantPossessed) && !_handledEvents.Contains(Events.PlantPossessed))
 		{
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			//_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));			
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_fillFlaskSprite, 4f));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_banishSpiritSprite, _defaultInstructionDuration));
 			_handledEvents.Add(Events.PlantPossessed);
@@ -444,9 +449,10 @@ public class FoxBehaviour : MonoBehaviour
 		Debug.Log("Fox Behaviour: A has been dropped outside of a plant patch");
 		if (_respondsTo.Contains(Events.PlantDroppedOutOfPatch) && !_handledEvents.Contains(Events.PlantDroppedOutOfPatch))
 		{
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
-			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));			
 			_behaviourQueue.Enqueue(InstructionCoroutine(_replantPlantSprite, _defaultInstructionDuration));
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_shovel));
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
 			_handledEvents.Add(Events.PlantDroppedOutOfPatch);
 		}
 	}
