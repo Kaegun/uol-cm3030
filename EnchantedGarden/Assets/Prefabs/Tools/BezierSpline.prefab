@@ -47,12 +47,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _points:
-  - {x: 0, y: 0, z: 0}
   - {x: 1, y: 0, z: 0}
   - {x: 2, y: 0, z: 0}
   - {x: 3, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  _modes: 0000000000000000
   _lineColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _curveColour: {r: 1, g: 1, b: 1, a: 1}
+  _pointColours:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
   _velocityColour: {r: 0, g: 1, b: 0, a: 1}
   _texture: {fileID: 0}
   _width: 2
@@ -70,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _quadsPerPoint: 5
   _width: 2
+  _widthNoiseFactor: 0.5
 --- !u!33 &616948483295942733
 MeshFilter:
   m_ObjectHideFlags: 0

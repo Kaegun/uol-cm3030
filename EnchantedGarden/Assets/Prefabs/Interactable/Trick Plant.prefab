@@ -157,7 +157,8 @@ MonoBehaviour:
   _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
-  _playAnimation: 0
+  _playPickupAnimation: 1
+  _playDropAnimation: 1
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _growthDuration: 1
   _growthTarget: 2

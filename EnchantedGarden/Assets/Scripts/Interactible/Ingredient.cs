@@ -1,10 +1,5 @@
-﻿using UnityEngine;
-
-//	Logic in base
-public class Ingredient : PickUpBase, IInteractor
+﻿public class Ingredient : PickUpBase, IInteractor
 {
-	public GameObject GameObject => gameObject;
-
 	public bool CanInteractWith(IInteractable interactable)
 	{
 		switch (interactable)
@@ -36,5 +31,10 @@ public class Ingredient : PickUpBase, IInteractor
 			default:
 				break;
 		}
+	}
+
+	public void DestroyInteractor()
+	{
+		Destroy(gameObject);
 	}
 }

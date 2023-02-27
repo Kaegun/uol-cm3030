@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Flask : PickUpBase, ICombinable, IInteractor
+public class Flask : PickUpBase, ICombinable, IInteractor, IEventPublisher
 {
 	[Header("Events")]
 	[SerializeField]
@@ -27,7 +27,15 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 
 	public bool CanUseFlask => _full;
 
+	public bool CanBeCombined => _held && !_full;
+
 	private float _combinationProgress = 0f;
+
+	public override void OnPickUp(Transform pickupTransform)
+	{
+		base.OnPickUp(pickupTransform);
+		this.ExecuteEvent(CombineProgress, _combinationProgress);
+	}
 
 	private void UseFlask()
 	{
@@ -39,7 +47,7 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	public bool Combining()
 	{
 		_combinationProgress += Time.deltaTime;
-		ExecuteEvent(CombineProgress, _combinationProgress);
+		this.ExecuteEvent(CombineProgress, _combinationProgress);
 
 		if (_combinationProgress >= _combinationThreshold)
 		{
@@ -54,18 +62,8 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 	{
 		_full = true;
 		_contents.SetActive(true);
-		_combinationProgress = 0f;
-
-		//	Moved to be handled by cauldron, can delete
-		//  Reduce the number of uses in the Cauldron
-		//  TODO: Not a fan of the below being in the Flask
-		//GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses--;
-		//GameManager.Instance.CheckIngredientsLow();
+		_combinationProgress = _combinationThreshold;
 	}
-
-	public bool CanBeCombined => _held && !_full;
-
-	public GameObject GameObject => gameObject;
 
 	public bool CanInteractWith(IInteractable interactable)
 	{
@@ -103,15 +101,9 @@ public class Flask : PickUpBase, ICombinable, IInteractor
 		}
 	}
 
-	private void ExecuteEvent<T>(EventHandler<T> handler, T e)
+	public void DestroyInteractor()
 	{
-		if (handler != null)
-		{
-			foreach (var evt in handler.GetInvocationList())
-			{
-				evt.DynamicInvoke(this, e);
-			}
-		}
+		Destroy(gameObject);
 	}
 
 	// Start is called before the first frame update

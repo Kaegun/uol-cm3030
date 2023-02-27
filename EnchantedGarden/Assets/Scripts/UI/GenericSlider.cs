@@ -17,6 +17,7 @@ public class GenericSlider : MonoBehaviour, ISettable<float>
 	[SerializeField]
 	private TMPro.TMP_Text _text;
 
+	public Transform Transform => transform;
 	public void SetMaximum(float value)
 	{
 		_maximumValue = value;

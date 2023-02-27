@@ -31,6 +31,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private FireSystem _fireSystem;
 	private AudioSource _cauldronAudioSource;
 
+	private bool CanUseCauldron => GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses > 0 && _fireSystem.IsAlive;
+
+	public Transform Transform => transform;
+
 	private void AddLog()
 	{
 		_fireSystem.AddLog();
@@ -45,9 +49,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 			StartCoroutine(CauldronCombineCoroutine());
 		}
 		else
-        {
+		{
 			StartCoroutine(CannotAddIngredientCoroutine());
-        }
+		}
 	}
 
 	// Start is called before the first frame update
@@ -99,12 +103,6 @@ public class Cauldron : MonoBehaviour, IInteractable
 		}
 	}
 
-	private bool CanUseCauldron => GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses > 0 && _fireSystem.IsAlive;
-
-	public Transform Transform => transform;
-
-	public GameObject GameObject => gameObject;
-
 	private IEnumerator CauldronCombineCoroutine()
 	{
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronCombineAudio);
@@ -113,11 +111,11 @@ public class Cauldron : MonoBehaviour, IInteractable
 	}
 
 	private IEnumerator CannotAddIngredientCoroutine()
-    {
+	{
 		_cauldronCanvas.gameObject.SetActive(true);
 		yield return new WaitForSeconds(1f);
 		_cauldronCanvas.gameObject.SetActive(false);
-    }
+	}
 
 	public bool CanInteractWith(IInteractor interactor)
 	{
@@ -161,5 +159,10 @@ public class Cauldron : MonoBehaviour, IInteractable
 	public bool DestroyOnInteract(IInteractor interactor)
 	{
 		return false;
+	}
+
+	public void DestroyInteractable()
+	{
+		//	Do nothing
 	}
 }

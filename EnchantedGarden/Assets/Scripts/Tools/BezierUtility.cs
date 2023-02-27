@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//	REF: https://catlikecoding.com/unity/tutorials/curves-and-splines/
 public static class BezierUtility
 {
 	//	Lerp between 3 points

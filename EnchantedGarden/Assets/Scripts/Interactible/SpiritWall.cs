@@ -1,49 +1,52 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public class SpiritWall : MonoBehaviour, IPossessable
 {
-    [SerializeField]
-    private bool _isPossessed;
+	[Header("Events")]
+	[SerializeField]
+	private ScriptableWorldEventHandler _events;
 
-    [SerializeField]
-    private GameObject _wallObj;
+	[SerializeField]
+	private bool _isPossessed;
 
-    public bool CanBePossessed => !_isPossessed;
+	[SerializeField]
+	private GameObject _wallObj;
 
-    // Possession is completed instantly, should this be changed?
-    public bool PossessionCompleted => true;
+	public bool CanBePossessed => !_isPossessed;
 
-    public Transform Transform => transform;
+	// Possession is completed instantly, should this be changed?
+	public bool PossessionCompleted => true;
 
-    public GameObject GameObject => gameObject;
+	public Transform Transform => transform;
 
-    public void OnDispossess()
-    {
-        _isPossessed = false;
-        _wallObj.SetActive(false);
-        // Score points
-        GameManager.Instance.ScorePoints(50);
-    }
+	public GameObject GameObject => gameObject;
 
-    public void OnPossessionStarted(Spirit possessor)
-    {
-        _isPossessed = true;
+	public void OnDispossess()
+	{
+		_isPossessed = false;
+		_wallObj.SetActive(false);
+		// Score points
+		_events.OnSpiritWallBanished(this);
+	}
 
-    }
+	public void OnPossessionStarted(Spirit possessor)
+	{
+		_isPossessed = true;
+	}
 
-    public void WhileCompletingPossession(Spirit possessor)
-    {
+	public void WhileCompletingPossession(Spirit possessor) { }
 
-    }
+	public void OnPossessionCompleted(Spirit possessor)
+	{
+		_wallObj.SetActive(true);
+	}
 
-    public void OnPossessionCompleted(Spirit possessor)
-    {
-        _wallObj.SetActive(true);
-    }
+	// Start is called before the first frame update
+	private void Start()
+	{
+		_wallObj.SetActive(false);
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        _wallObj.SetActive(false);
-    }
+		Assert.IsNotNull(_events, Utility.AssertNotNullMessage(nameof(_events)));
+	}
 }

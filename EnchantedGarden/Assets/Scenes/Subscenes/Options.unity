@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 2027942343}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1006474033
@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creditsPanel: {fileID: 0}
+  _buttonText: {fileID: 0}
   _scrollSpeed: 12
 --- !u!1 &1531456784
 GameObject:
@@ -379,7 +380,7 @@ GameObject:
   - component: {fileID: 1531456787}
   - component: {fileID: 1531456786}
   m_Layer: 5
-  m_Name: Game Over
+  m_Name: Paused Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -644,13 +645,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.9150943
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.634523
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.8468855
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
@@ -665,7 +681,12 @@ PrefabInstance:
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClick_RestartGame
+      value: OnClick_ContinueGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Options
       objectReference: {fileID: 0}
     - target: {fileID: 1100114420727354430, guid: 489c6aee211b44414872f7afdf05d7a5,
         type: 3}
@@ -677,6 +698,12 @@ PrefabInstance:
 --- !u!224 &2027942342 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1100114420727354417, guid: 489c6aee211b44414872f7afdf05d7a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2027942341}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2027942343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1100114420727354416, guid: 489c6aee211b44414872f7afdf05d7a5,
     type: 3}
   m_PrefabInstance: {fileID: 2027942341}
   m_PrefabAsset: {fileID: 0}

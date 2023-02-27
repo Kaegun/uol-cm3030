@@ -105,11 +105,8 @@ MonoBehaviour:
   _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
-  _playAnimation: 0
-  _plantState: 0
-  _plantMaterial: {fileID: 0}
-  _spiritMaterial: {fileID: 0}
-  _plantPatch: {fileID: 0}
+  _playPickupAnimation: 1
+  _playDropAnimation: 1
   _plantModel: {fileID: 8281818384358554452}
   _normalPosition: {x: 0, y: 0, z: 0}
   _normalRotation: {x: 0, y: 0, z: 0}
