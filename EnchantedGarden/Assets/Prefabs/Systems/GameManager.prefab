@@ -48,7 +48,8 @@ MonoBehaviour:
   _gameLevels:
   - {fileID: 11400000, guid: a6dc193a909c0e7479a471999f59efba, type: 2}
   - {fileID: 11400000, guid: 25de15761da47344583039b871c16715, type: 2}
-  _activeLevel: {fileID: 0}
+  - {fileID: 11400000, guid: 536c008bd52f496429588119504e4daa, type: 2}
+  _activeLevel: {fileID: 11400000, guid: a6dc193a909c0e7479a471999f59efba, type: 2}
   _backgroundMusicAudioSource: {fileID: 3935216101442718748}
   _detachedAudioSourcePrefab: {fileID: 3958828404382933102, guid: 76ae88a5df59ef046bb8cf1345e71eaa,
     type: 3}
@@ -56,6 +57,7 @@ MonoBehaviour:
   _midIntensityMusicThreshold: 2
   _highIntensityMusicThreshold: 4
   _useUiOverlay: 1
+  _disabledOverlayElements: 0000000001000000
 --- !u!82 &3935216101442718748
 AudioSource:
   m_ObjectHideFlags: 0

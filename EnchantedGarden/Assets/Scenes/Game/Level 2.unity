@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6009378, g: 0.31541732, b: 0.26320833, a: 1}
+  m_IndirectSpecularColor: {r: 0.60636353, g: 0.31909066, b: 0.26583698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4935,34 +4935,6 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
         type: 3}
-      propertyPath: _worldEvents
-      value: 
-      objectReference: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1,
-        type: 2}
-    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
-        type: 3}
-      propertyPath: _levels.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
-        type: 3}
-      propertyPath: _levels.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 536c008bd52f496429588119504e4daa,
-        type: 2}
-    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
-        type: 3}
-      propertyPath: _gameLevels.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
-        type: 3}
-      propertyPath: _gameLevels.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 536c008bd52f496429588119504e4daa,
-        type: 2}
-    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
-        type: 3}
       propertyPath: _midIntensityMusicThreshold
       value: 3
       objectReference: {fileID: 0}
@@ -4970,6 +4942,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _highIntensityMusicThreshold
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
+        type: 3}
+      propertyPath: _disabledOverlayElements.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7817171687047018025, guid: 1a44584ce9b2814438ccca7430a1a299,
         type: 3}
@@ -5608,17 +5585,17 @@ PrefabInstance:
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.266163
+      value: 6.266169
       objectReference: {fileID: 0}
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.35616
+      value: 18.356176
       objectReference: {fileID: 0}
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.540009
+      value: -19.54
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007313481969, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
@@ -5683,17 +5660,17 @@ PrefabInstance:
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.266163
+      value: 6.266169
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.35616
+      value: 18.356176
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.540009
+      value: -19.54
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
@@ -5718,7 +5695,7 @@ PrefabInstance:
     - target: {fileID: 4488676007358626428, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: field of view
-      value: 60
+      value: 59.999996
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626428, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}

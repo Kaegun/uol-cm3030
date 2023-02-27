@@ -3,11 +3,11 @@
 ## Team and Role Assignments
 | Team member | Role |
 | ----------- | ---- |
-| Hamish Grigor | Lead Designer and Producer |
-| Johann Ungerer | Lead Developer and Co-Producer |
-| Marianna Siembiot | Audio-Visual Lead and Developer |
-| Raj Maurya | Level Design and Developer |
-| Xiyu Zhou (Kathy) | UX Lead and Developer |
+| Hamish Grigor | Lead Designer, Producer and Game Mechanics Code |
+| Johann Ungerer | Lead Developer, Co-Producer and VFX |
+| Marianna Siembiot | Art and Sound Direction |
+| Raj Maurya | Level Design |
+| Xiyu Zhou (Kathy) | **Absconded** |
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS

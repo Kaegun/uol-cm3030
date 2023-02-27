@@ -95,9 +95,11 @@ public class GameManager : SingletonBase<GameManager>
 	public void LoadNextLevel()
 	{
 		int currentLevelIndex = Array.IndexOf(_gameLevels, _activeLevel);
+		Debug.Log($"LeadNextLevel - CurrentLevelIndex: {currentLevelIndex}");
 		if (currentLevelIndex < _gameLevels.Length - 1)
 		{
 			var nextLevel = _gameLevels[currentLevelIndex + 1];
+			Debug.Log($"LeadNextLevel - CurrentLevelIndex: {nextLevel.Level.SceneName()}");
 			SceneLoader.LoadScene(nextLevel.Level.SceneName());
 		}
 		else
@@ -113,7 +115,6 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		Debug.Log("Level Failed");
 
-		_gameOver = true;
 		Time.timeScale = 0.0f;
 
 		//	Play End of Game Audio loop
@@ -241,7 +242,6 @@ public class GameManager : SingletonBase<GameManager>
 			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.highIntensityAudio);
 			}
-
 		}
 	}
 
