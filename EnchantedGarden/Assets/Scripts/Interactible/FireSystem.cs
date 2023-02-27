@@ -106,6 +106,8 @@ public class FireSystem : MonoBehaviour
 		_fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
 		_fireLifetimeStep = _fireLifetime / 3;
 
+		Debug.Log($"Fire: [{_currentFireLevel}] [{_fireLifetime}] [{_fireLifetimeStep}]");
+
 		//	Start Fire Audio
 		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);
 	}
