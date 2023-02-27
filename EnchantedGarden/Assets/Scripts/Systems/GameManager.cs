@@ -182,6 +182,7 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
+		CheckIngredientsEmpty();
 	}
 
 	private void SubscribeToWorldEvents()

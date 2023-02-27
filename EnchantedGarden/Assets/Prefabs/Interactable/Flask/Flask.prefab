@@ -75,7 +75,7 @@ MonoBehaviour:
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _contents: {fileID: 8042439846279555346}
   _full: 0
-  _combinationThreshold: 1
+  _combinationThreshold: 0.66
   _flaskSmashAudio: {fileID: 11400000, guid: ad3a963c14d2ac14395b203ab166d2c2, type: 2}
 --- !u!1001 &8041904278119681148
 PrefabInstance:

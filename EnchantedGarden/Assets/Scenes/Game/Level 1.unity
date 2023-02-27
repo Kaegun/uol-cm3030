@@ -4613,7 +4613,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _activeLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 25de15761da47344583039b871c16715,
+      objectReference: {fileID: 11400000, guid: 536c008bd52f496429588119504e4daa,
         type: 2}
     - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
         type: 3}
@@ -4631,6 +4631,17 @@ PrefabInstance:
       propertyPath: _levels.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 53f78de3cb19c074d86dfcc544dba116,
+        type: 2}
+    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
+        type: 3}
+      propertyPath: _gameLevels.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266752785168013236, guid: 1a44584ce9b2814438ccca7430a1a299,
+        type: 3}
+      propertyPath: _gameLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 25de15761da47344583039b871c16715,
         type: 2}
     - target: {fileID: 7817171687047018025, guid: 1a44584ce9b2814438ccca7430a1a299,
         type: 3}
@@ -4829,6 +4840,11 @@ PrefabInstance:
     - target: {fileID: 1397182448904017552, guid: 1be70247d4c9f314f82aeb41ef16369d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2654099411566534505, guid: 1be70247d4c9f314f82aeb41ef16369d,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8598752769166538699, guid: 1be70247d4c9f314f82aeb41ef16369d,

@@ -69,10 +69,10 @@ public class Spirit : MonoBehaviour, IInteractable
 	private Vector3 _spawnPos;
 	private IPossessable _targetPossessable = null;
 
-	private const float _possessedSpeedFactor = 0.5f,
+	private const float _possessedSpeedFactor = 0.33f,
 		_justSpawnedMovementFactor = 0.5f,
 		_spawnMovementDelay = 2.0f,
-		_widenSearchThreshold = 10.0f,
+		_widenSearchThreshold = 7.5f,
 		_banishTimeout = 0.8f;
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
@@ -367,6 +367,7 @@ public class Spirit : MonoBehaviour, IInteractable
 			if (possessable is SpiritWall)
 			{
 				DeactivateBody();
+				_worldEvents.OnSpiritWallSpawned(this);
 			}
 			else
 			{

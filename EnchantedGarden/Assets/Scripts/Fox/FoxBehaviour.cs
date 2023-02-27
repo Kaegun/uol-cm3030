@@ -202,7 +202,6 @@ public class FoxBehaviour : MonoBehaviour
 		_camera = Camera.main;
 
 		SubscribeToWorldEvents();
-		GameManager.Instance.CheckIngredientsEmpty();
 	}
 
 	// Update is called once per frame
@@ -327,8 +326,7 @@ public class FoxBehaviour : MonoBehaviour
 				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
-				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
-				
+				//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));				
 			}			
 			_handledEvents.Add(Events.LevelStarted);
 		}
@@ -410,7 +408,7 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
-			_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, _defaultInstructionDuration));
+			_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, 2f));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_logs));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_refuelFireSprite, _defaultInstructionDuration));
 		}
@@ -423,7 +421,7 @@ public class FoxBehaviour : MonoBehaviour
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_cauldron));
-			_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, _defaultInstructionDuration));
+			_behaviourQueue.Enqueue(InstructionCoroutine(_cauldronUnusableSprite, 2f));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_refillPotionSprite, _defaultInstructionDuration));
 		}
