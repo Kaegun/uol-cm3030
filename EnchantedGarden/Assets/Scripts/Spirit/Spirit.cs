@@ -73,7 +73,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		_justSpawnedMovementFactor = 0.5f,
 		_spawnMovementDelay = 2.0f,
 		_widenSearchThreshold = 10.0f,
-		_banishTimeout = 0.6f;
+		_banishTimeout = 0.8f;
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
 
@@ -138,7 +138,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private void Banish()
 	{
-		_spiritBody.SetMaterial(_banishedMaterial, true);
+		_spiritBody.SetMaterial(_banishedMaterial, false);
 		_possessedPossessable?.OnDispossess();
 		_worldEvents.OnSpiritBanished(this);
 		// Spirit is destroyed before audio plays
@@ -159,14 +159,14 @@ public class Spirit : MonoBehaviour, IInteractable
 		_spiritState = SpiritState.Spawning;
 
 		if (_tutorialSpirit)
-        {
+		{
 			StartCoroutine(TutorialSpiritSpawnCoroutine());
 		}
 		else
-        {			
+		{
 			AudioController.PlayAudio(_audioSource, _spawnAudio);
 			StartCoroutine(SpawnCoroutine());
-		}			
+		}
 	}
 
 	//  Update is called once per frame
@@ -219,12 +219,6 @@ public class Spirit : MonoBehaviour, IInteractable
 		_bodyObj.SetActive(false);
 	}
 
-	// Not sure there is any instance we'll need this but will keep it for now
-	private void ActivateBody()
-	{
-		_bodyObj.SetActive(true);
-	}
-
 	private IEnumerator SpawnCoroutine()
 	{
 		// Set move direction towards origin with random roation applied
@@ -242,11 +236,11 @@ public class Spirit : MonoBehaviour, IInteractable
 	}
 
 	private IEnumerator TutorialSpiritSpawnCoroutine()
-    {
+	{
 		yield return new WaitForSeconds(4f);
 		_spiritState = SpiritState.Searching;
 		_worldEvents.OnSpiritSpawned(this);
-    }
+	}
 
 	private IEnumerator SearchCoroutine()
 	{
@@ -311,16 +305,21 @@ public class Spirit : MonoBehaviour, IInteractable
 		}
 	}
 
-    private void OnTriggerStay(Collider other)
-    {
-		// Function contents should only be carried out if spirit is searching
-		if (_spiritState != SpiritState.Searching)
-        {
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
+		{
+			Debug.Log("Stealing a plant - collider");
+			StealPossessedPlant();
+		}
+		else if (_spiritState != SpiritState.Searching)
+		{
+			// Function contents should only be carried out if spirit is searching
 			return;
-        }
+		}
 
 		// Handle tutorial spirit
-		if (_tutorialSpirit 
+		if (_tutorialSpirit
 			&& other.gameObject.IsLayer(CommonTypes.Layers.Plant)
 			&& other.TryGetComponent(out Plant plant)
 			&& plant.CanBePossessed
@@ -331,7 +330,7 @@ public class Spirit : MonoBehaviour, IInteractable
 			transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
 			_spiritState = SpiritState.StartingPossession;
 			AudioController.PlayAudio(_audioSource, _beginPossessingAudio);
-			_spiritBody.SetMaterial(_banishableMaterial);			
+			_spiritBody.SetMaterial(_banishableMaterial);
 		}
 
 		// Handle trick plants
@@ -374,59 +373,5 @@ public class Spirit : MonoBehaviour, IInteractable
 				_spiritBody.SetMaterial(_banishableMaterial);
 			}
 		}
-
-		if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
-		{
-			StealPossessedPlant();
-		}
 	}
-
-    //private void OnTriggerEnter(Collider other)
-	//{
-	//	// Handle trick plants
-	//	if (other.gameObject.IsLayer(CommonTypes.Layers.TrickPlant)
-	//		&& other.TryGetComponent(out TrickPlant trickPlant)
-	//		&& trickPlant.CanBePossessed
-	//		&& _spiritState == SpiritState.Searching)
-	//	{
-	//		StopAllCoroutines();
-	//		_possessedPossessable = trickPlant;
-	//		_possessedPossessable.OnPossessionStarted(this);
-	//		_spiritState = SpiritState.Trapped;
-	//		transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
-	//		_spiritState = SpiritState.StartingPossession;
-	//		_spiritBody.SetMaterial(_banishMaterial);
-	//	}
-	//
-	//	//	TODO: Handle all layers for possession
-	//	if (other.gameObject.IsInLayers(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall })
-	//		&& other.TryGetComponent(out IPossessable possessable)
-	//		&& possessable.CanBePossessed
-	//		&& possessable == _targetPossessable
-	//		&& _spiritState == SpiritState.Searching)
-	//	{
-	//		Debug.Log("Spirit start possessing");
-	//		// Stop searching coroutine
-	//		StopAllCoroutines();
-	//		_possessedPossessable = possessable;
-	//		_possessedPossessable.OnPossessionStarted(this);
-	//		transform.position = new Vector3(_possessedPossessable.Transform.position.x, transform.position.y, _possessedPossessable.Transform.position.z);
-	//		_spiritState = SpiritState.StartingPossession;
-	//		AudioController.PlayAudio(_audioSource, _beginPossessingAudio);
-	//
-	//		if (possessable is SpiritWall)
-	//		{
-	//			DeactivateBody();
-	//		}
-	//		else
-	//		{
-	//			_spiritBody.SetMaterial(_banishMaterial);
-	//		}
-	//	}
-	//	if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
-	//	{
-	//		//	handle - we're off the edge of the map Jim
-	//		StealPossessedPlant();
-	//	}
-	//}
 }
