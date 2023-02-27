@@ -102,7 +102,8 @@ public class FireSystem : MonoBehaviour
 		Assert.IsNotNull(_fireParticles, Utility.AssertNotNullMessage(nameof(_fireParticles)));
 		Assert.IsNotNull(_smokeParticles, Utility.AssertNotNullMessage(nameof(_smokeParticles)));
 
-		_currentFireLevel = _fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
+		_currentFireLevel = GameManager.Instance.ActiveLevel.CauldronSettings.StartFireDuration;
+		_fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
 		_fireLifetimeStep = _fireLifetime / 3;
 
 		//	Start Fire Audio
