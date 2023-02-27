@@ -327,7 +327,7 @@ public class FoxBehaviour : MonoBehaviour
 				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
-				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
+				//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));
 				
 			}			
 			_handledEvents.Add(Events.LevelStarted);
