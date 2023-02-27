@@ -56,7 +56,8 @@ MonoBehaviour:
   _carryIconCombineColor: {r: 1, g: 1, b: 1, a: 1}
   _despawns: 0
   _despawnTimeout: 5
-  _playAnimation: 0
+  _playPickupAnimation: 0
+  _playDropAnimation: 0
 --- !u!136 &2934656443759496695
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -65,7 +66,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7754108684737133617}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.25
   m_Height: 1.7724732
@@ -78,6 +79,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6689965096717609098}
     m_Modifications:
+    - target: {fileID: 6620782929741956478, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782930194735099, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782930637775318, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782930962428675, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782931038935171, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620782931285581051, guid: b935d8de81c259742861dcba19d2f33f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6620782931358447179, guid: b935d8de81c259742861dcba19d2f33f,
         type: 3}
       propertyPath: m_Name

@@ -115,7 +115,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		}
 	}
 
-	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted;
+	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted && _plantPatch == null;
 
 	public override bool CanBeDropped => base.CanBeDropped
 									&& Physics.OverlapSphere(transform.position, 2.0f).Where(c => c.GetComponent<PlantPatch>() != null

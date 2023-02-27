@@ -1068,8 +1068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
   _turnSpeed: 30
-  _maxSpeed: 6
-  _acceleration: 6
+  _maxSpeed: 9
+  _acceleration: 9
   _instructionCanvas: {fileID: 1301200878}
   _defaultAlertDuration: 1
   _defaultInstructionDuration: 3

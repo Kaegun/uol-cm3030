@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worldEvents: {fileID: 11400000, guid: b4685119927813b42a5e61170c24ddd1, type: 2}
-  _moveSpeed: 3
+  _moveSpeed: 2
   _turnSpeed: 10
   _bodyObj: {fileID: 3262456472504981868}
   _audioSource: {fileID: 7080195345624704059}
@@ -60,6 +60,7 @@ MonoBehaviour:
   _bansihAudio: {fileID: 11400000, guid: 0829bc61580c0e748819a52239f81672, type: 2}
   _banishableMaterial: {fileID: 2100000, guid: 591f75c3e05cd85488d10d57d229c07f, type: 2}
   _banishedMaterial: {fileID: 2100000, guid: a49d53391384f3c43826e843d1a0607e, type: 2}
+  _tutorialSpirit: 0
 --- !u!135 &4107769748018646644
 SphereCollider:
   m_ObjectHideFlags: 0
