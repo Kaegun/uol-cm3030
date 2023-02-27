@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 616948483295942734}
   - component: {fileID: 616948483295942737}
-  - component: {fileID: 4394407300546221171}
   - component: {fileID: 616948483295942735}
+  - component: {fileID: 4394407300546221171}
   - component: {fileID: 616948483295942733}
   - component: {fileID: 616948483295942732}
   m_Layer: 0
@@ -62,6 +62,21 @@ MonoBehaviour:
   _velocityColour: {r: 0, g: 1, b: 0, a: 1}
   _texture: {fileID: 0}
   _width: 2
+--- !u!114 &616948483295942735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616948483295942736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83600f19aca4cc243b5abe12b520238a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quadsPerPoint: 5
+  _width: 8
+  _widthNoiseFactor: 0.5
 --- !u!114 &4394407300546221171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,21 +96,6 @@ MonoBehaviour:
   - {fileID: 1323533898846632, guid: 07232b84fecc54e45b2e071b6885bb96, type: 3}
   _seed: 2
   _density: 0.75
---- !u!114 &616948483295942735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616948483295942736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83600f19aca4cc243b5abe12b520238a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _quadsPerPoint: 5
-  _width: 8
-  _widthNoiseFactor: 0.5
 --- !u!33 &616948483295942733
 MeshFilter:
   m_ObjectHideFlags: 0
