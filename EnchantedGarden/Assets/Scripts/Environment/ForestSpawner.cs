@@ -18,6 +18,7 @@ public class ForestSpawner : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
 	{
+		float start = Time.realtimeSinceStartup;
 		if (_seed > 0)
 			Random.InitState(_seed);
 
@@ -43,10 +44,12 @@ public class ForestSpawner : MonoBehaviour
 			// # Quads - Account for fewer tris to make full quads
 			var numQuads = mesh.triangles.Length - mesh.triangles.Length % 4;
 			var totalTrees = 0;
+			float startTrees = Time.realtimeSinceStartup;
 			for (int i = 0; i < numQuads; i += 4)
 			{
 				totalTrees += FillQuad(GetQuad(i, mesh), avgRadius, positions);
 			}
+			Debug.Log($"Took {Time.realtimeSinceStartup - startTrees} seconds to plant trees");
 			Debug.Log($"Spawned: {totalTrees} trees!");
 		}
 		else
@@ -57,6 +60,9 @@ public class ForestSpawner : MonoBehaviour
 		//	Re-randomize the seed after spawning the trees
 		if (_seed > 0)
 			Random.InitState(System.Environment.TickCount);
+
+		float duration = Time.realtimeSinceStartup - start;
+		Debug.Log($"Forest spawn duration: {duration}");
 	}
 
 	// Update is called once per frame
@@ -97,7 +103,7 @@ public class ForestSpawner : MonoBehaviour
 				radius = Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
 			}
 			var pos = new Vector3(quad.x - quad.z / 2 + Random.Range(-quad.z / 2, quad.z / 2), 0, quad.y - quad.w / 2 + Random.Range(-quad.w / 2, quad.w / 2));
-			if (guard++ < 5)
+			if (guard++ < 4)
 			{
 				if (positions.All(p => (pos - p).magnitude > radius))
 				{
