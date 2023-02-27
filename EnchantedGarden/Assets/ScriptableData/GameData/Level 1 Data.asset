@@ -19,7 +19,7 @@ MonoBehaviour:
   _threeStarScoreThreshold: 30000
   _waves:
   - Count: 1
-    WaveDelay: 2
+    WaveDelay: 8
     SpiritSpawnDelay: 3
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 1
@@ -54,6 +54,6 @@ MonoBehaviour:
   _replantingThreshold: 1
   _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
-    _startNumberOfUses: 5
+    _startNumberOfUses: 0
     _maximumUses: 5
     _fireDuration: 50
