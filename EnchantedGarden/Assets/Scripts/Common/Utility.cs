@@ -100,6 +100,8 @@ public static class Utility
     {
         switch (level)
         {
+			case Levels.Launcher:
+				return Scenes.Launcher;
             case Levels.Level0:
                 return Scenes.Level0;
             case Levels.Level1:
@@ -114,6 +116,21 @@ public static class Utility
 				return Scenes.TemplateLevel;
 			default:
 				return Scenes.Level0;
+		}
+    }
+
+	public static string Name(this VolumeChannel channel)
+    {
+        switch (channel)
+        {
+            case VolumeChannel.Master:
+				return Volume.MasterVolume;
+            case VolumeChannel.Music:
+				return Volume.MusicVolume;
+			case VolumeChannel.SFX:
+				return Volume.SFXVolume;
+			default:
+				return "";
 		}
     }
 }

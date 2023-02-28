@@ -11,8 +11,11 @@ public class SceneLoader : MonoBehaviour
 
 	public static void UnloadScene(string sceneName)
 	{
-		var operation = SceneManager.UnloadSceneAsync(sceneName);
-		operation.completed += SceneUnloadCompleted;
+		if (SceneManager.GetSceneByName(sceneName).IsValid())
+        {
+			var operation = SceneManager.UnloadSceneAsync(sceneName);
+			operation.completed += SceneUnloadCompleted;
+		}		
 	}
 
 	private static void SceneLoadCompleted(AsyncOperation obj)

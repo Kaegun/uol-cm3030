@@ -33,6 +33,7 @@ public static class CommonTypes
 	public static class Scenes
 	{
 		public const string Launcher = "Launcher";
+		public const string LauncherUI = "Launcher UI";
 		public const string UI = "UI Overlay";
 		public const string LevelFailed = "Level Failed";
 		public const string Level0 = "Level 0";
@@ -50,13 +51,14 @@ public static class CommonTypes
 
 	public enum Levels
 	{
+		Launcher,
 		Level0,
 		Level1,
 		Level2,
 		Level3,
 		Level4,
-		Template
-	}
+		Template        
+    }
 
 	public static class ScoreValues
 	{
@@ -72,4 +74,17 @@ public static class CommonTypes
 	{
 		public const float UsesThreshold = 0.5f;
 	}
+
+	public enum VolumeChannel
+    {
+		Master,
+		Music,
+		SFX
+    }
+	public static class Volume
+    {
+		public const string MasterVolume = "Master Volume";
+		public const string MusicVolume = "Music Volume";
+		public const string SFXVolume = "SFX Volume";
+    }
 }

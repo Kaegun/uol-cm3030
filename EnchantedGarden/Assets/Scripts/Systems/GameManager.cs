@@ -26,6 +26,9 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private AudioSource _detachedAudioSourcePrefab;
 
+	[SerializeField]
+	private ScriptableVolumeSettings _volumeSettings;
+
 	[Header("UI")]
 	[SerializeField]
 	private bool _useUiOverlay = true;
@@ -80,6 +83,10 @@ public class GameManager : SingletonBase<GameManager>
 		//	Restart time
 		Time.timeScale = 1.0f;
 		SceneLoader.UnloadScene(sceneName);
+		if (ActiveLevel.Level == CommonTypes.Levels.Launcher)
+        {
+			SceneLoader.LoadScene(CommonTypes.Scenes.LauncherUI, true);
+        }
 	}
 
 	public void LoadNextLevel()
@@ -118,6 +125,8 @@ public class GameManager : SingletonBase<GameManager>
 		_gameOver = true;
 		Time.timeScale = 0.0f;
 
+		SceneLoader.UnloadScene(CommonTypes.Scenes.UI);
+
 		//	TODO: Stop audio
 		_backgroundMusicAudioSource.Stop();
 
@@ -149,7 +158,7 @@ public class GameManager : SingletonBase<GameManager>
 	protected override void Awake()
 	{
 		base.Awake();
-		SetCurrentActiveLevel();
+		SetCurrentActiveLevel();		
 	}
 
 	private void PlantStolen(object sender, GameObject e)
@@ -196,12 +205,18 @@ public class GameManager : SingletonBase<GameManager>
 		Assert.IsTrue(_gameLevels.Length > 0);
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
 
+		_volumeSettings.UpdateAudioMixerSettings();
+
 		SubscribeToWorldEvents();
 
 		if (_useUiOverlay)
 		{
 			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		}
+		if (ActiveLevel.Level == CommonTypes.Levels.Launcher)
+        {
+			SceneLoader.LoadScene(CommonTypes.Scenes.LauncherUI, true);
+        }
 
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 		StartCoroutine(LevelStartedEventCoroutine(ActiveLevel.Level.SceneName()));

@@ -30,7 +30,7 @@ public class UiEventManager : MonoBehaviour
 
 	public void OnClick_Story()
 	{
-		SceneLoader.LoadScene(CommonTypes.Scenes.Story, true);
+		SceneLoader.LoadScene(CommonTypes.Scenes.Story, true);		
 	}
 
 	public void OnClick_Credits()
@@ -42,4 +42,14 @@ public class UiEventManager : MonoBehaviour
 	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Options, true);
 	}
+
+	public void OnClick_UnloadLauncherUI()
+    {
+		SceneLoader.UnloadScene(CommonTypes.Scenes.LauncherUI);
+	}
+
+	public void OnSliderChange_MasterVolume(float volume)
+    {
+		
+    }
 }

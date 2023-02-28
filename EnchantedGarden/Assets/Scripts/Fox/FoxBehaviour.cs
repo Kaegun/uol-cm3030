@@ -132,7 +132,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private Animator _animator;
 	private AudioSource _audioSource;
-	//private TMP_Text _speechText;
 	private Image _instructionImage;
 	private Camera _camera;
 
