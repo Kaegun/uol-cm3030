@@ -12,8 +12,9 @@ public class ForestSpawner : MonoBehaviour
 	[SerializeField]
 	private int _seed = -1;
 
+	//	Allow some overlap
 	[SerializeField]
-	[Range(0.0f, 1.0f)]
+	[Range(0.0f, 1.5f)]
 	private float _density;
 
 	private const int _guardConstant = 4;
@@ -107,7 +108,7 @@ public class ForestSpawner : MonoBehaviour
 			if (tree == null)
 			{
 				tree = _treePrefabs[Random.Range(0, _treePrefabs.Length)];
-				radius = Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
+				radius = (1.0f - Mathf.Max(_density - 1.0f, 0.0f)) * Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
 			}
 
 			var pos = new Vector3(quad.x - quad.z / 2 + Random.Range(-quad.z / 2, quad.z / 2), 0, quad.y - quad.w / 2 + Random.Range(-quad.w / 2, quad.w / 2));
