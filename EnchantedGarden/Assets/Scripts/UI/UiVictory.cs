@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class UiVictory : MonoBehaviour
@@ -17,9 +18,19 @@ public class UiVictory : MonoBehaviour
 	[SerializeField]
 	private TMP_Text _scoreText;
 
+	[Header("Audio")]
+	[SerializeField]
+	private ScriptableAudioClip _sceneMusic;
+
+	[SerializeField]
+	private AudioSource _backgroundMusicAudioSource;
+
 	// Start is called before the first frame update
-	void Start()
+	private void Start()
 	{
+		Assert.IsNotNull(_backgroundMusicAudioSource, Utility.AssertNotNullMessage(nameof(_backgroundMusicAudioSource)));
+		Assert.IsNotNull(_sceneMusic, Utility.AssertNotNullMessage(nameof(_sceneMusic)));
+
 		//  Get Score from Game Manager
 		var score = GameManager.Instance.Score;
 
@@ -31,5 +42,9 @@ public class UiVictory : MonoBehaviour
 
 		//  Set Score
 		_scoreText.text = $"{score.FinalScore:# ##0}";
+
+		Debug.Log($"Playing audio: {_sceneMusic.name}");
+		//	Play Scene Audio loop
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _sceneMusic);
 	}
 }

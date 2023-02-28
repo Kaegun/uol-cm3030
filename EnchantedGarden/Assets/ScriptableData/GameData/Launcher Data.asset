@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Launcher Data
   m_EditorClassIdentifier: 
   _level: 0
-  _levelDuration: 600
+  _levelDuration: 15
   _infiniteLevel: 1
   _twoStarScoreThreshold: 0
   _threeStarScoreThreshold: 0
@@ -22,9 +22,11 @@ MonoBehaviour:
   _possessionThreshold: 10
   _startNumberOfPlants: 0
   _replantingThreshold: 2
-  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
     _startNumberOfUses: 1000000
     _maximumUses: 1000000
     _startFireDuration: 1000000
     _fireDuration: 1000000
+  _backgroundMusic: {fileID: 11400000, guid: 5e74ccec2f2e77a42856c0416157160a, type: 2}
+  _midIntensityMusicThreshold: 0
+  _highIntensityMusicThreshold: 0

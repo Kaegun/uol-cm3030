@@ -26,15 +26,6 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private AudioSource _detachedAudioSourcePrefab;
 
-	[SerializeField]
-	private ScriptableAudioClip _gameOverMusic;
-
-	[SerializeField]
-	private int _midIntensityMusicThreshold;
-
-	[SerializeField]
-	private int _highIntensityMusicThreshold;
-
 	[Header("UI")]
 	[SerializeField]
 	private bool _useUiOverlay = true;
@@ -88,7 +79,6 @@ public class GameManager : SingletonBase<GameManager>
 	{
 		//	Restart time
 		Time.timeScale = 1.0f;
-
 		SceneLoader.UnloadScene(sceneName);
 	}
 
@@ -117,9 +107,6 @@ public class GameManager : SingletonBase<GameManager>
 
 		Time.timeScale = 0.0f;
 
-		//	Play End of Game Audio loop
-		AudioController.PlayAudio(_backgroundMusicAudioSource, _gameOverMusic);
-
 		//	Load Game Over Screen
 		SceneLoader.LoadScene(CommonTypes.Scenes.LevelFailed, true);
 	}
@@ -130,6 +117,9 @@ public class GameManager : SingletonBase<GameManager>
 
 		_gameOver = true;
 		Time.timeScale = 0.0f;
+
+		//	TODO: Stop audio
+		_backgroundMusicAudioSource.Stop();
 
 		if (victory)
 		{
@@ -149,7 +139,6 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void SetCurrentActiveLevel()
 	{
-		//	TODO: Check this?
 		if (_activeLevel == null)
 			_activeLevel = _gameLevels[0];
 		ActiveLevel.CurrentNumberOfPlants = ActiveLevel.StartNumberOfPlants;
@@ -214,7 +203,7 @@ public class GameManager : SingletonBase<GameManager>
 		}
 
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
-		StartCoroutine(LevelStartedEventCoroutine(CommonTypes.Scenes.Level0));
+		StartCoroutine(LevelStartedEventCoroutine(ActiveLevel.Level.SceneName()));
 		Time.timeScale = 1.0f;
 
 		Score = new ScoreController(_worldEvents);
@@ -223,6 +212,8 @@ public class GameManager : SingletonBase<GameManager>
 	//	Update is called once per frame
 	private void Update()
 	{
+		Assert.IsNotNull(ActiveLevel, Utility.AssertNotNullMessage(nameof(ActiveLevel)));
+
 		if (!ActiveLevel.InfiniteLevel && Time.timeSinceLevelLoad >= ActiveLevel.LevelDuration && !_gameOver)
 		{
 			EndLevel(true);
@@ -230,15 +221,15 @@ public class GameManager : SingletonBase<GameManager>
 
 		if (!_gameOver && _backgroundMusicAudioSource.timeSamples > _backgroundMusicAudioSource.clip.samples * 0.999f)
 		{
-			if (_activeSpiritCount < _midIntensityMusicThreshold)
+			if (_activeSpiritCount < ActiveLevel.MidIntensityMusicThreshold)
 			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 			}
-			else if (_activeSpiritCount >= _midIntensityMusicThreshold && _activeSpiritCount < _highIntensityMusicThreshold)
+			else if (_activeSpiritCount >= ActiveLevel.MidIntensityMusicThreshold && _activeSpiritCount < ActiveLevel.HighIntensityMusicThreshold)
 			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.midIntensityAudio);
 			}
-			else if (_activeSpiritCount >= _highIntensityMusicThreshold)
+			else if (_activeSpiritCount >= ActiveLevel.HighIntensityMusicThreshold)
 			{
 				AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.highIntensityAudio);
 			}

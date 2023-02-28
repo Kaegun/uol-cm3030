@@ -15,25 +15,27 @@ public class SplineMeshGenerator : MonoBehaviour
 	[SerializeField]
 	private float _widthNoiseFactor = 0.5f;
 
-	private BezierSpline _spline;
 	private float _adjustedWidth;
 
 	private void Start()
 	{
-		Assert.IsTrue(TryGetComponent(out _spline), Utility.AssertNotNullMessage(nameof(_spline)));
-		if (TryGetComponent<MeshFilter>(out var meshFilter))
+		Debug.Log("SplineMeshGenerator.Start()");
+
+		MeshFilter meshFilter = null;
+		BezierSpline spline = null;
+		if (TryGetComponent(out meshFilter) && TryGetComponent(out spline))
 		{
 			var mesh = meshFilter.mesh != null ? meshFilter.mesh : new Mesh();
 			var vertices = new List<Vector3>();
 			var triangles = new List<int>();
 			var uvs = new List<Vector2>();
 
-			var numQuads = _spline.ControlPointCount * _quadsPerPoint;
+			var numQuads = spline.ControlPointCount * _quadsPerPoint;
 			_adjustedWidth = _width * (1f + Random.Range(-_widthNoiseFactor / 2, _widthNoiseFactor / 2));
 
 			for (int i = 0; i <= numQuads; i++)
 			{
-				vertices.AddRange(MakeQuad(i));
+				vertices.AddRange(MakeQuad(spline, i));
 				if (i % 2 == 0)
 					uvs.AddRange(new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1), });
 				else
@@ -48,20 +50,24 @@ public class SplineMeshGenerator : MonoBehaviour
 			mesh.Optimize();
 			mesh.RecalculateNormals();
 			meshFilter.mesh = mesh;
+
+			Debug.Log($"Leaving SplineMeshGenerator.Start [{triangles.Count}] | [{vertices.Count}]");
 		}
 		else
 		{
-			Assert.IsNull(meshFilter, Utility.AssertNotNullMessage(nameof(meshFilter)));
+			Assert.IsNotNull(spline, Utility.AssertNotNullMessage(nameof(spline)));
+			Assert.IsNotNull(meshFilter, Utility.AssertNotNullMessage(nameof(meshFilter)));
 		}
 	}
 
-	private Vector3[] MakeQuad(int step)
+	private Vector3[] MakeQuad(BezierSpline spline, int step)
 	{
-		var t = step * StepSize;
-		var point = _spline.GetWorldPoint(t);
-		var nextPoint = _spline.GetWorldPoint(t + StepSize);
-		var direction = _spline.GetWorldDirection(t);
-		var nextDirection = _spline.GetWorldDirection(t + StepSize);
+		var stepSize = spline.StepSize(_quadsPerPoint);
+		var t = step * stepSize;
+		var point = spline.GetWorldPoint(t);
+		var nextPoint = spline.GetWorldPoint(t + stepSize);
+		var direction = spline.GetWorldDirection(t);
+		var nextDirection = spline.GetWorldDirection(t + stepSize);
 
 		var edge = _width * (1f + Random.Range(0, _widthNoiseFactor));
 		var ret = new Vector3[]
@@ -75,6 +81,9 @@ public class SplineMeshGenerator : MonoBehaviour
 		return ret;
 	}
 
-	private float StepSize => 1f / (_spline.ControlPointCount * _quadsPerPoint);
 }
 
+internal static class BezierSplineEx
+{
+	public static float StepSize(this BezierSpline spline, float quadsPerPoint) => 1f / (spline.ControlPointCount * quadsPerPoint);
+}

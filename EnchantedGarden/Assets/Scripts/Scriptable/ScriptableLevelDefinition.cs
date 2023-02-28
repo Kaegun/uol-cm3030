@@ -57,11 +57,22 @@ public class ScriptableLevelDefinition : ScriptableObject
 	public float ReplantingThreshold => _replantingThreshold;
 
 	//	Settings pertaining to the cauldron
+	[Header("Cauldron")]
+	[SerializeField]
+	private CauldronSettings _cauldronSettings;
+	public CauldronSettings CauldronSettings => _cauldronSettings;
+
+	//	Audio
+	[Header("Audio")]
 	[SerializeField]
 	private ScriptableBackgroundMusic _backgroundMusic;
 	public ScriptableBackgroundMusic BackgroundMusic { get { return _backgroundMusic; } }
 
 	[SerializeField]
-	private CauldronSettings _cauldronSettings;
-	public CauldronSettings CauldronSettings => _cauldronSettings;
+	private int _midIntensityMusicThreshold;
+	public int MidIntensityMusicThreshold => _midIntensityMusicThreshold;
+
+	[SerializeField]
+	private int _highIntensityMusicThreshold;
+	public int HighIntensityMusicThreshold => _highIntensityMusicThreshold;
 }
