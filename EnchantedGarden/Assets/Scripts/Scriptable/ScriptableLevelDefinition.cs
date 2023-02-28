@@ -21,6 +21,10 @@ public class ScriptableLevelDefinition : ScriptableObject
 
 	[Header("Scoring")]
 	[SerializeField]
+	private int _oneStarScoreThreshold = 0;
+	public int OneStarScoreThreshold => _oneStarScoreThreshold;
+
+	[SerializeField]
 	private int _twoStarScoreThreshold = 0;
 	public int TwoStarScoreThreshold => _twoStarScoreThreshold;
 

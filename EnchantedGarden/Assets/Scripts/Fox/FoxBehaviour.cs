@@ -132,7 +132,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private Animator _animator;
 	private AudioSource _audioSource;
-	//private TMP_Text _speechText;
 	private Image _instructionImage;
 	private Camera _camera;
 
@@ -327,7 +326,13 @@ public class FoxBehaviour : MonoBehaviour
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
 				//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));				
-			}			
+			}
+			if (e == CommonTypes.Scenes.Level2)
+            {
+				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
+				_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _alchemyTable));
+				_behaviourQueue.Enqueue(InstructionCoroutine(_trickPlantTrapSprite, _defaultInstructionDuration));
+			}
 			_handledEvents.Add(Events.LevelStarted);
 		}
 	}

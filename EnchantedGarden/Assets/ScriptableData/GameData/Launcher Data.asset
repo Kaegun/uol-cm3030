@@ -15,12 +15,38 @@ MonoBehaviour:
   _level: 0
   _levelDuration: 15
   _infiniteLevel: 1
+  _oneStarScoreThreshold: 0
   _twoStarScoreThreshold: 0
   _threeStarScoreThreshold: 0
-  _waves: []
-  _unplantedFactor: 5
+  _waves:
+  - Count: 1
+    WaveDelay: 0
+    SpiritSpawnDelay: 0
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 20
+    SpiritSpawnDelay: 0
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 20
+    SpiritSpawnDelay: 0
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 20
+    SpiritSpawnDelay: 0
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  - Count: 1
+    WaveDelay: 20
+    SpiritSpawnDelay: 0
+    MoveSpeedMultiplier: 1
+    PossessionRateMultiplier: 1
+  _unplantedFactor: 2
   _possessionThreshold: 10
-  _startNumberOfPlants: 0
+  _startNumberOfPlants: 6
   _replantingThreshold: 2
   _cauldronSettings:
     _startNumberOfUses: 1000000
