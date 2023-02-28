@@ -14,6 +14,9 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	[SerializeField]
 	private GameObject _plantModel;
 
+	[SerializeField]
+	private GameObject _canBeReplantedIcon;
+
 	[Header("Normal Plant Model Transform")]
 	[SerializeField]
 	private Vector3 _normalPosition;
@@ -62,12 +65,14 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		_plantPatch = parent;
 		_replantingProgress = 0;
 		SetModelNormal();
+		SetCanBeReplantedIcon();
 	}
 
 	private void Replant(PlantPatch parent)
 	{
 		PlantPlant(parent);
 		_worldEvents.OnPlantReplanted(transform.position);
+		SetCanBeReplantedIcon();
 	}
 
 	public void OnPossessionStarted(Spirit possessor)
@@ -120,6 +125,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 			SetModelDropped();
 			_worldEvents.OnPlantDroppedOutOfPatch(gameObject);
 		}
+		SetCanBeReplantedIcon();
 	}
 
 	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted && _plantPatch == null;
@@ -140,6 +146,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		}
 
 		base.OnPickUp(pickupTransform);
+		SetCanBeReplantedIcon();
 	}
 
 	public override void OnDrop(bool despawn = false)
@@ -157,6 +164,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
 		SetModelDropped();
 		_plantState = PlantState.Default;
+		SetCanBeReplantedIcon();
 	}
 
 	//  Start is called before the first frame update
@@ -192,6 +200,18 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		_plantModel.transform.localRotation = Quaternion.Euler(_droppedRotation);
 		_plantModel.transform.localScale = _droppedScale;
 	}
+
+	private void SetCanBeReplantedIcon()
+    {
+		if (CanBeReplanted)
+        {
+			_canBeReplantedIcon.SetActive(true);
+        }
+		else
+        {
+			_canBeReplantedIcon.SetActive(false);
+        }
+    }
 
 	public bool CanInteractWith(IInteractor interactor)
 	{

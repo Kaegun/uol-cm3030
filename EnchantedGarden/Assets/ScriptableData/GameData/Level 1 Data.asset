@@ -15,7 +15,7 @@ MonoBehaviour:
   _level: 1
   _levelDuration: 120
   _infiniteLevel: 0
-  _oneStarScoreThreshold: 0
+  _oneStarScoreThreshold: 13000
   _twoStarScoreThreshold: 25000
   _threeStarScoreThreshold: 45000
   _waves:

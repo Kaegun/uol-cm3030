@@ -57,6 +57,9 @@ public class Spirit : MonoBehaviour, IInteractable
 	[SerializeField]
 	private bool _tutorialSpirit = false;
 
+	[SerializeField]
+	private float _tutorialSpiritWaitDuration = 4f;
+
 	private SpiritBody _spiritBody;
 	private Vector3 _moveDirection;
 	private float _moveSpeedMultiplier = 1f;
@@ -237,7 +240,7 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private IEnumerator TutorialSpiritSpawnCoroutine()
 	{
-		yield return new WaitForSeconds(4f);
+		yield return new WaitForSeconds(_tutorialSpiritWaitDuration);
 		_spiritState = SpiritState.Searching;
 		_worldEvents.OnSpiritSpawned(this);
 	}
