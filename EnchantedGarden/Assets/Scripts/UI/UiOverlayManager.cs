@@ -107,8 +107,9 @@ public class UiOverlayManager : MonoBehaviour
 			}
 		}
 
-		SubscribeToEvents();
 		_scoreSettable.SetValue(0);
+
+		SubscribeToEvents();
 	}
 
 	private void Score(object sender, ScriptableWorldEventHandler.ScoreEventArguments e)
