@@ -80,6 +80,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		SetModelNormal();
 		_plantState = PlantState.BecomingPossessed;
 		_startPossessionPos = transform.position;
+		SetCanBeReplantedIcon();
 		_worldEvents.OnPlantPossessing(transform.position);
 	}
 
@@ -117,7 +118,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		{
 			var plantPatch = GetNearbyPlantPatch();
 			if (plantPatch != null)
-            {
+			{
 				_plantPatch = plantPatch;
 				transform.position = _plantPatch.transform.position;
 				_plantPatch.AddPlant(this);
@@ -125,6 +126,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 			SetModelDropped();
 			_worldEvents.OnPlantDroppedOutOfPatch(gameObject);
 		}
+
 		SetCanBeReplantedIcon();
 	}
 
@@ -179,7 +181,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	protected override void Update() { }
 
 	private PlantPatch GetNearbyPlantPatch()
-    {
+	{
 		return Physics.OverlapSphere(transform.position, 1.5f).
 			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
 			Select(c => c.GetComponent<PlantPatch>()).
@@ -202,16 +204,9 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	}
 
 	private void SetCanBeReplantedIcon()
-    {
-		if (CanBeReplanted)
-        {
-			_canBeReplantedIcon.SetActive(true);
-        }
-		else
-        {
-			_canBeReplantedIcon.SetActive(false);
-        }
-    }
+	{
+		_canBeReplantedIcon.SetActive(CanBeReplanted);
+	}
 
 	public bool CanInteractWith(IInteractor interactor)
 	{
