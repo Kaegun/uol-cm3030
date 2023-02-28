@@ -15,6 +15,7 @@ MonoBehaviour:
   _level: 2
   _levelDuration: 150
   _infiniteLevel: 0
+  _oneStarScoreThreshold: 0
   _twoStarScoreThreshold: 30000
   _threeStarScoreThreshold: 48000
   _waves:
@@ -52,9 +53,11 @@ MonoBehaviour:
   _possessionThreshold: 17.5
   _startNumberOfPlants: 5
   _replantingThreshold: 1
-  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
     _startNumberOfUses: 2
     _maximumUses: 10
     _startFireDuration: 0
     _fireDuration: 75
+  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
+  _midIntensityMusicThreshold: 3
+  _highIntensityMusicThreshold: 6

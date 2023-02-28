@@ -34,10 +34,10 @@ public class ScoreController
 		_finalScore = (int)(_score * (1 + 0.5f * numPlantsRemaining));
 	}
 
-	public int CalculateRating(int numPlantsRemaining, int twoStarThreshold, int threeStarThreshold)
+	public int CalculateRating(int numPlantsRemaining, int oneStarThreshold, int twoStarThreshold, int threeStarThreshold)
 	{
 		CalculateFinalScore(numPlantsRemaining);
-		return _rating = _finalScore >= threeStarThreshold ? 3 : _finalScore >= twoStarThreshold ? 2 : 1;
+		return _rating = _finalScore >= threeStarThreshold ? 3 : _finalScore >= twoStarThreshold ? 2 : _finalScore >= oneStarThreshold ? 1 : 0;
 	}
 
 	private void SpiritBanished(object sender, Spirit e)

@@ -121,7 +121,9 @@ public class GameManager : SingletonBase<GameManager>
 		//	TODO: Stop audio
 		_backgroundMusicAudioSource.Stop();
 
-		if (victory)
+		int rating = Score.CalculateRating(ActiveLevel.CurrentNumberOfPlants, ActiveLevel.OneStarScoreThreshold, ActiveLevel.TwoStarScoreThreshold, ActiveLevel.ThreeStarScoreThreshold);
+
+		if (victory && rating > 0)
 		{
 			LoadVictoryScene();
 		}
@@ -132,8 +134,7 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	private void LoadVictoryScene()
-	{
-		Score.CalculateRating(ActiveLevel.CurrentNumberOfPlants, ActiveLevel.TwoStarScoreThreshold, ActiveLevel.ThreeStarScoreThreshold);
+	{		
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
 	}
 

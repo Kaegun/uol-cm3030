@@ -110,6 +110,13 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 		}
 		else
 		{
+			var plantPatch = GetNearbyPlantPatch();
+			if (plantPatch != null)
+            {
+				_plantPatch = plantPatch;
+				transform.position = _plantPatch.transform.position;
+				_plantPatch.AddPlant(this);
+			}
 			SetModelDropped();
 			_worldEvents.OnPlantDroppedOutOfPatch(gameObject);
 		}
@@ -139,16 +146,13 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	{
 		base.OnDrop();
 		//	TODO: All of this can be done with Trigger Collider and Layers
-		var plantPatch = Physics.OverlapSphere(transform.position, 2.0f).
-			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
-			Select(c => c.GetComponent<PlantPatch>()).
-			OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
-			FirstOrDefault();
+		var plantPatch = GetNearbyPlantPatch();
 
 		if (plantPatch != null)
 		{
 			_plantPatch = plantPatch;
 			transform.position = _plantPatch.transform.position;
+			_plantPatch.AddPlant(this);
 		}
 
 		SetModelDropped();
@@ -165,6 +169,15 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
 	//  Update is called once per frame
 	protected override void Update() { }
+
+	private PlantPatch GetNearbyPlantPatch()
+    {
+		return Physics.OverlapSphere(transform.position, 1.5f).
+			Where(c => c.GetComponent<PlantPatch>() != null && !c.GetComponent<PlantPatch>().ContainsPlant).
+			Select(c => c.GetComponent<PlantPatch>()).
+			OrderBy(c => Vector3.Distance(c.transform.position, transform.position)).
+			FirstOrDefault();
+	}
 
 	private void SetModelNormal()
 	{

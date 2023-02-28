@@ -210,7 +210,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		transform.position += _moveSpeed * _moveSpeedMultiplier * speedFactor * Time.deltaTime * moveDir;
 
 		// Use cos wave to make spirit bob up and down as it moves
-		var bobAmount = 0.005f * Mathf.Cos(Time.time * 3.5f);
+		var bobAmount = 0.5f * Time.deltaTime * Mathf.Cos(Time.time * 3.5f);
 		transform.position += Vector3.up * bobAmount;
 	}
 
