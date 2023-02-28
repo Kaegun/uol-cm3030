@@ -61,6 +61,7 @@ MonoBehaviour:
   _banishableMaterial: {fileID: 2100000, guid: 591f75c3e05cd85488d10d57d229c07f, type: 2}
   _banishedMaterial: {fileID: 2100000, guid: a49d53391384f3c43826e843d1a0607e, type: 2}
   _tutorialSpirit: 0
+  _tutorialSpiritWaitDuration: 4
 --- !u!135 &4107769748018646644
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5327574566a5e2b4ea5d1f0d0d3b2e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 308192148189400579}
 --- !u!1001 &2416175915241858109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -308,6 +310,12 @@ Transform:
 --- !u!1 &6914262122218038491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9111802349078626534, guid: 39e42e51479827d4491e40bdad502ec3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2416175915241858109}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &308192148189400579 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6502898718562538946, guid: 39e42e51479827d4491e40bdad502ec3,
     type: 3}
   m_PrefabInstance: {fileID: 2416175915241858109}
   m_PrefabAsset: {fileID: 0}

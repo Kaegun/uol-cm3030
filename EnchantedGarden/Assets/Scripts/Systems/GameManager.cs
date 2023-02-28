@@ -43,7 +43,7 @@ public class GameManager : SingletonBase<GameManager>
 
 	public ScoreController Score { get; private set; }
 
-	// Should probably be in the AudioController, would likely need to make it a Singleton though
+	//	Create a detached Audio source. Used on the despawning of an item to play a 3D sound when the underlying GameObject has been destroyed.
 	public AudioSource CreateDetachedAudioSource(Vector3 position)
 	{
 		return Instantiate(_detachedAudioSourcePrefab, position, Quaternion.identity);
@@ -73,8 +73,6 @@ public class GameManager : SingletonBase<GameManager>
 
 	public void RestartLevel()
 	{
-		//	Restart time
-		//Time.timeScale = 1.0f;
 		SceneLoader.LoadScene(_activeLevel.Level.SceneName());
 	}
 
@@ -84,9 +82,9 @@ public class GameManager : SingletonBase<GameManager>
 		Time.timeScale = 1.0f;
 		SceneLoader.UnloadScene(sceneName);
 		if (ActiveLevel.Level == CommonTypes.Levels.Launcher)
-        {
+		{
 			SceneLoader.LoadScene(CommonTypes.Scenes.LauncherUI, true);
-        }
+		}
 	}
 
 	public void LoadNextLevel()
@@ -143,7 +141,7 @@ public class GameManager : SingletonBase<GameManager>
 	}
 
 	private void LoadVictoryScene()
-	{		
+	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
 	}
 
@@ -158,7 +156,7 @@ public class GameManager : SingletonBase<GameManager>
 	protected override void Awake()
 	{
 		base.Awake();
-		SetCurrentActiveLevel();		
+		SetCurrentActiveLevel();
 	}
 
 	private void PlantStolen(object sender, GameObject e)
@@ -183,6 +181,8 @@ public class GameManager : SingletonBase<GameManager>
 		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
 		CheckIngredientsEmpty();
+
+		//	TODO: Might need to activate/place the Tutorial Spirit after all Starts have been called.
 	}
 
 	private void SubscribeToWorldEvents()
@@ -214,9 +214,9 @@ public class GameManager : SingletonBase<GameManager>
 			SceneLoader.LoadScene(CommonTypes.Scenes.UI, true);
 		}
 		if (ActiveLevel.Level == CommonTypes.Levels.Launcher)
-        {
+		{
 			SceneLoader.LoadScene(CommonTypes.Scenes.LauncherUI, true);
-        }
+		}
 
 		AudioController.PlayAudio(_backgroundMusicAudioSource, _activeLevel.BackgroundMusic.lowIntensityAudio);
 		StartCoroutine(LevelStartedEventCoroutine(ActiveLevel.Level.SceneName()));
