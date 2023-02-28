@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Launcher.unity
     guid: 9a6471cb7f1249247be14f7440554b2d
   - enabled: 1
+    path: Assets/Scenes/Subscenes/Launcher UI.unity
+    guid: 5d0523785ca6f584b9780cb65c8ce7b0
+  - enabled: 1
     path: Assets/Scenes/Subscenes/Credits.unity
     guid: 8fb3f3c624cc31f4b81a04add7f5c818
   - enabled: 1

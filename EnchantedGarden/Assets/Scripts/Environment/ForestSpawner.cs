@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+[RequireComponent(typeof(MeshFilter))]
 public class ForestSpawner : MonoBehaviour
 {
 	[SerializeField]
@@ -11,52 +12,65 @@ public class ForestSpawner : MonoBehaviour
 	[SerializeField]
 	private int _seed = -1;
 
+	//	Allow some overlap
 	[SerializeField]
-	[Range(0.0f, 1.0f)]
+	[Range(0.0f, 1.5f)]
 	private float _density;
+
+	private const int _guardConstant = 4;
 
 	// Start is called before the first frame update
 	private void Start()
 	{
-		if (_seed > 0)
-			Random.InitState(_seed);
-
-		//  Clamp density to 0 - 1
-		_density = Mathf.Clamp(_density, 0, 1);
-		if (TryGetComponent<MeshFilter>(out var meshFilter))
+		//	C# 8 Syntax would be nicer for this.
+		using (new DebugTiming(nameof(ForestSpawner)))
 		{
-			var mesh = meshFilter.sharedMesh;
+			if (_seed > 0)
+				Random.InitState(_seed);
 
-			//	Calculate average radius of the tree prefabs
-			float radius = 0.0f;
-			for (int i = 0; i < _treePrefabs.Length; i++)
+			//  Clamp density to 0 - 1
+			_density = Mathf.Clamp(_density, 0, 1);
+			if (TryGetComponent<MeshFilter>(out var meshFilter))
 			{
-				//	Approximate the radius using the square of the area
-				radius += Mathf.Sqrt(GetAreaOfObject(_treePrefabs[i]));
+				var mesh = meshFilter.sharedMesh;
+
+				Assert.IsNotNull(meshFilter.mesh, Utility.AssertNotNullMessage(nameof(meshFilter.mesh)));
+				Assert.IsNotNull(meshFilter.sharedMesh, Utility.AssertNotNullMessage(nameof(meshFilter.sharedMesh)));
+				Assert.IsNotNull(mesh.triangles, Utility.AssertNotNullMessage(nameof(mesh.triangles)));
+
+				//	Calculate average radius of the tree prefabs
+				float radius = 0.0f;
+				for (int i = 0; i < _treePrefabs.Length; i++)
+				{
+					//	Approximate the radius using the square of the area
+					radius += Mathf.Sqrt(GetAreaOfObject(_treePrefabs[i]));
+				}
+				var avgRadius = radius / _treePrefabs.Length;
+
+				//	Track spawned trees to avoid overlaps
+				List<Vector3> positions = new List<Vector3>();
+
+				//	Need to split the mesh into quads
+				// # Quads - Account for fewer tris to make full quads
+				var numQuads = mesh.triangles.Length - mesh.triangles.Length % 4;
+				var totalTrees = 0;
+				float startTrees = Time.realtimeSinceStartup;
+				for (int i = 0; i < numQuads; i += 4)
+				{
+					totalTrees += FillQuad(GetQuad(i, mesh), avgRadius, positions);
+				}
+
+				Debug.Log($"Spawned: {totalTrees} trees!");
 			}
-			var avgRadius = radius / _treePrefabs.Length;
-
-			//	Track spawned trees to avoid overlaps
-			List<Vector3> positions = new List<Vector3>();
-
-			//	Need to split the mesh into quads
-			// # Quads - Account for fewer tris to make full quads
-			var numQuads = mesh.triangles.Length - mesh.triangles.Length % 4;
-			var totalTrees = 0;
-			for (int i = 0; i < numQuads; i += 4)
+			else
 			{
-				totalTrees += FillQuad(GetQuad(i, mesh), avgRadius, positions);
+				Assert.IsNull(meshFilter, Utility.AssertNotNullMessage(nameof(meshFilter)));
 			}
-			Debug.Log($"Spawned: {totalTrees} trees!");
-		}
-		else
-		{
-			Assert.IsNull(meshFilter, Utility.AssertNotNullMessage(nameof(meshFilter)));
-		}
 
-		//	Re-randomize the seed after spawning the trees
-		if (_seed > 0)
-			Random.InitState(System.Environment.TickCount);
+			//	Re-randomize the seed after spawning the trees
+			if (_seed > 0)
+				Random.InitState(System.Environment.TickCount);
+		}
 	}
 
 	// Update is called once per frame
@@ -83,7 +97,7 @@ public class ForestSpawner : MonoBehaviour
 	{
 		var area = quad.z * quad.w;
 
-		int number = Mathf.CeilToInt(area / avgRadius * _density),
+		int number = Mathf.CeilToInt(_density * area / (Mathf.PI * avgRadius * avgRadius)),
 				i = 0, guard = 0, spawns = 0;
 
 		GameObject tree = null;
@@ -94,10 +108,12 @@ public class ForestSpawner : MonoBehaviour
 			if (tree == null)
 			{
 				tree = _treePrefabs[Random.Range(0, _treePrefabs.Length)];
-				radius = Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
+				radius = (1.0f - Mathf.Max(_density - 1.0f, 0.0f)) * Mathf.Sqrt(GetAreaOfObject(tree)) / 2;
 			}
+
 			var pos = new Vector3(quad.x - quad.z / 2 + Random.Range(-quad.z / 2, quad.z / 2), 0, quad.y - quad.w / 2 + Random.Range(-quad.w / 2, quad.w / 2));
-			if (guard++ < 5)
+
+			if (guard++ < _guardConstant)
 			{
 				if (positions.All(p => (pos - p).magnitude > radius))
 				{
@@ -113,7 +129,7 @@ public class ForestSpawner : MonoBehaviour
 			else
 			{
 				guard = 0;
-				//	Skip it if we can't find a place to plant it.
+				//	Skip it if we can't find a place to spawn a tree
 				i++;
 			}
 		}

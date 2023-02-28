@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class Cauldron : MonoBehaviour, IInteractable
@@ -10,6 +11,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private ScriptableWorldEventHandler _worldEvents;
 
 	[Header("Audio")]
+	[SerializeField]
+	private AudioSource _cauldronAudioSource;
+
 	[SerializeField]
 	private ScriptableAudioClip _cauldronBubbleAudio;
 
@@ -27,9 +31,15 @@ public class Cauldron : MonoBehaviour, IInteractable
 	[SerializeField]
 	private Canvas _cauldronCanvas;
 
+	[SerializeField]
+	private Image _cannotAddIngredient;
+
+	[SerializeField]
+	private Image _cannotUseCauldron;
+
 	private int _maxUses;
 	private FireSystem _fireSystem;
-	private AudioSource _cauldronAudioSource;
+	private Camera _camera;
 
 	private bool CanUseCauldron => GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses > 0 && _fireSystem.IsAlive;
 
@@ -58,16 +68,20 @@ public class Cauldron : MonoBehaviour, IInteractable
 	private void Start()
 	{
 		Assert.IsNotNull(_worldEvents, Utility.AssertNotNullMessage(nameof(_worldEvents)));
+		Assert.IsNotNull(_cauldronCanvas, Utility.AssertNotNullMessage(nameof(_cauldronCanvas)));
+		Assert.IsNotNull(_cannotAddIngredient, Utility.AssertNotNullMessage(nameof(_cannotAddIngredient)));
+		Assert.IsNotNull(_cannotUseCauldron, Utility.AssertNotNullMessage(nameof(_cannotUseCauldron)));
+
 		_fireSystem = GetComponentInChildren<FireSystem>();
 		Assert.IsNotNull(_fireSystem, Utility.AssertNotNullMessage(nameof(_fireSystem)));
-		Assert.IsTrue(TryGetComponent(out _cauldronAudioSource), Utility.AssertNotNullMessage(nameof(_cauldronAudioSource)));
-		Assert.IsNotNull(_cauldronCanvas, Utility.AssertNotNullMessage(nameof(_cauldronCanvas)));
-		_cauldronCanvas.gameObject.SetActive(false);
+
+		if (_cauldronAudioSource == null && !TryGetComponent(out _cauldronAudioSource))
+			Assert.IsNull(_cauldronAudioSource, Utility.AssertNotNullMessage(nameof(_cauldronAudioSource)));
+
+		_camera = Camera.main;
 
 		_maxUses = GameManager.Instance.ActiveLevel.CauldronSettings.MaximumUses;
 		GameManager.Instance.ActiveLevel.CauldronSettings.CurrentNumberOfUses = GameManager.Instance.ActiveLevel.CauldronSettings.StartNumberOfUses;
-
-		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}
 
 	// Update is called once per frame
@@ -84,7 +98,11 @@ public class Cauldron : MonoBehaviour, IInteractable
 			{
 				_cauldronContents.SetActive(false);
 			}
+			if (!_cannotUseCauldron.gameObject.activeSelf)
+			{
+				_cannotUseCauldron.gameObject.SetActive(true);
 
+			}
 		}
 		if (CanUseCauldron)
 		{
@@ -100,7 +118,14 @@ public class Cauldron : MonoBehaviour, IInteractable
 			{
 				_cauldronContentsParticles.SetActive(true);
 			}
+			if (_cannotUseCauldron.gameObject.activeSelf)
+			{
+				_cannotUseCauldron.gameObject.SetActive(false);
+
+			}
 		}
+
+		_cauldronCanvas.transform.rotation = Quaternion.Euler(-_camera.transform.rotation.eulerAngles);
 	}
 
 	private IEnumerator CauldronCombineCoroutine()
@@ -112,9 +137,9 @@ public class Cauldron : MonoBehaviour, IInteractable
 
 	private IEnumerator CannotAddIngredientCoroutine()
 	{
-		_cauldronCanvas.gameObject.SetActive(true);
+		_cannotAddIngredient.gameObject.SetActive(true);
 		yield return new WaitForSeconds(1f);
-		_cauldronCanvas.gameObject.SetActive(false);
+		_cannotAddIngredient.gameObject.SetActive(false);
 	}
 
 	public bool CanInteractWith(IInteractor interactor)

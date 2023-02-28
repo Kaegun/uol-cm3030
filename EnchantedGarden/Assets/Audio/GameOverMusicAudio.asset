@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GameOverMusicAudio
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 91c19015e97e06441ad6159635211b26, type: 3}
-  volume: 0.3
+  volume: 1
   loop: 1
   spatialBlend: 1

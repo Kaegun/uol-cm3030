@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 616948483295942734}
-  - component: {fileID: 616948483295942737}
   - component: {fileID: 4394407300546221171}
   - component: {fileID: 616948483295942735}
+  - component: {fileID: 616948483295942737}
   - component: {fileID: 616948483295942733}
   - component: {fileID: 616948483295942732}
   m_Layer: 0
@@ -35,33 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &616948483295942737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616948483295942736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67263cb1e96fe9247b3a114537f79ccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _points:
-  - {x: 1, y: 0, z: 0}
-  - {x: 2, y: 0, z: 0}
-  - {x: 3, y: 0, z: 0}
-  - {x: 4, y: 0, z: 0}
-  _modes: 0000000000000000
-  _loop: 0
-  _lineColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _pointColours:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  - {r: 0, g: 1, b: 1, a: 1}
-  _velocityColour: {r: 0, g: 1, b: 0, a: 1}
-  _texture: {fileID: 0}
-  _width: 2
 --- !u!114 &4394407300546221171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +69,33 @@ MonoBehaviour:
   _quadsPerPoint: 5
   _width: 8
   _widthNoiseFactor: 0.5
+--- !u!114 &616948483295942737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616948483295942736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67263cb1e96fe9247b3a114537f79ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points:
+  - {x: 1, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 3, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+  _lineColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _pointColours:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  _velocityColour: {r: 0, g: 1, b: 0, a: 1}
+  _texture: {fileID: 0}
+  _width: 2
 --- !u!33 &616948483295942733
 MeshFilter:
   m_ObjectHideFlags: 0

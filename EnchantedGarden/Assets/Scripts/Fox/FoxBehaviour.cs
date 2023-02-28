@@ -24,7 +24,7 @@ public class FoxBehaviour : MonoBehaviour
 		IngredientsEmpty,
 		PlantStolen,
 		SpiritWallSpawned,
-		TrickPlantPickedUp
+		TrickPlantPickedUp,
 	}
 
 	[Header("Events")]
@@ -61,7 +61,7 @@ public class FoxBehaviour : MonoBehaviour
 		Events.IngredientsEmpty,
 		Events.PlantStolen,
 		Events.SpiritWallSpawned,
-		Events.TrickPlantPickedUp
+		Events.TrickPlantPickedUp,
 	};
 
 	[Header("Instruction Sprites")]
@@ -132,7 +132,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private Animator _animator;
 	private AudioSource _audioSource;
-	//private TMP_Text _speechText;
 	private Image _instructionImage;
 	private Camera _camera;
 
@@ -144,6 +143,8 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void SubscribeToWorldEvents()
 	{
+		Debug.Log("Fox: Subscribing to Events");
+
 		_worldEvents.LevelStarted += LevelStarted;
 
 		_worldEvents.SpiritSpawned += SpiritSpawned;
@@ -327,7 +328,13 @@ public class FoxBehaviour : MonoBehaviour
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
 				//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));				
-			}			
+			}
+			if (e == CommonTypes.Scenes.Level2)
+			{
+				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
+				_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _alchemyTable));
+				_behaviourQueue.Enqueue(InstructionCoroutine(_trickPlantTrapSprite, _defaultInstructionDuration));
+			}
 			_handledEvents.Add(Events.LevelStarted);
 		}
 	}
@@ -367,7 +374,7 @@ public class FoxBehaviour : MonoBehaviour
 		if (_respondsTo.Contains(Events.PlantPossessed) && !_handledEvents.Contains(Events.PlantPossessed))
 		{
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
-			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));			
+			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_alchemyTable));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_fillFlaskSprite, 4f));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_banishSpiritSprite, _defaultInstructionDuration));
@@ -393,7 +400,7 @@ public class FoxBehaviour : MonoBehaviour
 		Debug.Log("Fox Behaviour: A plant has been dropped outside of a plant patch");
 		if (_respondsTo.Contains(Events.PlantDroppedOutOfPatch) && !_handledEvents.Contains(Events.PlantDroppedOutOfPatch))
 		{
-			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));			
+			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));
 			_behaviourQueue.Enqueue(InstructionCoroutine(_replantPlantSprite, _defaultInstructionDuration));
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_shovel));
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));

@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2dc88a8646e694dbc8b000abf0be43, type: 3}
   m_Name: Level 3 Data
   m_EditorClassIdentifier: 
+  _level: 4
   _levelDuration: 180
+  _infiniteLevel: 0
+  _oneStarScoreThreshold: 0
+  _twoStarScoreThreshold: 0
+  _threeStarScoreThreshold: 0
   _waves:
   - Count: 1
     WaveDelay: 3
@@ -53,8 +58,11 @@ MonoBehaviour:
   _possessionThreshold: 3
   _startNumberOfPlants: 6
   _replantingThreshold: 3
-  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
   _cauldronSettings:
     _startNumberOfUses: 0
     _maximumUses: 3
+    _startFireDuration: 30
     _fireDuration: 50
+  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
+  _midIntensityMusicThreshold: 0
+  _highIntensityMusicThreshold: 0
