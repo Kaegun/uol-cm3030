@@ -49,7 +49,7 @@ public abstract class PickUpBase : MonoBehaviour, IPickUp
 
 	public virtual bool CanBePickedUp
 	{
-		get { return !_held && _canBePickedUp; }
+		get { return !_held && _canBePickedUp && !_despawned; }
 		set { _canBePickedUp = value; }
 	}
 
