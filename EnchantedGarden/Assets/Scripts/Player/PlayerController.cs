@@ -85,24 +85,28 @@ public class PlayerController : MonoBehaviour
 
 	private IEnumerator PickUpObjectCoroutine()
 	{
-		AudioController.PlayAudio(_audioSource, _pickUpAudio);
-
-		// Reset local position of carry indicator to account for shovel bounce implementation
-		_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
 		_heldObject = PickupCorrectObject();
-
-		//	!! Animation clip uses left hand !! - Assuming _spawner will be null if the player is picking up something from the ground.
-		if (_heldObject.PlayPickUpAnimation && (_spawner == null || _spawner.PlayPickUpAnimation))
+		//	It is possible that the object despawned, so make sure there is an object to pick up.
+		if (_heldObject != null)
 		{
-			_canMove = false;
-			//	Play the pickup animation and wait for it to complete
-			yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.PickUp);
-			_canMove = true;
-		}
+			AudioController.PlayAudio(_audioSource, _pickUpAudio);
 
-		//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
-		SetCarryIndicator(true, _heldObject);
-		_heldObject.OnPickUp(_heldObjectTransform);
+			// Reset local position of carry indicator to account for shovel bounce implementation
+			_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
+
+			//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
+			SetCarryIndicator(true, _heldObject);
+			_heldObject.OnPickUp(_heldObjectTransform);
+
+			//	!! Animation clip uses left hand !! - Assuming _spawner will be null if the player is picking up something from the ground.
+			if (_heldObject.PlayPickUpAnimation && (_spawner == null || _spawner.PlayPickUpAnimation))
+			{
+				_canMove = false;
+				//	Play the pickup animation and wait for it to complete
+				yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.PickUp);
+				_canMove = true;
+			}
+		}
 	}
 
 	private IPickUp GetClosestPickup()
