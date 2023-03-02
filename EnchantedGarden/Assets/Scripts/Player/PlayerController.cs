@@ -91,6 +91,10 @@ public class PlayerController : MonoBehaviour
 		_carryIndicator.transform.localPosition = new Vector3(_carryIndicator.transform.localPosition.z, _carryIndicatorLocalY, _carryIndicator.transform.localPosition.z);
 		_heldObject = PickupCorrectObject();
 
+		//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
+		SetCarryIndicator(true, _heldObject);
+		_heldObject.OnPickUp(_heldObjectTransform);
+
 		//	!! Animation clip uses left hand !! - Assuming _spawner will be null if the player is picking up something from the ground.
 		if (_heldObject.PlayPickUpAnimation && (_spawner == null || _spawner.PlayPickUpAnimation))
 		{
@@ -98,11 +102,7 @@ public class PlayerController : MonoBehaviour
 			//	Play the pickup animation and wait for it to complete
 			yield return _animator.TriggerAndWaitForAnimation(CommonTypes.AnimatorActions.PickUp);
 			_canMove = true;
-		}
-
-		//	Enable Icon to indicate carried object. Must be called before _heldObject.OnPickUP to prevent carry indicator colours being overwritten
-		SetCarryIndicator(true, _heldObject);
-		_heldObject.OnPickUp(_heldObjectTransform);
+		}		
 	}
 
 	private IPickUp GetClosestPickup()
