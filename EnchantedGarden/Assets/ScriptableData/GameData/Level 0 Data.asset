@@ -25,7 +25,7 @@ MonoBehaviour:
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.1
   - Count: 1
-    WaveDelay: 15
+    WaveDelay: 10
     SpiritSpawnDelay: 0
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.1

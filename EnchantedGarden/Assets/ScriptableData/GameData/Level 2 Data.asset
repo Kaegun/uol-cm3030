@@ -54,8 +54,8 @@ MonoBehaviour:
   _startNumberOfPlants: 5
   _replantingThreshold: 1
   _cauldronSettings:
-    _startNumberOfUses: 6
-    _maximumUses: 6
+    _startNumberOfUses: 7
+    _maximumUses: 7
     _startFireDuration: 45
     _fireDuration: 45
   _backgroundMusic: {fileID: 11400000, guid: 5709d1f359cc8494cb9d499d0b752e16, type: 2}
