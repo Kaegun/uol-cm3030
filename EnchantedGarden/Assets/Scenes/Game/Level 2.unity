@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.60636353, g: 0.31909066, b: 0.26583698, a: 1}
+  m_IndirectSpecularColor: {r: 0.6009378, g: 0.31541732, b: 0.26320833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -354,6 +354,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spirit Wall (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
 --- !u!4 &204315603 stripped
@@ -433,6 +438,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spirit Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
@@ -2013,6 +2023,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spirit Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989895809235549046, guid: e035868401b74284896da0d3281b612b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e035868401b74284896da0d3281b612b, type: 3}
@@ -3744,17 +3759,17 @@ PrefabInstance:
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.266163
+      value: 4.610168
       objectReference: {fileID: 0}
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.35616
+      value: 19.5724
       objectReference: {fileID: 0}
     - target: {fileID: 4488676006137870678, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.540009
+      value: -19.540003
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007313481969, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
@@ -3819,42 +3834,42 @@ PrefabInstance:
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.266163
+      value: 4.610168
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.35616
+      value: 19.5724
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.540009
+      value: -19.540003
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6272114
+      value: 0.61237246
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.32650557
+      value: 0.3535534
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6272114
+      value: -0.61237246
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626424, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.32650557
+      value: 0.3535534
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626428, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
       propertyPath: field of view
-      value: 60
+      value: 59.99999
       objectReference: {fileID: 0}
     - target: {fileID: 4488676007358626428, guid: 35cdfdcc6254df44ca028b51d8f5447c,
         type: 3}
