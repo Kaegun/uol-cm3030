@@ -63,6 +63,6 @@ MonoBehaviour:
     _maximumUses: 3
     _startFireDuration: 30
     _fireDuration: 50
-  _backgroundMusic: {fileID: 11400000, guid: b31c24a5c636c574897f018e587b18ff, type: 2}
+  _backgroundMusic: {fileID: 11400000, guid: 9a0fb136280056e4fbb7cfb96a015c3c, type: 2}
   _midIntensityMusicThreshold: 0
   _highIntensityMusicThreshold: 0
