@@ -15,9 +15,9 @@ MonoBehaviour:
   _level: 1
   _levelDuration: 60
   _infiniteLevel: 0
-  _oneStarScoreThreshold: 4000
-  _twoStarScoreThreshold: 8000
-  _threeStarScoreThreshold: 12000
+  _oneStarScoreThreshold: 3500
+  _twoStarScoreThreshold: 5000
+  _threeStarScoreThreshold: 7500
   _waves:
   - Count: 1
     WaveDelay: 25
@@ -25,13 +25,13 @@ MonoBehaviour:
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.1
   - Count: 1
-    WaveDelay: 15
+    WaveDelay: 10
     SpiritSpawnDelay: 0
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.1
   _unplantedFactor: 2
   _possessionThreshold: 1
-  _startNumberOfPlants: 6
+  _startNumberOfPlants: 3
   _replantingThreshold: 1
   _cauldronSettings:
     _startNumberOfUses: 1000000

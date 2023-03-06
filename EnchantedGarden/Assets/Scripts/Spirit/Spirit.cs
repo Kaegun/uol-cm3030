@@ -75,7 +75,7 @@ public class Spirit : MonoBehaviour, IInteractable
 	private const float _possessedSpeedFactor = 0.33f,
 		_justSpawnedMovementFactor = 0.5f,
 		_spawnMovementDelay = 2.0f,
-		_widenSearchThreshold = 7.5f,
+		_widenSearchThreshold = 0f,
 		_banishTimeout = 0.8f;
 
 	public bool CanBeBanished => _spiritState == SpiritState.Possessing || _spiritState == SpiritState.StartingPossession;
@@ -247,14 +247,14 @@ public class Spirit : MonoBehaviour, IInteractable
 
 	private IEnumerator SearchCoroutine()
 	{
-		float searchDuration = 0;
+		float searchDuration = 0f;
 		while (_spiritState == SpiritState.Searching)
 		{
 			// Capture elapsed time at start of loop execution
 			float time = Time.time;
 			// Add possessable layers based on how long the spirit has been searching for something to possess
 			int layerMask = Utility.LayersAsLayerMask(CommonTypes.Layers.Plant);
-			if (searchDuration > _widenSearchThreshold)
+			if (searchDuration >= _widenSearchThreshold)
 			{
 				layerMask = Utility.LayersAsLayerMask(new[] { CommonTypes.Layers.Plant, CommonTypes.Layers.SpiritWall });
 			}
