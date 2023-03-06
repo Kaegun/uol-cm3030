@@ -29,6 +29,12 @@ public class GameManager : SingletonBase<GameManager>
 	[SerializeField]
 	private ScriptableVolumeSettings _volumeSettings;
 
+	[SerializeField]
+	private ScriptableAudioClip _levelFailedMusic;
+
+	[SerializeField]
+	private ScriptableAudioClip _levelCompleteMusic;
+
 	[Header("UI")]
 	[SerializeField]
 	private bool _useUiOverlay = true;
@@ -114,6 +120,7 @@ public class GameManager : SingletonBase<GameManager>
 
 		//	Load Game Over Screen
 		SceneLoader.LoadScene(CommonTypes.Scenes.LevelFailed, true);
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _levelFailedMusic);
 	}
 
 	private void EndLevel(bool victory)
@@ -143,6 +150,7 @@ public class GameManager : SingletonBase<GameManager>
 	private void LoadVictoryScene()
 	{
 		SceneLoader.LoadScene(CommonTypes.Scenes.Victory, true);
+		AudioController.PlayAudio(_backgroundMusicAudioSource, _levelCompleteMusic);
 	}
 
 	private void SetCurrentActiveLevel()

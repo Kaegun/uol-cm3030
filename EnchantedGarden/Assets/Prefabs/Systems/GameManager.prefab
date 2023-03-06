@@ -55,6 +55,9 @@ MonoBehaviour:
   _detachedAudioSourcePrefab: {fileID: 3958828404382933102, guid: 76ae88a5df59ef046bb8cf1345e71eaa,
     type: 3}
   _volumeSettings: {fileID: 11400000, guid: b42c4bbe68cedd34b84565f5199de7b5, type: 2}
+  _levelFailedMusic: {fileID: 11400000, guid: 5e93eabd20df1954390e37cc0ac23354, type: 2}
+  _levelCompleteMusic: {fileID: 11400000, guid: 1a0d31d50cc744d4db78af891e15522f,
+    type: 2}
   _useUiOverlay: 1
   _disabledOverlayElements: 0000000001000000
 --- !u!82 &3935216101442718748
