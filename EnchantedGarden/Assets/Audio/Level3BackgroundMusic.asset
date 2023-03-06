@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f902a04382110749abd08518a7c8062, type: 3}
+  m_Name: Level3BackgroundMusic
+  m_EditorClassIdentifier: 
+  lowIntensityAudio: {fileID: 11400000, guid: b3d5fc1d5231e4b448d2ebc4ba28534e, type: 2}
+  midIntensityAudio: {fileID: 11400000, guid: e0384ac8cbac6224a9e01b23aded1d8b, type: 2}
+  highIntensityAudio: {fileID: 11400000, guid: 289c8fdb28fc12340a81463defc5def2, type: 2}
