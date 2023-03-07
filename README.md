@@ -1,13 +1,16 @@
 # CM3030 - Game Development Project Readme
 
 ## Team and Role Assignments
-| Team member | Role |
-| ----------- | ---- |
-| Hamish Grigor | Lead Designer, Producer and Game Mechanics Code |
-| Johann Ungerer | Lead Developer, Co-Producer and VFX |
-| Marianna Siembiot | Art and Sound Direction |
-| Raj Maurya | Level Design |
-| Xiyu Zhou (Kathy) | **Absconded** |
+| Team member | Role | Git User Id |
+| ----------- | ---- | ----------- |
+| Hamish Grigor | Lead Designer, Producer and Game Mechanics Code | hbgr |
+| Johann Ungerer | Lead Developer, Co-Producer and VFX | Kaegun |
+| Marianna Siembiot | Art and Sound Direction | marcepannam |
+| Raj Maurya | Level Design | RajGM |
+| Xiyu Zhou (Kathy) | **Absconded** | HelloCat8 |
+
+# REFERENCES
+[a relative link](REFERENCES.md)
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS
