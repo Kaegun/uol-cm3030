@@ -45,6 +45,6 @@ public class UiVictory : MonoBehaviour
 
 		Debug.Log($"Playing audio: {_sceneMusic.name}");
 		//	Play Scene Audio loop
-		AudioController.PlayAudio(_backgroundMusicAudioSource, _sceneMusic);
+		//AudioController.PlayAudio(_backgroundMusicAudioSource, _sceneMusic);
 	}
 }

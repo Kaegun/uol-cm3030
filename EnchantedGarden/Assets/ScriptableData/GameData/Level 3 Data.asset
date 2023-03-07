@@ -15,11 +15,11 @@ MonoBehaviour:
   _level: 4
   _levelDuration: 180
   _infiniteLevel: 0
-  _oneStarScoreThreshold: 20000
-  _twoStarScoreThreshold: 30000
-  _threeStarScoreThreshold: 50000
+  _oneStarScoreThreshold: 19000
+  _twoStarScoreThreshold: 28000
+  _threeStarScoreThreshold: 48000
   _waves:
-  - Count: 4
+  - Count: 3
     WaveDelay: 10
     SpiritSpawnDelay: 2
     MoveSpeedMultiplier: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
     SpiritSpawnDelay: 2
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.5
-  - Count: 4
+  - Count: 3
     WaveDelay: 25
     SpiritSpawnDelay: 2
     MoveSpeedMultiplier: 1
@@ -55,14 +55,14 @@ MonoBehaviour:
     MoveSpeedMultiplier: 1
     PossessionRateMultiplier: 0.75
   _unplantedFactor: 2
-  _possessionThreshold: 9
+  _possessionThreshold: 11
   _startNumberOfPlants: 4
   _replantingThreshold: 1
   _cauldronSettings:
-    _startNumberOfUses: 5
-    _maximumUses: 5
-    _startFireDuration: 70
-    _fireDuration: 70
+    _startNumberOfUses: 6
+    _maximumUses: 6
+    _startFireDuration: 75
+    _fireDuration: 75
   _backgroundMusic: {fileID: 11400000, guid: 9a0fb136280056e4fbb7cfb96a015c3c, type: 2}
-  _midIntensityMusicThreshold: 3
-  _highIntensityMusicThreshold: 5
+  _midIntensityMusicThreshold: 4
+  _highIntensityMusicThreshold: 6

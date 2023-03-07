@@ -132,9 +132,10 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 
 	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted && _plantPatch == null;
 
-	public override bool CanBeDropped => base.CanBeDropped
+	// Allow plant to be dropped anywhere
+	/*public override bool CanBeDropped => base.CanBeDropped
 									&& Physics.OverlapSphere(transform.position, 2.0f).Where(c => c.GetComponent<PlantPatch>() != null
-									&& !c.GetComponent<PlantPatch>().ContainsPlant).ToList().Count > 0;
+									&& !c.GetComponent<PlantPatch>().ContainsPlant).ToList().Count > 0;*/
 
 	public override void OnPickUp(Transform pickupTransform)
 	{
@@ -154,7 +155,6 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	public override void OnDrop(bool despawn = false)
 	{
 		base.OnDrop();
-		//	TODO: All of this can be done with Trigger Collider and Layers
 		var plantPatch = GetNearbyPlantPatch();
 
 		if (plantPatch != null)
