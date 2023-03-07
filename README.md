@@ -9,8 +9,7 @@
 | Raj Maurya | Level Design | RajGM |
 | Xiyu Zhou (Kathy) | **Absconded** | HelloCat8 |
 
-# REFERENCES
-[a relative link](REFERENCES.md)
+# [REFERENCES](REFERENCES.md)
 
 ## Software and Tools
 1. Unity 2019.4.40f LTS
