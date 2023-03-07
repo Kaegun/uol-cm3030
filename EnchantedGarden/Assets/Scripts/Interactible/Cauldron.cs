@@ -130,7 +130,8 @@ public class Cauldron : MonoBehaviour, IInteractable
 
 	private IEnumerator CauldronCombineCoroutine()
 	{
-		AudioController.PlayAudio(_cauldronAudioSource, _cauldronCombineAudio);
+		// Combine noise as detached audio source so it will finish playing even if the cauldron is not useable
+		AudioController.PlayAudioDetached(_cauldronCombineAudio, transform.position);
 		yield return new WaitForSeconds(_cauldronCombineAudio.clip.length * 0.8f);
 		AudioController.PlayAudio(_cauldronAudioSource, _cauldronBubbleAudio);
 	}

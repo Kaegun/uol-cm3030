@@ -65,7 +65,7 @@ public static class CommonTypes
 		public const int BanishedSpiritBeforeFinishedPossession = 1000;
 		public const int BanishedSpiritAfterFinishedPossession = 500;
 		public const int ReplantedPlant = 500;
-		public const int BanishedWall = 1000;
+		public const int BanishedWall = 500;
 
 		//	TODO: Define other scoring events
 	}
