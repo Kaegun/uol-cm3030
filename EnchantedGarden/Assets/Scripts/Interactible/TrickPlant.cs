@@ -40,7 +40,6 @@ public class TrickPlant : PickUpBase, IPossessable
 
 	public void OnPossessionStarted(Spirit possessor)
 	{
-		// Set CanBePossessed false
 		_plantState = PlantState.Possessed;
 		_canvas.transform.rotation = Quaternion.Euler(-Camera.main.transform.rotation.eulerAngles);
 		_canvas.gameObject.SetActive(true);
