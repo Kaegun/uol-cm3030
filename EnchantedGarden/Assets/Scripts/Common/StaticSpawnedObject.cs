@@ -39,23 +39,19 @@ public class StaticSpawnedObject
 
 		if (_numberToSpawn > 1)
 		{
-			//	TODO: Fix this
 			//	Spawn a couple of objects around the spawn point
 			float stepSize = _spawnRadius / _numberToSpawn;
 			Vector3 offset = new Vector3(stepSize / 2, 0, stepSize / 2);
 
 			var rowsCols = Mathf.CeilToInt(_numberToSpawn / 2.0f);
-			Debug.Log($"Spawning ({rowsCols}): {_prefab.name}");
 			for (int i = 0; i < rowsCols; i++)
 			{
-				//	TODO: Position the objects correctly
 				for (int j = 0; j < rowsCols; j++)
 				{
 					if ((i + 1) * (j + 1) + j > _numberToSpawn)
 						break;
 
 					var spawned = Instantiate();
-					//	TODO: Calculate offsets - Start at the front of the table
 					spawned.transform.position += offset - new Vector3(i * stepSize, 0, j * stepSize);
 					list.Add(spawned);
 				}

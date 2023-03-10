@@ -19,13 +19,11 @@ public class ScoreSettable : MonoBehaviour, ISettable<float>
 
 	public void SetValue(float value)
 	{
-		Debug.Log("Setting the score");
 		_scoreUpdating = StartCoroutine(ScoreUpdatingCoroutine(value));
 	}
 
 	private IEnumerator ScoreUpdatingCoroutine(float score)
 	{
-		Debug.Log($"Score Coroutine: {score} | {GameManager.Instance.Score.Score}");
 		_text.text = $"SCORE: {GameManager.Instance.Score.Score:# ##0}";
 		//	TODO: Animate the score text in some way to make it pop when the player scores points.
 

@@ -144,7 +144,7 @@ public class Spirit : MonoBehaviour, IInteractable
 		_spiritBody.SetMaterial(_banishedMaterial, false);
 		_possessedPossessable?.OnDispossess();
 		_worldEvents.OnSpiritBanished(this);
-		// Spirit is destroyed before audio plays
+		// Use detached audio as audio should complete even though spirit is destroyed
 		AudioController.PlayAudioDetached(_bansihAudio, transform.position);
 		_spiritState = SpiritState.Banished;
 	}
@@ -312,7 +312,6 @@ public class Spirit : MonoBehaviour, IInteractable
 	{
 		if (other.gameObject.IsLayer(CommonTypes.Layers.Forest) && IsPossessingPlant)
 		{
-			Debug.Log("Stealing a plant - collider");
 			StealPossessedPlant();
 		}
 		else if (_spiritState != SpiritState.Searching)
@@ -358,7 +357,6 @@ public class Spirit : MonoBehaviour, IInteractable
 			&& possessable == _targetPossessable
 			&& _spiritState == SpiritState.Searching)
 		{
-			Debug.Log("Spirit start possessing");
 			// Stop searching coroutine
 			StopAllCoroutines();
 			_possessedPossessable = possessable;
