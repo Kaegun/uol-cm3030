@@ -69,7 +69,6 @@ public class FireSystem : MonoBehaviour
 
 	public void AddLog()
 	{
-		Debug.Log("Entering AddLog");
 		_currentFireLevel = _fireLifetime;
 		_fireState = FireState.High;
 		AudioController.PlayAudio(_fireAudioSource, _fireAddLogAudio);
@@ -105,8 +104,6 @@ public class FireSystem : MonoBehaviour
 		_currentFireLevel = GameManager.Instance.ActiveLevel.CauldronSettings.StartFireDuration;
 		_fireLifetime = GameManager.Instance.ActiveLevel.CauldronSettings.FireDuration;
 		_fireLifetimeStep = _fireLifetime / 3;
-
-		Debug.Log($"Fire: [{_currentFireLevel}] [{_fireLifetime}] [{_fireLifetimeStep}]");
 
 		//	Start Fire Audio
 		AudioController.PlayAudio(_fireAudioSource, _fireAmbientAudio);

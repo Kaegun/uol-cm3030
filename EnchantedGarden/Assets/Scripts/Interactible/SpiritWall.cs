@@ -15,7 +15,7 @@ public class SpiritWall : MonoBehaviour, IPossessable
 
 	public bool CanBePossessed => !_isPossessed;
 
-	// Possession is completed instantly, should this be changed?
+	// Possession is completed instantly
 	public bool PossessionCompleted => true;
 
 	public Transform Transform => transform;
@@ -26,7 +26,6 @@ public class SpiritWall : MonoBehaviour, IPossessable
 	{
 		_isPossessed = false;
 		_wallObj.SetActive(false);
-		// Score points
 		_events.OnSpiritWallBanished(this);
 	}
 

@@ -143,8 +143,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void SubscribeToWorldEvents()
 	{
-		Debug.Log("Fox: Subscribing to Events");
-
 		_worldEvents.LevelStarted += LevelStarted;
 
 		_worldEvents.SpiritSpawned += SpiritSpawned;
@@ -317,17 +315,14 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void LevelStarted(object sender, string e)
 	{
-		Debug.Log("Fox behaviour: Level started");
 		if (_respondsTo.Contains(Events.LevelStarted) && !_handledEvents.Contains(Events.LevelStarted))
 		{
-			//_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration));
 			if (e == CommonTypes.Scenes.Level0)
 			{
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_moveControlsSprite, _defaultInstructionDuration));
 				_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
 				_behaviourQueue.Enqueue(InstructionCoroutine(_spiritSpawnedSprite, _defaultInstructionDuration));
-				//_behaviourQueue.Enqueue(InstructionCoroutine(_spiritWillStealSprite, _defaultInstructionDuration));				
 			}
 			if (e == CommonTypes.Scenes.Level2)
 			{
@@ -353,7 +348,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void SpiritWallSpawned(object sender, Spirit e)
 	{
-		Debug.Log("Fox Behaviour: Spirit wall spawned!");
 
 		if (_respondsTo.Contains(Events.SpiritWallSpawned) && !_handledEvents.Contains(Events.SpiritWallSpawned))
 		{
@@ -369,8 +363,6 @@ public class FoxBehaviour : MonoBehaviour
 	{
 		//	Alert the player
 		//	Move fox and focus the camera on the fox
-		Debug.Log($"Fox Behaviour: Plant Possessing - [{e}]");
-
 		if (_respondsTo.Contains(Events.PlantPossessed) && !_handledEvents.Contains(Events.PlantPossessed))
 		{
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(_player));
@@ -384,7 +376,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void PlantStolen(object sender, GameObject e)
 	{
-		Debug.Log("Fox Behaviour: A plant has been stolen!");
 		if (_respondsTo.Contains(Events.PlantStolen) && !_handledEvents.Contains(Events.PlantStolen))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, e.transform.position));
@@ -397,7 +388,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void PlantDroppedOutOfPatch(object sender, GameObject e)
 	{
-		Debug.Log("Fox Behaviour: A plant has been dropped outside of a plant patch");
 		if (_respondsTo.Contains(Events.PlantDroppedOutOfPatch) && !_handledEvents.Contains(Events.PlantDroppedOutOfPatch))
 		{
 			_behaviourQueue.Enqueue(MoveToTargetCoroutine(e.transform));
@@ -410,7 +400,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void FireDied(object sender, Vector3 e)
 	{
-		Debug.Log("Fox Behaviour: The fire has DIED!!!");
 		if (_respondsTo.Contains(Events.FireDied))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));
@@ -423,7 +412,6 @@ public class FoxBehaviour : MonoBehaviour
 
 	private void IngredientsEmpty(object send, Vector3 e)
 	{
-		Debug.Log("Fox Behaviour: The ingredients are empty");
 		if (_respondsTo.Contains(Events.IngredientsEmpty))
 		{
 			_behaviourQueue.Enqueue(AlertCoroutine(_defaultAlertDuration, _cauldron));

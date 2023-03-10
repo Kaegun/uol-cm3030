@@ -41,10 +41,6 @@ public class UiVictory : MonoBehaviour
 		}
 
 		//  Set Score
-		_scoreText.text = $"{score.FinalScore:# ##0}";
-
-		Debug.Log($"Playing audio: {_sceneMusic.name}");
-		//	Play Scene Audio loop
-		//AudioController.PlayAudio(_backgroundMusicAudioSource, _sceneMusic);
+		_scoreText.text = $"{score.FinalScore:# ##0}";		
 	}
 }
