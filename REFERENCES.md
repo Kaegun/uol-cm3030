@@ -15,7 +15,8 @@
 | Mushroom | Pure Poly | https://assetstore.unity.com/packages/3d/environments/landscapes/free-low-poly-nature-forest-205742 |
 | Logs | JustCreate | https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-simple-nature-pack-162153 |
 | Fence | Silver Cats | https://assetstore.unity.com/packages/3d/environments/fantasy/glowing-forest-79686 |
-| Spirits (Model and Shader), Alchemy Table, Ground Shaders | Johann Ungerer | Self-made |
+| Ground Textures | Lumo-Art 3D | https://assetstore.unity.com/packages/2d/textures-materials/free-stylized-pbr-textures-pack-111778 |
+| Spirits (Model and Shader), Alchemy Table, Ground Shaders, Skybox | Johann Ungerer | Self-made |
 
 # Sound FX and Music
 | Assets | Creator | Source |
@@ -25,7 +26,13 @@
 | Level 2 Music | sushilbawa | https://www.looperman.com/loops/detail/145808/arctic-bells-162-162bpm-trap-bells-loop https://www.looperman.com/loops/detail/208048/arctic-bells-165-165bpm-trap-bells-loop https://www.looperman.com/loops/detail/164377/arctic-bells-126-126bpm-trap-bells-loop |
 | Level 3 Music | sushilbawa | https://www.looperman.com/loops/detail/236138/music-box-151-151bpm-trap-bells-loop https://www.looperman.com/loops/detail/239930/music-box-143-free-149bpm-trap-bells-loop https://www.looperman.com/loops/detail/242066/new-music-box-142-free-142bpm-trap-bells-loop |
 | Spirit Sounds, Fox Sounds | Olan | https://assetstore.unity.com/packages/audio/sound-fx/animals/animals-95444 |
-| Spirit Sounds, Fox Sounds | Olan | https://assetstore.unity.com/packages/audio/sound-fx/animals/animals-95444 |
+| Fire Ambient Sound | Tao & Sound | https://www.gamedevmarket.net/asset/christmas-sfx-pack-1259/ |
+| Fire Log Added Sound | Tao & Sound | https://www.gamedevmarket.net/asset/puzzle-sfx-pack-1518/ |
+| Cauldron Bubble Sound | Tao & Sound | https://www.gamedevmarket.net/asset/christmas-sfx-pack-1259/ |
+| Cauldron Combine Sound | ZStriefel | https://www.gamedevmarket.net/asset/casual-game-sfx-pack-548/ |
+| Flask Used Sound | WOW Sound | https://www.gamedevmarket.net/asset/rpg-magic-sfx-pack-2/ |
+| Game Over Music | Cloud Audio | https://www.gamedevmarket.net/asset/horror-music-atmospheres/ |
+| Player Digging Sound, Pickup / Put Down Sound | Cloud Audio | https://www.gamedevmarket.net/asset/pirate-game-sounds-pack/ (***pack no longer available***) |
 
 # UI & Fonts
 | Assets | Creator | Source |
@@ -38,3 +45,12 @@
 # Tutorials and References
 | Name | Creator | Source |
 | ----------------- | ----- | ---------- |
+| Unity ShaderGraph Procedural Skybox Tutorial Pt.1 | Tim Coster | https://timcoster.com/2019/09/03/unity-shadergraph-skybox-quick-tutorial/ |
+| Curves & Splines | Catlike Coding | https://catlikecoding.com/unity/tutorials/curves-and-splines/ |
+| How to create a ghost in Unity - Shader Graph Tutorial | Gabriel Aquiar | https://www.youtube.com/watch?v=KFMOD9jLCUg |
+| Unity Guide: Shadergraph Edge Glow | Rizing Games | https://www.youtube.com/watch?v=UkqVNjw2IR8 |
+| Dissolve Shader | Brackeys | https://www.youtube.com/watch?v=taMp1g1pBeE |
+| 2D Edges Directional Fade Shader Graph - Beginner Friendly Unity Tutorial | Binary Lunar | https://www.youtube.com/watch?v=Ntxqlw6WCbg |
+| Building Unity UI that scales for a real game - Prefabs / Scenes | Jason Weimann | https://www.youtube.com/watch?v=6ztY9-IX3Qg&t=3119s |
+| Unity 2018 Shader Graph / Editor - Tutorial 03: Tiling & Offset | Respect Studios | https://www.youtube.com/watch?v=caBUxzTaBwk |
+| Create a Third-Person Player Controller | Penny de Byl | https://www.udemy.com/course/create-a-third-person-player-character-controller |
