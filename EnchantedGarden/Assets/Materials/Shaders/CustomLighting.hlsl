@@ -1,4 +1,6 @@
-﻿#ifndef CUSTOM_LIGHTING_INCLUDED
+﻿/*	Reference: https://timcoster.com/2019/09/03/unity-shadergraph-skybox-quick-tutorial/ */
+
+#ifndef CUSTOM_LIGHTING_INCLUDED
 #define CUSTOM_LIGHTING_INCLUDED
 
 void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, out float DistanceAtten, out float ShadowAtten)
