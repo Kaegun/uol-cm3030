@@ -1,4 +1,5 @@
-﻿//	Reference: https://timcoster.com/2019/09/03/unity-shadergraph-skybox-quick-tutorial/
+﻿/*	Reference: https://timcoster.com/2019/09/03/unity-shadergraph-skybox-quick-tutorial/ */
+
 #ifndef CUSTOM_LIGHTING_INCLUDED
 #define CUSTOM_LIGHTING_INCLUDED
 
