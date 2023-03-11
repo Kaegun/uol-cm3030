@@ -114,7 +114,6 @@ public class UiOverlayManager : MonoBehaviour
 
 	private void Score(object sender, ScriptableWorldEventHandler.ScoreEventArguments e)
 	{
-		Debug.Log($"Scored Points: {e.Score}");
 		StartCoroutine(ScoreCoroutine(e));
 	}
 
@@ -129,7 +128,6 @@ public class UiOverlayManager : MonoBehaviour
 			float t = 0f;
 			while (t <= _scoreTextduration)
 			{
-				//	TODO: Make score text movement better
 				floatingScore.transform.position = Vector3.Lerp(startPos, _scoreSettable.Transform.position, t / _scoreTextduration);
 				t += Time.deltaTime;
 				yield return new WaitForEndOfFrame();

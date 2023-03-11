@@ -38,7 +38,6 @@ public class SpiritSpawner : MonoBehaviour
 			{
 				StartCoroutine(SpawnWaveCoroutine(_waveQueue.Dequeue()));
 				_nextWave = NextWaveDelay();
-				Debug.Log($"SpiritSpawner NextWave: {_nextWave}");
 			}
 		}
 	}

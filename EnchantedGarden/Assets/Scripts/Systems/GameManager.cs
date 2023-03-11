@@ -96,11 +96,11 @@ public class GameManager : SingletonBase<GameManager>
 	public void LoadNextLevel()
 	{
 		int currentLevelIndex = Array.IndexOf(_gameLevels, _activeLevel);
-		Debug.Log($"LeadNextLevel - CurrentLevelIndex: {currentLevelIndex}");
+		Debug.Log($"LoadNextLevel - CurrentLevelIndex: {currentLevelIndex}");
 		if (currentLevelIndex < _gameLevels.Length - 1)
 		{
 			var nextLevel = _gameLevels[currentLevelIndex + 1];
-			Debug.Log($"LeadNextLevel - CurrentLevelIndex: {nextLevel.Level.SceneName()}");
+			Debug.Log($"LoadNextLevel - CurrentLevelIndex: {nextLevel.Level.SceneName()}");
 			SceneLoader.LoadScene(nextLevel.Level.SceneName());
 		}
 		else
@@ -114,8 +114,6 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void LevelFailed()
 	{
-		Debug.Log("Level Failed");
-
 		Time.timeScale = 0.0f;
 
 		//	Load Game Over Screen
@@ -125,14 +123,11 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void EndLevel(bool victory)
 	{
-		Debug.Log("Level finished");
-
 		_gameOver = true;
 		Time.timeScale = 0.0f;
 
 		SceneLoader.UnloadScene(CommonTypes.Scenes.UI);
 
-		//	TODO: Stop audio
 		_backgroundMusicAudioSource.Stop();
 
 		int rating = Score.CalculateRating(ActiveLevel.CurrentNumberOfPlants, ActiveLevel.OneStarScoreThreshold, ActiveLevel.TwoStarScoreThreshold, ActiveLevel.ThreeStarScoreThreshold);
@@ -169,9 +164,10 @@ public class GameManager : SingletonBase<GameManager>
 
 	private void PlantStolen(object sender, GameObject e)
 	{
-		Debug.Log($"GameManager.CurrentNumberOfPlants: {ActiveLevel.name}:{ActiveLevel.CurrentNumberOfPlants}");
 		if (--ActiveLevel.CurrentNumberOfPlants <= 0)
+        {
 			EndLevel(false);
+        }			
 	}
 
 	private void SpiritSpawned(object sender, Spirit e)
@@ -189,8 +185,6 @@ public class GameManager : SingletonBase<GameManager>
 		yield return new WaitForSeconds(0.25f);
 		_worldEvents.OnLevelStarted(level);
 		CheckIngredientsEmpty();
-
-		//	TODO: Might need to activate/place the Tutorial Spirit after all Starts have been called.
 	}
 
 	private void SubscribeToWorldEvents()

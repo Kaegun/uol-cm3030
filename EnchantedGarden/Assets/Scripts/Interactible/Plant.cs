@@ -131,12 +131,7 @@ public class Plant : PickUpBase, IPossessable, IInteractable
 	}
 
 	public override bool CanBePickedUp => _plantState == PlantState.Default && !_planted && _plantPatch == null;
-
-	// Allow plant to be dropped anywhere
-	/*public override bool CanBeDropped => base.CanBeDropped
-									&& Physics.OverlapSphere(transform.position, 2.0f).Where(c => c.GetComponent<PlantPatch>() != null
-									&& !c.GetComponent<PlantPatch>().ContainsPlant).ToList().Count > 0;*/
-
+	
 	public override void OnPickUp(Transform pickupTransform)
 	{
 		SetModelNormal();
