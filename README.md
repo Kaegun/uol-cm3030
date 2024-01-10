@@ -5,7 +5,6 @@
 | ----------- | ---- | ----------- |
 | Hamish Grigor | Lead Designer, Producer and Game Mechanics Code | hbgr |
 | Johann Ungerer | Lead Developer, Co-Producer and VFX | Kaegun |
-| Marianna Siembiot | Art and Sound Direction | marcepannam |
 | Raj Maurya | Level Design | RajGM |
 | Xiyu Zhou (Kathy) | **Absconded** | HelloCat8 |
 
